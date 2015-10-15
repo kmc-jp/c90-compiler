@@ -1,0 +1,20 @@
+language: cpp
+compiler:
+  - gcc-4.8
+  - clang
+sudo: false
+addons:
+  apt:
+    packages:
+    - g++-4.8
+install:
+  - $CXX --version
+#  - make
+script:
+#  - make test
+
+notifications:
+  emails:
+    - c89-compiler@kmc.gr.jp
+  on_success: change
+  on_failure: always
