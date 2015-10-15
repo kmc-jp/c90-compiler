@@ -9,9 +9,9 @@ addons:
     - g++-4.8
 install:
   - $CXX --version
-#  - make
+  - make
 script:
-#  - make test
+  - make test
 
 notifications:
   emails:
