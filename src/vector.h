@@ -27,6 +27,11 @@ struct VM(Type) {
 };
 extern struct VM(Type) GV(Type);
 
+/* first of all, you must initialize special member functions */
+void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
+                               T(DtorMethod, Type) dtor,
+                               T(CopyMethod, Type) copy);
+
 /* vector of Type */
 struct V(Type) {
   Type* start_;  /* first data */
