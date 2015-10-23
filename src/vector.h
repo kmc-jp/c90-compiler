@@ -14,6 +14,7 @@
 #define VR(type) T(VectorRef, type)
 #define VM(type) T(VectorMethods, type)
 #define GV(type) CONCAT(global_, VM(type))
+#define VF(function, type) T(CONCAT(Vector, function), type)
 
 typedef void (*T(CtorMethod, Type))(Type* value);
 typedef void (*T(DtorMethod, Type))(Type* value);
@@ -41,5 +42,8 @@ struct V(Type) {
 
 /* reference to vector of Type */
 typedef struct V(Type)* VR(Type);
+
+/* constructor */
+VR(Type) VF(Ctor, Type)(void);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
