@@ -21,6 +21,10 @@ Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
   return v->start_;
 }
+bool VF(Empty, Type)(VR(Type) v) {
+  assert(v);
+  return v->start_ == v->finish_;
+}
 size_t VF(Size, Type)(VR(Type) v) {
   assert(v);
   return v->finish_ - v->start_;
