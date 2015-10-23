@@ -44,6 +44,13 @@ void VF(Place, Type)(VR(Type) v, size_t count) {
   }
   v->finish_ = v->start_ + count;
 }
+/* v->start_ must be constructed */
+void VF(Memcpy, Type)(Type* dst, Type* src, size_t count) {
+  size_t i = 0;
+  for (i = 0; i < count; ++i) {
+    GV(Type).copy_(dst + i, src + i);
+  }
+}
 
 VR(Type) VF(Ctor, Type)(void) {
   VR(Type) v = (VR(Type))malloc(sizeof(struct V(Type)));
