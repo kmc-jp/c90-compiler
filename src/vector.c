@@ -15,6 +15,11 @@ void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
 void VF(Nullify, Type)(VR(Type) v) {
   v->start_ = v->finish_ = v->end_ = NULL;
 }
+void VF(Delete, Type)(VR(Type) v) {
+  VF(Clear, Type)(v);
+  free(v->start_);
+  VF(Nullify, Type)(v);
+}
 
 VR(Type) VF(Ctor, Type)(void) {
   VR(Type) v = (VR(Type))malloc(sizeof(struct V(Type)));
@@ -23,8 +28,7 @@ VR(Type) VF(Ctor, Type)(void) {
 }
 void VF(Dtor, Type)(VR(Type)* pv) {
   assert(pv && *pv);
-  VF(Clear, Type)(*pv);
-  free((*pv)->start_);
+  VF(Delete, Type)(*pv);
   free(*pv);
   *pv = NULL;
 }
