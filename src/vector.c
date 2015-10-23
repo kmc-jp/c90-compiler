@@ -36,6 +36,14 @@ void VF(Alloc, Type)(VR(Type) v, size_t size) {
   v->finish_ = v->start_;
   v->end_ = v->start_ + capacity;
 }
+/* v->start_ must not be constructed */
+void VF(Place, Type)(VR(Type) v, size_t count) {
+  size_t i = 0;
+  for (i = 0; i < count; ++i) {
+    GV(Type).ctor_(v->start_ + i);
+  }
+  v->finish_ = v->start_ + count;
+}
 
 VR(Type) VF(Ctor, Type)(void) {
   VR(Type) v = (VR(Type))malloc(sizeof(struct V(Type)));
