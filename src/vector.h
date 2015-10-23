@@ -47,6 +47,8 @@ typedef struct V(Type)* VR(Type);
 
 /* constructor */
 VR(Type) VF(Ctor, Type)(void);
+/* data */
+Type* VF(Data, Type)(VR(Type) v);
 /* size */
 size_t VF(Size, Type)(VR(Type) v);
 

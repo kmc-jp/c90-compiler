@@ -17,6 +17,10 @@ VR(Type) VF(Ctor, Type)(void) {
   v->start_ = v->finish_ = v->end_ = NULL;
   return v;
 }
+Type* VF(Data, Type)(VR(Type) v) {
+  assert(v);
+  return v->start_;
+}
 size_t VF(Size, Type)(VR(Type) v) {
   assert(v);
   return v->finish_ - v->start_;
