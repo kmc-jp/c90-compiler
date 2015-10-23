@@ -5,6 +5,7 @@ TESTSUFFIX = .out
 TESTSDIR = tests
 TESTS = $(wildcard $(TESTSDIR)/*.c)
 TESTS_OBJ = $(TESTS:.c=$(TESTSUFFIX))
+TESTS_CFLAGS ?= -ansi $(CFLAGS)
 .SUFFIXES: $(TESTSUFFIX)
 
 RM = rm -f
@@ -16,7 +17,7 @@ test: testsource_test
 testsource_test: $(TESTS_OBJ)
 
 $(TESTSDIR)/%$(TESTSUFFIX): tests/%.c
-	$(CC) $< -o $@
+	$(CC) $(TESTS_CFLAGS) $< -o $@
 
 clean:
 	$(RM) $(TESTS_OBJ)
