@@ -29,6 +29,12 @@ size_t VF(Size, Type)(VR(Type) v) {
   assert(v);
   return v->finish_ - v->start_;
 }
+void VF(Clear, Type)(VR(Type) v) {
+  assert(v);
+  while (!VF(Empty, Type)) {
+    VF(Pop, Type)(v);
+  }
+}
 void VF(Pop, Type)(VR(Type) v) {
   assert(v);
   --v->finish_;
