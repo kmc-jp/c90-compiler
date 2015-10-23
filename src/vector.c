@@ -12,9 +12,13 @@ void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
   GV(Type).copy_ = copy;
 }
 
+void VF(Nullify, Type)(VR(Type) v) {
+  v->start_ = v->finish_ = v->end_ = NULL;
+}
+
 VR(Type) VF(Ctor, Type)(void) {
   VR(Type) v = (VR(Type))malloc(sizeof(struct V(Type)));
-  v->start_ = v->finish_ = v->end_ = NULL;
+  VF(Nullify, Type)(v);
   return v;
 }
 void VF(Dtor, Type)(VR(Type)* pv) {
