@@ -18,11 +18,11 @@ VR(Type) VF(Ctor, Type)(void) {
   return v;
 }
 void VF(Dtor, Type)(VR(Type)* pv) {
-  assert(v && *v);
-  VF(Clear, Type)(*v);
-  free((*v)->start_);
-  free(*v);
-  *v = NULL;
+  assert(pv && *pv);
+  VF(Clear, Type)(*pv);
+  free((*pv)->start_);
+  free(*pv);
+  *pv = NULL;
 }
 Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
