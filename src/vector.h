@@ -57,6 +57,8 @@ Type* VF(Data, Type)(VR(Type) v);
 bool VF(Empty, Type)(VR(Type) v);
 /* size */
 size_t VF(Size, Type)(VR(Type) v);
+/* reserve */
+void VF(Reserve, Type)(VR(Type) v, size_t size);
 /* capacity */
 size_t VF(Capacity, Type)(VR(Type) v);
 /* clear */

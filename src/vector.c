@@ -75,6 +75,19 @@ size_t VF(Size, Type)(VR(Type) v) {
   assert(v);
   return v->finish_ - v->start_;
 }
+void VF(Reserve, Type)(VR(Type) v, size_t size) {
+  if (VF(Capacity, Type)(v) < size) {
+    const size_t v_size = VF(Size, Type)(v);
+    struct V(Type) buffer = *v;
+    VR(Type) new_v = VF(Ctor, Type)();
+    VF(Alloc, Type)(new_v, size);
+    VF(Place, Type)(new_v, v_size);
+    VF(Memcpy, Type)(VF(Data, Type)(new_v), VF(Data, Type)(v), v_size);
+    *v = *new_v;
+    new_v = &buffer;
+    VF(Dtor, Type)(new_v);
+  }
+}
 size_t VF(Capacity, Type)(VR(Type) v) {
   assert(v);
   return v->end_ - v->start_;
