@@ -17,6 +17,13 @@ VR(Type) VF(Ctor, Type)(void) {
   v->start_ = v->finish_ = v->end_ = NULL;
   return v;
 }
+void VF(Dtor, Type)(VR(Type)* pv) {
+  assert(v && *v);
+  VF(Clear, Type)(*v);
+  free((*v)->start_);
+  free(*v);
+  *v = NULL;
+}
 Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
   return v->start_;
