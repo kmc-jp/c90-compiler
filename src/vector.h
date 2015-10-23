@@ -55,5 +55,8 @@ Type* VF(Data, Type)(VR(Type) v);
 bool VF(Empty, Type)(VR(Type) v);
 /* size */
 size_t VF(Size, Type)(VR(Type) v);
+/* pop_back */
+/* calling pop_back on empty vector is undefined */
+void VF(Pop, Type)(VR(Type) v);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */

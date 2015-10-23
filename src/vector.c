@@ -29,3 +29,8 @@ size_t VF(Size, Type)(VR(Type) v) {
   assert(v);
   return v->finish_ - v->start_;
 }
+void VF(Pop, Type)(VR(Type) v) {
+  assert(v);
+  --v->finish_;
+  GV(Type).dtor_(v->finish_);
+}
