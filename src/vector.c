@@ -1,4 +1,5 @@
 #include "vector.h"
+#include <assert.h>
 #include <stdlib.h>
 
 struct VM(Type) GV(Type);
@@ -15,4 +16,8 @@ VR(Type) VF(Ctor, Type)(void) {
   VR(Type) v = (VR(Type))malloc(sizeof(struct V(Type)));
   v->start_ = v->finish_ = v->end_ = NULL;
   return v;
+}
+size_t VF(Size, Type)(VR(Type) v) {
+  assert(v);
+  return v->finish_ - v->start_;
 }

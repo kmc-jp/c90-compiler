@@ -1,6 +1,8 @@
 #ifndef KMC_C89_COMPILER_VECTOR_H
 #define KMC_C89_COMPILER_VECTOR_H
 
+#include <stddef.h>
+
 /* to make compilable */
 #define Type int
 
@@ -45,5 +47,7 @@ typedef struct V(Type)* VR(Type);
 
 /* constructor */
 VR(Type) VF(Ctor, Type)(void);
+/* size */
+size_t VF(Size, Type)(VR(Type) v);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
