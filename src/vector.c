@@ -2,6 +2,15 @@
 #include <assert.h>
 #include <stdlib.h>
 
+/* size <= capacity && capacity == pow(2, n) */
+size_t EnoughCapacity(size_t size) {
+  size_t capacity = 1;
+  while (capacity < size) {
+    capacity *= 2;
+  }
+  return capacity;
+}
+
 struct VM(Type) GV(Type);
 
 void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
@@ -19,6 +28,13 @@ void VF(Delete, Type)(VR(Type) v) {
   VF(Clear, Type)(v);
   free(v->start_);
   VF(Nullify, Type)(v);
+}
+/* v->start_ must be free-ed */
+void VF(Alloc, Type)(VR(Type) v, size_t size) {
+  const size_t capacity = EnoughCapacity(size);
+  v->start_ = (Type*)malloc(sizeof(Type) * capacity);
+  v->finish_ = v->start_;
+  v->end_ = v->start_ + capacity;
 }
 
 VR(Type) VF(Ctor, Type)(void) {
