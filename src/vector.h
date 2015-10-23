@@ -11,6 +11,7 @@
 /* template macro */
 #define T(identifier, type) CONCAT(WITHBAR(identifier), WITHBAR(type))
 #define V(type) T(Vector, type)
+#define VR(type) T(VectorRef, type)
 
 /* vector of Type */
 struct V(Type) {
@@ -18,5 +19,8 @@ struct V(Type) {
   Type* finish_;  /* last data */
   Type* end_;  /* end of storage */
 };
+
+/* reference to vector of Type */
+typedef struct V(Type)* VR(Type);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
