@@ -51,6 +51,8 @@ typedef struct V(Type)* VR(Type);
 VR(Type) VF(Ctor, Type)(void);
 /* destructor */
 void VF(Dtor, Type)(VR(Type)* pv);
+/* assign */
+void VF(Assign, Type)(VR(Type) v, Type* data, size_t size);
 /* data */
 Type* VF(Data, Type)(VR(Type) v);
 /* empty */

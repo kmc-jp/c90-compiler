@@ -63,6 +63,17 @@ void VF(Dtor, Type)(VR(Type)* pv) {
   free(*pv);
   *pv = NULL;
 }
+void VF(Assign, Type)(VR(Type) v, Type* data, size_t size) {
+  assert(v);
+  if (VF(Capacity, Type)(v) < size) {
+    VF(Delete, Type)(v);
+    VF(Alloc, Type)(v, size);
+  } else {
+    VF(Clear, Type)(v);
+  }
+  VF(Place, Type)(v, size);
+  VF(Memcpy, Type)(VF(Data, Type)(v), data, size);
+}
 Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
   return v->start_;
