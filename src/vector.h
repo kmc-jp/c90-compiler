@@ -57,6 +57,8 @@ void VF(Copy, Type)(VR(Type) dst, VR(Type) src);
 void VF(Assign, Type)(VR(Type) v, Type* data, size_t size);
 /* data */
 Type* VF(Data, Type)(VR(Type) v);
+/* begin */
+Type* VF(Begin, Type)(VR(Type) v);
 /* empty */
 bool VF(Empty, Type)(VR(Type) v);
 /* size */
