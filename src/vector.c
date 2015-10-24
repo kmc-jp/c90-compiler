@@ -29,26 +29,16 @@ void VF(Delete, Type)(VR(Type) v) {
   free(v->start_);
   VF(Nullify, Type)(v);
 }
-/* v->start_ must be free-ed */
-void VF(Alloc, Type)(VR(Type) v, size_t size) {
+/* v->start_ must not be allocated */
+void VF(New, Type)(VR(Type) v, size_t size, Type* data, size_t count) {
   const size_t capacity = EnoughCapacity(size);
-  v->start_ = (Type*)malloc(sizeof(Type) * capacity);
-  v->finish_ = v->start_;
-  v->end_ = v->start_ + capacity;
-}
-/* v->start_ must not be constructed */
-void VF(Place, Type)(VR(Type) v, size_t count) {
-  size_t i = 0;
-  for (i = 0; i < count; ++i) {
-    GV(Type).ctor_(v->start_ + i);
-  }
-  v->finish_ = v->start_ + count;
-}
-/* v->start_ must be constructed */
-void VF(Memcpy, Type)(Type* dst, Type* src, size_t count) {
-  size_t i = 0;
-  for (i = 0; i < count; ++i) {
-    GV(Type).copy_(dst + i, src + i);
+  Type* it = (Type*)malloc(sizeof(Type) * capacity);
+  v->start_ = it;
+  v->finish_ = it + count;
+  v->end_ = it + capacity;
+  for (; it != v->finish_; ++it, ++data) {
+    GV(Type).ctor_(it);
+    GV(Type).copy_(it, data);
   }
 }
 
@@ -75,8 +65,7 @@ void VF(Assign, Type)(VR(Type) v, Type* data, size_t size) {
   } else {
     VF(Clear, Type)(v);
   }
-  VF(Place, Type)(v, size);
-  VF(Memcpy, Type)(VF(Data, Type)(v), data, size);
+  v->finish_ = VF(New, Type)(VF(Data, Type)(v), data, size);
 }
 Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
@@ -104,8 +93,8 @@ void VF(Reserve, Type)(VR(Type) v, size_t size) {
     struct V(Type) buffer = *v;
     VR(Type) new_v = VF(Ctor, Type)();
     VF(Alloc, Type)(new_v, size);
-    VF(Place, Type)(new_v, v_size);
-    VF(Memcpy, Type)(VF(Data, Type)(new_v), VF(Data, Type)(v), v_size);
+    new_v->finish_ =
+        VF(New, Type)(VF(Data, Type)(new_v), VF(Data, Type)(v), v_size);
     *v = *new_v;
     new_v = &buffer;
     VF(Dtor, Type)(new_v);
