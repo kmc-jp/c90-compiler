@@ -63,6 +63,10 @@ void VF(Dtor, Type)(VR(Type)* pv) {
   free(*pv);
   *pv = NULL;
 }
+void VF(Copy, Type)(VR(Type) dst, VR(Type) src) {
+  assert(dst && src);
+  VF(Assign, Type)(dst, VF(Data, Type)(src), VF(Size, Type)(src));
+}
 void VF(Assign, Type)(VR(Type) v, Type* data, size_t size) {
   assert(v);
   if (VF(Capacity, Type)(v) < size) {
