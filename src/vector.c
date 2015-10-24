@@ -121,6 +121,13 @@ void VF(Clear, Type)(VR(Type) v) {
     VF(Pop, Type)(v);
   }
 }
+void VF(Push, Type)(VR(Type) v, Type* value) {
+  assert(v && value);
+  VF(Reserve, Type)(v, VF(Size, Type)(v) + 1);
+  GV(Type).ctor_(v->finish_);
+  GV(Type).copy_(v->finish_, value);
+  ++v->finish_;
+}
 void VF(Pop, Type)(VR(Type) v) {
   assert(v);
   --v->finish_;

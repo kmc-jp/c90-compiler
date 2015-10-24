@@ -71,6 +71,8 @@ void VF(Reserve, Type)(VR(Type) v, size_t size);
 size_t VF(Capacity, Type)(VR(Type) v);
 /* clear */
 void VF(Clear, Type)(VR(Type) v);
+/* push_back */
+void VF(Push, Type)(VR(Type) v, Type* value);
 /* pop_back */
 /* calling pop_back on empty vector is undefined */
 void VF(Pop, Type)(VR(Type) v);
