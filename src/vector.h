@@ -59,6 +59,8 @@ void VF(Assign, Type)(VR(Type) v, Type* data, size_t size);
 Type* VF(Data, Type)(VR(Type) v);
 /* begin */
 Type* VF(Begin, Type)(VR(Type) v);
+/* end */
+Type* VF(End, Type)(VR(Type) v);
 /* empty */
 bool VF(Empty, Type)(VR(Type) v);
 /* size */

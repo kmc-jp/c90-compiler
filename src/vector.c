@@ -86,6 +86,10 @@ Type* VF(Begin, Type)(VR(Type) v) {
   assert(v);
   return v->start_;
 }
+Type* VF(End, Type)(VR(Type) v) {
+  assert(v);
+  return v->finish_;
+}
 bool VF(Empty, Type)(VR(Type) v) {
   assert(v);
   return v->start_ == v->finish_;
