@@ -133,8 +133,14 @@ size_t VF(Capacity, Type)(VR(Type) v) {
 }
 void VF(Clear, Type)(VR(Type) v) {
   assert(v);
-  while (!VF(Empty, Type)) {
-    VF(Pop, Type)(v);
+  {
+    Type* const begin = VF(Begin, Type)(v);
+    Type* const end = VF(End, Type)(v);
+    Type* it = begin;
+    v->finish_ = begin;
+    for (; it != end; ++it) {
+      GV(Type).dtor_(it);
+    }
   }
 }
 void VF(Push, Type)(VR(Type) v, Type* value) {
