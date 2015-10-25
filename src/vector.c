@@ -207,3 +207,29 @@ void VF(Pop, Type)(VR(Type) v) {
   --v->finish_;
   GV(Type).dtor_(v->finish_);
 }
+void VF(Resize, Type)(VR(Type) v, size_t size, Type* value) {
+  assert(v);
+  {
+    const size_t old_size = VF(Size, Type)(v);
+    if (old_size < size) {
+      assert(value);
+      VF(Reserve, Type)(v, size);
+    }
+    {
+      Type* const begin = VF(Begin, Type)(v);
+      Type* const end = VF(End, Type)(v);
+      Type* it = NULL;
+      v->finish_ = begin + size;
+      if (old_size < size) {
+        for (it = end; it != v->finish_; ++it) {
+          GV(Type).ctor_(it);
+          GV(Type).copy_(it, value);
+        }
+      } else {
+        for (it = v->finish_; it != end; ++it) {
+          GV(Type).dtor_(it);
+        }
+      }
+    }
+  }
+}

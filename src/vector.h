@@ -82,5 +82,8 @@ void VF(Push, Type)(VR(Type) v, Type* value);
 /* pop_back */
 /* calling pop_back on empty vector is undefined */
 void VF(Pop, Type)(VR(Type) v);
+/* resize */
+/* append copies of 'value' when extension */
+void VF(Resize, Type)(VR(Type) v, size_t size, Type* value);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
