@@ -111,16 +111,20 @@ size_t VF(Size, Type)(VR(Type) v) {
   return v->finish_ - v->start_;
 }
 void VF(Reserve, Type)(VR(Type) v, size_t size) {
+  assert(v);
   if (VF(Capacity, Type)(v) < size) {
-    const size_t v_size = VF(Size, Type)(v);
-    struct V(Type) buffer = *v;
-    VR(Type) new_v = VF(Ctor, Type)();
-    VF(Alloc, Type)(new_v, size);
-    new_v->finish_ =
-        VF(New, Type)(VF(Data, Type)(new_v), VF(Data, Type)(v), v_size);
-    *v = *new_v;
-    new_v = &buffer;
-    VF(Dtor, Type)(new_v);
+    const size_t old_size = VF(Size, Type)(v);
+    if (old_size == 0) {
+      free(v->start_);
+      VF(New, Type)(v, size, NULL, 0);
+    } else {
+      struct V(Type) tmp = *v;
+      VR(Type) buffer = VF(Ctor, Type)();
+      VF(New, Type)(buffer, size, VF(Data, Type)(v), old_size);
+      *v = *buffer;
+      buffer = &tmp;
+      VF(Dtor, Type)(&buffer);
+    }
   }
 }
 size_t VF(Capacity, Type)(VR(Type) v) {
