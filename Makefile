@@ -5,7 +5,7 @@ TESTSUFFIX = .out
 TESTSDIR = tests
 TESTS = $(wildcard $(TESTSDIR)/*/*.c)
 TESTS_OBJ = $(TESTS:.c=$(TESTSUFFIX))
-TESTS_CFLAGS ?= -ansi $(CFLAGS)
+TESTS_CFLAGS ?= -ansi -Wpedantic $(CFLAGS)
 .SUFFIXES: $(TESTSUFFIX)
 
 RM = rm -f
