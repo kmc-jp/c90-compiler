@@ -50,41 +50,41 @@ typedef struct V(Type)* VR(Type);
 /* constructor */
 VR(Type) VF(Ctor, Type)(void);
 /* destructor */
-void VF(Dtor, Type)(VR(Type)* pv);
+void VF(Dtor, Type)(VR(Type)* pthis);
 /* operator= */
-void VF(Copy, Type)(VR(Type) dst, VR(Type) src);
+void VF(Copy, Type)(VR(Type) this, VR(Type) src);
 /* assign */
-void VF(Assign, Type)(VR(Type) v, Type* data, size_t count);
+void VF(Assign, Type)(VR(Type) this, Type* data, size_t count);
 /* data */
-Type* VF(Data, Type)(VR(Type) v);
+Type* VF(Data, Type)(VR(Type) this);
 /* begin */
-Type* VF(Begin, Type)(VR(Type) v);
+Type* VF(Begin, Type)(VR(Type) this);
 /* end */
-Type* VF(End, Type)(VR(Type) v);
+Type* VF(End, Type)(VR(Type) this);
 /* empty */
-bool VF(Empty, Type)(VR(Type) v);
+bool VF(Empty, Type)(VR(Type) this);
 /* size */
-size_t VF(Size, Type)(VR(Type) v);
+size_t VF(Size, Type)(VR(Type) this);
 /* reserve */
-void VF(Reserve, Type)(VR(Type) v, size_t size);
+void VF(Reserve, Type)(VR(Type) this, size_t size);
 /* capacity */
-size_t VF(Capacity, Type)(VR(Type) v);
+size_t VF(Capacity, Type)(VR(Type) this);
 /* clear */
-void VF(Clear, Type)(VR(Type) v);
+void VF(Clear, Type)(VR(Type) this);
 /* insert */
 /* insert 'count' elements in data to the position indexed by 'pos' */
-void VF(Insert, Type)(VR(Type) v, size_t pos, Type* data, size_t count);
+void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count);
 /* erase */
 /* remove consecutive 'count' elements whose head is indexed by 'pos' */
-void VF(Erase, Type)(VR(Type) v, size_t pos, size_t count);
+void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count);
 /* push_back */
-void VF(Push, Type)(VR(Type) v, Type* value);
+void VF(Push, Type)(VR(Type) this, Type* value);
 /* pop_back */
 /* calling pop_back on empty vector is undefined */
-void VF(Pop, Type)(VR(Type) v);
+void VF(Pop, Type)(VR(Type) this);
 /* resize */
 /* append copies of 'value' when extension */
-void VF(Resize, Type)(VR(Type) v, size_t size, Type* value);
+void VF(Resize, Type)(VR(Type) this, size_t size, Type* value);
 /* swap */
 void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);
 
