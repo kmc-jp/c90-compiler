@@ -54,7 +54,7 @@ void VF(Dtor, Type)(VR(Type)* pv);
 /* operator= */
 void VF(Copy, Type)(VR(Type) dst, VR(Type) src);
 /* assign */
-void VF(Assign, Type)(VR(Type) v, Type* data, size_t size);
+void VF(Assign, Type)(VR(Type) v, Type* data, size_t count);
 /* data */
 Type* VF(Data, Type)(VR(Type) v);
 /* begin */

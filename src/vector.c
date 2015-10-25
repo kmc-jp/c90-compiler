@@ -57,15 +57,38 @@ void VF(Copy, Type)(VR(Type) dst, VR(Type) src) {
   assert(dst && src);
   VF(Assign, Type)(dst, VF(Data, Type)(src), VF(Size, Type)(src));
 }
-void VF(Assign, Type)(VR(Type) v, Type* data, size_t size) {
+void VF(Assign, Type)(VR(Type) v, Type* data, size_t count) {
   assert(v);
-  if (VF(Capacity, Type)(v) < size) {
-    VF(Delete, Type)(v);
-    VF(Alloc, Type)(v, size);
-  } else {
-    VF(Clear, Type)(v);
+  if (count == 0) {
+    return;
   }
-  v->finish_ = VF(New, Type)(VF(Data, Type)(v), data, size);
+  assert(data);
+  if (VF(Capacity, Type)(v) < count) {
+    VF(Clear, Type)(v);
+    VF(Reserve, Type)(v, count);
+  }
+  {
+    const size_t size = VF(Size, Type)(v);
+    Type* const begin = VF(Begin, Type)(v);
+    Type* const end = VF(End, Type)(v);
+    Type* it = begin;
+    v->finish_ = begin + count;
+    if (count < size) {
+      for (; it != v->finish_; ++it, ++data) {
+        GV(Type).copy_(it, data);
+      }
+      for (; it != end; ++it) {
+        GV(Type).dtor_(it);
+      }
+    } else {
+      for (it = end; it != v->finish_; ++it) {
+        GV(Type).ctor_(it);
+      }
+      for (it = begin; it != v->finish_; ++it, ++data) {
+        GV(Type).copy_(it, data);
+      }
+    }
+  }
 }
 Type* VF(Data, Type)(VR(Type) v) {
   assert(v);
