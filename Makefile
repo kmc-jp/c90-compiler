@@ -3,7 +3,7 @@ CFLAGS ?= -Wall -Wextra -O2
 
 TESTSUFFIX = .out
 TESTSDIR = tests
-TESTS = $(wildcard $(TESTSDIR)/*.c)
+TESTS = $(wildcard $(TESTSDIR)/*/*.c)
 TESTS_OBJ = $(TESTS:.c=$(TESTSUFFIX))
 TESTS_CFLAGS ?= -ansi $(CFLAGS)
 .SUFFIXES: $(TESTSUFFIX)
