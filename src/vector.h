@@ -74,6 +74,9 @@ void VF(Clear, Type)(VR(Type) v);
 /* insert */
 /* insert 'count' elements in data to the position indexed by 'pos' */
 void VF(Insert, Type)(VR(Type) v, size_t pos, Type* data, size_t count);
+/* erase */
+/* remove consecutive 'count' elements whose head is indexed by 'pos' */
+void VF(Erase, Type)(VR(Type) v, size_t pos, size_t count);
 /* push_back */
 void VF(Push, Type)(VR(Type) v, Type* value);
 /* pop_back */
