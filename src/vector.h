@@ -88,4 +88,7 @@ void VF(Resize, Type)(VR(Type) this, size_t size, Type* value);
 /* swap */
 void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);
 
+/* size <= capacity && capacity == pow(2, n) */
+size_t EnoughCapacity(size_t size);
+
 #endif  /* KMC_C89_COMPILER_VECTOR_H */

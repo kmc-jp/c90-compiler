@@ -2,15 +2,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-/* size <= capacity && capacity == pow(2, n) */
-size_t EnoughCapacity(size_t size) {
-  size_t capacity = 1;
-  while (capacity < size) {
-    capacity *= 2;
-  }
-  return capacity;
-}
-
 struct VM(Type) GV(Type);
 
 void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
@@ -240,4 +231,12 @@ void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs) {
     *lhs = *rhs;
     *rhs = tmp;
   }
+}
+
+size_t EnoughCapacity(size_t size) {
+  size_t capacity = 1;
+  while (capacity < size) {
+    capacity *= 2;
+  }
+  return capacity;
 }
