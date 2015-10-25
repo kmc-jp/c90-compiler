@@ -85,5 +85,7 @@ void VF(Pop, Type)(VR(Type) v);
 /* resize */
 /* append copies of 'value' when extension */
 void VF(Resize, Type)(VR(Type) v, size_t size, Type* value);
+/* swap */
+void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */

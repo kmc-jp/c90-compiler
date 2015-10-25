@@ -233,3 +233,11 @@ void VF(Resize, Type)(VR(Type) v, size_t size, Type* value) {
     }
   }
 }
+void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs) {
+  assert(lhs && rhs);
+  {
+    struct V(Type) tmp = *lhs;
+    *lhs = *rhs;
+    *rhs = tmp;
+  }
+}
