@@ -79,7 +79,8 @@ VR(Type) VF(Ctor, Type)(void) {
 }
 void VF(Dtor, Type)(VR(Type)* pthis) {
   assert(pthis && *pthis);
-  VF(Delete, Type)(*pthis);
+  VF(Clear, Type)(*pthis);
+  VF(Free, Type)(*pthis);
   free(*pthis);
   *pthis = NULL;
 }
