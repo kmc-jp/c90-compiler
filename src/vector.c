@@ -101,8 +101,7 @@ void VF(Assign, Type)(VR(Type) this, Type* data, size_t count) {
   {
     Type* const begin = VF(Begin, Type)(this);
     Type* const end = VF(End, Type)(this);
-    Type* const new_end = begin + count;
-    this->finish_ = new_end;
+    Type* const new_end = VF(SetEnd, Type)(this, begin + count);
     if (count < VF(Size, Type)(this)) {
       VF(RangeCopy, Type)(begin, new_end, data);
       VF(RangeDtor, Type)(new_end, end);
@@ -156,7 +155,7 @@ void VF(Clear, Type)(VR(Type) this) {
   {
     Type* const begin = VF(Begin, Type)(this);
     Type* const end = VF(End, Type)(this);
-    this->finish_ = begin;
+    VF(SetEnd, Type)(this, begin);
     GV(RangeDtor, Type)(begin, end);
   }
 }
@@ -170,10 +169,9 @@ void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count) {
     {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
-      Type* const new_end = end + count;
+      Type* const new_end = VF(SetEnd, Type)(this, end + count);
       Type* const head = begin + pos;
       Type* const tail = head + count;
-      this->finish_ = new_end;
       VF(RangeCtor, Type)(end, new_end);
       VF(MoveUp, Type)(head, end, count);
       GV(RangeCopy, Type)(head, tail, data);
@@ -188,10 +186,9 @@ void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count) {
     {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
-      Type* const new_end = end - count;
+      Type* const new_end = VF(SetEnd, Type)(this, end - count);
       Type* const head = begin + pos;
       Type* const tail = head + count;
-      this->finish_ = new_end;
       VF(MoveDown, Type)(tail, end, count);
       VF(RangeDtor, Type)(new_end, end);
     }
@@ -202,8 +199,7 @@ void VF(Push, Type)(VR(Type) this, Type* value) {
   VF(Reserve, Type)(this, VF(Size, Type)(this) + 1);
   {
     Type* const end = VF(End, Type)(this);
-    Type* const new_end = end + 1;
-    this->finish_ = new_end;
+    Type* const new_end = VF(SetEnd, Type)(this, end + 1);
     VF(RangeCtorCopy, Type)(end, new_end, value);
   }
 }
@@ -211,8 +207,7 @@ void VF(Pop, Type)(VR(Type) this) {
   assert(this);
   {
     Type* const end = VF(End, Type)(this);
-    Type* const new_end = end - 1;
-    this->finish_ = new_end;
+    Type* const new_end = VF(SetEnd, Type)(this, end - 1);
     VF(RangeDtor, Type)(new_end, end);
   }
 }
@@ -227,8 +222,7 @@ void VF(Resize, Type)(VR(Type) this, size_t size, Type* value) {
     {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
-      Type* const new_end = begin + size;
-      this->finish_ = new_end;
+      Type* const new_end = VF(SetEnd, Type)(this, begin + size);
       if (old_size < size) {
         VF(RangeCtorFill, Type)(end, new_end, value);
       } else {
