@@ -200,9 +200,12 @@ void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count) {
 void VF(Push, Type)(VR(Type) this, Type* value) {
   assert(this && value);
   VF(Reserve, Type)(this, VF(Size, Type)(this) + 1);
-  GV(Type).ctor_(this->finish_);
-  GV(Type).copy_(this->finish_, value);
-  ++this->finish_;
+  {
+    Type* const end = VF(End, Type)(this);
+    Type* const new_end = end + 1;
+    this->finish_ = new_end;
+    VF(RangeCtorCopy, Type)(end, new_end, value);
+  }
 }
 void VF(Pop, Type)(VR(Type) this) {
   assert(this);
