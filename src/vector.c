@@ -156,7 +156,7 @@ void VF(Clear, Type)(VR(Type) this) {
     Type* const begin = VF(Begin, Type)(this);
     Type* const end = VF(End, Type)(this);
     VF(SetEnd, Type)(this, begin);
-    GV(RangeDtor, Type)(begin, end);
+    VF(RangeDtor, Type)(begin, end);
   }
 }
 void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count) {
@@ -174,7 +174,7 @@ void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count) {
       Type* const tail = head + count;
       VF(RangeCtor, Type)(end, new_end);
       VF(MoveUp, Type)(head, end, count);
-      GV(RangeCopy, Type)(head, tail, data);
+      VF(RangeCopy, Type)(head, tail, data);
     }
   }
 }
