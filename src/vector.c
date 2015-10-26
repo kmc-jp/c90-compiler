@@ -12,6 +12,9 @@ void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
   GV(Type).copy_ = copy;
 }
 
+void VF(Free, Type)(VR(Type) this) {
+  free(this->start_);
+}
 void VF(Nullify, Type)(VR(Type) this) {
   this->start_ = this->finish_ = this->end_ = NULL;
 }
