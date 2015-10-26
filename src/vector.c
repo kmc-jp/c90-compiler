@@ -156,11 +156,8 @@ void VF(Clear, Type)(VR(Type) this) {
   {
     Type* const begin = VF(Begin, Type)(this);
     Type* const end = VF(End, Type)(this);
-    Type* it = begin;
     this->finish_ = begin;
-    for (; it != end; ++it) {
-      GV(Type).dtor_(it);
-    }
+    GV(RangeDtor, Type)(begin, end);
   }
 }
 void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count) {
