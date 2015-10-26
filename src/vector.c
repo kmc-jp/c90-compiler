@@ -38,6 +38,33 @@ void VF(MoveDown, Type)(Type* head, Type* tail, size_t count) {
     }
   }
 }
+void VF(RangeCtorCopy, Type)(Type* head, Type* tail, Type* data) {
+  for (; head != tail; ++head, ++data) {
+    GV(Type).ctor_(head);
+    GV(Type).copy_(head, data);
+  }
+}
+void VF(RangeCtorFill, Type)(Type* head, Type* tail, Type* data) {
+  for (; head != tail; ++head) {
+    GV(Type).ctor_(head);
+    GV(Type).copy_(head, data);
+  }
+}
+void VF(RangeCtor, Type)(Type* head, Type* tail) {
+  for (; head != tail; ++head) {
+    GV(Type).ctor_(head);
+  }
+}
+void VF(RangeDtor, Type)(Type* head, Type* tail) {
+  for (; head != tail; ++head) {
+    GV(Type).dtor_(head);
+  }
+}
+void VF(RangeCopy, Type)(Type* head, Type* tail, Type* data) {
+  for (; head != tail; ++head, ++data) {
+    GV(Type).copy_(head, data);
+  }
+}
 /* this->start_ must not be allocated */
 void VF(New, Type)(VR(Type) this, size_t size, Type* data, size_t count) {
   const size_t capacity = EnoughCapacity(size);
