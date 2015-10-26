@@ -20,6 +20,24 @@ void VF(Delete, Type)(VR(Type) this) {
   free(this->start_);
   VF(Nullify, Type)(this);
 }
+void VF(MoveUp, Type)(Type* head, Type* tail, size_t count) {
+  if (0 < count) {
+    Type* src = tail;
+    Type* dst = tail + count;
+    for (; src != head; --dst, --src) {
+      GV(Type).copy_(dst - 1, src - 1);
+    }
+  }
+}
+void VF(MoveDown, Type)(Type* head, Type* tail, size_t count) {
+  if (0 < count) {
+    Type* src = head;
+    Type* dst = head - count;
+    for (; src != tail; ++dst, ++src) {
+      GV(Type).copy_(dst, src);
+    }
+  }
+}
 /* this->start_ must not be allocated */
 void VF(New, Type)(VR(Type) this, size_t size, Type* data, size_t count) {
   const size_t capacity = EnoughCapacity(size);
