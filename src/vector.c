@@ -138,14 +138,12 @@ void VF(Reserve, Type)(VR(Type) this, size_t size) {
   if (VF(Capacity, Type)(this) < size) {
     const size_t old_size = VF(Size, Type)(this);
     if (old_size == 0) {
-      free(this->start_);
+      VF(Free, Type)(this);
       VF(New, Type)(this, size, NULL, 0);
     } else {
-      struct V(Type) tmp = *this;
       VR(Type) buffer = VF(Ctor, Type)();
       VF(New, Type)(buffer, size, VF(Data, Type)(this), old_size);
-      *this = *buffer;
-      buffer = &tmp;
+      VF(Swap, Type)(this, buffer);
       VF(Dtor, Type)(&buffer);
     }
   }
