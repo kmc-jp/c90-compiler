@@ -227,17 +227,12 @@ void VF(Resize, Type)(VR(Type) this, size_t size, Type* value) {
     {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
-      Type* it = NULL;
-      this->finish_ = begin + size;
+      Type* const new_end = begin + size;
+      this->finish_ = new_end;
       if (old_size < size) {
-        for (it = end; it != this->finish_; ++it) {
-          GV(Type).ctor_(it);
-          GV(Type).copy_(it, value);
-        }
+        VF(RangeCtorFill, Type)(end, new_end, value);
       } else {
-        for (it = this->finish_; it != end; ++it) {
-          GV(Type).dtor_(it);
-        }
+        VF(RangeDtor, Type)(new_end, end);
       }
     }
   }
