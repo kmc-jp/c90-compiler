@@ -209,8 +209,12 @@ void VF(Push, Type)(VR(Type) this, Type* value) {
 }
 void VF(Pop, Type)(VR(Type) this) {
   assert(this);
-  --this->finish_;
-  GV(Type).dtor_(this->finish_);
+  {
+    Type* const end = VF(End, Type)(this);
+    Type* const new_end = end - 1;
+    this->finish_ = new_end;
+    VF(RangeDtor, Type)(new_end, end);
+  }
 }
 void VF(Resize, Type)(VR(Type) this, size_t size, Type* value) {
   assert(this);
