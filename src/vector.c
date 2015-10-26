@@ -185,20 +185,15 @@ void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count) {
   {
     const size_t size = VF(Size, Type)(this);
     assert(pos + count <= size);
-    if (0 < count) {
+    {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
+      Type* const new_end = end - count;
       Type* const head = begin + pos;
       Type* const tail = head + count;
-      Type* it = head;
-      Type* src = tail;
-      this->finish_ = end - count;
-      for (; it != this->finish_; ++it, ++src) {
-        GV(Type).copy_(it, src);
-      }
-      for (; it != end; ++it) {
-        GV(Type).dtor_(it);
-      }
+      this->finish_ = new_end;
+      VF(MoveDown, Type)(tail, end, count);
+      VF(RangeDtor, Type)(new_end, end);
     }
   }
 }
