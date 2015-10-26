@@ -91,34 +91,22 @@ void VF(Copy, Type)(VR(Type) this, VR(Type) src) {
 }
 void VF(Assign, Type)(VR(Type) this, Type* data, size_t count) {
   assert(this);
-  if (count == 0) {
-    return;
-  }
-  assert(data);
+  assert(count == 0 || data);
   if (VF(Capacity, Type)(this) < count) {
     VF(Clear, Type)(this);
     VF(Reserve, Type)(this, count);
   }
   {
-    const size_t size = VF(Size, Type)(this);
     Type* const begin = VF(Begin, Type)(this);
     Type* const end = VF(End, Type)(this);
-    Type* it = begin;
-    this->finish_ = begin + count;
-    if (count < size) {
-      for (; it != this->finish_; ++it, ++data) {
-        GV(Type).copy_(it, data);
-      }
-      for (; it != end; ++it) {
-        GV(Type).dtor_(it);
-      }
+    Type* const new_end = begin + count;
+    this->finish_ = new_end;
+    if (count < VF(Size, Type)(this)) {
+      VF(RangeCopy, Type)(begin, new_end, data);
+      VF(RangeDtor, Type)(new_end, end);
     } else {
-      for (it = end; it != this->finish_; ++it) {
-        GV(Type).ctor_(it);
-      }
-      for (it = begin; it != this->finish_; ++it, ++data) {
-        GV(Type).copy_(it, data);
-      }
+      VF(RangeCtor, Type)(end, new_end);
+      VF(RangeCopy, Type)(begin, new_end, data);
     }
   }
 }
