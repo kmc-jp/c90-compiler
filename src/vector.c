@@ -68,14 +68,10 @@ void VF(RangeCopy, Type)(Type* head, Type* tail, Type* data) {
 /* this->start_ must not be allocated */
 void VF(New, Type)(VR(Type) this, size_t size, Type* data, size_t count) {
   const size_t capacity = EnoughCapacity(size);
-  Type* it = (Type*)malloc(sizeof(Type) * capacity);
-  this->start_ = it;
-  this->finish_ = it + count;
-  this->end_ = it + capacity;
-  for (; it != this->finish_; ++it, ++data) {
-    GV(Type).ctor_(it);
-    GV(Type).copy_(it, data);
-  }
+  this->start_ = (Type*)malloc(sizeof(Type) * capacity);
+  this->finish_ = this->start_ + count;
+  this->end_ = this->start_ + capacity;
+  VF(RangeCtorCopy, Type)(this->start_, this->finish_, data);
 }
 
 VR(Type) VF(Ctor, Type)(void) {
