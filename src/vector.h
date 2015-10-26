@@ -20,73 +20,73 @@ typedef signed char bool;
 #define GV(type) CONCAT(global_, VM(type))
 #define VF(function, type) T(CONCAT(Vector, function), type)
 
-typedef void (*T(CtorMethod, Type))(Type* value);
-typedef void (*T(DtorMethod, Type))(Type* value);
-typedef void (*T(CopyMethod, Type))(Type* dst, Type* src);
-
-/* special member functions */
-struct VM(Type) {
-  T(CtorMethod, Type) ctor_;
-  T(DtorMethod, Type) dtor_;
-  T(CopyMethod, Type) copy_;
-};
-extern struct VM(Type) GV(Type);
-
-/* first of all, you must initialize special member functions */
-void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,
-                               T(DtorMethod, Type) dtor,
-                               T(CopyMethod, Type) copy);
-
-/* vector of Type */
-struct V(Type) {
-  Type* start_;  /* first data */
-  Type* finish_;  /* last data */
-  Type* end_;  /* end of storage */
-};
-
-/* reference to vector of Type */
-typedef struct V(Type)* VR(Type);
-
-/* constructor */
-VR(Type) VF(Ctor, Type)(void);
-/* destructor */
-void VF(Dtor, Type)(VR(Type)* pthis);
-/* operator= */
-void VF(Copy, Type)(VR(Type) this, VR(Type) src);
-/* assign */
-void VF(Assign, Type)(VR(Type) this, Type* data, size_t count);
-/* data */
-Type* VF(Data, Type)(VR(Type) this);
-/* begin */
-Type* VF(Begin, Type)(VR(Type) this);
-/* end */
-Type* VF(End, Type)(VR(Type) this);
-/* empty */
-bool VF(Empty, Type)(VR(Type) this);
-/* size */
-size_t VF(Size, Type)(VR(Type) this);
-/* reserve */
-void VF(Reserve, Type)(VR(Type) this, size_t size);
-/* capacity */
-size_t VF(Capacity, Type)(VR(Type) this);
-/* clear */
-void VF(Clear, Type)(VR(Type) this);
-/* insert */
-/* insert 'count' elements in data to the position indexed by 'pos' */
-void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count);
-/* erase */
-/* remove consecutive 'count' elements whose head is indexed by 'pos' */
-void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count);
-/* push_back */
-void VF(Push, Type)(VR(Type) this, Type* value);
-/* pop_back */
-/* calling pop_back on empty vector is undefined */
-void VF(Pop, Type)(VR(Type) this);
-/* resize */
-/* append copies of 'value' when extension */
-void VF(Resize, Type)(VR(Type) this, size_t size, Type* value);
-/* swap */
-void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);
+#define DECLARE_VECTOR(Type)                                            \
+  typedef void (*T(CtorMethod, Type))(Type* value);                     \
+  typedef void (*T(DtorMethod, Type))(Type* value);                     \
+  typedef void (*T(CopyMethod, Type))(Type* dst, Type* src);            \
+                                                                        \
+  /* special member functions */                                        \
+  struct VM(Type) {                                                     \
+    T(CtorMethod, Type) ctor_;                                          \
+    T(DtorMethod, Type) dtor_;                                          \
+    T(CopyMethod, Type) copy_;                                          \
+  };                                                                    \
+  extern struct VM(Type) GV(Type);                                      \
+                                                                        \
+  /* first of all, you must initialize special member functions */      \
+  void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,              \
+                                 T(DtorMethod, Type) dtor,              \
+                                 T(CopyMethod, Type) copy);             \
+                                                                        \
+  /* vector of Type */                                                  \
+  struct V(Type) {                                                      \
+    Type* start_;  /* first data */                                     \
+    Type* finish_;  /* last data */                                     \
+    Type* end_;  /* end of storage */                                   \
+  };                                                                    \
+  /* reference to vector of Type */                                     \
+  typedef struct V(Type)* VR(Type);                                     \
+                                                                        \
+  /* constructor */                                                     \
+  VR(Type) VF(Ctor, Type)(void);                                        \
+  /* destructor */                                                      \
+  void VF(Dtor, Type)(VR(Type)* pthis);                                 \
+  /* operator= */                                                       \
+  void VF(Copy, Type)(VR(Type) this, VR(Type) src);                     \
+  /* assign */                                                          \
+  void VF(Assign, Type)(VR(Type) this, Type* data, size_t count);       \
+  /* data */                                                            \
+  Type* VF(Data, Type)(VR(Type) this);                                  \
+  /* begin */                                                           \
+  Type* VF(Begin, Type)(VR(Type) this);                                 \
+  /* end */                                                             \
+  Type* VF(End, Type)(VR(Type) this);                                   \
+  /* empty */                                                           \
+  bool VF(Empty, Type)(VR(Type) this);                                  \
+  /* size */                                                            \
+  size_t VF(Size, Type)(VR(Type) this);                                 \
+  /* reserve */                                                         \
+  void VF(Reserve, Type)(VR(Type) this, size_t size);                   \
+  /* capacity */                                                        \
+  size_t VF(Capacity, Type)(VR(Type) this);                             \
+  /* clear */                                                           \
+  void VF(Clear, Type)(VR(Type) this);                                  \
+  /* insert */                                                          \
+  /* insert 'count' elements in data to the position indexed by 'pos' */ \
+  void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count); \
+  /* erase */                                                           \
+  /* remove consecutive 'count' elements whose head is indexed by 'pos' */ \
+  void VF(Erase, Type)(VR(Type) this, size_t pos, size_t count);        \
+  /* push_back */                                                       \
+  void VF(Push, Type)(VR(Type) this, Type* value);                      \
+  /* pop_back */                                                        \
+  /* calling pop_back on empty vector is undefined */                   \
+  void VF(Pop, Type)(VR(Type) this);                                    \
+  /* resize */                                                          \
+  /* append copies of 'value' when extension */                         \
+  void VF(Resize, Type)(VR(Type) this, size_t size, Type* value);       \
+  /* swap */                                                            \
+  void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);                      \
 
 /* size <= capacity && capacity == pow(2, n) */
 size_t EnoughCapacity(size_t size);

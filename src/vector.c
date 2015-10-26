@@ -1,6 +1,4 @@
 #include "vector.h"
-#include <assert.h>
-#include <stdlib.h>
 
 struct VM(Type) GV(Type);
 
