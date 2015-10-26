@@ -18,6 +18,7 @@ typedef signed char bool;
 #define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
 #define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
 
+/* declare vector template prototypes */
 #define DECLARE_VECTOR(Type)                                            \
   typedef void (*TEMPLATE(Type, CtorMethod))(Type* value);              \
   typedef void (*TEMPLATE(Type, DtorMethod))(Type* value);              \
@@ -94,6 +95,7 @@ typedef signed char bool;
   void VECTORFUNC(Type, Swap)(VECTORREF(Type) lhs,                      \
                               VECTORREF(Type) rhs);                     \
 
+/* define vector template implementations */
 #define DEFINE_VECTOR(Type)                                             \
   struct TEMPLATE(Type, VectorMethods) VECTOR_GLOBAL(Type);             \
                                                                         \
