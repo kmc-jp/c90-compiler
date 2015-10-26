@@ -18,11 +18,6 @@ void VF(Free, Type)(VR(Type) this) {
 void VF(Nullify, Type)(VR(Type) this) {
   this->start_ = this->finish_ = this->end_ = NULL;
 }
-void VF(Delete, Type)(VR(Type) this) {
-  VF(Clear, Type)(this);
-  free(this->start_);
-  VF(Nullify, Type)(this);
-}
 void VF(MoveUp, Type)(Type* head, Type* tail, size_t count) {
   if (0 < count) {
     Type* src = tail;
