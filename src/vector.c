@@ -165,28 +165,18 @@ void VF(Insert, Type)(VR(Type) this, size_t pos, Type* data, size_t count) {
   {
     const size_t size = VF(Size, Type)(this);
     assert(pos <= size);
-    if (count == 0) {
-      return;
-    }
-    assert(data);
+    assert(count == 0 || data);
     VF(Reserve, Type)(this, size + count);
     {
       Type* const begin = VF(Begin, Type)(this);
       Type* const end = VF(End, Type)(this);
+      Type* const new_end = end + count;
       Type* const head = begin + pos;
       Type* const tail = head + count;
-      Type* it = end;
-      Type* src = end;
-      this->finish_ = end + count;
-      for (; it != this->finish_; ++it) {
-        GV(Type).ctor_(it);
-      }
-      for (; it != tail; --it, --src) {
-        GV(Type).copy_(it - 1, src - 1);
-      }
-      for (it = head; it != tail; ++it, ++data) {
-        GV(Type).copy_(it, data);
-      }
+      this->finish_ = new_end;
+      VF(RangeCtor, Type)(end, new_end);
+      VF(MoveUp, Type)(head, end, count);
+      GV(RangeCopy, Type)(head, tail, data);
     }
   }
 }
