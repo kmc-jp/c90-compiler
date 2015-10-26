@@ -11,30 +11,30 @@ typedef signed char bool;
 #define WITHBAR(x) CONCAT(x, _)
 
 /* template macro */
-#define T(identifier, type) CONCAT(WITHBAR(identifier), WITHBAR(type))
-#define V(type) T(Vector, type)
-#define VR(type) T(VectorRef, type)
-#define VM(type) T(VectorMethods, type)
+#define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
+#define V(type) TEMPLATE(type, Vector)
+#define VR(type) TEMPLATE(type, VectorRef)
+#define VM(type) TEMPLATE(type, VectorMethods)
 #define GV(type) CONCAT(global_, VM(type))
-#define VF(function, type) T(CONCAT(Vector, function), type)
+#define VF(function, type) TEMPLATE(type, CONCAT(Vector, function))
 
 #define DECLARE_VECTOR(Type)                                            \
-  typedef void (*T(CtorMethod, Type))(Type* value);                     \
-  typedef void (*T(DtorMethod, Type))(Type* value);                     \
-  typedef void (*T(CopyMethod, Type))(Type* dst, Type* src);            \
+  typedef void (*TEMPLATE(Type, CtorMethod))(Type* value);              \
+  typedef void (*TEMPLATE(Type, DtorMethod))(Type* value);              \
+  typedef void (*TEMPLATE(Type, CopyMethod))(Type* dst, Type* src);     \
                                                                         \
   /* special member functions */                                        \
   struct VM(Type) {                                                     \
-    T(CtorMethod, Type) ctor_;                                          \
-    T(DtorMethod, Type) dtor_;                                          \
-    T(CopyMethod, Type) copy_;                                          \
+    TEMPLATE(Type, CtorMethod) ctor_;                                   \
+    TEMPLATE(Type, DtorMethod) dtor_;                                   \
+    TEMPLATE(Type, CopyMethod) copy_;                                   \
   };                                                                    \
   extern struct VM(Type) GV(Type);                                      \
                                                                         \
   /* first of all, you must initialize special member functions */      \
-  void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,              \
-                                 T(DtorMethod, Type) dtor,              \
-                                 T(CopyMethod, Type) copy);             \
+  void VECTORFUNC(Initialize, Type)(TEMPLATE(Type, CtorMethod) ctor,    \
+                                    TEMPLATE(Type, DtorMethod) dtor,    \
+                                    TEMPLATE(Type, CopyMethod) copy);   \
                                                                         \
   /* vector of Type */                                                  \
   struct V(Type) {                                                      \
@@ -89,9 +89,10 @@ typedef signed char bool;
 #define DEFINE_VECTOR(Type)                                             \
   struct VM(Type) GV(Type);                                             \
                                                                         \
-  void T(VectorInitialize, Type)(T(CtorMethod, Type) ctor,              \
-                                 T(DtorMethod, Type) dtor,              \
-                                 T(CopyMethod, Type) copy) {            \
+  void TEMPLATE(Type, VectorInitialize)(                                \
+      TEMPLATE(Type, CtorMethod) ctor,                                  \
+      TEMPLATE(Type, DtorMethod) dtor,                                  \
+      TEMPLATE(Type, CopyMethod) copy) {                                \
     GV(Type).ctor_ = ctor;                                              \
     GV(Type).dtor_ = dtor;                                              \
     GV(Type).copy_ = copy;                                              \
