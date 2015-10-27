@@ -9,9 +9,10 @@ typedef signed char bool;
 #define CONCATENATE(x, y) x ## y
 #define CONCAT(x, y) CONCATENATE(x, y)
 #define WITHBAR(x) CONCAT(x, _)
+#define TBRACKET(x) CONCAT(T, CONCAT(x, T))
 
 /* template macro */
-#define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
+#define TEMPLATE(type, identifier) CONCAT(identifier, TBRACKET(type))
 #define VECTOR(type) TEMPLATE(type, Vector)
 #define VECTORREF(type) TEMPLATE(type, VectorRef)
 #define VECTORFUNC(type, function) TEMPLATE(type, CONCAT(Vector, function))
