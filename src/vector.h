@@ -14,7 +14,7 @@ typedef signed char bool;
 #define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
 #define VECTOR(type) TEMPLATE(type, Vector)
 #define VECTORREF(type) TEMPLATE(type, VectorRef)
-#define VECTORFUNC(type, function) TEMPLATE(CONCAT(Vector, function), type)
+#define VECTORFUNC(type, function) TEMPLATE(type, CONCAT(Vector, function))
 #define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
 #define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
 
