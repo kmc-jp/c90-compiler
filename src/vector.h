@@ -14,8 +14,7 @@ typedef signed char bool;
 #define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
 #define VECTOR(type) TEMPLATE(type, Vector)
 #define VR(type) TEMPLATE(type, VectorRef)
-#define VM(type) TEMPLATE(type, VectorMethods)
-#define GV(type) CONCAT(global_, VM(type))
+#define GV(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
 #define VF(function, type) TEMPLATE(type, CONCAT(Vector, function))
 
 #define DECLARE_VECTOR(Type)                                            \
@@ -24,12 +23,12 @@ typedef signed char bool;
   typedef void (*TEMPLATE(Type, CopyMethod))(Type* dst, Type* src);     \
                                                                         \
   /* special member functions */                                        \
-  struct VM(Type) {                                                     \
+  struct TEMPLATE(Type, VectorMethods) {                                \
     TEMPLATE(Type, CtorMethod) ctor_;                                   \
     TEMPLATE(Type, DtorMethod) dtor_;                                   \
     TEMPLATE(Type, CopyMethod) copy_;                                   \
   };                                                                    \
-  extern struct VM(Type) GV(Type);                                      \
+  extern struct TEMPLATE(Type, VectorMethods) GV(Type);                  \
                                                                         \
   /* first of all, you must initialize special member functions */      \
   void VECTORFUNC(Initialize, Type)(TEMPLATE(Type, CtorMethod) ctor,    \
@@ -87,7 +86,7 @@ typedef signed char bool;
   void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);                      \
 
 #define DEFINE_VECTOR(Type)                                             \
-  struct VM(Type) GV(Type);                                             \
+  struct TEMPLATE(Type, VectorMethods) GV(Type);                        \
                                                                         \
   void TEMPLATE(Type, VectorInitialize)(                                \
       TEMPLATE(Type, CtorMethod) ctor,                                  \
