@@ -14,7 +14,7 @@ typedef signed char bool;
 #define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
 #define VECTOR(type) TEMPLATE(type, Vector)
 #define VR(type) TEMPLATE(type, VectorRef)
-#define GV(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
+#define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
 #define VF(function, type) TEMPLATE(type, CONCAT(Vector, function))
 
 #define DECLARE_VECTOR(Type)                                            \
@@ -28,7 +28,7 @@ typedef signed char bool;
     TEMPLATE(Type, DtorMethod) dtor_;                                   \
     TEMPLATE(Type, CopyMethod) copy_;                                   \
   };                                                                    \
-  extern struct TEMPLATE(Type, VectorMethods) GV(Type);                  \
+  extern struct TEMPLATE(Type, VectorMethods) VECTOR_GLOBAL(Type);      \
                                                                         \
   /* first of all, you must initialize special member functions */      \
   void VECTORFUNC(Initialize, Type)(TEMPLATE(Type, CtorMethod) ctor,    \
@@ -86,7 +86,7 @@ typedef signed char bool;
   void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs);                      \
 
 #define DEFINE_VECTOR(Type)                                             \
-  struct TEMPLATE(Type, VectorMethods) GV(Type);                        \
+  struct TEMPLATE(Type, VectorMethods) VECTOR_GLOBAL(Type);             \
                                                                         \
   void TEMPLATE(Type, VectorInitialize)(                                \
       TEMPLATE(Type, CtorMethod) ctor,                                  \
