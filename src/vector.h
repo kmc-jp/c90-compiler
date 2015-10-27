@@ -12,7 +12,7 @@ typedef signed char bool;
 
 /* template macro */
 #define TEMPLATE(type, identifier) CONCAT(WITHBAR(identifier), WITHBAR(type))
-#define V(type) TEMPLATE(type, Vector)
+#define VECTOR(type) TEMPLATE(type, Vector)
 #define VR(type) TEMPLATE(type, VectorRef)
 #define VM(type) TEMPLATE(type, VectorMethods)
 #define GV(type) CONCAT(global_, VM(type))
@@ -37,13 +37,13 @@ typedef signed char bool;
                                     TEMPLATE(Type, CopyMethod) copy);   \
                                                                         \
   /* vector of Type */                                                  \
-  struct V(Type) {                                                      \
+  struct VECTOR(Type) {                                                 \
     Type* start_;  /* first data */                                     \
     Type* finish_;  /* last data */                                     \
     Type* end_;  /* end of storage */                                   \
   };                                                                    \
   /* reference to vector of Type */                                     \
-  typedef struct V(Type)* VR(Type);                                     \
+  typedef struct VECTOR(Type)* VR(Type);                                \
                                                                         \
   /* constructor */                                                     \
   VR(Type) VF(Ctor, Type)(void);                                        \
@@ -162,7 +162,7 @@ typedef signed char bool;
   }                                                                     \
                                                                         \
   VR(Type) VF(Ctor, Type)(void) {                                       \
-    VR(Type) this = (VR(Type))malloc(sizeof(struct V(Type)));           \
+    VR(Type) this = (VR(Type))malloc(sizeof(struct VECTOR(Type)));      \
     VF(Nullify, Type)(this);                                            \
     return this;                                                        \
   }                                                                     \
@@ -320,7 +320,7 @@ typedef signed char bool;
   void VF(Swap, Type)(VR(Type) lhs, VR(Type) rhs) {                     \
     assert(lhs && rhs);                                                 \
     {                                                                   \
-      struct V(Type) tmp = *lhs;                                        \
+      struct VECTOR(Type) tmp = *lhs;                                   \
       *lhs = *rhs;                                                      \
       *rhs = tmp;                                                       \
     }                                                                   \
