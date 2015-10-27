@@ -10,6 +10,7 @@ typedef signed char bool;
 #define CONCAT(x, y) CONCATENATE(x, y)
 #define WITHBAR(x) CONCAT(x, _)
 #define TBRACKET(x) CONCAT(T, CONCAT(x, T))
+#define UNUSED(x) (void)(x)
 
 /* template macro */
 #define TEMPLATE(type, identifier) CONCAT(identifier, TBRACKET(type))
@@ -18,6 +19,8 @@ typedef signed char bool;
 #define VECTORFUNC(type, function) TEMPLATE(type, CONCAT(Vector, function))
 #define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
 #define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
+#define DEFAULT_METHOD(type, function)          \
+  TEMPLATE(type, CONCAT(default_, function))
 
 /* declare vector template prototypes */
 #define DECLARE_VECTOR(Type)                                            \
@@ -356,6 +359,28 @@ typedef signed char bool;
       *rhs = tmp;                                                       \
     }                                                                   \
   }                                                                     \
+
+/* default methods for built-in type */
+#define DECLARE_DEFAULT_METHODS(Type)                           \
+  void DEFAULT_METHOD(Type, ctor)(Type* value);                 \
+  void DEFAULT_METHOD(Type, dtor)(Type* value);                 \
+  void DEFAULT_METHOD(Type, copy)(Type* dst, Type* src);        \
+
+#define DEFINE_DEFAULT_METHODS(Type)                            \
+  void DEFAULT_METHOD(Type, ctor)(Type* value) {                \
+    *value = (Type)0;                                           \
+  }                                                             \
+  void DEFAULT_METHOD(Type, dtor)(Type* value) {                \
+    UNUSED(value);                                              \
+  }                                                             \
+  void DEFAULT_METHOD(Type, copy)(Type* dst, Type* src) {       \
+    *dst = *src;                                                \
+  }                                                             \
+
+#define INITIALIZE_DEFAULT_METHODS(Type)                        \
+  VECTORFUNC(Type, initialize)(DEFAULT_METHOD(Type, ctor),      \
+                               DEFAULT_METHOD(Type, dtor),      \
+                               DEFAULT_METHOD(Type, copy))      \
 
 /* size <= capacity && capacity == pow(2, n) */
 size_t enough_capacity(size_t size);
