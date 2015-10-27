@@ -21,6 +21,8 @@ typedef signed char bool;
 #define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
 #define DEFAULT_METHOD(type, function)          \
   TEMPLATE(type, CONCAT(default_, function))
+#define DEFAULT_VECTOR_METHOD(type, function)           \
+  TEMPLATE(type, CONCAT(default_vector_, function))
 
 /* declare vector template prototypes */
 #define DECLARE_VECTOR(Type)                                            \
@@ -381,6 +383,31 @@ typedef signed char bool;
   VECTORFUNC(Type, initialize)(DEFAULT_METHOD(Type, ctor),      \
                                DEFAULT_METHOD(Type, dtor),      \
                                DEFAULT_METHOD(Type, copy))      \
+
+/* default methods for vector type */
+#define DECLARE_DEFAULT_VECTOR_METHODS(Type)                            \
+  void DEFAULT_VECTOR_METHOD(Type, ctor)(VECTORREF(Type)* value);       \
+  void DEFAULT_VECTOR_METHOD(Type, dtor)(VECTORREF(Type)* value);       \
+  void DEFAULT_VECTOR_METHOD(Type, copy)(VECTORREF(Type)* dst,          \
+                                         VECTORREF(Type)* src);         \
+
+#define DEFINE_DEFAULT_VECTOR_METHODS(Type)                             \
+  void DEFAULT_VECTOR_METHOD(Type, ctor)(VECTORREF(Type)* value) {      \
+    *value = VECTORFUNC(Type, ctor)();                                  \
+  }                                                                     \
+  void DEFAULT_VECTOR_METHOD(Type, dtor)(VECTORREF(Type)* value) {      \
+    VECTORFUNC(Type, dtor)(value);                                      \
+  }                                                                     \
+  void DEFAULT_VECTOR_METHOD(Type, copy)(VECTORREF(Type)* dst,          \
+                                         VECTORREF(Type)* src) {        \
+    VECTORFUNC(Type, copy)(*dst, *src);                                 \
+  }                                                                     \
+
+#define INITIALIZE_DEFAULT_VECTOR_METHODS(Type) \
+  VECTORFUNC(VECTORREF(Type), initialize)(      \
+      DEFAULT_VECTOR_METHOD(Type, ctor),        \
+      DEFAULT_VECTOR_METHOD(Type, dtor),        \
+      DEFAULT_VECTOR_METHOD(Type, copy))        \
 
 /* size <= capacity && capacity == pow(2, n) */
 size_t enough_capacity(size_t size);
