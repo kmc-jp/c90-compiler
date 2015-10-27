@@ -13,12 +13,18 @@ typedef signed char bool;
 #define UNUSED(x) (void)(x)
 
 /* template macro */
-#define TEMPLATE(type, identifier) CONCAT(identifier, TBRACKET(type))
-#define VECTOR(type) TEMPLATE(type, Vector)
-#define VECTORREF(type) TEMPLATE(type, VectorRef)
-#define VECTORFUNC(type, function) TEMPLATE(type, CONCAT(Vector, function))
-#define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
-#define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
+#define TEMPLATE(type, identifier)              \
+  CONCAT(identifier, TBRACKET(type))
+#define VECTOR(type)                            \
+  TEMPLATE(type, Vector)
+#define VECTORREF(type)                         \
+  TEMPLATE(type, VectorRef)
+#define VECTORFUNC(type, function)              \
+  TEMPLATE(type, CONCAT(Vector, function))
+#define VECTOR_GLOBAL(type)                             \
+  CONCAT(global_, TEMPLATE(type, VectorMethods))
+#define VECTOR_METHOD(type, function)           \
+  VECTOR_GLOBAL(type).WITHBAR(function)
 #define DEFAULT_METHOD(type, function)          \
   TEMPLATE(type, CONCAT(default_, function))
 #define DEFAULT_VECTOR_METHOD(type, function)           \
