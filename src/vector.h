@@ -15,6 +15,7 @@ typedef signed char bool;
 #define VECTOR(type) TEMPLATE(type, Vector)
 #define VR(type) TEMPLATE(type, VectorRef)
 #define VECTOR_GLOBAL(type) CONCAT(global_, TEMPLATE(type, VectorMethods))
+#define VECTOR_METHOD(type, function) VECTOR_GLOBAL(type).WITHBAR(function)
 #define VF(function, type) TEMPLATE(type, CONCAT(Vector, function))
 
 #define DECLARE_VECTOR(Type)                                            \
@@ -24,9 +25,9 @@ typedef signed char bool;
                                                                         \
   /* special member functions */                                        \
   struct TEMPLATE(Type, VectorMethods) {                                \
-    TEMPLATE(Type, CtorMethod) ctor_;                                   \
-    TEMPLATE(Type, DtorMethod) dtor_;                                   \
-    TEMPLATE(Type, CopyMethod) copy_;                                   \
+    TEMPLATE(Type, CtorMethod) WITHBAR(ctor);                           \
+    TEMPLATE(Type, DtorMethod) WITHBAR(dtor);                           \
+    TEMPLATE(Type, CopyMethod) WITHBAR(copy);                           \
   };                                                                    \
   extern struct TEMPLATE(Type, VectorMethods) VECTOR_GLOBAL(Type);      \
                                                                         \
@@ -92,9 +93,9 @@ typedef signed char bool;
       TEMPLATE(Type, CtorMethod) ctor,                                  \
       TEMPLATE(Type, DtorMethod) dtor,                                  \
       TEMPLATE(Type, CopyMethod) copy) {                                \
-    GV(Type).ctor_ = ctor;                                              \
-    GV(Type).dtor_ = dtor;                                              \
-    GV(Type).copy_ = copy;                                              \
+    VECTOR_METHOD(Type, ctor) = ctor;                                   \
+    VECTOR_METHOD(Type, dtor) = dtor;                                   \
+    VECTOR_METHOD(Type, copy) = copy;                                   \
   }                                                                     \
                                                                         \
   void VF(Free, Type)(VR(Type) this) {                                  \
@@ -111,7 +112,7 @@ typedef signed char bool;
       Type* src = tail;                                                 \
       Type* dst = tail + count;                                         \
       for (; src != head; --dst, --src) {                               \
-        GV(Type).copy_(dst - 1, src - 1);                               \
+        VECTOR_METHOD(Type, copy)(dst - 1, src - 1);                    \
       }                                                                 \
     }                                                                   \
   }                                                                     \
@@ -120,35 +121,35 @@ typedef signed char bool;
       Type* src = head;                                                 \
       Type* dst = head - count;                                         \
       for (; src != tail; ++dst, ++src) {                               \
-        GV(Type).copy_(dst, src);                                       \
+        VECTOR_METHOD(Type, copy)(dst, src);                            \
       }                                                                 \
     }                                                                   \
   }                                                                     \
   void VF(RangeCtorCopy, Type)(Type* head, Type* tail, Type* data) {    \
     for (; head != tail; ++head, ++data) {                              \
-      GV(Type).ctor_(head);                                             \
-      GV(Type).copy_(head, data);                                       \
+      VECTOR_METHOD(Type, ctor)(head);                                  \
+      VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   void VF(RangeCtorFill, Type)(Type* head, Type* tail, Type* data) {    \
     for (; head != tail; ++head) {                                      \
-      GV(Type).ctor_(head);                                             \
-      GV(Type).copy_(head, data);                                       \
+      VECTOR_METHOD(Type, ctor)(head);                                  \
+      VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   void VF(RangeCtor, Type)(Type* head, Type* tail) {                    \
     for (; head != tail; ++head) {                                      \
-      GV(Type).ctor_(head);                                             \
+      VECTOR_METHOD(Type, ctor)(head);                                  \
     }                                                                   \
   }                                                                     \
   void VF(RangeDtor, Type)(Type* head, Type* tail) {                    \
     for (; head != tail; ++head) {                                      \
-      GV(Type).dtor_(head);                                             \
+      VECTOR_METHOD(Type, dtor)(head);                                  \
     }                                                                   \
   }                                                                     \
   void VF(RangeCopy, Type)(Type* head, Type* tail, Type* data) {        \
     for (; head != tail; ++head, ++data) {                              \
-      GV(Type).copy_(head, data);                                       \
+      VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   /* this->start_ must not be allocated */                              \
