@@ -1,0 +1,9 @@
+#ifndef KMC_C89_COMPILER_VECTOR_INT_H
+#define KMC_C89_COMPILER_VECTOR_INT_H
+
+#include "../src/vector.h"
+
+DECLARE_VECTOR(int)
+DECLARE_DEFAULT_METHODS(int)
+
+#endif /* KMC_C89_COMPILER_VECTOR_INT_H */
