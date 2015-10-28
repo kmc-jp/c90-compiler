@@ -63,47 +63,47 @@ typedef signed char bool;
   /* constructor */                                                     \
   VECTORREF(Type) VECTORFUNC(Type, ctor)(void);                         \
   /* destructor */                                                      \
-  void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pthis);                  \
+  void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pself);                  \
   /* operator= */                                                       \
-  void VECTORFUNC(Type, copy)(VECTORREF(Type) this,                     \
+  void VECTORFUNC(Type, copy)(VECTORREF(Type) self,                     \
                               VECTORREF(Type) src);                     \
   /* assign */                                                          \
-  void VECTORFUNC(Type, assign)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, assign)(VECTORREF(Type) self,                   \
                                 Type* data, size_t count);              \
   /* data */                                                            \
-  Type* VECTORFUNC(Type, data)(VECTORREF(Type) this);                   \
+  Type* VECTORFUNC(Type, data)(VECTORREF(Type) self);                   \
   /* begin */                                                           \
-  Type* VECTORFUNC(Type, begin)(VECTORREF(Type) this);                  \
+  Type* VECTORFUNC(Type, begin)(VECTORREF(Type) self);                  \
   /* end */                                                             \
-  Type* VECTORFUNC(Type, end)(VECTORREF(Type) this);                    \
+  Type* VECTORFUNC(Type, end)(VECTORREF(Type) self);                    \
   /* empty */                                                           \
-  bool VECTORFUNC(Type, empty)(VECTORREF(Type) this);                   \
+  bool VECTORFUNC(Type, empty)(VECTORREF(Type) self);                   \
   /* size */                                                            \
-  size_t VECTORFUNC(Type, size)(VECTORREF(Type) this);                  \
+  size_t VECTORFUNC(Type, size)(VECTORREF(Type) self);                  \
   /* reserve */                                                         \
-  void VECTORFUNC(Type, reserve)(VECTORREF(Type) this, size_t size);    \
+  void VECTORFUNC(Type, reserve)(VECTORREF(Type) self, size_t size);    \
   /* capacity */                                                        \
-  size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) this);              \
+  size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) self);              \
   /* clear */                                                           \
-  void VECTORFUNC(Type, clear)(VECTORREF(Type) this);                   \
+  void VECTORFUNC(Type, clear)(VECTORREF(Type) self);                   \
   /* insert */                                                          \
   /* insert 'count' elements in data                                    \
      to the position indexed by 'pos' */                                \
-  void VECTORFUNC(Type, insert)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, insert)(VECTORREF(Type) self,                   \
                                 size_t pos, Type* data, size_t count);  \
   /* erase */                                                           \
   /* remove consecutive 'count' elements                                \
      whose head is indexed by 'pos' */                                  \
-  void VECTORFUNC(Type, erase)(VECTORREF(Type) this,                    \
+  void VECTORFUNC(Type, erase)(VECTORREF(Type) self,                    \
                                size_t pos, size_t count);               \
   /* push_back */                                                       \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) this, Type* value);       \
+  void VECTORFUNC(Type, push)(VECTORREF(Type) self, Type* value);       \
   /* pop_back */                                                        \
   /* calling pop_back on empty vector is undefined */                   \
-  void VECTORFUNC(Type, pop)(VECTORREF(Type) this);                     \
+  void VECTORFUNC(Type, pop)(VECTORREF(Type) self);                     \
   /* resize */                                                          \
   /* append copies of 'value' when extension */                         \
-  void VECTORFUNC(Type, resize)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
                                 size_t size, Type* value);              \
   /* swap */                                                            \
   void VECTORFUNC(Type, swap)(VECTORREF(Type) lhs,                      \
@@ -122,14 +122,14 @@ typedef signed char bool;
     VECTOR_METHOD(Type, copy) = copy;                                   \
   }                                                                     \
                                                                         \
-  void VECTORFUNC(Type, free)(VECTORREF(Type) this) {                   \
-    free(this->start_);                                                 \
+  void VECTORFUNC(Type, free)(VECTORREF(Type) self) {                   \
+    free(self->start_);                                                 \
   }                                                                     \
-  void VECTORFUNC(Type, nullify)(VECTORREF(Type) this) {                \
-    this->start_ = this->finish_ = this->end_ = NULL;                   \
+  void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {                \
+    self->start_ = self->finish_ = self->end_ = NULL;                   \
   }                                                                     \
-  Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) this, Type* end) {    \
-    return this->finish_ = end;                                         \
+  Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) self, Type* end) {    \
+    return self->finish_ = end;                                         \
   }                                                                     \
   void VECTORFUNC(Type, move_up)(                                       \
       Type* head, Type* tail, size_t count) {                           \
@@ -181,50 +181,50 @@ typedef signed char bool;
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
-  /* this->start_ must not be allocated */                              \
-  void VECTORFUNC(Type, new)(VECTORREF(Type) this,                      \
+  /* self->start_ must not be allocated */                              \
+  void VECTORFUNC(Type, new)(VECTORREF(Type) self,                      \
                              size_t size, Type* data, size_t count) {   \
     const size_t capacity = enough_capacity(size);                      \
-    this->start_ = (Type*)malloc(sizeof(Type) * capacity);              \
-    this->finish_ = this->start_ + count;                               \
-    this->end_ = this->start_ + capacity;                               \
+    self->start_ = (Type*)malloc(sizeof(Type) * capacity);              \
+    self->finish_ = self->start_ + count;                               \
+    self->end_ = self->start_ + capacity;                               \
     VECTORFUNC(Type, range_ctor_copy)(                                  \
-        this->start_, this->finish_, data);                             \
+        self->start_, self->finish_, data);                             \
   }                                                                     \
                                                                         \
   VECTORREF(Type) VECTORFUNC(Type, ctor)(void) {                        \
-    VECTORREF(Type) this =                                              \
+    VECTORREF(Type) self =                                              \
         (VECTORREF(Type))malloc(sizeof(struct VECTOR(Type)));           \
-    VECTORFUNC(Type, nullify)(this);                                    \
-    return this;                                                        \
+    VECTORFUNC(Type, nullify)(self);                                    \
+    return self;                                                        \
   }                                                                     \
-  void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pthis) {                 \
-    assert(pthis && *pthis);                                            \
-    VECTORFUNC(Type, clear)(*pthis);                                    \
-    VECTORFUNC(Type, free)(*pthis);                                     \
-    free(*pthis);                                                       \
-    *pthis = NULL;                                                      \
+  void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pself) {                 \
+    assert(pself && *pself);                                            \
+    VECTORFUNC(Type, clear)(*pself);                                    \
+    VECTORFUNC(Type, free)(*pself);                                     \
+    free(*pself);                                                       \
+    *pself = NULL;                                                      \
   }                                                                     \
-  void VECTORFUNC(Type, copy)(VECTORREF(Type) this,                     \
+  void VECTORFUNC(Type, copy)(VECTORREF(Type) self,                     \
                               VECTORREF(Type) src) {                    \
-    assert(this && src);                                                \
-    VECTORFUNC(Type, assign)(this, VECTORFUNC(Type, data)(src),         \
+    assert(self && src);                                                \
+    VECTORFUNC(Type, assign)(self, VECTORFUNC(Type, data)(src),         \
                              VECTORFUNC(Type, size)(src));              \
   }                                                                     \
-  void VECTORFUNC(Type, assign)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, assign)(VECTORREF(Type) self,                   \
                                 Type* data, size_t count) {             \
-    assert(this);                                                       \
+    assert(self);                                                       \
     assert(count == 0 || data);                                         \
-    if (VECTORFUNC(Type, capacity)(this) < count) {                     \
-      VECTORFUNC(Type, clear)(this);                                    \
-      VECTORFUNC(Type, reserve)(this, count);                           \
+    if (VECTORFUNC(Type, capacity)(self) < count) {                     \
+      VECTORFUNC(Type, clear)(self);                                    \
+      VECTORFUNC(Type, reserve)(self, count);                           \
     }                                                                   \
     {                                                                   \
-      Type* const begin = VECTORFUNC(Type, begin)(this);                \
-      Type* const end = VECTORFUNC(Type, end)(this);                    \
+      Type* const begin = VECTORFUNC(Type, begin)(self);                \
+      Type* const end = VECTORFUNC(Type, end)(self);                    \
       Type* const new_end =                                             \
-          VECTORFUNC(Type, set_end)(this, begin + count);               \
-      if (count < VECTORFUNC(Type, size)(this)) {                       \
+          VECTORFUNC(Type, set_end)(self, begin + count);               \
+      if (count < VECTORFUNC(Type, size)(self)) {                       \
         VECTORFUNC(Type, range_copy)(begin, new_end, data);             \
         VECTORFUNC(Type, range_dtor)(new_end, end);                     \
       } else {                                                          \
@@ -233,68 +233,68 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  Type* VECTORFUNC(Type, data)(VECTORREF(Type) this) {                  \
-    assert(this);                                                       \
-    return this->start_;                                                \
+  Type* VECTORFUNC(Type, data)(VECTORREF(Type) self) {                  \
+    assert(self);                                                       \
+    return self->start_;                                                \
   }                                                                     \
-  Type* VECTORFUNC(Type, begin)(VECTORREF(Type) this) {                 \
-    assert(this);                                                       \
-    return this->start_;                                                \
+  Type* VECTORFUNC(Type, begin)(VECTORREF(Type) self) {                 \
+    assert(self);                                                       \
+    return self->start_;                                                \
   }                                                                     \
-  Type* VECTORFUNC(Type, end)(VECTORREF(Type) this) {                   \
-    assert(this);                                                       \
-    return this->finish_;                                               \
+  Type* VECTORFUNC(Type, end)(VECTORREF(Type) self) {                   \
+    assert(self);                                                       \
+    return self->finish_;                                               \
   }                                                                     \
-  bool VECTORFUNC(Type, empty)(VECTORREF(Type) this) {                  \
-    assert(this);                                                       \
-    return this->start_ == this->finish_;                               \
+  bool VECTORFUNC(Type, empty)(VECTORREF(Type) self) {                  \
+    assert(self);                                                       \
+    return self->start_ == self->finish_;                               \
   }                                                                     \
-  size_t VECTORFUNC(Type, size)(VECTORREF(Type) this) {                 \
-    assert(this);                                                       \
-    return this->finish_ - this->start_;                                \
+  size_t VECTORFUNC(Type, size)(VECTORREF(Type) self) {                 \
+    assert(self);                                                       \
+    return self->finish_ - self->start_;                                \
   }                                                                     \
-  void VECTORFUNC(Type, reserve)(VECTORREF(Type) this, size_t size) {   \
-    assert(this);                                                       \
-    if (VECTORFUNC(Type, capacity)(this) < size) {                      \
-      const size_t old_size = VECTORFUNC(Type, size)(this);             \
+  void VECTORFUNC(Type, reserve)(VECTORREF(Type) self, size_t size) {   \
+    assert(self);                                                       \
+    if (VECTORFUNC(Type, capacity)(self) < size) {                      \
+      const size_t old_size = VECTORFUNC(Type, size)(self);             \
       if (old_size == 0) {                                              \
-        VECTORFUNC(Type, free)(this);                                   \
-        VECTORFUNC(Type, new)(this, size, NULL, 0);                     \
+        VECTORFUNC(Type, free)(self);                                   \
+        VECTORFUNC(Type, new)(self, size, NULL, 0);                     \
       } else {                                                          \
         VECTORREF(Type) buffer = VECTORFUNC(Type, ctor)();              \
         VECTORFUNC(Type, new)(buffer, size,                             \
-                              VECTORFUNC(Type, data)(this), old_size);  \
-        VECTORFUNC(Type, swap)(this, buffer);                           \
+                              VECTORFUNC(Type, data)(self), old_size);  \
+        VECTORFUNC(Type, swap)(self, buffer);                           \
         VECTORFUNC(Type, dtor)(&buffer);                                \
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) this) {             \
-    assert(this);                                                       \
-    return this->end_ - this->start_;                                   \
+  size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) self) {             \
+    assert(self);                                                       \
+    return self->end_ - self->start_;                                   \
   }                                                                     \
-  void VECTORFUNC(Type, clear)(VECTORREF(Type) this) {                  \
-    assert(this);                                                       \
+  void VECTORFUNC(Type, clear)(VECTORREF(Type) self) {                  \
+    assert(self);                                                       \
     {                                                                   \
-      Type* const begin = VECTORFUNC(Type, begin)(this);                \
-      Type* const end = VECTORFUNC(Type, end)(this);                    \
-      VECTORFUNC(Type, set_end)(this, begin);                           \
+      Type* const begin = VECTORFUNC(Type, begin)(self);                \
+      Type* const end = VECTORFUNC(Type, end)(self);                    \
+      VECTORFUNC(Type, set_end)(self, begin);                           \
       VECTORFUNC(Type, range_dtor)(begin, end);                         \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, insert)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, insert)(VECTORREF(Type) self,                   \
                                 size_t pos, Type* data, size_t count) { \
-    assert(this);                                                       \
+    assert(self);                                                       \
     {                                                                   \
-      const size_t size = VECTORFUNC(Type, size)(this);                 \
+      const size_t size = VECTORFUNC(Type, size)(self);                 \
       assert(pos <= size);                                              \
       assert(count == 0 || data);                                       \
-      VECTORFUNC(Type, reserve)(this, size + count);                    \
+      VECTORFUNC(Type, reserve)(self, size + count);                    \
       {                                                                 \
-        Type* const begin = VECTORFUNC(Type, begin)(this);              \
-        Type* const end = VECTORFUNC(Type, end)(this);                  \
+        Type* const begin = VECTORFUNC(Type, begin)(self);              \
+        Type* const end = VECTORFUNC(Type, end)(self);                  \
         Type* const new_end =                                           \
-            VECTORFUNC(Type, set_end)(this, end + count);               \
+            VECTORFUNC(Type, set_end)(self, end + count);               \
         Type* const head = begin + pos;                                 \
         Type* const tail = head + count;                                \
         VECTORFUNC(Type, range_ctor)(end, new_end);                     \
@@ -303,17 +303,17 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, erase)(VECTORREF(Type) this,                    \
+  void VECTORFUNC(Type, erase)(VECTORREF(Type) self,                    \
                                size_t pos, size_t count) {              \
-    assert(this);                                                       \
+    assert(self);                                                       \
     {                                                                   \
-      const size_t size = VECTORFUNC(Type, size)(this);                 \
+      const size_t size = VECTORFUNC(Type, size)(self);                 \
       assert(pos + count <= size);                                      \
       {                                                                 \
-        Type* const begin = VECTORFUNC(Type, begin)(this);              \
-        Type* const end = VECTORFUNC(Type, end)(this);                  \
+        Type* const begin = VECTORFUNC(Type, begin)(self);              \
+        Type* const end = VECTORFUNC(Type, end)(self);                  \
         Type* const new_end =                                           \
-            VECTORFUNC(Type, set_end)(this, end - count);               \
+            VECTORFUNC(Type, set_end)(self, end - count);               \
         Type* const head = begin + pos;                                 \
         Type* const tail = head + count;                                \
         VECTORFUNC(Type, move_down)(tail, end, count);                  \
@@ -321,37 +321,37 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) this, Type* value) {      \
-    assert(this && value);                                              \
-    VECTORFUNC(Type, reserve)(this, VECTORFUNC(Type, size)(this) + 1);  \
+  void VECTORFUNC(Type, push)(VECTORREF(Type) self, Type* value) {      \
+    assert(self && value);                                              \
+    VECTORFUNC(Type, reserve)(self, VECTORFUNC(Type, size)(self) + 1);  \
     {                                                                   \
-      Type* const end = VECTORFUNC(Type, end)(this);                    \
-      Type* const new_end = VECTORFUNC(Type, set_end)(this, end + 1);   \
+      Type* const end = VECTORFUNC(Type, end)(self);                    \
+      Type* const new_end = VECTORFUNC(Type, set_end)(self, end + 1);   \
       VECTORFUNC(Type, range_ctor_copy)(end, new_end, value);           \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, pop)(VECTORREF(Type) this) {                    \
-    assert(this);                                                       \
+  void VECTORFUNC(Type, pop)(VECTORREF(Type) self) {                    \
+    assert(self);                                                       \
     {                                                                   \
-      Type* const end = VECTORFUNC(Type, end)(this);                    \
-      Type* const new_end = VECTORFUNC(Type, set_end)(this, end - 1);   \
+      Type* const end = VECTORFUNC(Type, end)(self);                    \
+      Type* const new_end = VECTORFUNC(Type, set_end)(self, end - 1);   \
       VECTORFUNC(Type, range_dtor)(new_end, end);                       \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, resize)(VECTORREF(Type) this,                   \
+  void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
                                 size_t size, Type* value) {             \
-    assert(this);                                                       \
+    assert(self);                                                       \
     {                                                                   \
-      const size_t old_size = VECTORFUNC(Type, size)(this);             \
+      const size_t old_size = VECTORFUNC(Type, size)(self);             \
       if (old_size < size) {                                            \
         assert(value);                                                  \
-        VECTORFUNC(Type, reserve)(this, size);                          \
+        VECTORFUNC(Type, reserve)(self, size);                          \
       }                                                                 \
       {                                                                 \
-        Type* const begin = VECTORFUNC(Type, begin)(this);              \
-        Type* const end = VECTORFUNC(Type, end)(this);                  \
+        Type* const begin = VECTORFUNC(Type, begin)(self);              \
+        Type* const end = VECTORFUNC(Type, end)(self);                  \
         Type* const new_end =                                           \
-            VECTORFUNC(Type, set_end)(this, begin + size);              \
+            VECTORFUNC(Type, set_end)(self, begin + size);              \
         if (old_size < size) {                                          \
           VECTORFUNC(Type, range_ctor_fill)(end, new_end, value);       \
         } else {                                                        \
