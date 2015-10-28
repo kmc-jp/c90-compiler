@@ -46,14 +46,11 @@ $(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 	$(CC) $(TESTS_CFLAGS) $< -o $@
 
 
-vector_int_test: gtest_main.o gtest-all.o vector.o vector_int.o vector_int_test.o
+vector_int_test: $(GTEST_DIR)/%.o vector.o vector_int.o vector_int_test.o
 	$(CXX) -o $@ gtest_main.o gtest-all.o vector.o vector_int.o vector_int_test.o -lpthread
 
-gtest_main.o: $(GTEST_DIR)/gtest_main.cc
-	$(CXX) -c $(GTEST_DIR)/gtest_main.cc -I$(TESTS_DIR)
-
-gtest-all.o: $(GTEST_DIR)/gtest-all.cc
-	$(CXX) -c $(GTEST_DIR)/gtest-all.cc -Wno-missing-field-initializers -I$(TESTS_DIR)
+$(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
+	$(CXX) -c $< $(GTEST_FLAGS)
 
 vector.o: $(SRC_DIR)/vector.c
 	$(CC) -c $(SRC_DIR)/vector.c
