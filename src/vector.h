@@ -4,7 +4,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#ifndef __cplusplus
 typedef signed char bool;
+#endif  /* __cplusplus */
 
 #define CONCATENATE(x, y) x ## y
 #define CONCAT(x, y) CONCATENATE(x, y)
