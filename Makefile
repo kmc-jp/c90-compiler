@@ -39,7 +39,7 @@ TEST_VECTOR_OBJS = $(TEST_VECTOR_C_SRCS:.c=.o) $(TEST_VECTOR_CXX_SRCS:.cpp=.o)
 RM = rm -f
 AR = ar rcs
 
-UNITTESTS = $(TESTS_DIR)/vector_int_test
+UNITTESTS = $(TEST_VECTOR_DIR)/vector_int_test.out
 
 all:
 
@@ -64,19 +64,22 @@ $(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 unittests: $(UNITTESTS)
 
 $(GTEST_LIB): $(GTEST_OBJS)
-	$(AR) $@ $(GTEST_OBJS)
-
-$(TESTS_DIR)/vector_int_test: $(SRC_DIR)/vector.o $(SRC_DIR)/vector_int.o $(TESTS_DIR)/vector_int_test.o $(GTEST_LIB)
-	$(CXX) -o $@ $(SRC_DIR)/vector.o $(SRC_DIR)/vector_int.o $(TESTS_DIR)/vector_int_test.o $(GTEST_LIB) -lpthread
+	$(AR) $@ $^
 
 $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
-	$(CXX) -c $< $(GTEST_FLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) -c $< -o $@
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/vector.h
-	$(CC) -c $< -o $@
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(VECTOR_HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(TESTS_DIR)/%.o: $(TESTS_DIR)/%.cpp $(SRC_DIR)/vector.h
-	$(CXX) -c $< -o $@
+$(TEST_VECTOR_DIR)/vector_int_test.out: $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(GTEST_LIB)
+	$(CXX) $(CXXFLAGS) $(GTEST_LDFLAGS) $^ -o $@
+
+$(TEST_VECTOR_DIR)/%.o: $(TEST_VECTOR_DIR)/%.cpp $(VECTOR_HEADER)
+	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) -c $< -o $@
+
+$(TEST_VECTOR_DIR)/%.o: $(TEST_VECTOR_DIR)/%.c $(VECTOR_HEADER)
+	$(CC) $(CFLAGS) $(GTEST_INCLUDE) -c $< -o $@
 
 clean:
 	$(RM) $(TESTS_OBJS) $(UNITTESTS)
