@@ -1,10 +1,13 @@
 CC ?= gcc
+CXX ?= g++
 CFLAGS ?= -Wall -Wextra -O2
 
+SRC_DIR = src
+
 TESTSUFFIX = .out
-TESTSDIR = tests
-STAGE1_DIR = $(TESTSDIR)/stage1
-STAGE2_DIR = $(TESTSDIR)/stage2
+TESTS_DIR = tests
+STAGE1_DIR = $(TESTS_DIR)/stage1
+STAGE2_DIR = $(TESTS_DIR)/stage2
 TESTS_STAGE1 = $(wildcard $(STAGE1_DIR)/*.c)
 TESTS_STAGE2 = $(wildcard $(STAGE2_DIR)/*.c)
 TESTS = $(TESTS_STAGE1) $(TESTS_STAGE2)
@@ -15,6 +18,10 @@ TESTS_CFLAGS ?= -ansi -pedantic $(CFLAGS)
 TESTS_LIBS_STAGE1_DIR = $(STAGE1_DIR)/lib
 TESTS_LIBS_STAGE1 = $(TESTS_LIBS_STAGE1_DIR)/print.o
 TESTS_LIBS_STAGE1_CFLAGS ?= $(TESTS_CFLAGS)
+
+GTEST_DIR = $(TESTS_DIR)/gtest
+GTEST_FLAGS = -Wno-missing-field-init -lpthread -I$(TESTS_DIR)
+
 .SUFFIXES: $(TESTSUFFIX)
 
 RM = rm -f
@@ -37,6 +44,31 @@ $(TESTS_LIBS_STAGE1_DIR)/%.o: $(TESTS_LIBS_STAGE1_DIR)/%.c
 
 $(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 	$(CC) $(TESTS_CFLAGS) $< -o $@
+
+
+vector_int_test: gtest_main.o gtest-all.o vector.o vector_int.o vector_int_test.o
+	$(CXX) -o $@ gtest_main.o gtest-all.o vector.o vector_int.o vector_int_test.o -lpthread
+
+gtest_main.o: $(GTEST_DIR)/gtest_main.cc
+	$(CXX) -c $(GTEST_DIR)/gtest_main.cc -I$(TESTS_DIR)
+
+gtest-all.o: $(GTEST_DIR)/gtest-all.cc
+	$(CXX) -c $(GTEST_DIR)/gtest-all.cc -Wno-missing-field-initializers -I$(TESTS_DIR)
+
+vector.o: $(SRC_DIR)/vector.c
+	$(CC) -c $(SRC_DIR)/vector.c
+
+vector.o: $(SRC_DIR)/vector.h
+
+vector_int.o: $(TESTS_DIR)/vector_int.c
+	$(CC) -c $(TESTS_DIR)/vector_int.c
+
+vector_int.o: $(SRC_DIR)/vector.h
+
+vector_int_test.o: $(TESTS_DIR)/vector_int_test.cpp
+	$(CXX) -c $(TESTS_DIR)/vector_int_test.cpp
+
+vector_int_test.o: $(SRC_DIR)/vector.h
 
 clean:
 	$(RM) $(TESTS_OBJS)
