@@ -3,9 +3,18 @@ CFLAGS ?= -Wall -Wextra -O2
 
 TESTSUFFIX = .out
 TESTSDIR = tests
-TESTS = $(wildcard $(TESTSDIR)/*/*.c)
-TESTS_OBJ = $(TESTS:.c=$(TESTSUFFIX))
+STAGE1_DIR = $(TESTSDIR)/stage1
+STAGE2_DIR = $(TESTSDIR)/stage2
+TESTS_STAGE1 = $(wildcard $(STAGE1_DIR)/*.c)
+TESTS_STAGE2 = $(wildcard $(STAGE2_DIR)/*.c)
+TESTS = $(TESTS_STAGE1) $(TESTS_STAGE2)
+STAGE1_OBJS = $(TESTS_STAGE1:.c=$(TESTSUFFIX))
+STAGE2_OBJS = $(TESTS_STAGE2:.c=$(TESTSUFFIX))
+TESTS_OBJS = $(STAGE1_OBJS) $(STAGE2_OBJS) $(TESTS_LIBS_STAGE1)
 TESTS_CFLAGS ?= -ansi -pedantic $(CFLAGS)
+TESTS_LIBS_STAGE1_DIR = $(STAGE1_DIR)/lib
+TESTS_LIBS_STAGE1 = $(TESTS_LIBS_STAGE1_DIR)/print.o
+TESTS_LIBS_STAGE1_CFLAGS ?= $(TESTS_CFLAGS)
 .SUFFIXES: $(TESTSUFFIX)
 
 RM = rm -f
@@ -14,12 +23,22 @@ all:
 
 test: testsource_test
 
-testsource_test: $(TESTS_OBJ)
+testsource_test: tests_stage1 tests_stage2
 
-$(TESTSDIR)/%$(TESTSUFFIX): tests/%.c
+tests_stage1: $(STAGE1_OBJS)
+
+tests_stage2: $(STAGE2_OBJS)
+
+$(STAGE1_DIR)/%$(TESTSUFFIX): $(STAGE1_DIR)/%.c $(TESTS_LIBS_STAGE1)
+	$(CC) $(TESTS_CFLAGS) $< $(TESTS_LIBS_STAGE1) -o $@
+
+$(TESTS_LIBS_STAGE1_DIR)/%.o: $(TESTS_LIBS_STAGE1_DIR)/%.c
+	$(CC) $(TESTS_LIBS_STAGE1_CFLAGS) $< -c -o $@
+
+$(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 	$(CC) $(TESTS_CFLAGS) $< -o $@
 
 clean:
-	$(RM) $(TESTS_OBJ)
+	$(RM) $(TESTS_OBJS)
 
 .PHONY: test clean
