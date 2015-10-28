@@ -21,14 +21,20 @@ TESTS_LIBS_STAGE1_CFLAGS ?= $(TESTS_CFLAGS)
 
 GTEST_DIR = $(TESTS_DIR)/gtest
 GTEST_FLAGS = -Wno-missing-field-init -lpthread -I$(TESTS_DIR)
+GTEST_SRCS = $(wildcard $(GTEST_DIR)/*.cc)
+GTEST_OBJS = $(GTEST_SRCS:.cc=.o)
+GTEST_LIB = libgtest.so
 
 .SUFFIXES: $(TESTSUFFIX)
 
 RM = rm -f
+AR = ar rcs
+
+UNITTESTS = $(TESTS_DIR)/vector_int_test
 
 all:
 
-test: testsource_test
+test: testsource_test unittests
 
 testsource_test: tests_stage1 tests_stage2
 
@@ -46,28 +52,27 @@ $(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 	$(CC) $(TESTS_CFLAGS) $< -o $@
 
 
-vector_int_test: $(GTEST_DIR)/%.o vector.o vector_int.o vector_int_test.o
-	$(CXX) -o $@ gtest_main.o gtest-all.o vector.o vector_int.o vector_int_test.o -lpthread
+unittests: $(UNITTESTS)
+
+$(GTEST_LIB): $(GTEST_OBJS)
+	$(AR) $@ $(GTEST_OBJS)
+
+$(TESTS_DIR)/vector_int_test: $(SRC_DIR)/vector.o $(SRC_DIR)/vector_int.o $(TESTS_DIR)/vector_int_test.o $(GTEST_LIB)
+	$(CXX) -o $@ $(SRC_DIR)/vector.o $(SRC_DIR)/vector_int.o $(TESTS_DIR)/vector_int_test.o $(GTEST_LIB) -lpthread
 
 $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
-	$(CXX) -c $< $(GTEST_FLAGS)
+	$(CXX) -c $< $(GTEST_FLAGS) -o $@
 
-vector.o: $(SRC_DIR)/vector.c
-	$(CC) -c $(SRC_DIR)/vector.c
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/vector.h
+	$(CC) -c $< -o $@
 
-vector.o: $(SRC_DIR)/vector.h
-
-vector_int.o: $(TESTS_DIR)/vector_int.c
-	$(CC) -c $(TESTS_DIR)/vector_int.c
-
-vector_int.o: $(SRC_DIR)/vector.h
-
-vector_int_test.o: $(TESTS_DIR)/vector_int_test.cpp
-	$(CXX) -c $(TESTS_DIR)/vector_int_test.cpp
-
-vector_int_test.o: $(SRC_DIR)/vector.h
+$(TESTS_DIR)/%.o: $(TESTS_DIR)/%.cpp $(SRC_DIR)/vector.h
+	$(CXX) -c $< -o $@
 
 clean:
-	$(RM) $(TESTS_OBJS)
+	$(RM) $(TESTS_OBJS) $(UNITTESTS)
+
+distclean: clean
+	$(RM) $(GTEST_LIB) $(GTEST_OBJS)
 
 .PHONY: test clean
