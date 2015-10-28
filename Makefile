@@ -24,6 +24,7 @@ GTEST_DIR = $(TESTS_DIR)/gtest
 GTEST_SRCS = $(wildcard $(GTEST_DIR)/*.cc)
 GTEST_OBJS = $(GTEST_SRCS:.cc=.o)
 GTEST_LIB = libgtest.so
+GTEST_FLAGS = -Wno-missing-field-initializers
 GTEST_INCLUDE = -I$(TESTS_DIR)
 GTEST_LDFLAGS = -lpthread
 
@@ -67,7 +68,7 @@ $(GTEST_LIB): $(GTEST_OBJS)
 	$(AR) $@ $^
 
 $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
-	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) $(GTEST_FLAGS) -c $< -o $@
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(VECTOR_HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
