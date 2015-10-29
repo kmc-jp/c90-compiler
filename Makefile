@@ -91,3 +91,4 @@ distclean: clean
 	$(RM) $(GTEST_LIB)
 
 .PHONY: test clean
+.PRECIOUS: $(STAGE1_LIBS)
