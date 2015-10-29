@@ -5,9 +5,14 @@ compiler:
 sudo: false
 addons:
   apt:
+    sources:
+    - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
 install:
+  - if [ "$CXX" = "g++" ]; then
+       export CXX="g++-4.8";
+    fi
   - $CXX --version
   - make
 script:
