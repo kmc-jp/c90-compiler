@@ -41,8 +41,7 @@ TEST_VECTOR_OBJS = $(TEST_VECTOR_C_OBJS) $(TEST_VECTOR_CXX_OBJS)
 RM = rm -f
 AR = ar rcs
 
-UNITTESTS =
-# UNITTESTS = $(TEST_VECTOR_DIR)/vector_int_test.out
+UNITTESTS = $(TEST_VECTOR_DIR)/vector_int_test.out
 
 all:
 
