@@ -113,6 +113,6 @@ clean:
 	$(RM) $(TESTS_OBJS) $(UNITTESTS) $(GTEST_OBJS) $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(KMC89_OBJS)
 
 distclean: clean
-	$(RM) $(GTEST_LIB)
+	$(RM) $(GTEST_LIB) $(TARGET)
 
 .PHONY: test clean
