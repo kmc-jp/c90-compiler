@@ -3,6 +3,8 @@
 
 #include <stddef.h>
 
+#define UNUSED(x) (void)(x)
+
 #ifndef __cplusplus
 typedef signed char bool;
 extern const bool true;

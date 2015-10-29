@@ -3,6 +3,8 @@
 #include "utility.h"
 
 int main(int argc, char *argv[]) {
+  UNUSED(argc);
+  UNUSED(argv);
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
   /* int main() { return 0; } */
   LLVMTypeRef main_type = LLVMFunctionType(LLVMInt32Type(), NULL, 0, false);
