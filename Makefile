@@ -48,7 +48,7 @@ LLVM_MODULES = core analysis
 LLVM_CFLAGS = `llvm-config --cflags`
 LLVM_CXXFLAGS = `llvm-config --cxxflags`
 LLVM_LDFLAGS = `llvm-config --ldflags`
-LLVM_LIBS = `llvm-config --libs $(LLVM_MODULES) --system-libs`
+LLVM_LIBS = `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
 .SUFFIXES: $(TESTSUFFIX)
 
