@@ -44,7 +44,7 @@ KMC89_C_OBJS = $(KMC89_C_SRCS:.c=.o)
 KMC89_CXX_OBJS = $(KMC89_CXX_SRCS:.c=.o)
 KMC89_OBJS = $(KMC89_C_OBJS) $(KMC89_CXX_OBJS)
 
-LLVM_MODULES = core
+LLVM_MODULES = core analysis
 LLVM_CFLAGS = `llvm-config --cflags`
 LLVM_CXXFLAGS = `llvm-config --cxxflags`
 LLVM_LDFLAGS = `llvm-config --ldflags`

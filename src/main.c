@@ -1,3 +1,4 @@
+#include <llvm-c/Analysis.h>
 #include <llvm-c/Core.h>
 #include "utility.h"
 
@@ -11,6 +12,11 @@ int main(int argc, char *argv[]) {
   LLVMPositionBuilderAtEnd(builder, main_entry);
   LLVMValueRef return_value = LLVMConstInt(LLVMInt32Type(), 0, false);
   LLVMBuildRet(builder, return_value);
+  {
+    char *error = NULL;
+    LLVMVerifyModule(module, LLVMAbortProcessAction, &error);
+    LLVMDisposeMessage(error);
+  }
   LLVMDisposeBuilder(builder);
   LLVMDisposeModule(module);
   return 0;
