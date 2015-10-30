@@ -5,8 +5,15 @@ extern "C" {
 
 #define VECINT(function) VECTORFUNC(int, function)
 
-TEST(VectorIntTest, ctor) {
-  VECTORREF(int) v = VECINT(ctor)();
+class VectorIntTest : public ::testing::Test {
+ protected:
+  VectorIntTest() : v(VECINT(ctor)()) {}
+  ~VectorIntTest() {
+    VECINT(dtor)(&v);
+  }
+  VECTORREF(int) v;
+};
+
+TEST_F(VectorIntTest, ctor) {
   EXPECT_TRUE(VECINT(empty)(v));
-  VECINT(dtor)(&v);
 }
