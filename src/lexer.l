@@ -1,6 +1,8 @@
-%option noyywrap
+%option yywrap
 %{
-#include "y.tab.h"
+#include "token.h"
+#include "yacc_mock.h"
+//#include "y.tab.h"
 
 int yywrap(void) {
   return 1;
@@ -115,4 +117,11 @@ int yywrap(void) {
   return IDENT;
 }
 %%
+#include <stdio.h>
 
+int main(argc,argv)
+int argc;
+char *argv;
+{
+  yylex();
+}
