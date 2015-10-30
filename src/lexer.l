@@ -18,7 +18,7 @@ int yywrap(void) {
 <ONELCOMMENT>\n   BEGIN(INITIAL);
 
 "["   return LBRAKET;
-"]"   return BBRAKET;
+"]"   return RBRAKET;
 "("   return LPAREN;
 ")"   return RPAREN;
 "{"   return LBRACE;
