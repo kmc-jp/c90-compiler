@@ -103,3 +103,16 @@ TEST_F(VectorIntTest, erase) {
   VECINT(erase)(v, 0, 5);
   EXPECT_TRUE(VECINT(empty)(v));
 }
+
+TEST_F(VectorIntTest, push) {
+  int value = 0;
+  size_t i = 0;
+  for (i = 0; i < 10; ++i, ++value) {
+    VECINT(push)(v, &value);
+  }
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(10U, VECINT(size)(v));
+  for (i = 0; i < 10; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+}
