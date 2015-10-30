@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <llvm-c/Analysis.h>
+#include <llvm-c/BitWriter.h>
 #include <llvm-c/Core.h>
 #include "utility.h"
 
@@ -18,6 +20,9 @@ int main(int argc, char *argv[]) {
     char *error = NULL;
     LLVMVerifyModule(module, LLVMAbortProcessAction, &error);
     LLVMDisposeMessage(error);
+  }
+  if (LLVMWriteBitcodeToFile(module, "main.bc") != 0) {
+    fputs("failed to write bitcode to file\n", stderr);
   }
   LLVMDisposeBuilder(builder);
   LLVMDisposeModule(module);
