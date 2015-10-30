@@ -58,3 +58,10 @@ TEST_F(VectorIntTest, assign) {
   EXPECT_EQ(count, VECINT(size)(v));
   EXPECT_LE(count, VECINT(capacity)(v));
 }
+
+TEST_F(VectorIntTest, reserve) {
+  const size_t size = 5;
+  VECINT(reserve)(v, size);
+  EXPECT_TRUE(VECINT(empty)(v));
+  EXPECT_LE(size, VECINT(capacity)(v));
+}
