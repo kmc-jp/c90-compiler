@@ -36,7 +36,8 @@ typedef signed char bool;
 #define DECLARE_VECTOR(Type)                                            \
   typedef void (*TEMPLATE(Type, CtorMethod))(Type* value);              \
   typedef void (*TEMPLATE(Type, DtorMethod))(Type* value);              \
-  typedef void (*TEMPLATE(Type, CopyMethod))(Type* dst, Type* src);     \
+  typedef void (*TEMPLATE(Type, CopyMethod))(Type* dst,                 \
+                                             const Type* src);          \
                                                                         \
   /* special member functions */                                        \
   struct TEMPLATE(Type, VectorMethods) {                                \
@@ -69,7 +70,7 @@ typedef signed char bool;
                               VECTORREF(Type) src);                     \
   /* assign */                                                          \
   void VECTORFUNC(Type, assign)(VECTORREF(Type) self,                   \
-                                Type* data, size_t count);              \
+                                const Type* data, size_t count);        \
   /* data */                                                            \
   Type* VECTORFUNC(Type, data)(VECTORREF(Type) self);                   \
   /* begin */                                                           \
@@ -89,22 +90,22 @@ typedef signed char bool;
   /* insert */                                                          \
   /* insert 'count' elements in data                                    \
      to the position indexed by 'pos' */                                \
-  void VECTORFUNC(Type, insert)(VECTORREF(Type) self,                   \
-                                size_t pos, Type* data, size_t count);  \
+  void VECTORFUNC(Type, insert)(VECTORREF(Type) self, size_t pos,       \
+                                const Type* data, size_t count);        \
   /* erase */                                                           \
   /* remove consecutive 'count' elements                                \
      whose head is indexed by 'pos' */                                  \
   void VECTORFUNC(Type, erase)(VECTORREF(Type) self,                    \
                                size_t pos, size_t count);               \
   /* push_back */                                                       \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) self, Type* value);       \
+  void VECTORFUNC(Type, push)(VECTORREF(Type) self, const Type* value); \
   /* pop_back */                                                        \
   /* calling pop_back on empty vector is undefined */                   \
   void VECTORFUNC(Type, pop)(VECTORREF(Type) self);                     \
   /* resize */                                                          \
   /* append copies of 'value' when extension */                         \
   void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
-                                size_t size, Type* value);              \
+                                size_t size, const Type* value);        \
   /* swap */                                                            \
   void VECTORFUNC(Type, swap)(VECTORREF(Type) lhs,                      \
                               VECTORREF(Type) rhs);                     \
@@ -152,14 +153,14 @@ typedef signed char bool;
     }                                                                   \
   }                                                                     \
   void VECTORFUNC(Type, range_ctor_copy)(                               \
-      Type* head, Type* tail, Type* data) {                             \
+      Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   void VECTORFUNC(Type, range_ctor_fill)(                               \
-      Type* head, Type* tail, Type* data) {                             \
+      Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
@@ -176,14 +177,14 @@ typedef signed char bool;
     }                                                                   \
   }                                                                     \
   void VECTORFUNC(Type, range_copy)(                                    \
-      Type* head, Type* tail, Type* data) {                             \
+      Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   /* self->start_ must not be allocated */                              \
-  void VECTORFUNC(Type, new)(VECTORREF(Type) self,                      \
-                             size_t size, Type* data, size_t count) {   \
+  void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,         \
+                             const Type* data, size_t count) {          \
     const size_t capacity = enough_capacity(size);                      \
     self->start_ = (Type*)malloc(sizeof(Type) * capacity);              \
     self->finish_ = self->start_ + count;                               \
@@ -212,7 +213,7 @@ typedef signed char bool;
                              VECTORFUNC(Type, size)(src));              \
   }                                                                     \
   void VECTORFUNC(Type, assign)(VECTORREF(Type) self,                   \
-                                Type* data, size_t count) {             \
+                                const Type* data, size_t count) {       \
     assert(self);                                                       \
     assert(count == 0 || data);                                         \
     if (VECTORFUNC(Type, capacity)(self) < count) {                     \
@@ -282,8 +283,8 @@ typedef signed char bool;
       VECTORFUNC(Type, range_dtor)(begin, end);                         \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, insert)(VECTORREF(Type) self,                   \
-                                size_t pos, Type* data, size_t count) { \
+  void VECTORFUNC(Type, insert)(VECTORREF(Type) self, size_t pos,       \
+                                const Type* data, size_t count) {       \
     assert(self);                                                       \
     {                                                                   \
       const size_t size = VECTORFUNC(Type, size)(self);                 \
@@ -321,7 +322,8 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) self, Type* value) {      \
+  void VECTORFUNC(Type, push)(VECTORREF(Type) self,                     \
+                              const Type* value) {                      \
     assert(self && value);                                              \
     VECTORFUNC(Type, reserve)(self, VECTORFUNC(Type, size)(self) + 1);  \
     {                                                                   \
@@ -339,7 +341,7 @@ typedef signed char bool;
     }                                                                   \
   }                                                                     \
   void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
-                                size_t size, Type* value) {             \
+                                size_t size, const Type* value) {       \
     assert(self);                                                       \
     {                                                                   \
       const size_t old_size = VECTORFUNC(Type, size)(self);             \
@@ -374,7 +376,7 @@ typedef signed char bool;
 #define DECLARE_DEFAULT_METHODS(Type)                           \
   void DEFAULT_METHOD(Type, ctor)(Type* value);                 \
   void DEFAULT_METHOD(Type, dtor)(Type* value);                 \
-  void DEFAULT_METHOD(Type, copy)(Type* dst, Type* src);        \
+  void DEFAULT_METHOD(Type, copy)(Type* dst, const Type* src);  \
 
 #define DEFINE_DEFAULT_METHODS(Type)                            \
   void DEFAULT_METHOD(Type, ctor)(Type* value) {                \
@@ -383,7 +385,7 @@ typedef signed char bool;
   void DEFAULT_METHOD(Type, dtor)(Type* value) {                \
     UNUSED(value);                                              \
   }                                                             \
-  void DEFAULT_METHOD(Type, copy)(Type* dst, Type* src) {       \
+  void DEFAULT_METHOD(Type, copy)(Type* dst, const Type* src) { \
     *dst = *src;                                                \
   }                                                             \
 
