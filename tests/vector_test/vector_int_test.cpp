@@ -116,3 +116,22 @@ TEST_F(VectorIntTest, push) {
     EXPECT_EQ((int)i, VECINT(data)(v)[i]);
   }
 }
+
+TEST_F(VectorIntTest, pop) {
+  const int data[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  const size_t count = sizeof(data) / sizeof(int);
+  size_t i = 0;
+  VECINT(assign)(v, data, count);
+  for (i = 0; i < 5; ++i) {
+    VECINT(pop)(v);
+  }
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(5U, VECINT(size)(v));
+  for (i = 0; i < 5; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+  for (i = 0; i < 5; ++i) {
+    VECINT(pop)(v);
+  }
+  EXPECT_TRUE(VECINT(empty)(v));
+}
