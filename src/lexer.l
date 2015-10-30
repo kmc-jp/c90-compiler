@@ -1,5 +1,5 @@
+%option noyywrap
 %{
-#include<stdio.h>
 #include "y.tab.h"
 
 int yywrap(void) {
@@ -7,6 +7,9 @@ int yywrap(void) {
 }
 %}
 %%
+"//".*\n ;
+"/*".*"*/" ;
+[ \t\n] ;
 "["   return LBRAKET;
 "]"   return BBRAKET;
 "("   return LPAREN;
