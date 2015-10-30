@@ -135,3 +135,24 @@ TEST_F(VectorIntTest, pop) {
   }
   EXPECT_TRUE(VECINT(empty)(v));
 }
+
+TEST_F(VectorIntTest, resize) {
+  size_t i = 0;
+  int value = 0;
+  VECINT(resize)(v, 5, &value);
+  EXPECT_EQ(5U, VECINT(size)(v));
+  value = 1;
+  VECINT(resize)(v, 10, &value);
+  EXPECT_EQ(10U, VECINT(size)(v));
+  for (i = 0; i < 5; ++i) {
+    EXPECT_EQ(0, VECINT(data)(v)[i]);
+  }
+  for (i = 5; i < 10; ++i) {
+    EXPECT_EQ(1, VECINT(data)(v)[i]);
+  }
+  VECINT(resize)(v, 3, NULL);
+  EXPECT_EQ(3U, VECINT(size)(v));
+  for (i = 0; i < 3; ++i) {
+    EXPECT_EQ(0, VECINT(data)(v)[i]);
+  }
+}
