@@ -116,3 +116,4 @@ distclean: clean
 	$(RM) $(GTEST_LIB) $(TARGET)
 
 .PHONY: test clean
+.PRECIOUS: $(STAGE1_LIBS)
