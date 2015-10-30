@@ -65,3 +65,11 @@ TEST_F(VectorIntTest, reserve) {
   EXPECT_TRUE(VECINT(empty)(v));
   EXPECT_LE(size, VECINT(capacity)(v));
 }
+
+TEST_F(VectorIntTest, clear) {
+  const int data[] = {0, 1, 2, 3, 4};
+  const size_t count = sizeof(data) / sizeof(int);
+  VECINT(assign)(v, data, count);
+  VECINT(clear)(v);
+  EXPECT_TRUE(VECINT(empty)(v));
+}
