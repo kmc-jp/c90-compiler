@@ -6,10 +6,17 @@ int yywrap(void) {
   return 1;
 }
 %}
+%x COMMENT
+%x ONELCOMMENT
 %%
-"//".*\n ;
-"/*".*"*/" ;
-[ \t\n] ;
+
+"/*"              BEGIN(COMMENT);
+<COMMENT>"*/"     BEGIN(INITIAL);
+<COMMENT>.        ;
+"//"              BEGIN(ONELCOMMENT);
+<ONELCOMMENT>[^\n] ;
+<ONELCOMMENT>\n   BEGIN(INITIAL);
+
 "["   return LBRAKET;
 "]"   return BBRAKET;
 "("   return LPAREN;
