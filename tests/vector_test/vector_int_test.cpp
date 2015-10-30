@@ -3,8 +3,10 @@ extern "C" {
 }
 #include "gtest/gtest.h"
 
+#define VECINT(function) VECTORFUNC(int, function)
+
 TEST(VectorIntTest, ctor) {
-  VECTORREF(int) v = VECTORFUNC(int, ctor)();
-  EXPECT_TRUE(VECTORFUNC(int, empty)(v));
-  VECTORFUNC(int, dtor)(&v);
+  VECTORREF(int) v = VECINT(ctor)();
+  EXPECT_TRUE(VECINT(empty)(v));
+  VECINT(dtor)(&v);
 }
