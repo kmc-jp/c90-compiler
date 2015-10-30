@@ -73,3 +73,18 @@ TEST_F(VectorIntTest, clear) {
   VECINT(clear)(v);
   EXPECT_TRUE(VECINT(empty)(v));
 }
+
+TEST_F(VectorIntTest, insert) {
+  const int data1[] = {0, 1, 2, 8, 9};
+  const int data2[] = {3, 4, 5, 6, 7};
+  const size_t count1 = sizeof(data1) / sizeof(int);
+  const size_t count2 = sizeof(data2) / sizeof(int);
+  size_t i = 0;
+  VECINT(assign)(v, data1, count1);
+  VECINT(insert)(v, 3, data2, count2);
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count1 + count2, VECINT(size)(v));
+  for (i = 0; i < count1 + count2; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+}
