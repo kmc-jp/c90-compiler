@@ -22,3 +22,9 @@ TEST_F(VectorIntTest, ctor) {
   EXPECT_EQ(0U, VECINT(size)(v));
   EXPECT_EQ(0U, VECINT(capacity)(v));
 }
+
+TEST_F(VectorIntTest, dtor) {
+  VECTORREF(int) vec = VECINT(ctor)();
+  VECINT(dtor)(&vec);
+  EXPECT_EQ(NULL, vec);
+}
