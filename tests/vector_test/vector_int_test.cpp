@@ -28,3 +28,17 @@ TEST_F(VectorIntTest, dtor) {
   VECINT(dtor)(&vec);
   EXPECT_EQ(NULL, vec);
 }
+
+TEST_F(VectorIntTest, assign) {
+  const int data[] = {0, 1, 2, 3, 4};
+  const size_t count = sizeof(data) / sizeof(int);
+  size_t i = 0;
+  VECINT(assign)(v, data, count);
+  ASSERT_TRUE(VECINT(data)(v) != NULL);
+  for (i = 0; i < count; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count, VECINT(size)(v));
+  EXPECT_LE(count, VECINT(capacity)(v));
+}
