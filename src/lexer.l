@@ -110,10 +110,10 @@ int yywrap(void) {
   return DOUBLE_LITERAL;
 }
 
-[_a-z][a-z0-9] {
-  char *temp;
-  scanf("%[a-zA-Z0-9]", temp);
-  yylval.string_value = temp;
+[_a-z][_a-zA-Z0-9]* {
+  char temp[72];
+  sscanf(yytext, "%[a-zA-Z0-9_]", temp);
+  strcpy(yylval.string_value, temp);
   return IDENT;
 }
 %%
