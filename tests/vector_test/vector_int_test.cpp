@@ -156,3 +156,35 @@ TEST_F(VectorIntTest, resize) {
     EXPECT_EQ(0, VECINT(data)(v)[i]);
   }
 }
+
+TEST_F(VectorIntTest, swap) {
+  const int data1[] = {0, 1, 2};
+  const int data2[] = {0, 1, 2, 3, 4};
+  const size_t count1 = sizeof(data1) / sizeof(int);
+  const size_t count2 = sizeof(data2) / sizeof(int);
+  size_t i = 0;
+  VECTORREF(int) v2 = VECINT(ctor)();
+  VECINT(assign)(v, data1, count1);
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count1, VECINT(size)(v));
+  for (i = 0; i < count1; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+  VECINT(assign)(v2, data2, count2);
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count2, VECINT(size)(v2));
+  for (i = 0; i < count2; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v2)[i]);
+  }
+  VECINT(swap)(v, v2);
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count2, VECINT(size)(v));
+  for (i = 0; i < count2; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v)[i]);
+  }
+  EXPECT_FALSE(VECINT(empty)(v));
+  EXPECT_EQ(count1, VECINT(size)(v2));
+  for (i = 0; i < count1; ++i) {
+    EXPECT_EQ((int)i, VECINT(data)(v2)[i]);
+  }
+}
