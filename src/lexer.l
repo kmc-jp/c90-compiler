@@ -9,7 +9,11 @@ int yywrap(void) {
 }
 
 void copy_yytext() {
-  char *literal = (char*)malloc(yylen);
+  char *literal = (char*)malloc(yyleng + 1);
+  if (literal == NULL) {
+    printf("could not allocate memory for literal\n");
+    exit(EXIT_FAILURE);
+  }
   strcpy(literal, yytext);
   yylval = literal;
 }
@@ -96,9 +100,9 @@ void copy_yytext() {
 "void"      return VOID;
 "volatile"  return VOLATILE;
 "while"     return WHILE;
-"answer"    return FORTY_TWO; // funny easter egg
+"the_answer"  return FORTY_TWO; /* funny easter egg */
 
-[1-9][0-9]* {
+"0"|[1-9][0-9]* {
   copy_yytext();
   return INT_LITERAL;
 }
@@ -111,6 +115,11 @@ void copy_yytext() {
 [_a-z][_a-zA-Z0-9]* {
   copy_yytext();
   return IDENT;
+}
+
+.           {
+  printf("could not lex: %s\n", yytext);
+  exit(EXIT_FAILURE);
 }
 %%
 #include <stdio.h>
