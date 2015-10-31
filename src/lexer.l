@@ -8,23 +8,48 @@ int yywrap(void) {
   return 1;
 }
 
-void copy_yytext() {
-  char *literal = (char*)malloc(yyleng + 1);
+void copy_to_yylval(char *src, int size) {
+  char *literal = (char*)malloc(size + 1);
   if (literal == NULL) {
     printf("could not allocate memory for literal\n");
     exit(EXIT_FAILURE);
   }
-  strncpy(literal, yytext, yyleng);
-  literal[yyleng] = '\0';
+  strncpy(literal, src, size);
+  literal[size] = '\0';
   yylval = literal;
 }
+
+VECTORREF(char) lexer_string_literal;
 %}
+ESCSEQ    \\[\\\?\'\"abfnrtv0]
+NONESCSEQ [^\\\?\'\"abfnrtv0]
+CHARACTER {ESCSEQ}|{NONESCSEQ}
+IDENT     [_a-z][_a-zA-Z0-9]*
 %x COMMENT
+%x STRING
 %%
 
 "/*"              BEGIN(COMMENT);
 <COMMENT>"*/"     BEGIN(INITIAL);
 <COMMENT>.        ;
+
+"\""              BEGIN(STRING);
+
+<STRING>{CHARACTER} {
+  int i;
+  for (i = 0; i < yyleng; ++i) {
+    VECTORREF(char, push)(lexer_string_literal, &(yytext[i]));
+  }
+}
+
+<STRING>"\""      {
+  int len = VECTORREF(char, size)(lexer_string_literal);
+  char *str = VECTORREF(char, data)(lexer_string_literal);
+  copy_to_yylval(str, len);
+  VECTORREF(char, clear)(lexer_string_literal);
+  BEGIN(INITIAL);
+  return STRING_LITERAL;
+}
 
 "["   return LBRAKET;
 "]"   return RBRAKET;
@@ -104,27 +129,22 @@ void copy_yytext() {
 "the_answer"  return FORTY_TWO; /* funny easter egg */
 
 "0"|[1-9][0-9]* {
-  copy_yytext();
+  copy_to_yylval(yytext, yyleng);
   return INT_LITERAL;
 }
 
 [0-9]*\.[0-9]* {
-  copy_yytext();
+  copy_to_yylval(yytext, yyleng);
   return DOUBLE_LITERAL;
 }
 
-[_a-z][_a-zA-Z0-9]* {
-  copy_yytext();
+{IDENT} {
+  copy_to_yylval(yytext, yyleng);
   return IDENT;
 }
 
-"'"\\[\\\?\'\"abfnrtv0]"'" {
-  copy_yytext();
-  return CHAR_LITERAL;
-}
-
-"'"[^\\\?\'\"]"'" {
-  copy_yytext();
+"'"{CHARACTER}"'" {
+  copy_to_yylval(yytext, yyleng);
   return CHAR_LITERAL;
 }
 
