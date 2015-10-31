@@ -98,10 +98,11 @@ typedef signed char bool;
   void VECTORFUNC(Type, erase)(VECTORREF(Type) self,                    \
                                size_t pos, size_t count);               \
   /* push_back */                                                       \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) self, const Type* value); \
+  void VECTORFUNC(Type, push_back)(VECTORREF(Type) self,                \
+                                   const Type* value);                  \
   /* pop_back */                                                        \
   /* calling pop_back on empty vector is undefined */                   \
-  void VECTORFUNC(Type, pop)(VECTORREF(Type) self);                     \
+  void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self);                \
   /* resize */                                                          \
   /* append copies of 'value' when extension */                         \
   void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
@@ -322,8 +323,8 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, push)(VECTORREF(Type) self,                     \
-                              const Type* value) {                      \
+  void VECTORFUNC(Type, push_back)(VECTORREF(Type) self,                \
+                                   const Type* value) {                 \
     assert(self && value);                                              \
     VECTORFUNC(Type, reserve)(self, VECTORFUNC(Type, size)(self) + 1);  \
     {                                                                   \
@@ -332,7 +333,7 @@ typedef signed char bool;
       VECTORFUNC(Type, range_ctor_copy)(end, new_end, value);           \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, pop)(VECTORREF(Type) self) {                    \
+  void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self) {               \
     assert(self);                                                       \
     {                                                                   \
       Type* const end = VECTORFUNC(Type, end)(self);                    \
