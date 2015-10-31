@@ -43,6 +43,7 @@ TEST_F(VectorIntTest, copy) {
   EXPECT_FALSE(VECINT(empty)(v2));
   EXPECT_EQ(count, VECINT(size)(v2));
   EXPECT_LE(count, VECINT(capacity)(v2));
+  VECINT(dtor)(&v2);
 }
 
 TEST_F(VectorIntTest, assign) {
@@ -187,4 +188,5 @@ TEST_F(VectorIntTest, swap) {
   for (i = 0; i < count1; ++i) {
     EXPECT_EQ((int)i, VECINT(data)(v2)[i]);
   }
+  VECINT(dtor)(&v2);
 }
