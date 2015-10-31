@@ -399,7 +399,7 @@ typedef signed char bool;
   void DEFAULT_VECTOR_METHOD(Type, ctor)(VECTORREF(Type)* value);       \
   void DEFAULT_VECTOR_METHOD(Type, dtor)(VECTORREF(Type)* value);       \
   void DEFAULT_VECTOR_METHOD(Type, copy)(VECTORREF(Type)* dst,          \
-                                         VECTORREF(Type)* src);         \
+                                         const VECTORREF(Type)* src);   \
 
 #define DEFINE_DEFAULT_VECTOR_METHODS(Type)                             \
   void DEFAULT_VECTOR_METHOD(Type, ctor)(VECTORREF(Type)* value) {      \
@@ -409,7 +409,7 @@ typedef signed char bool;
     VECTORFUNC(Type, dtor)(value);                                      \
   }                                                                     \
   void DEFAULT_VECTOR_METHOD(Type, copy)(VECTORREF(Type)* dst,          \
-                                         VECTORREF(Type)* src) {        \
+                                         const VECTORREF(Type)* src) {  \
     VECTORFUNC(Type, copy)(*dst, *src);                                 \
   }                                                                     \
 
