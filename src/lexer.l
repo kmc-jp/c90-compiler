@@ -14,7 +14,8 @@ void copy_yytext() {
     printf("could not allocate memory for literal\n");
     exit(EXIT_FAILURE);
   }
-  strcpy(literal, yytext);
+  strncpy(literal, yytext, yyleng);
+  literal[yyleng] = '\0';
   yylval = literal;
 }
 %}
