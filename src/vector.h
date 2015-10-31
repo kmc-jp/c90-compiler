@@ -104,7 +104,7 @@ typedef signed char bool;
   /* calling pop_back on empty vector is undefined */                   \
   void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self);                \
   /* resize */                                                          \
-  /* append copies of 'value' when extension */                         \
+  /* append copies of value pointed by 'value' when extension */        \
   void VECTORFUNC(Type, resize)(VECTORREF(Type) self,                   \
                                 size_t size, const Type* value);        \
   /* swap */                                                            \
