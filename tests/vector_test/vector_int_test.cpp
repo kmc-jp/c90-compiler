@@ -3,6 +3,7 @@ extern "C" {
 }
 #include "gtest/gtest.h"
 
+#define VINT VECTORREF(int)
 #define VECINT(function) VECTORFUNC(int, function)
 
 class VectorIntTest : public ::testing::Test {
@@ -11,7 +12,7 @@ class VectorIntTest : public ::testing::Test {
   ~VectorIntTest() {
     VECINT(dtor)(&v);
   }
-  VECTORREF(int) v;
+  VINT v;
 };
 
 TEST_F(VectorIntTest, ctor) {
@@ -24,7 +25,7 @@ TEST_F(VectorIntTest, ctor) {
 }
 
 TEST_F(VectorIntTest, dtor) {
-  VECTORREF(int) v2 = VECINT(ctor)();
+  VINT v2 = VECINT(ctor)();
   VECINT(dtor)(&v2);
   EXPECT_EQ(NULL, v2);
 }
@@ -33,7 +34,7 @@ TEST_F(VectorIntTest, copy) {
   const int data[] = {0, 1, 2, 3, 4};
   const size_t count = sizeof(data) / sizeof(int);
   size_t i = 0;
-  VECTORREF(int) v2 = VECINT(ctor)();
+  VINT v2 = VECINT(ctor)();
   VECINT(assign)(v, data, count);
   VECINT(copy)(v2, v);
   ASSERT_TRUE(VECINT(data)(v2) != NULL);
@@ -164,7 +165,7 @@ TEST_F(VectorIntTest, swap) {
   const size_t count1 = sizeof(data1) / sizeof(int);
   const size_t count2 = sizeof(data2) / sizeof(int);
   size_t i = 0;
-  VECTORREF(int) v2 = VECINT(ctor)();
+  VINT v2 = VECINT(ctor)();
   VECINT(assign)(v, data1, count1);
   EXPECT_FALSE(VECINT(empty)(v));
   EXPECT_EQ(count1, VECINT(size)(v));
