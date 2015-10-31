@@ -1,4 +1,4 @@
-#include "vector_int.h"
+#include "use_vector.h"
 
 DEFINE_VECTOR(int)
 DEFINE_DEFAULT_METHODS(int)

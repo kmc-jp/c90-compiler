@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 extern "C" {
-#include "vector_int.h"
+#include "use_vector.h"
 }
 
 class VectorIntEnvironment : public ::testing::Environment {

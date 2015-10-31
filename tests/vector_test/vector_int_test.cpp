@@ -1,5 +1,5 @@
 extern "C" {
-#include "vector_int.h"
+#include "use_vector.h"
 }
 #include "gtest/gtest.h"
 
