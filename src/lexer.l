@@ -7,6 +7,12 @@
 int yywrap(void) {
   return 1;
 }
+
+void copy_yytext() {
+  char *literal = (char*)malloc(yylen);
+  strcpy(literal, yytext);
+  yylval = literal;
+}
 %}
 %x COMMENT
 %%
@@ -93,23 +99,17 @@ int yywrap(void) {
 "answer"    return FORTY_TWO; // funny easter egg
 
 [1-9][0-9]* {
-  int temp;
-  sscanf(yytext, "%d", &temp);
-  yylval.int_value = temp;
+  copy_yytext();
   return INT_LITERAL;
 }
 
 [0-9]*\.[0-9]* {
-  double temp;
-  sscanf(yytext, "%lf", &temp);
-  yylval.double_value = temp;
+  copy_yytext();
   return DOUBLE_LITERAL;
 }
 
 [_a-z][_a-zA-Z0-9]* {
-  char temp[72];
-  sscanf(yytext, "%[a-zA-Z0-9_]", temp);
-  strcpy(yylval.string_value, temp);
+  copy_yytext();
   return IDENT;
 }
 %%

@@ -1,3 +1,4 @@
 #include "yacc_mock.h"
 
-union TokenVal yylval;
+char *yylval;
+int yylen;
