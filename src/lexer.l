@@ -2,22 +2,18 @@
 %{
 #include "token.h"
 #include "yacc_mock.h"
-//#include "y.tab.h"
+/* #include "y.tab.h" */
 
 int yywrap(void) {
   return 1;
 }
 %}
 %x COMMENT
-%x ONELCOMMENT
 %%
 
 "/*"              BEGIN(COMMENT);
 <COMMENT>"*/"     BEGIN(INITIAL);
 <COMMENT>.        ;
-"//"              BEGIN(ONELCOMMENT);
-<ONELCOMMENT>[^\n] ;
-<ONELCOMMENT>\n   BEGIN(INITIAL);
 
 "["   return LBRAKET;
 "]"   return RBRAKET;
