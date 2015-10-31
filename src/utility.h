@@ -11,4 +11,6 @@ extern const bool true;
 extern const bool false;
 #endif  /* __cplusplus */
 
+void* safe_malloc(size_t size);
+
 #endif  /* KMC_C89_COMPILER_UTILITY_H */
