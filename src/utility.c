@@ -13,3 +13,7 @@ void* safe_malloc(size_t size) {
   }
   return ptr;
 }
+void safe_free_impl(void** ptr) {
+  free(&ptr);
+  *ptr = NULL;
+}
