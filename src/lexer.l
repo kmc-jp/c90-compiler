@@ -117,6 +117,16 @@ void copy_yytext() {
   return IDENT;
 }
 
+"'"\\[\\\?\'\"abfnrtv0]"'" {
+  copy_yytext();
+  return CHAR_LITERAL;
+}
+
+"'"[^\\\?\'\"]"'" {
+  copy_yytext();
+  return CHAR_LITERAL;
+}
+
 .           {
   printf("could not lex: %s\n", yytext);
   exit(EXIT_FAILURE);
