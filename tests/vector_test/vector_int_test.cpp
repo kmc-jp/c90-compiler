@@ -24,9 +24,9 @@ TEST_F(VectorIntTest, ctor) {
 }
 
 TEST_F(VectorIntTest, dtor) {
-  VECTORREF(int) vec = VECINT(ctor)();
-  VECINT(dtor)(&vec);
-  EXPECT_EQ(NULL, vec);
+  VECTORREF(int) v2 = VECINT(ctor)();
+  VECINT(dtor)(&v2);
+  EXPECT_EQ(NULL, v2);
 }
 
 TEST_F(VectorIntTest, copy) {
