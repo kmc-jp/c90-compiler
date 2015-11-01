@@ -183,7 +183,7 @@
   void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,         \
                              const Type* data, size_t count) {          \
     const size_t capacity = enough_capacity(size);                      \
-    self->start_ = (Type*)malloc(sizeof(Type) * capacity);              \
+    self->start_ = safe_array_malloc(Type, capacity);                   \
     self->finish_ = self->start_ + count;                               \
     self->end_ = self->start_ + capacity;                               \
     VECTORFUNC(Type, range_ctor_copy)(                                  \
@@ -191,8 +191,7 @@
   }                                                                     \
                                                                         \
   VECTORREF(Type) VECTORFUNC(Type, ctor)(void) {                        \
-    VECTORREF(Type) self =                                              \
-        (VECTORREF(Type))malloc(sizeof(struct VECTOR(Type)));           \
+    VECTORREF(Type) self = safe_malloc(struct VECTOR(Type));            \
     VECTORFUNC(Type, nullify)(self);                                    \
     return self;                                                        \
   }                                                                     \
