@@ -2,6 +2,7 @@
 %{
 #include "token.h"
 #include "yacc_mock.h"
+#include "utility.h"
 /* #include "y.tab.h" */
 
 int yywrap(void) {
@@ -9,11 +10,7 @@ int yywrap(void) {
 }
 
 void copy_to_yylval(char *src, int size) {
-  char *literal = (char*)malloc(size + 1);
-  if (literal == NULL) {
-    printf("could not allocate memory for literal\n");
-    exit(EXIT_FAILURE);
-  }
+  char *literal = safe_malloc(size + 1);
   strncpy(literal, src, size);
   literal[size] = '\0';
   yylval = literal;
