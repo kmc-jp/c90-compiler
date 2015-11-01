@@ -309,8 +309,7 @@ typedef signed char bool;
                                size_t pos, size_t count) {              \
     assert(self);                                                       \
     {                                                                   \
-      const size_t size = VECTORFUNC(Type, size)(self);                 \
-      assert(pos + count <= size);                                      \
+      assert(pos + count <= VECTORFUNC(Type, size)(self));              \
       {                                                                 \
         Type* const begin = VECTORFUNC(Type, begin)(self);              \
         Type* const end = VECTORFUNC(Type, end)(self);                  \
