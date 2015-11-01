@@ -17,3 +17,11 @@ void safe_free_impl(void** ptr) {
   free(&ptr);
   *ptr = NULL;
 }
+
+size_t enough_capacity(size_t size) {
+  size_t capacity = 1;
+  while (capacity < size) {
+    capacity *= 2;
+  }
+  return capacity;
+}

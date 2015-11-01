@@ -415,7 +415,4 @@
       DEFAULT_VECTOR_METHOD(Type, dtor),        \
       DEFAULT_VECTOR_METHOD(Type, copy))        \
 
-/* size <= capacity && capacity == pow(2, n) */
-size_t enough_capacity(size_t size);
-
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
