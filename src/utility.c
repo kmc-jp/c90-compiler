@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const bool true = 1;
-const bool false = 0;
-
 void* safe_malloc(size_t size) {
   void* ptr = malloc(size);
   if (!ptr) {
