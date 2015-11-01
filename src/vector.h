@@ -121,7 +121,8 @@
   }                                                                     \
                                                                         \
   void VECTORFUNC(Type, free)(VECTORREF(Type) self) {                   \
-    free(self->start_);                                                 \
+    safe_free(self->start_);                                            \
+    self->finish_ = self->end_ = NULL;                                  \
   }                                                                     \
   void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {                \
     self->start_ = self->finish_ = self->end_ = NULL;                   \
@@ -199,8 +200,7 @@
     assert(pself && *pself);                                            \
     VECTORFUNC(Type, clear)(*pself);                                    \
     VECTORFUNC(Type, free)(*pself);                                     \
-    free(*pself);                                                       \
-    *pself = NULL;                                                      \
+    safe_free(*pself);                                                  \
   }                                                                     \
   void VECTORFUNC(Type, copy)(VECTORREF(Type) self,                     \
                               VECTORREF(Type) src) {                    \
