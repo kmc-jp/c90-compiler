@@ -12,6 +12,10 @@ extern const bool false;
 #endif  /* __cplusplus */
 
 void* safe_malloc_impl(size_t size);
+#define safe_malloc(type)                       \
+  (type*)safe_malloc(sizeof(type))
+#define safe_array_malloc(type, size)           \
+  (type*)safe_malloc(sizeof(type) * (size))
 
 void safe_free_impl(void** ptr);
 #define safe_free(ptr)                          \
