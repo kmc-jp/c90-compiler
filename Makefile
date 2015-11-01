@@ -86,9 +86,6 @@ $(GTEST_LIB): $(GTEST_OBJS)
 $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
 	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) $(GTEST_FLAGS) -c $< -o $@
 
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(VECTOR_HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(TEST_VECTOR_DIR)/vector_int_test.out: $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(GTEST_LIB)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(GTEST_LDFLAGS)
 
