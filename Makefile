@@ -27,7 +27,8 @@ GTEST_OBJS = $(GTEST_SRCS:.cc=.o)
 GTEST_LIBRARY = $(GTEST_DIR)/libgtest.a
 GTEST_FLAGS = -Wno-missing-field-initializers
 GTEST_INCLUDE = -I$(TESTS_DIR)
-GTEST_LDFLAGS = -lpthread
+GTEST_LIBS = -L$(GTEST_DIR)
+GTEST_LDFLAGS = -lgtest -lpthread
 
 VECTOR_HEADER = $(SRC_DIR)/vector.h
 VECTOR_OBJ = $(SRC_DIR)/vector.o
@@ -86,7 +87,7 @@ $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
 	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) $(GTEST_FLAGS) -c $< -o $@
 
 $(TEST_VECTOR_DIR)/vector_int_test.out: $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(GTEST_LIBRARY)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(GTEST_LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(GTEST_LIBS) $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) -o $@ $(GTEST_LDFLAGS)
 
 $(TEST_VECTOR_DIR)/%.o: $(TEST_VECTOR_DIR)/%.cpp $(VECTOR_HEADER)
 	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) -c $< -o $@
