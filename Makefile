@@ -24,7 +24,7 @@ TESTS_CFLAGS ?= -ansi -pedantic $(CFLAGS)
 GTEST_DIR = $(TESTS_DIR)/gtest
 GTEST_SRCS = $(wildcard $(GTEST_DIR)/*.cc)
 GTEST_OBJS = $(GTEST_SRCS:.cc=.o)
-GTEST_LIB = libgtest.a
+GTEST_LIBRARY = $(GTEST_DIR)/libgtest.a
 GTEST_FLAGS = -Wno-missing-field-initializers
 GTEST_INCLUDE = -I$(TESTS_DIR)
 GTEST_LDFLAGS = -lpthread
@@ -79,13 +79,13 @@ $(STAGE2_DIR)/%$(TESTSUFFIX): $(STAGE2_DIR)/%.c
 
 unittests: $(UNITTESTS)
 
-$(GTEST_LIB): $(GTEST_OBJS)
+$(GTEST_LIBRARY): $(GTEST_OBJS)
 	$(AR) $@ $^
 
 $(GTEST_DIR)/%.o: $(GTEST_DIR)/%.cc
 	$(CXX) $(CXXFLAGS) $(GTEST_INCLUDE) $(GTEST_FLAGS) -c $< -o $@
 
-$(TEST_VECTOR_DIR)/vector_int_test.out: $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(GTEST_LIB)
+$(TEST_VECTOR_DIR)/vector_int_test.out: $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(GTEST_LIBRARY)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(GTEST_LDFLAGS)
 
 $(TEST_VECTOR_DIR)/%.o: $(TEST_VECTOR_DIR)/%.cpp $(VECTOR_HEADER)
@@ -109,7 +109,7 @@ clean:
 	$(RM) $(TESTS_OBJS) $(UNITTESTS) $(GTEST_OBJS) $(VECTOR_OBJ) $(TEST_VECTOR_OBJS) $(KMC89_OBJS)
 
 distclean: clean
-	$(RM) $(GTEST_LIB) $(TARGET)
+	$(RM) $(GTEST_LIBRARY) $(TARGET)
 
 .PHONY: test clean
 .PRECIOUS: $(STAGE1_LIBS)
