@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void* safe_malloc(size_t size) {
+void* safe_malloc_impl(size_t size) {
   void* ptr = malloc(size);
   if (!ptr) {
     fprintf(stderr, "malloc error: failed to allocate memory\n");
@@ -11,6 +11,6 @@ void* safe_malloc(size_t size) {
   return ptr;
 }
 void safe_free_impl(void** ptr) {
-  free(&ptr);
+  free(*ptr);
   *ptr = NULL;
 }
