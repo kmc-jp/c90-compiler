@@ -3,16 +3,12 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
-#ifndef __cplusplus
-typedef signed char bool;
-#endif  /* __cplusplus */
+#include "utility.h"
 
 #define CONCATENATE(x, y) x ## y
 #define CONCAT(x, y) CONCATENATE(x, y)
 #define WITHBAR(x) CONCAT(x, _)
 #define TBRACKET(x) CONCAT(T, CONCAT(x, T))
-#define UNUSED(x) (void)(x)
 
 /* template macro */
 #define TEMPLATE(type, identifier)              \
