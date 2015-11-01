@@ -106,11 +106,11 @@ TEST_F(VectorIntTest, erase) {
   EXPECT_TRUE(VINTF(empty)(v));
 }
 
-TEST_F(VectorIntTest, push) {
+TEST_F(VectorIntTest, push_back) {
   int value = 0;
   size_t i = 0;
   for (i = 0; i < 10; ++i, ++value) {
-    VINTF(push)(v, &value);
+    VINTF(push_back)(v, &value);
   }
   EXPECT_FALSE(VINTF(empty)(v));
   EXPECT_EQ(10U, VINTF(size)(v));
@@ -119,13 +119,13 @@ TEST_F(VectorIntTest, push) {
   }
 }
 
-TEST_F(VectorIntTest, pop) {
+TEST_F(VectorIntTest, pop_back) {
   const int data[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   const size_t count = sizeof(data) / sizeof(int);
   size_t i = 0;
   VINTF(assign)(v, data, count);
   for (i = 0; i < 5; ++i) {
-    VINTF(pop)(v);
+    VINTF(pop_back)(v);
   }
   EXPECT_FALSE(VINTF(empty)(v));
   EXPECT_EQ(5U, VINTF(size)(v));
@@ -133,7 +133,7 @@ TEST_F(VectorIntTest, pop) {
     EXPECT_EQ((int)i, VINTF(data)(v)[i]);
   }
   for (i = 0; i < 5; ++i) {
-    VINTF(pop)(v);
+    VINTF(pop_back)(v);
   }
   EXPECT_TRUE(VINTF(empty)(v));
 }
