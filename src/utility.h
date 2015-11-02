@@ -7,11 +7,16 @@
 
 #ifndef __cplusplus
 typedef signed char bool;
-extern const bool true;
-extern const bool false;
+#define true ((bool)1)
+#define false ((bool)0)
 #endif  /* __cplusplus */
 
-void* safe_malloc(size_t size);
+void* safe_malloc_impl(size_t size);
+#define safe_malloc(type)                       \
+  (type*)safe_malloc(sizeof(type))
+#define safe_array_malloc(type, size)           \
+  (type*)safe_malloc(sizeof(type) * (size))
+
 void safe_free_impl(void** ptr);
 #define safe_free(ptr)                          \
   do { safe_free_impl(&ptr); } while(false)
