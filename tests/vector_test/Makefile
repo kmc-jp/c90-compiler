@@ -6,8 +6,7 @@ TESTS_DIR = $(TOP_DIR)/tests
 GTEST_DIR = $(TESTS_DIR)/gtest
 
 GTEST_LIB = $(GTEST_DIR)/libgtest.a
-VECTOR_SRC = $(SRC_DIR)/vector.c
-VECTOR_OBJ = $(VECTOR_SRC:.c=.o)
+UTILITY_OBJ = $(SRC_DIR)/utility.o
 
 C_SRCS = $(wildcard *.c)
 CXX_SRCS = $(wildcard *.cpp)
@@ -26,7 +25,7 @@ LIBS += -lgtest -lpthread
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS) $(VECTOR_OBJ)
+$(TARGET): $(OBJS) $(UTILITY_OBJ)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
 
 $(TARGET): $(GTEST_LIB)
