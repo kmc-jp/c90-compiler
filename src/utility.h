@@ -7,8 +7,8 @@
 
 #ifndef __cplusplus
 typedef signed char bool;
-extern const bool true;
-extern const bool false;
+#define true ((bool)1)
+#define false ((bool)0)
 #endif  /* __cplusplus */
 
 void* safe_malloc_impl(size_t size);
