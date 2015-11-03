@@ -10,9 +10,8 @@ void* safe_malloc_impl(size_t size) {
   }
   return ptr;
 }
-void safe_free_impl(void** ptr) {
-  free(*ptr);
-  *ptr = NULL;
+void safe_free_impl(void* ptr) {
+  free(ptr);
 }
 
 size_t enough_capacity(size_t size) {
