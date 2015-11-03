@@ -21,4 +21,7 @@ void safe_free_impl(void* ptr);
 #define safe_free(ptr)                          \
   do { safe_free_impl(ptr); ptr = NULL; } while(false)
 
+/* size <= capacity && capacity == pow(2, n) */
+size_t enough_capacity(size_t size);
+
 #endif  /* KMC_C89_COMPILER_UTILITY_H */
