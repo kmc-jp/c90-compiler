@@ -13,12 +13,12 @@ typedef signed char bool;
 
 void* safe_malloc_impl(size_t size);
 #define safe_malloc(type)                       \
-  (type*)safe_malloc(sizeof(type))
+  (type*)safe_malloc_impl(sizeof(type))
 #define safe_array_malloc(type, size)           \
-  (type*)safe_malloc(sizeof(type) * (size))
+  (type*)safe_malloc_impl(sizeof(type) * (size))
 
-void safe_free_impl(void** ptr);
+void safe_free_impl(void* ptr);
 #define safe_free(ptr)                          \
-  do { safe_free_impl(&ptr); } while(false)
+  do { safe_free_impl(ptr); ptr = NULL; } while(false)
 
 #endif  /* KMC_C89_COMPILER_UTILITY_H */
