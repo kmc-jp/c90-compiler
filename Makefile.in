@@ -1,0 +1,29 @@
+# c89-compiler/Makefile.in
+
+.SUFFIXES: .out .o .c .cc .cpp
+
+CC ?= gcc
+CXX ?= g++
+COMMON_FLAGS = -Wall -Wextra -O2
+C89_RESTRICT_FLAGS = -ansi -pedantic
+CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
+CXXFLAGS ?= $(COMMON_FLAGS)
+RM = rm -f
+AR = ar rcs
+
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.cc.o:
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	$(RM) $(OBJS)
+
+distclean: clean
+	$(RM) $(TARGET)
+
+.PHONY: clean distclean
