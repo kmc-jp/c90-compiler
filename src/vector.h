@@ -120,17 +120,18 @@
     VECTOR_METHOD(Type, copy) = copy;                                   \
   }                                                                     \
                                                                         \
-  void VECTORFUNC(Type, free)(VECTORREF(Type) self) {                   \
+  static void VECTORFUNC(Type, free)(VECTORREF(Type) self) {            \
     safe_free(self->start_);                                            \
     self->finish_ = self->end_ = NULL;                                  \
   }                                                                     \
-  void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {                \
+  static void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {         \
     self->start_ = self->finish_ = self->end_ = NULL;                   \
   }                                                                     \
-  Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) self, Type* end) {    \
+  static Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) self,          \
+                                         Type* end) {                   \
     return self->finish_ = end;                                         \
   }                                                                     \
-  void VECTORFUNC(Type, move_up)(                                       \
+  static void VECTORFUNC(Type, move_up)(                                \
       Type* head, Type* tail, size_t count) {                           \
     if (0 < count) {                                                    \
       Type* src = tail;                                                 \
@@ -140,7 +141,7 @@
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, move_down)(                                     \
+  static void VECTORFUNC(Type, move_down)(                              \
       Type* head, Type* tail, size_t count) {                           \
     if (0 < count) {                                                    \
       Type* src = head;                                                 \
@@ -150,39 +151,39 @@
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor_copy)(                               \
+  static void VECTORFUNC(Type, range_ctor_copy)(                        \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor_fill)(                               \
+  static void VECTORFUNC(Type, range_ctor_fill)(                        \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor)(Type* head, Type* tail) {           \
+  static void VECTORFUNC(Type, range_ctor)(Type* head, Type* tail) {    \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, ctor)(head);                                  \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_dtor)(Type* head, Type* tail) {           \
+  static void VECTORFUNC(Type, range_dtor)(Type* head, Type* tail) {    \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, dtor)(head);                                  \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_copy)(                                    \
+  static void VECTORFUNC(Type, range_copy)(                             \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   /* self->start_ must not be allocated */                              \
-  void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,         \
-                             const Type* data, size_t count) {          \
+  static void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,  \
+                                    const Type* data, size_t count) {   \
     const size_t capacity = enough_capacity(size);                      \
     self->start_ = safe_array_malloc(Type, capacity);                   \
     self->finish_ = self->start_ + count;                               \
