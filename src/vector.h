@@ -3,16 +3,12 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
-#ifndef __cplusplus
-typedef signed char bool;
-#endif  /* __cplusplus */
+#include "utility.h"
 
 #define CONCATENATE(x, y) x ## y
 #define CONCAT(x, y) CONCATENATE(x, y)
 #define WITHBAR(x) CONCAT(x, _)
 #define TBRACKET(x) CONCAT(T, CONCAT(x, T))
-#define UNUSED(x) (void)(x)
 
 /* template macro */
 #define TEMPLATE(type, identifier)              \
@@ -124,16 +120,18 @@ typedef signed char bool;
     VECTOR_METHOD(Type, copy) = copy;                                   \
   }                                                                     \
                                                                         \
-  void VECTORFUNC(Type, free)(VECTORREF(Type) self) {                   \
-    free(self->start_);                                                 \
+  static void VECTORFUNC(Type, free)(VECTORREF(Type) self) {            \
+    safe_free(self->start_);                                            \
+    self->finish_ = self->end_ = NULL;                                  \
   }                                                                     \
-  void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {                \
+  static void VECTORFUNC(Type, nullify)(VECTORREF(Type) self) {         \
     self->start_ = self->finish_ = self->end_ = NULL;                   \
   }                                                                     \
-  Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) self, Type* end) {    \
+  static Type* VECTORFUNC(Type, set_end)(VECTORREF(Type) self,          \
+                                         Type* end) {                   \
     return self->finish_ = end;                                         \
   }                                                                     \
-  void VECTORFUNC(Type, move_up)(                                       \
+  static void VECTORFUNC(Type, move_up)(                                \
       Type* head, Type* tail, size_t count) {                           \
     if (0 < count) {                                                    \
       Type* src = tail;                                                 \
@@ -143,7 +141,7 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, move_down)(                                     \
+  static void VECTORFUNC(Type, move_down)(                              \
       Type* head, Type* tail, size_t count) {                           \
     if (0 < count) {                                                    \
       Type* src = head;                                                 \
@@ -153,41 +151,41 @@ typedef signed char bool;
       }                                                                 \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor_copy)(                               \
+  static void VECTORFUNC(Type, range_ctor_copy)(                        \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor_fill)(                               \
+  static void VECTORFUNC(Type, range_ctor_fill)(                        \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, ctor)(head);                                  \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_ctor)(Type* head, Type* tail) {           \
+  static void VECTORFUNC(Type, range_ctor)(Type* head, Type* tail) {    \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, ctor)(head);                                  \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_dtor)(Type* head, Type* tail) {           \
+  static void VECTORFUNC(Type, range_dtor)(Type* head, Type* tail) {    \
     for (; head != tail; ++head) {                                      \
       VECTOR_METHOD(Type, dtor)(head);                                  \
     }                                                                   \
   }                                                                     \
-  void VECTORFUNC(Type, range_copy)(                                    \
+  static void VECTORFUNC(Type, range_copy)(                             \
       Type* head, Type* tail, const Type* data) {                       \
     for (; head != tail; ++head, ++data) {                              \
       VECTOR_METHOD(Type, copy)(head, data);                            \
     }                                                                   \
   }                                                                     \
   /* self->start_ must not be allocated */                              \
-  void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,         \
-                             const Type* data, size_t count) {          \
+  static void VECTORFUNC(Type, new)(VECTORREF(Type) self, size_t size,  \
+                                    const Type* data, size_t count) {   \
     const size_t capacity = enough_capacity(size);                      \
-    self->start_ = (Type*)malloc(sizeof(Type) * capacity);              \
+    self->start_ = safe_array_malloc(Type, capacity);                   \
     self->finish_ = self->start_ + count;                               \
     self->end_ = self->start_ + capacity;                               \
     VECTORFUNC(Type, range_ctor_copy)(                                  \
@@ -195,8 +193,7 @@ typedef signed char bool;
   }                                                                     \
                                                                         \
   VECTORREF(Type) VECTORFUNC(Type, ctor)(void) {                        \
-    VECTORREF(Type) self =                                              \
-        (VECTORREF(Type))malloc(sizeof(struct VECTOR(Type)));           \
+    VECTORREF(Type) self = safe_malloc(struct VECTOR(Type));            \
     VECTORFUNC(Type, nullify)(self);                                    \
     return self;                                                        \
   }                                                                     \
@@ -204,8 +201,7 @@ typedef signed char bool;
     assert(pself && *pself);                                            \
     VECTORFUNC(Type, clear)(*pself);                                    \
     VECTORFUNC(Type, free)(*pself);                                     \
-    free(*pself);                                                       \
-    *pself = NULL;                                                      \
+    safe_free(*pself);                                                  \
   }                                                                     \
   void VECTORFUNC(Type, copy)(VECTORREF(Type) self,                     \
                               VECTORREF(Type) src) {                    \
@@ -309,8 +305,7 @@ typedef signed char bool;
                                size_t pos, size_t count) {              \
     assert(self);                                                       \
     {                                                                   \
-      const size_t size = VECTORFUNC(Type, size)(self);                 \
-      assert(pos + count <= size);                                      \
+      assert(pos + count <= VECTORFUNC(Type, size)(self));              \
       {                                                                 \
         Type* const begin = VECTORFUNC(Type, begin)(self);              \
         Type* const end = VECTORFUNC(Type, end)(self);                  \
@@ -419,8 +414,5 @@ typedef signed char bool;
       DEFAULT_VECTOR_METHOD(Type, ctor),        \
       DEFAULT_VECTOR_METHOD(Type, dtor),        \
       DEFAULT_VECTOR_METHOD(Type, copy))        \
-
-/* size <= capacity && capacity == pow(2, n) */
-size_t enough_capacity(size_t size);
 
 #endif  /* KMC_C89_COMPILER_VECTOR_H */
