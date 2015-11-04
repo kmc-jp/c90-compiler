@@ -2,9 +2,14 @@
 
 SRC_DIR := src
 TESTS_DIR := tests
+DIRS := $(SRC_DIR) $(TESTS_DIR)
 
 TARGET := kmc89
 RM := rm -f
+
+TEST_TARGETS := unit_test source_test
+CLEAN_TARGETS := $(DIRS:=_clean)
+DISTCLEAN_TARGETS := $(DIRS:=_distclean)
 
 
 all: $(TARGET) test
@@ -13,37 +18,29 @@ $(TARGET): build
 	cp $(SRC_DIR)/$(TARGET) $(TARGET)
 
 build:
-	cd $(SRC_DIR); make build
+	$(MAKE) -C $(SRC_DIR) build
 
 
-test: unit_test source_test
+test: $(TEST_TARGETS)
+
+$(TEST_TARGETS):
+	$(MAKE) -C $(TESTS_DIR) $@
 
 unit_test: build
-	cd $(TESTS_DIR); make unit_test
-
-source_test:
-	cd $(TESTS_DIR); make source_test
 
 
-clean: src_clean tests_clean
+clean: $(CLEAN_TARGETS)
 
-src_clean:
-	cd $(SRC_DIR); make clean
-
-tests_clean:
-	cd $(TESTS_DIR); make clean
+$(CLEAN_TARGETS):
+	$(MAKE) -C $(@:_clean=) clean
 
 
-distclean: src_distclean tests_distclean
+distclean: $(DISTCLEAN_TARGETS)
 	$(RM) $(TARGET)
 
-src_distclean:
-	cd $(SRC_DIR); make distclean
-
-tests_distclean:
-	cd $(TESTS_DIR); make distclean
+$(DISTCLEAN_TARGETS):
+	$(MAKE) -C $(@:_distclean=) distclean
 
 
-.PHONY: all build test unit_test source_test\
-	clean src_clean tests_clean\
-	distclean src_distclean tests_distclean
+.PHONY: all build test clean distclean\
+	$(TEST_TARGETS) $(CLEAN_TARGETS) $(DISTCLEAN_TARGETS)
