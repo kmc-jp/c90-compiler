@@ -1,9 +1,9 @@
 # c89-compiler/tests/Makefile
 
-STAGE1_DIR = stage1
-STAGE2_DIR = stage2
-GTEST_DIR = gtest
-VECTOR_TEST_DIR = vector_test
+STAGE1_DIR := stage1
+STAGE2_DIR := stage2
+GTEST_DIR := gtest
+VECTOR_TEST_DIR := vector_test
 
 
 source_test: stage1_test stage2_test
@@ -24,7 +24,7 @@ vector_test: gtest
 	cd $(VECTOR_TEST_DIR); make unit_test
 
 
-CLEAN_TARGETS = stage1_clean stage2_clean gtest_clean vector_test_clean
+CLEAN_TARGETS := stage1_clean stage2_clean gtest_clean vector_test_clean
 clean: $(CLEAN_TARGETS)
 
 stage1_clean:
@@ -40,7 +40,7 @@ vector_test_clean:
 	cd $(VECTOR_TEST_DIR); make clean
 
 
-DISTCLEAN_TARGETS = stage1_distclean stage2_distclean gtest_distclean vector_test_distclean
+DISTCLEAN_TARGETS := stage1_distclean stage2_distclean gtest_distclean vector_test_distclean
 distclean: $(DISTCLEAN_TARGETS)
 
 stage1_distclean:

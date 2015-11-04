@@ -1,13 +1,13 @@
 # c89-compiler/tests/stage1/Makefile
 
-TOP_DIR = ../..
-LIB_DIR = lib
+TOP_DIR := ../..
+LIB_DIR := lib
 
-LIB_SRCS = $(wildcard $(LIB_DIR)/*.c)
-LIB_OBJS = $(LIB_SRCS:.c=.o)
+LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
+LIB_OBJS := $(LIB_SRCS:.c=.o)
 
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.out) $(LIB_OBJS)
+SRCS := $(wildcard *.c)
+OBJS := $(SRCS:.c=.out) $(LIB_OBJS)
 
 include $(TOP_DIR)/Makefile.in
 

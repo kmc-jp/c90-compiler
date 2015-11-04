@@ -4,12 +4,12 @@
 
 CC ?= gcc
 CXX ?= g++
-COMMON_FLAGS = -Wall -Wextra -O2
-C89_RESTRICT_FLAGS = -ansi -pedantic
+COMMON_FLAGS := -Wall -Wextra -O2
+C89_RESTRICT_FLAGS := -ansi -pedantic
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
 CXXFLAGS ?= $(COMMON_FLAGS)
-RM = rm -f
-AR = ar rcs
+RM := rm -f
+AR := ar rcs
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@

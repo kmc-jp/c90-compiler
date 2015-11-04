@@ -1,12 +1,12 @@
 # c89-compiler/tests/gtest/Makefile
 
-TOP_DIR = ../..
-TEST_DIR = $(TOP_DIR)/tests
+TOP_DIR := ../..
+TEST_DIR := $(TOP_DIR)/tests
 
-SRCS = $(wildcard *.cc)
-OBJS = $(SRCS:.cc=.o)
-TARGET = libgtest.a
-INCLUDE = -I$(TEST_DIR)
+SRCS := $(wildcard *.cc)
+OBJS := $(SRCS:.cc=.o)
+TARGET := libgtest.a
+INCLUDE := -I$(TEST_DIR)
 
 include $(TOP_DIR)/Makefile.in
 

@@ -1,10 +1,10 @@
 # c89-compiler/Makefile
 
-SRC_DIR = src
-TESTS_DIR = tests
+SRC_DIR := src
+TESTS_DIR := tests
 
-TARGET = kmc89
-RM = rm -f
+TARGET := kmc89
+RM := rm -f
 
 
 all: $(TARGET) test
