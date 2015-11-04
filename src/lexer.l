@@ -48,27 +48,27 @@ IDENT     [_a-z][_a-zA-Z0-9]*
   return STRING_LITERAL;
 }
 
+"<<=" return BLSHIFTASSIGN;
+">>=" return BRSHIFTASSIGN;
 "<<"  return BLSHIFT;
 ">>"  return BRSHIFT;
 "<="  return LE;
 ">="  return GE;
-"=="  return EQEQ;
+"=="  return EQ;
 "!="  return NEQ;
 "->"  return ARROW;
 "++"  return INCREMENT;
 "--"  return DECREMENT;
 "&&"  return LAND;
 "||"  return LOR;
-"*="  return MULEQ;
-"/="  return DIVEQ;
-"%="  return MODEQ;
-"+="  return ADDEQ;
-"-="  return SUBEQ;
-"<<=" return BLSHIFTEQ;
-">>=" return BRSHIFTEQ;
-"&="  return BANDEQ;
-"^="  return BXOREQ;
-"|="  return BOREQ;
+"*="  return MULASSIGN;
+"/="  return DIVASSIGN;
+"%="  return MODASSIGN;
+"+="  return ADDASSIGN;
+"-="  return SUBASSIGN;
+"&="  return BANDASSIGN;
+"^="  return BXORASSIGN;
+"|="  return BORASSIGN;
 "["   return LBRAKET;
 "]"   return RBRAKET;
 "("   return LPAREN;
@@ -87,7 +87,7 @@ IDENT     [_a-z][_a-zA-Z0-9]*
 "^"   return BXOR;
 "|"   return BOR;
 "?"   return QUESTION;
-"="   return EQ;
+"="   return ASSIGN;
 ","   return COMMA;
 ":"   return COLON;
 ";"   return SEMICOLON;
