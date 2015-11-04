@@ -5,8 +5,10 @@ SRC_DIR := $(TOP_DIR)/src
 TESTS_DIR := $(TOP_DIR)/tests
 GTEST_DIR := $(TESTS_DIR)/gtest
 
-GTEST_LIB := $(GTEST_DIR)/libgtest.a
-UTILITY_OBJ := $(SRC_DIR)/utility.o
+GTEST_LIB := libgtest.a
+UTILITY_OBJ := utility.o
+GTEST_TARGET := $(GTEST_DIR)/$(GTEST_LIB)
+UTILITY_TARGET := $(SRC_DIR)/$(UTILITY_OBJ)
 
 C_SRCS := $(wildcard *.c)
 CXX_SRCS := $(wildcard *.cpp)
@@ -25,9 +27,15 @@ LIBS += -lgtest -lpthread
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS) $(UTILITY_OBJ)
+$(TARGET): $(OBJS) $(UTILITY_TARGET)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
 
-$(TARGET): $(GTEST_LIB)
+$(TARGET): $(GTEST_TARGET)
+
+$(GTEST_TARGET):
+	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
+
+$(UTILITY_TARGET):
+	$(MAKE) -C $(SRC_DIR) $(UTILITY_OBJ)
 
 .PHONY: unit_test
