@@ -26,8 +26,6 @@ test: $(TEST_TARGETS)
 $(TEST_TARGETS):
 	$(MAKE) -C $(TESTS_DIR) $@
 
-unit_test: build
-
 
 clean: $(CLEAN_TARGETS)
 
