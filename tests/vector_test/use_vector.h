@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_USE_VECTOR_H
 #define KMC_C89_COMPILER_USE_VECTOR_H
 
-#include "../src/vector.h"
+#include "vector.h"
 
 DECLARE_VECTOR(int)
 DECLARE_DEFAULT_METHODS(int)
