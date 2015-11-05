@@ -15,7 +15,7 @@ LLVM_CXXFLAGS := `llvm-config --cxxflags`
 LLVM_LDFLAGS := `llvm-config --ldflags`
 LLVM_LIBS := `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
-include $(TOP_DIR)/Makefile.in
+include $(TOP_DIR)/Makefile.common
 
 CFLAGS += $(LLVM_CFLAGS)
 CXXFLAGS += $(LLVM_CXXFLAGS)

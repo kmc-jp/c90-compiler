@@ -5,7 +5,7 @@ TOP_DIR := ../..
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.out)
 
-include $(TOP_DIR)/Makefile.in
+include $(TOP_DIR)/Makefile.common
 
 source_test: $(OBJS)
 

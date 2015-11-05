@@ -9,7 +9,7 @@ LIB_OBJS := $(LIB_SRCS:.c=.o)
 SRCS := $(wildcard *.c)
 OBJS := $(SRCS:.c=.out) $(LIB_OBJS)
 
-include $(TOP_DIR)/Makefile.in
+include $(TOP_DIR)/Makefile.common
 
 source_test: lib_build $(OBJS)
 

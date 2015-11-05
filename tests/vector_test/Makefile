@@ -18,7 +18,7 @@ OBJS := $(C_OBJS) $(CXX_OBJS)
 TARGET := vector_test.out
 INCLUDE := -I$(TESTS_DIR) -I$(SRC_DIR)
 
-include $(TOP_DIR)/Makefile.in
+include $(TOP_DIR)/Makefile.common
 
 CFLAGS += $(INCLUDE)
 CXXFLAGS += $(INCLUDE)

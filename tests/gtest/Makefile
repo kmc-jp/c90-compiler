@@ -8,7 +8,7 @@ OBJS := $(SRCS:.cc=.o)
 TARGET := libgtest.a
 INCLUDE := -I$(TEST_DIR)
 
-include $(TOP_DIR)/Makefile.in
+include $(TOP_DIR)/Makefile.common
 
 CXXFLAGS += -Wno-missing-field-initializers $(INCLUDE)
 
