@@ -36,7 +36,7 @@ IDENT     [_a-z][_a-zA-Z0-9]*
 <STRING>{CHARACTER} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
-    VECTORFUNC(char, push)(lexer_string_literal, &(yytext[i]));
+    VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
   }
 }
 
@@ -151,11 +151,3 @@ IDENT     [_a-z][_a-zA-Z0-9]*
   exit(EXIT_FAILURE);
 }
 %%
-#include <stdio.h>
-
-int main(argc,argv)
-int argc;
-char *argv;
-{
-  yylex();
-}
