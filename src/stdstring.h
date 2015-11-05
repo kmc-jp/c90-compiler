@@ -89,5 +89,17 @@ size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index);
 void string_resize(StringRef self, size_t size);
 /* swap */
 void string_swap(StringRef self, StringRef other);
+/* find */
+/* return index of the first character of the first matched substring in self */
+/* otherwise, return string_npos */
+size_t string_find(StringRef self, const char* str);
+/* find_first_of */
+/* return index of the first matched character in self */
+/* otherwise, return string_npos */
+size_t string_find_first_of(StringRef self, const char* str);
+/* find_first_not_of */
+/* return index of the first matched character in self */
+/* otherwise, return string_npos */
+size_t string_find_first_not_of(StringRef self, const char* str);
 
 #endif  /* KMC_C89_COMPILER_STDSTRING_H */
