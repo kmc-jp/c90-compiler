@@ -5,6 +5,10 @@
 
 typedef struct String* StringRef;
 
+/* npos */
+/* represent index of end of string */
+extern const size_t string_npos;
+
 /* constructor */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */
@@ -43,5 +47,47 @@ void string_reserve(StringRef self, size_t size);
 size_t string_capacity(StringRef self);
 /* shrink_to_fit */
 void string_shrink_to_fit(StringRef self);
+/* clear */
+void string_clear(StringRef self);
+/* insert */
+/* behavior is undefined if index is out of range */
+void string_insert(StringRef self, size_t index, const char* data);
+/* erase */
+/* remove from index to the end if 'index + count' is out of range */
+/* remove from index to the end if count is string_npos */
+/* behavior is undefined if index is out of range */
+void string_erase(StringRef self, size_t index, size_t count);
+/* push_back */
+void string_push_back(StringRef self, char data);
+/* pop_back */
+/* behavior is undefined if self is empty */
+void string_pop_back(StringRef self);
+/* append */
+void string_append(StringRef self, const char* data);
+/* compare */
+/* return negative value if self is lexicographically less than other */
+/* return 0 if self and other is equal */
+/* return positive value if self is lexicographically greater than other */
+int string_compare(StringRef self, StringRef other);
+/* replace */
+/* index and count is treated same as string_erase */
+void string_replace(StringRef self, size_t index, size_t count,
+                    const char* data);
+/* substr */
+/* index and count is treated same as string_erase */
+/* returned object must be destructed */
+StringRef string_substr(StringRef self, size_t index, size_t count);
+/* copy */
+/* index and count is treated same as string_erase */
+/* characters copied to dst is not null-terminated */
+/* return the number of characters copied to dst */
+/* behaviour is undefined if dst has not enough storage */
+size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index);
+/* resize */
+/* additional null-characters are appended
+   if the current length of self is less than size */
+void string_resize(StringRef self, size_t size);
+/* swap */
+void string_swap(StringRef self, StringRef other);
 
 #endif  /* KMC_C89_COMPILER_STDSTRING_H */
