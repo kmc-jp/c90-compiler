@@ -4,6 +4,7 @@
 
 CC ?= gcc
 CXX ?= g++
+LEX = flex
 COMMON_FLAGS = -Wall -Wextra -O2
 C89_RESTRICT_FLAGS = -ansi -pedantic
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
