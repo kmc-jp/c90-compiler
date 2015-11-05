@@ -33,5 +33,15 @@ char* string_begin(StringRef self);
 /* end */
 /* return pointer to the null character following the last character */
 char* string_end(StringRef self);
+/* empty */
+bool string_empty(StringRef self);
+/* length */
+size_t string_length(StringRef self);
+/* reserve */
+void string_reserve(StringRef self, size_t size);
+/* capacity */
+size_t string_capacity(StringRef self);
+/* shrink_to_fit */
+void string_shrink_to_fit(StringRef self);
 
 #endif  /* KMC_C89_COMPILER_STDSTRING_H */
