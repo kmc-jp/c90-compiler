@@ -1,8 +1,9 @@
-%option yywrap
+/* %option yywrap */
 %{
 #include "token.h"
 #include "yacc_mock.h"
 #include "utility.h"
+#include "use_vector.h"
 /* #include "y.tab.h" */
 
 int yywrap(void) {
@@ -10,7 +11,7 @@ int yywrap(void) {
 }
 
 void copy_to_yylval(char *src, int size) {
-  char *literal = safe_malloc(size + 1);
+  char *literal = safe_array_malloc(char, size + 1);
   strncpy(literal, src, size);
   literal[size] = '\0';
   yylval = literal;
@@ -33,17 +34,17 @@ IDENT     [_a-z][_a-zA-Z0-9]*
 "\""              BEGIN(STRING);
 
 <STRING>{CHARACTER} {
-  int i;
+  unsigned i;
   for (i = 0; i < yyleng; ++i) {
-    VECTORREF(char, push)(lexer_string_literal, &(yytext[i]));
+    VECTORFUNC(char, push)(lexer_string_literal, &(yytext[i]));
   }
 }
 
 <STRING>"\""      {
-  int len = VECTORREF(char, size)(lexer_string_literal);
-  char *str = VECTORREF(char, data)(lexer_string_literal);
+  int len = VECTORFUNC(char, size)(lexer_string_literal);
+  char *str = VECTORFUNC(char, data)(lexer_string_literal);
   copy_to_yylval(str, len);
-  VECTORREF(char, clear)(lexer_string_literal);
+  VECTORFUNC(char, clear)(lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
 }
