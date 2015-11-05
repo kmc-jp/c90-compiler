@@ -151,11 +151,3 @@ IDENT     [_a-z][_a-zA-Z0-9]*
   exit(EXIT_FAILURE);
 }
 %%
-#include <stdio.h>
-
-int main(argc,argv)
-int argc;
-char *argv;
-{
-  yylex();
-}
