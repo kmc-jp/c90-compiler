@@ -13,16 +13,16 @@ LLVM_MODULES := core analysis bitwriter
 LLVM_CFLAGS := `llvm-config --cflags`
 LLVM_CXXFLAGS := `llvm-config --cxxflags`
 LLVM_LDFLAGS := `llvm-config --ldflags`
-LLVM_LIBS := `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
+LLVM_LDLIBS := `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
 include $(TOP_DIR)/Makefile.common
 
 CFLAGS += $(LLVM_CFLAGS)
 CXXFLAGS += $(LLVM_CXXFLAGS)
 LDFLAGS += $(LLVM_LDFLAGS)
-LIBS += $(LLVM_LIBS)
+LDLIBS += $(LLVM_LDLIBS)
 
 build: $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(LDFLAGS) $^ $(LIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@

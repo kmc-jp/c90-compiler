@@ -23,12 +23,12 @@ include $(TOP_DIR)/Makefile.common
 CFLAGS += $(INCLUDE)
 CXXFLAGS += $(INCLUDE)
 LDFLAGS += -L$(GTEST_DIR)
-LIBS += -lgtest -lpthread
+LDLIBS += -lgtest -lpthread
 
 unit_test: $(TARGET)
 
 $(TARGET): $(OBJS) $(UTILITY_TARGET)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(TARGET): $(GTEST_TARGET)
 
