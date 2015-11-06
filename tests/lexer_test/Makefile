@@ -6,7 +6,7 @@ TESTS_DIR = $(TOP_DIR)/tests
 GTEST_DIR = $(TESTS_DIR)/gtest
 
 GTEST_LIB = $(GTEST_DIR)/libgtest.a
-UTILITY_OBJ = $(SRC_DIR)/utility.o
+SRC_OBJS = $(SRC_DIR)/lex.yy.o $(SRC_DIR)/yacc_mock.o $(SRC_DIR)/lexer_adapter.o $(SRC_DIR)/use_vector.o $(SRC_DIR)/utility.o
 
 C_SRCS = $(wildcard *.c)
 CXX_SRCS = $(wildcard *.cpp)
@@ -22,10 +22,11 @@ CFLAGS += $(INCLUDE)
 CXXFLAGS += $(INCLUDE)
 LDFLAGS += -L$(GTEST_DIR)
 LIBS += -lgtest -lpthread
+OBJS += $(SRC_DIR)/lex.yy.o
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS) $(UTILITY_OBJ)
+$(TARGET): $(OBJS) $(SRC_OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
 
 $(TARGET): $(GTEST_LIB)
