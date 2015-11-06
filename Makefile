@@ -43,5 +43,5 @@ $(DISTCLEAN_TARGETS): distclean_%:
 	$(MAKE) -C $* distclean
 
 
-.PHONY: all build test clean distclean\
+.PHONY: all build test do_test clean distclean\
 	$(TEST_TARGETS) $(CLEAN_TARGETS) $(DISTCLEAN_TARGETS)

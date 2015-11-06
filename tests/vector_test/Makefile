@@ -41,4 +41,4 @@ $(UTILITY_TARGET):
 do_test: $(TARGET)
 	./$(TARGET)
 
-.PHONY: unit_test
+.PHONY: unit_test do_test
