@@ -12,7 +12,7 @@ CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
 DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
 
 
-all: $(TARGET) test
+all: $(TARGET)
 
 $(TARGET): build
 	cp $(SRC_DIR)/$(TARGET) $(TARGET)
