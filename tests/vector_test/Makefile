@@ -38,4 +38,7 @@ $(GTEST_TARGET):
 $(UTILITY_TARGET):
 	$(MAKE) -C $(SRC_DIR) $(UTILITY_OBJ)
 
+do_test: $(TARGET)
+	./$(TARGET)
+
 .PHONY: unit_test

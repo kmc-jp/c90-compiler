@@ -21,10 +21,13 @@ build:
 	$(MAKE) -C $(SRC_DIR) build
 
 
-test: $(TEST_TARGETS)
+test: $(TEST_TARGETS) do_test
 
 $(TEST_TARGETS):
 	$(MAKE) -C $(TESTS_DIR) $@
+
+do_test:
+	$(MAKE) -C $(TESTS_DIR) do_test
 
 
 clean: $(CLEAN_TARGETS)
