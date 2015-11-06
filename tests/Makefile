@@ -8,34 +8,34 @@ SOURCE_TEST_DIRS := $(STAGE1_DIR) $(STAGE2_DIR)
 UNIT_TEST_DIRS := $(GTEST_DIR) $(VECTOR_TEST_DIR)
 DIRS := $(SOURCE_TEST_DIRS) $(UNIT_TEST_DIRS)
 
-SOURCE_TEST_TARGETS := $(SOURCE_TEST_DIR:=_test)
-UNIT_TEST_TARGETS := $(UNIT_TEST_DIRS:=_test)
-CLEAN_TARGETS := $(DIRS:=_clean)
-DISTCLEAN_TARGETS := $(DIRS:=_distclean)
+SOURCE_TEST_TARGETS := $(addprefix source_test_,$(SOURCE_TEST_DIRS))
+UNIT_TEST_TARGETS := $(addprefix unit_test_,$(UNIT_TEST_DIRS))
+CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
+DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
 
 
 source_test: $(SOURCE_TEST_TARGETS)
 
-$(SOURCE_TEST_TARGETS):
-	$(MAKE) -C $(@:_test=) source_test
+$(SOURCE_TEST_TARGETS): source_test_%:
+	$(MAKE) -C $* source_test
 
 
 unit_test: $(UNIT_TEST_TARGETS)
 
-$(UNIT_TEST_TARGETS):
-	$(MAKE) -C $(@:_test=) unit_test
+$(UNIT_TEST_TARGETS): unit_test_%:
+	$(MAKE) -C $* unit_test
 
 
 clean: $(CLEAN_TARGETS)
 
-$(CLEAN_TARGETS):
-	$(MAKE) -C $(@:_clean=) clean
+$(CLEAN_TARGETS): clean_%:
+	$(MAKE) -C $* clean
 
 
 distclean: $(DISTCLEAN_TARGETS)
 
-$(DISTCLEAN_TARGETS):
-	$(MAKE) -C $(@:_distclean=) distclean
+$(DISTCLEAN_TARGETS): distclean_%:
+	$(MAKE) -C $* distclean
 
 
 .PHONY: source_test unit_test clean distclean\

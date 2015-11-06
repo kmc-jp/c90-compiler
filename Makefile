@@ -8,8 +8,8 @@ TARGET := kmc89
 RM := rm -f
 
 TEST_TARGETS := unit_test source_test
-CLEAN_TARGETS := $(DIRS:=_clean)
-DISTCLEAN_TARGETS := $(DIRS:=_distclean)
+CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
+DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
 
 
 all: $(TARGET) test
@@ -29,15 +29,15 @@ $(TEST_TARGETS):
 
 clean: $(CLEAN_TARGETS)
 
-$(CLEAN_TARGETS):
-	$(MAKE) -C $(@:_clean=) clean
+$(CLEAN_TARGETS): clean_%:
+	$(MAKE) -C $* clean
 
 
 distclean: $(DISTCLEAN_TARGETS)
 	$(RM) $(TARGET)
 
-$(DISTCLEAN_TARGETS):
-	$(MAKE) -C $(@:_distclean=) distclean
+$(DISTCLEAN_TARGETS): distclean_%:
+	$(MAKE) -C $* distclean
 
 
 .PHONY: all build test clean distclean\
