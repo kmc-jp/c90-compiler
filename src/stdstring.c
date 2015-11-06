@@ -16,3 +16,8 @@ StringRef string_ctor(const char* src) {
   self->length_ = length;
   return self;
 }
+
+void string_dtor(StringRef* pself) {
+  safe_free((*pself)->data_);
+  safe_free(*pself);
+}
