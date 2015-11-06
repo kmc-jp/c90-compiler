@@ -11,13 +11,13 @@ CXXFLAGS ?= $(COMMON_FLAGS)
 RM := rm -f
 AR := ar rcs
 
-.c.o:
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.cc.o:
+%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-.cpp.o:
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
