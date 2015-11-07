@@ -7,7 +7,7 @@ DIRS := $(SRC_DIR) $(TESTS_DIR)
 TARGET := kmc89
 RM := rm -f
 
-TEST_TARGETS := unit_test source_test
+TEST_TARGETS := unit_test source_test do_test
 CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
 DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
 
@@ -21,13 +21,10 @@ build:
 	$(MAKE) -C $(SRC_DIR) build
 
 
-test: $(TEST_TARGETS) do_test
+test: $(TEST_TARGETS)
 
 $(TEST_TARGETS):
 	$(MAKE) -C $(TESTS_DIR) $@
-
-do_test:
-	$(MAKE) -C $(TESTS_DIR) do_test
 
 
 clean: $(CLEAN_TARGETS)
