@@ -42,7 +42,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(PLUS, lex_first_token("+ ++n"));
   EXPECT_EQ(MINUS, lex_first_token("- --n"));
   EXPECT_EQ(NEG, lex_first_token("!*p"));
-  EXPECT_EQ(DIV, lex_first_token("/*p"));
+  EXPECT_EQ(DIV, lex_first_token("/!n"));
   EXPECT_EQ(MOD, lex_first_token("%!n"));
   EXPECT_EQ(BLSHIFT, lex_first_token("<<*p"));
   EXPECT_EQ(BRSHIFT, lex_first_token(">>*p"));
@@ -57,7 +57,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(LOR, lex_first_token("||&n"));
   EXPECT_EQ(BOR, lex_first_token("|&n"));
   EXPECT_EQ(QUESTION, lex_first_token("?*p"));
-  EXPECT_EQ(EQ, lex_first_token("=!n"));
+  EXPECT_EQ(ASSIGN, lex_first_token("=!n"));
   EXPECT_EQ(MULASSIGN, lex_first_token("*=*p"));
   EXPECT_EQ(ADDASSIGN, lex_first_token("+=++n"));
   EXPECT_EQ(ADDASSIGN, lex_first_token("+=-n"));
@@ -103,7 +103,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(VOID, lex_first_token("void"));
   EXPECT_EQ(VOLATILE, lex_first_token("volatile"));
   EXPECT_EQ(WHILE, lex_first_token("while"));
-  EXPECT_EQ(FORTY_TWO, lex_first_token("forty_two"));
+  EXPECT_EQ(FORTY_TWO, lex_first_token("the_answer"));
   
   EXPECT_EQ(IDENT, lex_first_token("automobile"));
   EXPECT_EQ(IDENT, lex_first_token("breakable"));
