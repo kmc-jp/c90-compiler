@@ -31,4 +31,6 @@ $(TARGET): $(OBJS) $(SRC_OBJS)
 
 $(TARGET): $(GTEST_LIB)
 
+lexer_test.cpp : $(SRC_DIR)/token.h
+
 .PHONY: unit_test
