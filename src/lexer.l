@@ -136,7 +136,7 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
   return INT_LITERAL;
 }
 
-[0-9]*\.[0-9]* {
+[+-]?[0-9]*\.[0-9]*[[Ee][+-]?{DIGIT10}]?[FfLl]? {
   copy_to_yylval(yytext, yyleng);
   return DOUBLE_LITERAL;
 }
