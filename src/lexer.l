@@ -54,6 +54,16 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
   return STRING_LITERAL;
 }
 
+[+-]?[0-9]*"."[0-9]*[[Ee][+-]?{DIGIT10}]?[FfLl]? {
+  copy_to_yylval(yytext, yyleng);
+  return DOUBLE_LITERAL;
+}
+
+[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
+  copy_to_yylval(yytext, yyleng);
+  return INT_LITERAL;
+}
+
 "<<=" return BLSHIFTASSIGN;
 ">>=" return BRSHIFTASSIGN;
 "<<"  return BLSHIFT;
@@ -130,16 +140,6 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
 "volatile"  return VOLATILE;
 "while"     return WHILE;
 "the_answer"  return FORTY_TWO; /* funny easter egg */
-
-[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
-}
-
-[+-]?[0-9]*\.[0-9]*[[Ee][+-]?{DIGIT10}]?[FfLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
-}
 
 {IDENT} {
   copy_to_yylval(yytext, yyleng);
