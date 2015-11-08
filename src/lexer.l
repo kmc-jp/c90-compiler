@@ -23,6 +23,11 @@ ESCSEQ    \\[\\\?\'\"abfnrtv0]
 NONESCSEQ [^\\\?\'\"abfnrtv0]
 CHARACTER {ESCSEQ}|{NONESCSEQ}
 IDENT     [_a-z][_a-zA-Z0-9]*
+DIGIT2    "0b"("0"|1[01]*)
+DIGIT4    "0q"("0"|[1-3][0-3]*)
+DIGIT8    "0"("0"|[1-7][0-7]*)
+DIGIT10   "0"|[1-9][0-9]*
+DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
 %x COMMENT
 %x STRING
 %%
@@ -47,6 +52,16 @@ IDENT     [_a-z][_a-zA-Z0-9]*
   VECTORFUNC(char, clear)(lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
+}
+
+[+-]?[0-9]*"."[0-9]*[[Ee][+-]?{DIGIT10}]?[FfLl]? {
+  copy_to_yylval(yytext, yyleng);
+  return DOUBLE_LITERAL;
+}
+
+[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
+  copy_to_yylval(yytext, yyleng);
+  return INT_LITERAL;
 }
 
 "<<=" return BLSHIFTASSIGN;
@@ -125,16 +140,6 @@ IDENT     [_a-z][_a-zA-Z0-9]*
 "volatile"  return VOLATILE;
 "while"     return WHILE;
 "the_answer"  return FORTY_TWO; /* funny easter egg */
-
-"0"|[1-9][0-9]* {
-  copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
-}
-
-[0-9]*\.[0-9]* {
-  copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
-}
 
 {IDENT} {
   copy_to_yylval(yytext, yyleng);
