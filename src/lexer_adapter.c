@@ -14,9 +14,5 @@ void yyin_from_file(const char *filename) {
 }
 
 void yyin_from_string(char *code, int size) {
-  FILE *fp = fmemopen(code, size + 1, "r");
-  if (fp == NULL) {
-    printf("fatal error: failed to open stream\n");
-    exit(EXIT_FAILURE);
-  }
+  yy_scan_string(code);
 }
