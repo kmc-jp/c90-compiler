@@ -13,6 +13,6 @@ void yyin_from_file(const char *filename) {
   yyin = fp;
 }
 
-void yyin_from_string(char *code, int size) {
+void yyin_from_string(const char *code) {
   yy_scan_string(code);
 }
