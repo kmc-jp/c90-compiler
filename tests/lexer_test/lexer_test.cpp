@@ -164,21 +164,20 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14l"));
   
   EXPECT_EQ(CHAR_LITERAL, lex_first_token("'*'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\a'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\b'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\f'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\n'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\r'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\v'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\\'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\?'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\"'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\''"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\0'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\10'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'\x8'"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\a')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\b')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\f')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\n')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\r')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\v')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\0')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\10')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\x8')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\\')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\"')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\'')"));
+  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\?')"));
 
-  EXPECT_EQ(STRING_LITERAL,
-      lex_first_token("abcdefgABCDEFG\t\'\n\\____;;;"));
+  EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
 }
 
