@@ -1,5 +1,6 @@
 /* %option yywrap */
 %{
+#define YY_USER_INIT initialize_lexer()
 #include "token.h"
 #include "yacc_mock.h"
 #include "utility.h"
@@ -18,9 +19,14 @@ void copy_to_yylval(char *src, int size) {
 }
 
 VECTORREF(char) lexer_string_literal;
+
+void initialize_lexer(void) {
+  do_initialize_vector();
+  lexer_string_literal = VECTORFUNC(char, ctor)();
+}
 %}
-ESCSEQ    \\[\\\?\'\"abfnrtv0]
-NONESCSEQ [^\\\?\'\"abfnrtv0]
+ESCSEQ    "\\"[\\\'\"abfnrtv0?]
+NONESCSEQ [^\\]
 CHARACTER {ESCSEQ}|{NONESCSEQ}
 IDENT     [_a-z][_a-zA-Z0-9]*
 DIGIT2    "0b"("0"|1[01]*)
@@ -28,6 +34,8 @@ DIGIT4    "0q"("0"|[1-3][0-3]*)
 DIGIT8    "0"("0"|[1-7][0-7]*)
 DIGIT10   "0"|[1-9][0-9]*
 DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
+CHAR8     "\\"[0-7]+
+CHAR16    "\\x"[0-9A-F]+
 %x COMMENT
 %x STRING
 %%
@@ -38,13 +46,6 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
 
 "\""              BEGIN(STRING);
 
-<STRING>{CHARACTER} {
-  unsigned i;
-  for (i = 0; i < yyleng; ++i) {
-    VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
-  }
-}
-
 <STRING>"\""      {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
   char *str = VECTORFUNC(char, data)(lexer_string_literal);
@@ -54,7 +55,14 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
   return STRING_LITERAL;
 }
 
-[+-]?[0-9]*"."[0-9]*[[Ee][+-]?{DIGIT10}]?[FfLl]? {
+<STRING>{CHARACTER} {
+  unsigned i;
+  for (i = 0; i < yyleng; ++i) {
+    VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
+  }
+}
+
+[+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   copy_to_yylval(yytext, yyleng);
   return DOUBLE_LITERAL;
 }
@@ -146,7 +154,7 @@ DIGIT16   "0x"("0"|[1-9A-F][0-9A-F]*)
   return IDENT;
 }
 
-"'"{CHARACTER}"'" {
+"'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
   copy_to_yylval(yytext, yyleng);
   return CHAR_LITERAL;
 }
