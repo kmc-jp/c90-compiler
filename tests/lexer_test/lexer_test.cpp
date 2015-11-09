@@ -2,10 +2,12 @@ extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "lexer_adapter.h"
+#include "use_vector.h"
 #include "token.h"
 }
 #include "gtest/gtest.h"
 #include <vector>
+#include <string>
 
 std::vector<Token> lex_from_file(const std::string &filename) {
   yyin_from_file(filename.c_str());
@@ -18,11 +20,12 @@ std::vector<Token> lex_from_file(const std::string &filename) {
 }
 
 Token lex_first_token(const std::string &code) {
-  char *str = new char[code.length() + 1];
-  strcpy(str, code.c_str());
-  yyin_from_string(str, code.length());
-  Token tok;
-  tok = (Token)yylex();
+  std::string str;
+  str.reserve(code.length() + 1);
+  str.assign(code);
+  str.resize(code.length() + 1);
+  yyin_from_string(str.data());
+  Token tok = (Token)yylex();
   return tok;
 }
 
