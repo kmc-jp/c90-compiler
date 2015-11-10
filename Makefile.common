@@ -2,6 +2,13 @@
 
 .SUFFIXES: .out .o .c .cc .cpp
 
+C_SRCS := $(wildcard *.c)
+CC_SRCS := $(wildcard *.cc)
+CXX_SRCS := $(wildcard *.cpp)
+C_OBJS := $(C_SRCS:.c=.o)
+CC_OBJS := $(CC_SRCS:.cc=.o)
+CXX_OBJS := $(CXX_SRCS:.cpp=.o)
+
 CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2
