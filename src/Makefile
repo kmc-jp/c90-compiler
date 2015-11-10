@@ -9,18 +9,8 @@ CXX_OBJS := $(CXX_SRCS:.cpp=.o)
 OBJS := $(C_OBJS) $(CXX_OBJS)
 TARGET := kmc89
 
-LLVM_MODULES := core analysis bitwriter
-LLVM_CFLAGS := `llvm-config --cflags`
-LLVM_CXXFLAGS := `llvm-config --cxxflags`
-LLVM_LDFLAGS := `llvm-config --ldflags`
-LLVM_LDLIBS := `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
-
 include $(TOP_DIR)/Makefile.common
-
-CFLAGS += $(LLVM_CFLAGS)
-CXXFLAGS += $(LLVM_CXXFLAGS)
-LDFLAGS += $(LLVM_LDFLAGS)
-LDLIBS += $(LLVM_LDLIBS)
+include Makefile.common
 
 build: $(OBJS) $(TARGET)
 
