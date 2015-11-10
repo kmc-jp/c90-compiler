@@ -1,4 +1,4 @@
-# c89-compiler/tests/stage1/Makefile
+# c89-compiler/tests/stage2/Makefile
 
 TOP_DIR := ../..
 

@@ -1,4 +1,4 @@
-# c89-compiler/Makefile.in
+# c89-compiler/Makefile.common
 
 .SUFFIXES: .out .o .c .cc .cpp
 
