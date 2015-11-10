@@ -14,13 +14,10 @@ C_OBJS := $(C_SRCS:.c=.o)
 CXX_OBJS := $(CXX_SRCS:.cpp=.o)
 OBJS := $(C_OBJS) $(CXX_OBJS)
 TARGET := vector_test.out
-INCLUDE := -I$(TESTS_DIR) -I$(SRC_DIR)
 
 include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
-
-CFLAGS += $(INCLUDE)
-CXXFLAGS += $(INCLUDE)
+include $(TESTS_DIR)/Makefile.common
 
 unit_test: $(TARGET)
 
