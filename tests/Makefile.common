@@ -1,0 +1,12 @@
+# c89-compiler/tests/Makefile.common
+
+ifndef TOP_DIR
+$(error TOP_DIR must be defined)
+endif
+
+SRC_DIR := $(TOP_DIR)/src
+TESTS_DIR := $(TOP_DIR)/tests
+
+INCLUDE += -I$(SRC_DIR) -I$(TESTS_DIR)
+CFLAGS += $(INCLUDE)
+CXXFLAGS += $(INCLUDE)
