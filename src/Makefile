@@ -1,9 +1,10 @@
 # c89-compiler/src/Makefile
 
 TOP_DIR := ..
+SRC_DIR := .
 
 include $(TOP_DIR)/Makefile.common
-include Makefile.common
+include $(SRC_DIR)/Makefile.common
 
 OBJS := $(C_OBJS) $(CXX_OBJS)
 TARGET := kmc89
