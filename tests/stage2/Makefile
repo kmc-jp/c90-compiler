@@ -2,10 +2,9 @@
 
 TOP_DIR := ../..
 
-SRCS := $(wildcard *.c)
-OBJS := $(SRCS:.c=.out)
-
 include $(TOP_DIR)/Makefile.common
+
+OBJS := $(C_OBJS)
 
 source_test: $(OBJS)
 
