@@ -9,40 +9,46 @@ UNIT_TEST_DIRS := $(GTEST_DIR) $(VECTOR_TEST_DIR)
 DO_TEST_DIRS := $(VECTOR_TEST_DIR)
 DIRS := $(SOURCE_TEST_DIRS) $(UNIT_TEST_DIRS)
 
-SOURCE_TEST_TARGETS := $(addprefix source_test_,$(SOURCE_TEST_DIRS))
-UNIT_TEST_TARGETS := $(addprefix unit_test_,$(UNIT_TEST_DIRS))
-DO_TEST_TARGETS := $(addprefix do_test_,$(DO_TEST_DIRS))
-CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
-DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
+SOURCE_TEST_PREFIX := source_test_
+UNIT_TEST_PREFIX := unit_test_
+DO_TEST_PREFIX := do_test_
+CLEAN_PREFIX := clean_
+DISTCLEAN_PREFIX := distclean_
+
+SOURCE_TEST_TARGETS := $(addprefix $(SOURCE_TEST_PREFIX),$(SOURCE_TEST_DIRS))
+UNIT_TEST_TARGETS := $(addprefix $(UNIT_TEST_PREFIX),$(UNIT_TEST_DIRS))
+DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(DO_TEST_DIRS))
+CLEAN_TARGETS := $(addprefix $(CLEAN_PREFIX),$(DIRS))
+DISTCLEAN_TARGETS := $(addprefix $(DISTCLEAN_PREFIX),$(DIRS))
 
 
 source_test: $(SOURCE_TEST_TARGETS)
 
-$(SOURCE_TEST_TARGETS): source_test_%:
+$(SOURCE_TEST_TARGETS): $(SOURCE_TEST_PREFIX)%:
 	$(MAKE) -C $* source_test
 
 
 unit_test: $(UNIT_TEST_TARGETS)
 
-$(UNIT_TEST_TARGETS): unit_test_%:
+$(UNIT_TEST_TARGETS): $(UNIT_TEST_PREFIX)%:
 	$(MAKE) -C $* unit_test
 
 
 do_test: $(DO_TEST_TARGETS)
 
-$(DO_TEST_TARGETS): do_test_%:
+$(DO_TEST_TARGETS): $(DO_TEST_PREFIX)%:
 	$(MAKE) -C $* do_test
 
 
 clean: $(CLEAN_TARGETS)
 
-$(CLEAN_TARGETS): clean_%:
+$(CLEAN_TARGETS): $(CLEAN_PREFIX)%:
 	$(MAKE) -C $* clean
 
 
 distclean: $(DISTCLEAN_TARGETS)
 
-$(DISTCLEAN_TARGETS): distclean_%:
+$(DISTCLEAN_TARGETS): $(DISTCLEAN_PREFIX)%:
 	$(MAKE) -C $* distclean
 
 

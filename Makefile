@@ -7,9 +7,12 @@ DIRS := $(SRC_DIR) $(TESTS_DIR)
 TARGET := kmc89
 RM := rm -f
 
+CLEAN_PREFIX := clean_
+DISTCLEAN_PREFIX := distclean_
+
 TEST_TARGETS := unit_test source_test do_test
-CLEAN_TARGETS := $(addprefix clean_,$(DIRS))
-DISTCLEAN_TARGETS := $(addprefix distclean_,$(DIRS))
+CLEAN_TARGETS := $(addprefix $(CLEAN_PREFIX),$(DIRS))
+DISTCLEAN_TARGETS := $(addprefix $(DISTCLEAN_PREFIX),$(DIRS))
 
 
 all: $(TARGET)
@@ -29,14 +32,14 @@ $(TEST_TARGETS):
 
 clean: $(CLEAN_TARGETS)
 
-$(CLEAN_TARGETS): clean_%:
+$(CLEAN_TARGETS): $(CLEAN_PREFIX)%:
 	$(MAKE) -C $* clean
 
 
 distclean: $(DISTCLEAN_TARGETS)
 	$(RM) $(TARGET)
 
-$(DISTCLEAN_TARGETS): distclean_%:
+$(DISTCLEAN_TARGETS): $(DISTCLEAN_PREFIX)%:
 	$(MAKE) -C $* distclean
 
 
