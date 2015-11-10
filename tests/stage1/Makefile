@@ -3,13 +3,11 @@
 TOP_DIR := ../..
 LIB_DIR := lib
 
+include $(TOP_DIR)/Makefile.common
+
 LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
 LIB_OBJS := $(LIB_SRCS:.c=.o)
-
-SRCS := $(wildcard *.c)
-OBJS := $(SRCS:.c=.out) $(LIB_OBJS)
-
-include $(TOP_DIR)/Makefile.common
+OBJS := $(C_OBJS) $(LIB_OBJS)
 
 source_test: lib_build $(OBJS)
 
