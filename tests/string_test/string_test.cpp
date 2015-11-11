@@ -295,3 +295,35 @@ TEST_F(StringTest, swap) {
   string_dtor(&v2);
 }
 
+TEST_F(StringTest, find) {
+  const char data[] = "abcdefg";
+  const size_t length = sizeof(data) / sizeof(char) - 1;
+  const char target[] = "def";
+  const char missed[] = "dack";
+  string_assign(v, data1);
+
+  EXPECT_EQ(3, string_find(v, target));
+  EXPECT_EQ(length, string_find(v, missed));
+}
+
+TEST_F(StringTest, find_first_of) {
+  const char data[] = "abcdefg";
+  const size_t length = sizeof(data) / sizeof(char) - 1;
+  const char target[] = "fgd";
+  const char missed[] = "xyz";
+  string_assign(v, data1);
+
+  EXPECT_EQ(3, string_find_first_of(v, target));
+  EXPECT_EQ(string_npos, string_find(v, missed));
+}
+
+TEST_F(StringTest, find_first_not_of) {
+  const char data[] = "abcdefg";
+  const size_t length = sizeof(data) / sizeof(char) - 1;
+  const char target[] = "cba";
+  const char allchars[] = "gfedcba";
+  string_assign(v, data1);
+
+  EXPECT_EQ(3, string_find_first_of(v, target));
+  EXPECT_EQ(string_npos, string_find(v, allchars));
+}
