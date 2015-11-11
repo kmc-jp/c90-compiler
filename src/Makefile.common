@@ -1,10 +1,11 @@
 # c89-compiler/src/Makefile.common
 
+LLVM_CONFIG ?= llvm-config
 LLVM_MODULES := core analysis bitwriter
-LLVM_CFLAGS := `llvm-config --cflags`
-LLVM_CXXFLAGS := `llvm-config --cxxflags`
-LLVM_LDFLAGS := `llvm-config --ldflags`
-LLVM_LDLIBS := `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
+LLVM_CFLAGS := `$(LLVM_CONFIG) --cflags`
+LLVM_CXXFLAGS := `$(LLVM_CONFIG) --cxxflags`
+LLVM_LDFLAGS := `$(LLVM_CONFIG) --ldflags`
+LLVM_LDLIBS := `$(LLVM_CONFIG) --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
 CFLAGS += $(LLVM_CFLAGS)
 CXXFLAGS += $(LLVM_CXXFLAGS)
