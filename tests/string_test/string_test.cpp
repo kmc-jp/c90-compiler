@@ -24,7 +24,7 @@ TEST_F(StringTest, ctor) {
 }
 
 TEST_F(StringTest, dtor) {
-  StringRef v2 = string_ctor();
+  StringRef v2 = string_ctor(NULL);
   string_dtor(&v2);
   EXPECT_EQ(NULL, v2);
 }
@@ -46,13 +46,13 @@ TEST_F(StringTest, ctor_with_data) {
   EXPECT_FALSE(string_empty(v2));
   EXPECT_EQ(length, string_length(v2));
   EXPECT_LE(length, string_capacity(v2));
-  string_dtor(v2);
+  string_dtor(&v2);
 }
 
 TEST_F(StringTest, copy) {
   const char * const data = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
-  stringRef v2(data);
+  StringRef v2 = string_ctor(data);
 
   copy(v, v2);
   ASSERT_TRUE(string_data(v) != NULL);
@@ -200,7 +200,7 @@ TEST_F(StringTest, string_compare){
     }
   }
   for (i = 0; i < count ; ++i) {
-    string_dtor(&vs[i]);
+    string_dtor(vs + i);
   }
 }
 
