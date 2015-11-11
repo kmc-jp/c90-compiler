@@ -243,7 +243,7 @@ TEST_F(StringTest, copy_to) {
   const char data2[] = "xyz";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
-  const char dst[] = "\0\0\0";
+  char dst[] = "\0\0\0";
   string_assign(v, data1);
 
   string_copy_to(v, dst, length2, 3);
