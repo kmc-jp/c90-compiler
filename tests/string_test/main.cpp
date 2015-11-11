@@ -3,9 +3,8 @@ extern "C" {
 #include "string.h"
 }
 
-class StringEnvironment {
+class StringEnvironment : public ::testing::Environment {
   virtual void SetUp() {
-    INITIALIZE_DEFAULT_METHODS(int);
   }
 };
 
