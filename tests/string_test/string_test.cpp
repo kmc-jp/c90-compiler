@@ -1,5 +1,5 @@
 extern "C" {
-#include "string.h"
+#include "stdstring.h"
 }
 #include "gtest/gtest.h"
 
