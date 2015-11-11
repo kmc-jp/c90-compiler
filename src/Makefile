@@ -9,7 +9,7 @@ include $(SRC_DIR)/Makefile.common
 OBJS := $(C_OBJS) $(CXX_OBJS)
 TARGET := kmc89
 
-build: $(OBJS) $(TARGET)
+build: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@

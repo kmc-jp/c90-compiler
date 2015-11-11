@@ -9,12 +9,10 @@ LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
 LIB_OBJS := $(LIB_SRCS:.c=.o)
 OBJS := $(C_OBJS) $(LIB_OBJS)
 
-source_test: lib_build $(OBJS)
+source_test: $(OBJS)
 
-lib_build: $(LIB_OBJS)
-
-.o.out: lib_build
+.o.out: $(LIB_OBJS)
 	$(CC) $< $(LIB_OBJS) -o $@
 
-.PHONY: source_test lib_build
+.PHONY: source_test
 .PRECIOUS: $(LIB_OBJS)

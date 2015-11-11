@@ -16,7 +16,7 @@ TARGET := vector_test.out
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS) $(UTILITY_TARGET)
+$(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(TARGET): $(GTEST_TARGET)
