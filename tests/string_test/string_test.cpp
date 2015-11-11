@@ -75,6 +75,25 @@ TEST_F(StringTest, assign) {
   EXPECT_LE(length, string_capacity(v));
 }
 
+TEST_F(StringTest, reserve) {
+  const size_t length = 5;
+
+  string_reserve(v, length);
+  EXPECT_TRUE(string_empty(v));
+  EXPECT_LE(length, string_capacity(v));
+}
+
+TEST_F(StringTest, shrink_to_fit) {
+  const char * const data = "abcde"
+  const size_t length = sizeof(data) / sizeof(char) - 1;
+  string_assign(v, data);
+
+  string_reserve(v, 20);
+  EXPECT_LE(20, string_capacity(v));
+
+  string_shrink_to_fit(v);
+  EXPECT_LE(length, string_capacity(v));
+}
 TEST_F(StringTest, clear) {
   const char * const data = "abcde"
   string_assign(v, data);
@@ -230,6 +249,31 @@ TEST_F(StringTest, copy_to) {
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1, string_size(v));
   EXPECT_STREQ(data1, string_data(v))
+}
+
+TEST_F(StringTest, resize) {
+  const char data1[] = "abcd";
+  const char data2[] = "abcd\0";
+  const char data3[] = "abcd\0\0\0\0\0\0";
+  const char data4[] = "abc";
+  int len = 0, i = 0,
+  string_assign(v, data1);
+  
+  string_resize(v, 5);
+  EXPECT_EQ(5U, string_size(v));
+  for (i = 0; i <= 5; ++i) {
+    EXPECT_EQ(data2[i], string_data(v)[i]);
+  }
+  string_resize(v, 10);
+  EXPECT_EQ(10U, string_size(v));
+  for (i = 0; i <= 10; ++i) {
+    EXPECT_EQ(data3[i], string_data(v)[i]);
+  }
+  string_resize(v, 3);
+  EXPECT_EQ(3, string_size(v));
+  for (i = 0; i <= 3; ++i) {
+    EXPECT_EQ(data4[i], string_data(v)[i]);
+  }
 }
 
 TEST_F(StringTest, swap) {
