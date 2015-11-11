@@ -20,7 +20,7 @@ TEST_F(StringTest, ctor) {
   EXPECT_EQ('\0', *string_end(v));
   EXPECT_TRUE(string_empty(v));
   EXPECT_EQ(0U, string_length(v));
-  EXPECT_EQ(0U, string_capasity(v));
+  EXPECT_EQ(0U, string_capacity(v));
 }
 
 TEST_F(StringTest, dtor) {
@@ -45,7 +45,7 @@ TEST_F(StringTest, ctor_with_data) {
   }
   EXPECT_FALSE(string_empty(v2));
   EXPECT_EQ(length, string_length(v2));
-  EXPECT_LE(length, string_capasity(v2));
+  EXPECT_LE(length, string_capacity(v2));
   string_dtor(v2);
 }
 
@@ -58,7 +58,7 @@ TEST_F(StringTest, copy) {
   ASSERT_TRUE(string_data(v) != NULL);
   EXPECT_STREQ(data, string_data(v));
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length, string_size(v));
+  EXPECT_EQ(length, string_length(v));
   EXPECT_LE(length, string_capacity(v));
   string_dtor(&v2);
 }
@@ -71,7 +71,7 @@ TEST_F(StringTest, assign) {
   ASSERT_TRUE(string_data(v) != NULL);
   EXPECT_STREQ(data, string_data(v));
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length, string_size(v));
+  EXPECT_EQ(length, string_length(v));
   EXPECT_LE(length, string_capacity(v));
 }
 
@@ -112,7 +112,7 @@ TEST_F(StringTest, insert) {
 
   string_insert(v, 3, data2);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1 + length2, string_size(v));
+  EXPECT_EQ(length1 + length2, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
 }
 
@@ -125,7 +125,7 @@ TEST_F(StringTest, erase) {
 
   string_erase(v, 3, 5);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length2, string_size(v));
+  EXPECT_EQ(length2, string_length(v));
   EXPECT_STREQ(data2, string_data(v));
   
   string_erase(v, 0, 5);
@@ -141,7 +141,7 @@ TEST_F(StringTest, push_back) {
     string_push_back(v, data[i]);
   }
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length, string_size(v));
+  EXPECT_EQ(length, string_length(v));
   EXPECT_STREQ(data, string_data(v));
 }
 
@@ -157,7 +157,7 @@ TEST_F(StringTest, pop_back) {
     string_pop_back(v);
   }
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length2, string_size(v));
+  EXPECT_EQ(length2, string_length(v));
   EXPECT_STREQ(data2, string_data(v));
   for (i = 0; i < length2; ++i) {
     string_pop_back(v);
@@ -174,12 +174,12 @@ TEST_F(StringTest, append) {
 
   string_append(v, data1);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1, string_size(v));
+  EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data1, string_data(v));
 
   string_append(v1, data2);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1 + length2, string_size(v));
+  EXPECT_EQ(length1 + length2, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
 }
 
@@ -214,7 +214,7 @@ TEST_F(StringTest, replace) {
 
   string_replace(v, 3, length2, data2);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1, string_size(v));
+  EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data3, string_data(v))
 }
 
@@ -227,11 +227,11 @@ TEST_F(StringTest, substr) {
 
   StringRef v2 = string_substr(v, 3, length2);
   EXPECT_FALSE(string_empty(v2));
-  EXPECT_EQ(length2, string_size(v2));
+  EXPECT_EQ(length2, string_length(v2));
   EXPECT_STREQ(data2, string_data(v2))
 
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1, string_size(v));
+  EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data1, string_data(v))
 }
 
@@ -247,7 +247,7 @@ TEST_F(StringTest, copy_to) {
   EXPECT_STREQ(data2, dst)
 
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length1, string_size(v));
+  EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data1, string_data(v))
 }
 
@@ -260,17 +260,17 @@ TEST_F(StringTest, resize) {
   string_assign(v, data1);
   
   string_resize(v, 5);
-  EXPECT_EQ(5U, string_size(v));
+  EXPECT_EQ(5U, string_length(v));
   for (i = 0; i <= 5; ++i) {
     EXPECT_EQ(data2[i], string_data(v)[i]);
   }
   string_resize(v, 10);
-  EXPECT_EQ(10U, string_size(v));
+  EXPECT_EQ(10U, string_length(v));
   for (i = 0; i <= 10; ++i) {
     EXPECT_EQ(data3[i], string_data(v)[i]);
   }
   string_resize(v, 3);
-  EXPECT_EQ(3, string_size(v));
+  EXPECT_EQ(3, string_length(v));
   for (i = 0; i <= 3; ++i) {
     EXPECT_EQ(data4[i], string_data(v)[i]);
   }
@@ -286,10 +286,10 @@ TEST_F(StringTest, swap) {
 
   string_swap(v, v2);
   EXPECT_FALSE(string_empty(v));
-  EXPECT_EQ(length2, string_size(v));
+  EXPECT_EQ(length2, string_length(v));
   EXPECT_STREQ(data2, string_data(v))
   EXPECT_FALSE(string_empty(v2));
-  EXPECT_EQ(length1, string_size(v2));
+  EXPECT_EQ(length1, string_length(v2));
   EXPECT_STREQ(data1, string_data(v2))
 
   string_dtor(&v2);
