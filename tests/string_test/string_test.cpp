@@ -54,7 +54,7 @@ TEST_F(StringTest, copy) {
   const size_t length = sizeof(data) / sizeof(char) - 1;
   StringRef v2 = string_ctor(data);
 
-  copy(v, v2);
+  string_copy(v, v2);
   ASSERT_TRUE(string_data(v) != NULL);
   EXPECT_STREQ(data, string_data(v));
   EXPECT_FALSE(string_empty(v));
@@ -89,7 +89,7 @@ TEST_F(StringTest, shrink_to_fit) {
   string_assign(v, data);
 
   string_reserve(v, 20);
-  EXPECT_LE(20, string_capacity(v));
+  EXPECT_LE(20U, string_capacity(v));
 
   string_shrink_to_fit(v);
   EXPECT_LE(length, string_capacity(v));
@@ -119,7 +119,6 @@ TEST_F(StringTest, insert) {
 TEST_F(StringTest, erase) {
   const char * const data1 = "abcjihgfde";
   const char * const data2 = "abcde";
-  const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
   string_assign(v, data1);
 
@@ -150,7 +149,7 @@ TEST_F(StringTest, pop_back) {
   const char * const data2 = "abcde";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
-  string_assign(v, data);
+  string_assign(v, data1);
   size_t i = 0;
 
   for (i = 0; i < length1 - length2; ++i) {
@@ -177,7 +176,7 @@ TEST_F(StringTest, append) {
   EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data1, string_data(v));
 
-  string_append(v1, data2);
+  string_append(v, data2);
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1 + length2, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
@@ -256,7 +255,7 @@ TEST_F(StringTest, resize) {
   const char data2[] = "abcd\0";
   const char data3[] = "abcd\0\0\0\0\0\0";
   const char data4[] = "abc";
-  int len = 0, i = 0,
+  int i = 0;
   string_assign(v, data1);
   
   string_resize(v, 5);
@@ -300,7 +299,7 @@ TEST_F(StringTest, find) {
   const size_t length = sizeof(data) / sizeof(char) - 1;
   const char target[] = "def";
   const char missed[] = "dack";
-  string_assign(v, data1);
+  string_assign(v, data);
 
   EXPECT_EQ(3, string_find(v, target));
   EXPECT_EQ(length, string_find(v, missed));
@@ -308,10 +307,9 @@ TEST_F(StringTest, find) {
 
 TEST_F(StringTest, find_first_of) {
   const char data[] = "abcdefg";
-  const size_t length = sizeof(data) / sizeof(char) - 1;
   const char target[] = "fgd";
   const char missed[] = "xyz";
-  string_assign(v, data1);
+  string_assign(v, data);
 
   EXPECT_EQ(3, string_find_first_of(v, target));
   EXPECT_EQ(string_npos, string_find(v, missed));
@@ -319,10 +317,9 @@ TEST_F(StringTest, find_first_of) {
 
 TEST_F(StringTest, find_first_not_of) {
   const char data[] = "abcdefg";
-  const size_t length = sizeof(data) / sizeof(char) - 1;
   const char target[] = "cba";
   const char allchars[] = "gfedcba";
-  string_assign(v, data1);
+  string_assign(v, data);
 
   EXPECT_EQ(3, string_find_first_of(v, target));
   EXPECT_EQ(string_npos, string_find(v, allchars));
