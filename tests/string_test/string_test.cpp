@@ -183,9 +183,13 @@ TEST_F(StringTest, append) {
 }
 
 TEST_F(StringTest, string_compare){
-  const StringRef[] vs = {"", "a", "ab", "aba", "abc", "c"};
+  const char * const data[] = {"", "a", "ab", "aba", "abc", "c"};
   const int count = 6;
-  int i = 0; j = 1, result = 0;
+  StringRef vs[count];
+  int i = 0, j = 1, result = 0;
+  for (i = 0; i < count ; ++i) {
+    vs[i] = string_ctor(data[i]);
+  }
   for (i = 0; i < count ; ++i) {
     for (j = 0 ; j < count ; ++i) {
       result = string_compare(vs[i], vs[j]);
