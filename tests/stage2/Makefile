@@ -5,10 +5,11 @@ TOP_DIR := ../..
 include $(TOP_DIR)/Makefile.common
 
 OBJS := $(C_OBJS)
+TARGET := $(C_OBJS:.o=.out)
 
-source_test: $(OBJS)
+source_test: $(TARGET)
 
-.o.out:
+%.out: %.o
 	$(CC) $< -o $@
 
 .PHONY: source_test

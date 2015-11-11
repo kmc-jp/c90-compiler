@@ -8,10 +8,11 @@ include $(TOP_DIR)/Makefile.common
 LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
 LIB_OBJS := $(LIB_SRCS:.c=.o)
 OBJS := $(C_OBJS) $(LIB_OBJS)
+TARGET := $(C_OBJS:.o=.out)
 
-source_test: $(OBJS)
+source_test: $(TARGET)
 
-.o.out: $(LIB_OBJS)
+%.out: %.o $(LIB_OBJS)
 	$(CC) $< $(LIB_OBJS) -o $@
 
 .PHONY: source_test
