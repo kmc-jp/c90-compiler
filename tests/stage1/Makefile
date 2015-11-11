@@ -10,10 +10,18 @@ LIB_OBJS := $(LIB_SRCS:.c=.o)
 OBJS := $(C_OBJS) $(LIB_OBJS)
 TARGET := $(C_OBJS:.o=.out)
 
+DO_TEST_PREFIX := do_test_
+DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(TARGET))
+
 source_test: $(TARGET)
 
 %.out: %.o $(LIB_OBJS)
 	$(CC) $< $(LIB_OBJS) -o $@
+
+do_test: $(DO_TEST_TARGETS)
+
+$(DO_TEST_TARGETS): $(DO_TEST_PREFIX)%: %
+	./$*
 
 .PHONY: source_test
 .PRECIOUS: $(LIB_OBJS)
