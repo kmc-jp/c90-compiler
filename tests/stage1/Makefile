@@ -1,22 +1,27 @@
 # c89-compiler/tests/stage1/Makefile
 
-TOP_DIR = ../..
-LIB_DIR = lib
+TOP_DIR := ../..
+LIB_DIR := lib
 
-LIB_SRCS = $(wildcard $(LIB_DIR)/*.c)
-LIB_OBJS = $(LIB_SRCS:.c=.o)
+include $(TOP_DIR)/Makefile.common
 
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.out) $(LIB_OBJS)
+LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
+LIB_OBJS := $(LIB_SRCS:.c=.o)
+OBJS := $(C_OBJS) $(LIB_OBJS)
+TARGET := $(C_OBJS:.o=.out)
 
-include $(TOP_DIR)/Makefile.in
+DO_TEST_PREFIX := do_test_
+DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(TARGET))
 
-source_test: lib_build $(OBJS)
+source_test: $(TARGET)
 
-lib_build: $(LIB_OBJS)
-
-.o.out: lib_build
+%.out: %.o $(LIB_OBJS)
 	$(CC) $< $(LIB_OBJS) -o $@
 
-.PHONY: source_test lib_build
+do_test: $(DO_TEST_TARGETS)
+
+$(DO_TEST_TARGETS): $(DO_TEST_PREFIX)%: %
+	./$*
+
+.PHONY: source_test
 .PRECIOUS: $(LIB_OBJS)
