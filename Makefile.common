@@ -16,20 +16,23 @@ DEPENDS = $(OBJS:.o=.d)
 CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2
+DEPEND_FLAGS := -MMD -MP
 C89_RESTRICT_FLAGS := -ansi -pedantic
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
 CXXFLAGS ?= $(COMMON_FLAGS)
+CFLAGS += $(DEPEND_FLAGS)
+CXXFLAGS += $(DEPEND_FLAGS)
 RM := rm -f
 AR := ar rcs
 
 %.o: %.c
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.cc
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 -include $(DEPENDS)
 
