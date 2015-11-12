@@ -4,8 +4,7 @@ TOP_DIR := ../..
 
 include $(TOP_DIR)/Makefile.common
 
-OBJS := $(C_OBJS)
-TARGET := $(C_OBJS:.o=.out)
+TARGET := $(OBJS:.o=.out)
 
 DO_TEST_PREFIX := do_test_
 DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(TARGET))

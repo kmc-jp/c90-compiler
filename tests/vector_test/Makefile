@@ -11,8 +11,9 @@ include $(TESTS_DIR)/Makefile.common
 
 UTILITY_OBJ := utility.o
 UTILITY_TARGET := $(SRC_DIR)/$(UTILITY_OBJ)
-OBJS := $(C_OBJS) $(CXX_OBJS) $(UTILITY_TARGET)
+
 TARGET := vector_test.out
+OBJS += $(UTILITY_TARGET)
 
 unit_test: $(TARGET)
 
