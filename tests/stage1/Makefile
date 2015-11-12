@@ -7,8 +7,9 @@ include $(TOP_DIR)/Makefile.common
 
 LIB_SRCS := $(wildcard $(LIB_DIR)/*.c)
 LIB_OBJS := $(LIB_SRCS:.c=.o)
-OBJS := $(C_OBJS) $(LIB_OBJS)
-TARGET := $(C_OBJS:.o=.out)
+
+TARGET := $(OBJS:.o=.out)
+OBJS += $(LIB_OBJS)
 
 DO_TEST_PREFIX := do_test_
 DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(TARGET))

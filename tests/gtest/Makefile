@@ -6,7 +6,6 @@ TESTS_DIR := $(TOP_DIR)/tests
 include $(TOP_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-OBJS := $(CC_OBJS)
 TARGET := libgtest.a
 
 CXXFLAGS += -Wno-missing-field-initializers
