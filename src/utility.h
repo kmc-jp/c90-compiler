@@ -11,6 +11,8 @@ typedef signed char bool;
 #define false ((bool)0)
 #endif  /* __cplusplus */
 
+typedef unsigned char byte;
+
 void* safe_malloc_impl(size_t size);
 #define safe_malloc(type)                       \
   (type*)safe_malloc_impl(sizeof(type))
