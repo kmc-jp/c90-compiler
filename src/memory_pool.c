@@ -60,6 +60,7 @@ static void* palloc_from_block(MemoryPoolBlockRef block,
   const size_t rest = block->end_ - block->begin_;
   const size_t offset = align_offset(block->begin_, alignment);
   if (rest < offset + size) {
+    ++block->failed_;
     return NULL;
   } else {
     byte* const data = block->begin_ + offset;
