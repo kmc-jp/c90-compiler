@@ -8,6 +8,7 @@ struct MemoryPoolBlock {
   byte* begin_;
   byte* end_;
   MemoryPoolBlockRef next_;
+  size_t failed_;
 };
 
 struct MemoryPoolLarge {
@@ -29,6 +30,7 @@ static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   block->begin_ = block_data + header_size;
   block->end_ = block_data + block_size;
   block->next_ = NULL;
+  block->failed_ = 0;
   return block;
 }
 static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
