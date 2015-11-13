@@ -37,6 +37,12 @@ static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
     safe_free(block);
   }
 }
+static MemoryPoolLargeRef memory_pool_large_ctor(size_t data_size) {
+  MemoryPoolLargeRef large = safe_malloc(struct MemoryPoolLarge);
+  large->data_ = safe_array_malloc(byte, data_size);
+  large->prev_ = NULL;
+  return large;
+}
 static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
   if (large) {
     memory_pool_large_dtor(large->prev_);
