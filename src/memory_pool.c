@@ -50,6 +50,18 @@ static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
     safe_free(large);
   }
 }
+static void* palloc_from_block(MemoryPoolBlockRef block,
+                               size_t size, size_t alignment) {
+  const size_t rest = block->end_ - block->begin_;
+  const size_t offset = align_offset(block->begin_, alignment);
+  if (rest < offset + size) {
+    return NULL;
+  } else {
+    byte* const data = block->begin_ + offset;
+    block->begin_ = data + size;
+    return data;
+  }
+}
 
 MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
