@@ -101,22 +101,25 @@ void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment) {
   assert(0 < size);
   assert(is_power_of_two(alignment));
   if (size < pool->max_) {
-    byte* const data = palloc_from_block(pool->block_, size, alignment);
-    if (data) {
-      return data;
-    } else {
-      const MemoryPoolBlockRef block = memory_pool_block_ctor(pool->max_);
-      byte* const new_data = palloc_from_block(block, size, alignment);
-      if (new_data) {
-        block->next_ = pool->block_;
-        pool->block_ = block;
-        return new_data;
-      } else {
-        memory_pool_block_dtor(block);
-        return palloc_from_large(pool, size);
+    MemoryPoolBlockRef iter = pool->current_;
+    byte* data = NULL;
+    for (; !data && iter; iter = iter->next_) {
+      data = palloc_from_block(iter, size, alignment);
+      if (!data && !iter->next_) {
+        iter = iter->next_ = memory_pool_block_ctor(pool->max_);
+        data = palloc_from_block(iter, size, alignment);
       }
     }
-  } else {
-    return palloc_from_large(pool, size);
+    for (iter = pool->current_; iter->next_; iter = iter->next_) {
+      if (FAILED_THRESHOLD < iter->failed_) {
+        pool->current_ = iter->next_;
+      } else {
+        break;
+      }
+    }
+    if (data) {
+      return data;
+    }
   }
+  return palloc_from_large(pool, size);
 }
