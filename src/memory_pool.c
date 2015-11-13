@@ -7,7 +7,7 @@ typedef struct MemoryPoolLarge* MemoryPoolLargeRef;
 struct MemoryPoolBlock {
   byte* begin_;
   byte* end_;
-  MemoryPoolBlockRef prev_;
+  MemoryPoolBlockRef next_;
 };
 
 struct MemoryPoolLarge {
@@ -28,12 +28,12 @@ static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   const MemoryPoolBlockRef block = (MemoryPoolBlockRef)block_data;
   block->begin_ = block_data + header_size;
   block->end_ = block_data + block_size;
-  block->prev_ = NULL;
+  block->next_ = NULL;
   return block;
 }
 static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
   if (block) {
-    memory_pool_block_dtor(block->prev_);
+    memory_pool_block_dtor(block->next_);
     safe_free(block);
   }
 }
@@ -101,7 +101,7 @@ void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment) {
       const MemoryPoolBlockRef block = memory_pool_block_ctor(pool->max_);
       byte* const new_data = palloc_from_block(block, size, alignment);
       if (new_data) {
-        block->prev_ = pool->block_;
+        block->next_ = pool->block_;
         pool->block_ = block;
         return new_data;
       } else {
