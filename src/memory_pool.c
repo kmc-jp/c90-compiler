@@ -62,6 +62,12 @@ static void* palloc_from_block(MemoryPoolBlockRef block,
     return data;
   }
 }
+static void* palloc_from_large(MemoryPoolRef pool, size_t size) {
+  const MemoryPoolLargeRef large = memory_pool_large_ctor(size);
+  large->prev_ = pool->large_;
+  pool->large_ = large;
+  return large->data_;
+}
 
 MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
