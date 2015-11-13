@@ -22,6 +22,8 @@ struct MemoryPool {
   size_t max_;
 };
 
+static const size_t FAILED_THRESHOLD = 4;
+
 static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
   const size_t block_size = data_size + header_size;
