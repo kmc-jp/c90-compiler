@@ -8,3 +8,8 @@ struct MemoryPoolBlock {
   byte* end_;
   MemoryPoolBlockRef prev_;
 };
+
+struct MemoryPoolLarge {
+  void* data_;
+  MemoryPoolLargeRef prev_;
+};
