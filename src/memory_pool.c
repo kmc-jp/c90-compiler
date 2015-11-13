@@ -71,7 +71,7 @@ static void* palloc_from_large(MemoryPoolRef pool, size_t size) {
 
 MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
-  const size_t block_size = MAX(size, header_size * 3);
+  const size_t block_size = MAX(size, header_size * 2);
   const size_t data_size = block_size - header_size;
   const MemoryPoolRef pool = safe_malloc(struct MemoryPool);
   pool->block_ = memory_pool_block_ctor(data_size);
@@ -93,7 +93,7 @@ void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment) {
   assert(pool);
   assert(0 < size);
   assert(is_power_of_two(alignment));
-  if (size * 2 < pool->max_) {
+  if (size < pool->max_) {
     byte* const data = palloc_from_block(pool->block_, size, alignment);
     if (data) {
       return data;
