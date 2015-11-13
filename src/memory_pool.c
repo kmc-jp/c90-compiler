@@ -28,7 +28,11 @@ static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
   }
 }
 static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
-  UNUSED(large);
+  if (large) {
+    memory_pool_large_dtor(large->prev_);
+    safe_free(large->data_);
+    safe_free(large);
+  }
 }
 
 MemoryPoolRef memory_pool_ctor(size_t size) {
