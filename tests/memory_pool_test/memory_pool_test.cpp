@@ -212,3 +212,23 @@ TEST_F(MemoryPoolTest, union_types) {
     }
   }
 }
+
+struct B {
+  char c[10101];
+  long long ll;
+};
+
+TEST_F(MemoryPoolTest, big) {
+  int i = 0;
+  int j = 0;
+  B** ptrs = palloc(B*, p, 100);
+  for (i = 0; i < 100; ++i) {
+    ptrs[i] = palloc(B, p, 100);
+    EXPECT_TRUE(IS_ALIGNED(B, ptrs[i]));
+  }
+  for (i = 0; i < 100; ++i) {
+    for (j = i + 1; j < 100; ++j) {
+      EXPECT_NE(ptrs[i], ptrs[j]);
+    }
+  }
+}
