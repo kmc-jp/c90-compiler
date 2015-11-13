@@ -32,5 +32,7 @@ void safe_free_impl(void* ptr);
 
 /* size <= capacity && capacity == pow(2, n) */
 size_t enough_capacity(size_t size);
+/* return true if size is power of 2 */
+bool is_power_of_two(size_t size);
 
 #endif  /* KMC_C89_COMPILER_UTILITY_H */

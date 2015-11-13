@@ -21,3 +21,6 @@ size_t enough_capacity(size_t size) {
   }
   return capacity;
 }
+bool is_power_of_two(size_t size) {
+  return size == enough_capacity(size);
+}
