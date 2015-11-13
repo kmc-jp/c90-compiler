@@ -1,4 +1,5 @@
 #include "memory_pool.h"
+#include <assert.h>
 
 typedef struct MemoryPoolBlock* MemoryPoolBlockRef;
 typedef struct MemoryPoolLarge* MemoryPoolLargeRef;
@@ -20,6 +21,13 @@ struct MemoryPool {
   size_t max_;
 };
 
+static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
+  UNUSED(block);
+}
+static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
+  UNUSED(large);
+}
+
 MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
   const size_t block_size = MAX(size, header_size * 2);
@@ -32,4 +40,13 @@ MemoryPoolRef memory_pool_ctor(size_t size) {
   pool->large_ = NULL;
   pool->max_ = block_size - header_size;
   return pool;
+}
+
+void memory_pool_dtor(MemoryPoolRef* ppool) {
+  assert(ppool);
+  if (*ppool) {
+    memory_pool_block_dtor((*ppool)->block_);
+    memory_pool_large_dtor((*ppool)->large_);
+    safe_free(*ppool);
+  }
 }
