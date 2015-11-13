@@ -7,7 +7,8 @@ typedef struct MemoryPoolLarge* MemoryPoolLargeRef;
 struct MemoryPoolBlock {
   byte* begin_;
   byte* end_;
-  MemoryPoolBlockRef prev_;
+  MemoryPoolBlockRef next_;
+  size_t failed_;
 };
 
 struct MemoryPoolLarge {
@@ -17,9 +18,12 @@ struct MemoryPoolLarge {
 
 struct MemoryPool {
   MemoryPoolBlockRef block_;
+  MemoryPoolBlockRef current_;
   MemoryPoolLargeRef large_;
   size_t max_;
 };
+
+static const size_t FAILED_THRESHOLD = 4;
 
 static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
@@ -28,12 +32,13 @@ static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   const MemoryPoolBlockRef block = (MemoryPoolBlockRef)block_data;
   block->begin_ = block_data + header_size;
   block->end_ = block_data + block_size;
-  block->prev_ = NULL;
+  block->next_ = NULL;
+  block->failed_ = 0;
   return block;
 }
 static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
   if (block) {
-    memory_pool_block_dtor(block->prev_);
+    memory_pool_block_dtor(block->next_);
     safe_free(block);
   }
 }
@@ -55,6 +60,7 @@ static void* palloc_from_block(MemoryPoolBlockRef block,
   const size_t rest = block->end_ - block->begin_;
   const size_t offset = align_offset(block->begin_, alignment);
   if (rest < offset + size) {
+    ++block->failed_;
     return NULL;
   } else {
     byte* const data = block->begin_ + offset;
@@ -75,6 +81,7 @@ MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t data_size = block_size - header_size;
   const MemoryPoolRef pool = safe_malloc(struct MemoryPool);
   pool->block_ = memory_pool_block_ctor(data_size);
+  pool->current_ = pool->block_;
   pool->large_ = NULL;
   pool->max_ = data_size;
   return pool;
@@ -94,22 +101,25 @@ void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment) {
   assert(0 < size);
   assert(is_power_of_two(alignment));
   if (size < pool->max_) {
-    byte* const data = palloc_from_block(pool->block_, size, alignment);
-    if (data) {
-      return data;
-    } else {
-      const MemoryPoolBlockRef block = memory_pool_block_ctor(pool->max_);
-      byte* const new_data = palloc_from_block(block, size, alignment);
-      if (new_data) {
-        block->prev_ = pool->block_;
-        pool->block_ = block;
-        return new_data;
-      } else {
-        memory_pool_block_dtor(block);
-        return palloc_from_large(pool, size);
+    MemoryPoolBlockRef iter = pool->current_;
+    byte* data = NULL;
+    for (; !data && iter; iter = iter->next_) {
+      data = palloc_from_block(iter, size, alignment);
+      if (!data && !iter->next_) {
+        iter = iter->next_ = memory_pool_block_ctor(pool->max_);
+        data = palloc_from_block(iter, size, alignment);
       }
     }
-  } else {
-    return palloc_from_large(pool, size);
+    for (iter = pool->current_; iter->next_; iter = iter->next_) {
+      if (FAILED_THRESHOLD < iter->failed_) {
+        pool->current_ = iter->next_;
+      } else {
+        break;
+      }
+    }
+    if (data) {
+      return data;
+    }
   }
+  return palloc_from_large(pool, size);
 }
