@@ -184,3 +184,31 @@ TEST_F(MemoryPoolTest, struct_types) {
     }
   }
 }
+
+union U {
+  char c[29];
+  short s[23];
+  int i[19];
+  long l[17];
+  long long ll[13];
+  float f[11];
+  double d[7];
+  long double ld[5];
+  size_t st[3];
+  ptrdiff_t pt[2];
+};
+
+TEST_F(MemoryPoolTest, union_types) {
+  int i = 0;
+  int j = 0;
+  U** ptrs = palloc(U*, p, 100);
+  for (i = 0; i < 100; ++i) {
+    ptrs[i] = palloc(U, p, 100);
+    EXPECT_TRUE(IS_ALIGNED(U, ptrs[i]));
+  }
+  for (i = 0; i < 100; ++i) {
+    for (j = i + 1; j < 100; ++j) {
+      EXPECT_NE(ptrs[i], ptrs[j]);
+    }
+  }
+}
