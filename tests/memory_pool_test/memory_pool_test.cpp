@@ -3,6 +3,9 @@ extern "C" {
 #include "memory_pool.h"
 }
 
+#define IS_ALIGNED(type, ptr)                   \
+  ((size_t)(ptr) % ALIGNOF(type) == 0)
+
 class MemoryPoolTest : public ::testing::Test {
  protected:
   MemoryPoolTest() : p(memory_pool_ctor(1024)) {}
