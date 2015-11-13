@@ -8,6 +8,11 @@
 #define MAX(x, y) ((x) < (y) ? (y) : (x))
 
 #ifndef __cplusplus
+#define ALIGNOF(type)                                           \
+  MIN(sizeof(type), offsetof(struct { char a; type b; }, b))
+#endif
+
+#ifndef __cplusplus
 typedef signed char bool;
 #define true ((bool)1)
 #define false ((bool)0)
