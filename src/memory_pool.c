@@ -25,7 +25,7 @@ static MemoryPoolBlockRef memory_pool_block_ctor(size_t data_size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
   const size_t block_size = data_size + header_size;
   byte* const block_data = safe_array_malloc(byte, block_size);
-  MemoryPoolBlockRef block = (MemoryPoolBlockRef)block_data;
+  const MemoryPoolBlockRef block = (MemoryPoolBlockRef)block_data;
   block->begin_ = block_data + header_size;
   block->end_ = block_data + block_size;
   block->prev_ = NULL;
@@ -38,7 +38,7 @@ static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
   }
 }
 static MemoryPoolLargeRef memory_pool_large_ctor(size_t data_size) {
-  MemoryPoolLargeRef large = safe_malloc(struct MemoryPoolLarge);
+  const MemoryPoolLargeRef large = safe_malloc(struct MemoryPoolLarge);
   large->data_ = safe_array_malloc(byte, data_size);
   large->prev_ = NULL;
   return large;
