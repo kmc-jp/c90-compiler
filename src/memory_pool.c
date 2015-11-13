@@ -18,6 +18,7 @@ struct MemoryPoolLarge {
 
 struct MemoryPool {
   MemoryPoolBlockRef block_;
+  MemoryPoolBlockRef current_;
   MemoryPoolLargeRef large_;
   size_t max_;
 };
@@ -79,6 +80,7 @@ MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t data_size = block_size - header_size;
   const MemoryPoolRef pool = safe_malloc(struct MemoryPool);
   pool->block_ = memory_pool_block_ctor(data_size);
+  pool->current_ = pool->block_;
   pool->large_ = NULL;
   pool->max_ = data_size;
   return pool;
