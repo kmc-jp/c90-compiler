@@ -7,26 +7,9 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) < (y) ? (y) : (x))
 
-#ifdef __cplusplus
-namespace detail {
-template <typename T>
-class align_of {
-  struct inner {
-    char a;
-    T b;
-  };
- public:
-  static const std::size_t value = offsetof(inner, b);
-};
-}
-#endif
-
 #ifndef __cplusplus
 #define ALIGNOF(type)                                           \
   MIN(sizeof(type), offsetof(struct { char a; type b; }, b))
-#else
-#define ALIGNOF(type)                                   \
-  MIN(sizeof(type), detail::align_of<type>::value)
 #endif
 
 #ifndef __cplusplus
