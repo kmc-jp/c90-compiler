@@ -88,3 +88,28 @@ void memory_pool_dtor(MemoryPoolRef* ppool) {
     safe_free(*ppool);
   }
 }
+
+void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment) {
+  assert(pool);
+  assert(0 < size);
+  assert(is_power_of_two(alignment));
+  if (size * 2 < pool->max_) {
+    byte* const data = palloc_from_block(pool->block_, size, alignment);
+    if (data) {
+      return data;
+    } else {
+      const MemoryPoolBlockRef block = memory_pool_block_ctor(pool->max_);
+      byte* const new_data = palloc_from_block(block, size, alignment);
+      if (new_data) {
+        block->prev_ = pool->block_;
+        pool->block_ = block;
+        return new_data;
+      } else {
+        memory_pool_block_dtor(block);
+        return palloc_from_large(pool, size);
+      }
+    }
+  } else {
+    return palloc_from_large(pool, size);
+  }
+}
