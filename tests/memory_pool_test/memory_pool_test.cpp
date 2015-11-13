@@ -3,6 +3,21 @@ extern "C" {
 #include "memory_pool.h"
 }
 
+namespace detail {
+template <typename T>
+class align_of {
+  struct inner {
+    char a;
+    T b;
+  };
+ public:
+  static const size_t value = MIN(sizeof(T), offsetof(inner, b));
+};
+}
+
+#define ALIGNOF(type)                           \
+  detail::align_of<type>::value
+
 #define IS_ALIGNED(type, ptr)                   \
   ((size_t)(ptr) % ALIGNOF(type) == 0)
 
