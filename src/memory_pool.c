@@ -22,7 +22,10 @@ struct MemoryPool {
 };
 
 static void memory_pool_block_dtor(MemoryPoolBlockRef block) {
-  UNUSED(block);
+  if (block) {
+    memory_pool_block_dtor(block->prev_);
+    safe_free(block);
+  }
 }
 static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
   UNUSED(large);
