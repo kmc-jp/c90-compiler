@@ -47,15 +47,12 @@ static void memory_pool_large_dtor(MemoryPoolLargeRef large) {
 
 MemoryPoolRef memory_pool_ctor(size_t size) {
   const size_t header_size = sizeof(struct MemoryPoolBlock);
-  const size_t block_size = MAX(size, header_size * 2);
+  const size_t block_size = MAX(size, header_size * 3);
+  const size_t data_size = block_size - header_size;
   const MemoryPoolRef pool = safe_malloc(struct MemoryPool);
-  byte* const block = safe_array_malloc(byte, block_size);
-  pool->block_ = (MemoryPoolBlockRef)block;
-  pool->block_->begin_ = block + header_size;
-  pool->block_->end_ = block + block_size;
-  pool->block_->prev_ = NULL;
+  pool->block_ = memory_pool_block_ctor(data_size);
   pool->large_ = NULL;
-  pool->max_ = block_size - header_size;
+  pool->max_ = data_size;
   return pool;
 }
 
