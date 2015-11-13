@@ -13,3 +13,9 @@ struct MemoryPoolLarge {
   void* data_;
   MemoryPoolLargeRef prev_;
 };
+
+struct MemoryPool {
+  MemoryPoolBlockRef block_;
+  MemoryPoolLargeRef large_;
+  size_t max_;
+};
