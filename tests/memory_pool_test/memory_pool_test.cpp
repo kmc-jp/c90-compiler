@@ -11,3 +11,10 @@ class MemoryPoolTest : public ::testing::Test {
   }
   MemoryPoolRef p;
 };
+
+TEST_F(MemoryPoolTest, ctor_and_dtor) {
+  MemoryPoolRef pool = memory_pool_ctor(0);
+  EXPECT_TRUE(NULL != pool);
+  memory_pool_dtor(&pool);
+  EXPECT_EQ(NULL, pool);
+}
