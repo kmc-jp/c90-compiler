@@ -239,3 +239,24 @@ void string_replace(StringRef self, size_t index, size_t count,
     *string_end(self) = '\0';
   }
 }
+
+StringRef string_substr(StringRef self, size_t index, size_t count) {
+  assert(self);
+  {
+    const size_t length = string_length(self);
+    char* const head = string_data(self) + index;
+    if (count == string_npos || length < index + count) {
+      StringRef substr = string_ctor(head);
+      return substr;
+    } else {
+      char* const tail = head + count;
+      const char tmp = *tail;
+      *tail = '\0';
+      {
+        StringRef substr = string_ctor(head);
+        *tail = tmp;
+        return substr;
+      }
+    }
+  }
+}
