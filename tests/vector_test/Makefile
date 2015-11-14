@@ -9,11 +9,10 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-UTILITY_OBJ := utility.o
-UTILITY_TARGET := $(SRC_DIR)/$(UTILITY_OBJ)
-
+VECTOR_SRCS := utility.c
+VECTOR_OBJS := $(VECTOR_SRCS:%.c=$(SRC_DIR)/%.o)
 TARGET := vector_test.out
-OBJS += $(UTILITY_TARGET)
+OBJS += $(VECTOR_OBJS)
 
 unit_test: $(TARGET)
 
@@ -25,8 +24,8 @@ $(TARGET): $(GTEST_TARGET)
 $(GTEST_TARGET):
 	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
 
-$(UTILITY_TARGET):
-	$(MAKE) -C $(SRC_DIR) $(UTILITY_OBJ)
+$(VECTOR_OBJS): $(SRC_DIR)/%:
+	$(MAKE) -C $(SRC_DIR) $*
 
 do_test: $(TARGET)
 	./$(TARGET)
