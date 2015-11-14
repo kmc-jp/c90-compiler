@@ -21,6 +21,9 @@ StringRef string_ctor(const char* src) {
 }
 
 void string_dtor(StringRef* pself) {
-  safe_free((*pself)->data_);
-  safe_free(*pself);
+  assert(pself);
+  if (*pself) {
+    safe_free((*pself)->data_);
+    safe_free(*pself);
+  }
 }
