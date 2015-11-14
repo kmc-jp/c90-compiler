@@ -22,3 +22,5 @@ lex.yy.c lex.yy.h: lexer.l
 lex.yy.o: CFLAGS += -Wno-unused-function
 
 main.o: CFLAGS += -Wno-long-long
+
+.PHONY: build
