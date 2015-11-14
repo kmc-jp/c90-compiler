@@ -33,3 +33,8 @@ char* string_data(StringRef self) {
   assert(self);
   return self->data_;
 }
+
+size_t string_length(StringRef self) {
+  assert(self);
+  return self->length_;
+}
