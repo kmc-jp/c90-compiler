@@ -167,7 +167,6 @@ void string_erase(StringRef self, size_t index, size_t count) {
   assert(self);
   {
     const size_t length = string_length(self);
-    const size_t capacity = string_capacity(self);
     if (count == string_npos || length < index + count) {
       self->length_ = index;
     } else {
