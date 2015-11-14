@@ -260,3 +260,16 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
     }
   }
 }
+
+size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
+  assert(self);
+  {
+    const size_t length = string_length(self);
+    char* const src = string_data(self) + index;
+    if (count == string_npos || length < index + count) {
+      count = length - index;
+    }
+    memmove(dst, src, count);
+    return count;
+  }
+}
