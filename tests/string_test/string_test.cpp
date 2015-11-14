@@ -165,8 +165,8 @@ TEST_F(StringTest, pop_back) {
 }
 
 TEST_F(StringTest, append) {
-  const char data1[] = "abcij";
-  const char data2[] = "defgh";
+  const char data1[] = "abcde";
+  const char data2[] = "fghij";
   const char data3[] = "abcdefghij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
