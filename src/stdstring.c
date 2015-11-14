@@ -14,6 +14,10 @@ static void string_alloc(StringRef self, size_t size) {
   self->data_ = safe_array_malloc(char, size);
   self->capacity_ = size - 1;
 }
+static void string_extend(StringRef self, size_t size) {
+  string_free(self);
+  string_alloc(self, enough_capacity(size + 1));
+}
 static void string_init(StringRef self, const char* src, size_t length) {
   strncpy(self->data_, src, length + 1);
   self->length_ = length;
