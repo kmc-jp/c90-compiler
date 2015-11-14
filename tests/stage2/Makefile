@@ -1,15 +1,22 @@
-# c89-compiler/tests/stage1/Makefile
+# c89-compiler/tests/stage2/Makefile
 
-TOP_DIR = ../..
+TOP_DIR := ../..
 
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.out)
+include $(TOP_DIR)/Makefile.common
 
-include $(TOP_DIR)/Makefile.in
+TARGET := $(OBJS:.o=.out)
 
-source_test: $(OBJS)
+DO_TEST_PREFIX := do_test_
+DO_TEST_TARGETS := $(addprefix $(DO_TEST_PREFIX),$(TARGET))
 
-.o.out:
+source_test: $(TARGET)
+
+%.out: %.o
 	$(CC) $< -o $@
 
-.PHONY: source_test
+do_test: $(DO_TEST_TARGETS)
+
+$(DO_TEST_TARGETS): $(DO_TEST_PREFIX)%: %
+	./$*
+
+.PHONY: source_test do_test

@@ -1,0 +1,15 @@
+# c89-compiler/tests/gtest/Makefile.common
+
+ifndef TOP_DIR
+$(error TOP_DIR must be defined)
+endif
+
+ifndef GTEST_DIR
+GTEST_DIR := $(TOP_DIR)/tests/gtest
+endif
+
+GTEST_LIB := libgtest.a
+GTEST_TARGET := $(GTEST_DIR)/$(GTEST_LIB)
+
+LDFLAGS += -L$(GTEST_DIR)
+LDLIBS += -lgtest -lpthread

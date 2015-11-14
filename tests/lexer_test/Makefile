@@ -1,38 +1,35 @@
 # c89-compiler/tests/lexer_test/Makefile
 
-TOP_DIR = ../..
-SRC_DIR = $(TOP_DIR)/src
-TESTS_DIR = $(TOP_DIR)/tests
-GTEST_DIR = $(TESTS_DIR)/gtest
+TOP_DIR := ../..
+SRC_DIR := $(TOP_DIR)/src
+TESTS_DIR := $(TOP_DIR)/tests
+GTEST_DIR := $(TESTS_DIR)/gtest
 
-GTEST_LIB = $(GTEST_DIR)/libgtest.a
+include $(TOP_DIR)/Makefile.common
+include $(GTEST_DIR)/Makefile.common
+include $(TESTS_DIR)/Makefile.common
 
-LEX_SOURCES = lex.yy.c yacc_mock.c
-UTILITY_SOURCES = use_vector.c utility.c
-LEX_OBJS = $(LEX_SOURCES:%.c=$(SRC_DIR)/%.o)
-UTILITY_OBJS = $(UTILITY_SOURCES:%.c=$(SRC_DIR)/%.o)
-C_SRCS = $(wildcard *.c)
-CXX_SRCS = $(wildcard *.cpp)
-C_OBJS = $(C_SRCS:.c=.o)
-CXX_OBJS = $(CXX_SRCS:.cpp=.o)
-OBJS = $(C_OBJS) $(CXX_OBJS) $(LEX_OBJS) $(UTILITY_OBJS)
-TARGET = lexer_test.out
-INCLUDE = -I$(TESTS_DIR) -I$(SRC_DIR)
-
-include $(TOP_DIR)/Makefile.in
-
-CFLAGS += $(INCLUDE)
-CXXFLAGS += $(INCLUDE)
-LDFLAGS += -L$(GTEST_DIR)
-LIBS += -lgtest -lpthread
+LEX_SRCS := lex.yy.c yacc_mock.c use_vector.c utility.c
+LEX_OBJS := $(LEX_SRCS:%.c=$(SRC_DIR)/%.o)
+TARGET := lexer_test.out
+CLEAN_OBJS += $(LEX_OBJS)
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+$(TARGET): $(OBJS) $(LEX_OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-$(TARGET): $(GTEST_LIB)
+$(TARGET): $(GTEST_TARGET)
 
-lexer_test.cpp : $(SRC_DIR)/token.h
+$(OBJS): $(LEX_OBJS)
 
-.PHONY: unit_test
+$(GTEST_TARGET):
+	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
+
+$(LEX_OBJS): $(SRC_DIR)/%:
+	$(MAKE) -C $(SRC_DIR) $*
+
+do_test: $(TARGET)
+	./$(TARGET)
+
+.PHONY: unit_test do_test
