@@ -295,3 +295,16 @@ void string_swap(StringRef self, StringRef other) {
     *other = tmp;
   }
 }
+
+size_t string_find(StringRef self, const char* str) {
+  assert(self);
+  {
+    char* const begin = string_begin(self);
+    char* const head = strstr(begin, str);
+    if (head) {
+      return head - begin;
+    } else {
+      return string_npos;
+    }
+  }
+}
