@@ -214,3 +214,28 @@ int string_compare(StringRef self, StringRef other) {
   assert(self && other);
   return strcmp(string_data(self), string_data(other));
 }
+
+void string_replace(StringRef self, size_t index, size_t count,
+                    const char* data) {
+  assert(self);
+  if (data) {
+    const size_t length = string_length(self);
+    const size_t data_length = strlen(data);
+    if (count == string_npos || length < index + count) {
+      strncpy(string_data(self) + index, data, data_length);
+      self->length_ = index + data_length;
+    } else {
+      const size_t new_length = length + data_length - count ;
+      string_reserve(self, new_length);
+      self->length_ = new_length;
+      {
+        char* const head = string_begin(self) + index;
+        char* const dst = head + data_length;
+        char* const src = head + count;
+        memmove(dst, src, length - index - count);
+        strncpy(head, data, data_length);
+      }
+    }
+    *string_end(self) = '\0';
+  }
+}
