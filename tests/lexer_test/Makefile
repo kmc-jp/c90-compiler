@@ -23,7 +23,13 @@ $(TARGET): $(GTEST_TARGET)
 
 $(OBJS): $(LEX_OBJS)
 
+$(GTEST_TARGET):
+	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
+
 $(LEX_OBJS): $(SRC_DIR)/%:
 	$(MAKE) -C $(SRC_DIR) $*
+
+do_test: $(TARGET)
+	./$(TARGET)
 
 .PHONY: unit_test
