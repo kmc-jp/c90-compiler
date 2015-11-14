@@ -18,6 +18,9 @@ static void string_new(StringRef self, const char* src,
   self->length_ = length;
   self->capacity_ = capacity - 1;
 }
+static void string_free(StringRef self) {
+  safe_free(self->data_);
+}
 
 StringRef string_ctor(const char* src) {
   const size_t length = src ? strlen(src) : 0;
@@ -29,7 +32,7 @@ StringRef string_ctor(const char* src) {
 void string_dtor(StringRef* pself) {
   assert(pself);
   if (*pself) {
-    safe_free((*pself)->data_);
+    string_free(*pself);
     safe_free(*pself);
   }
 }
