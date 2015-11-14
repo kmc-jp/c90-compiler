@@ -143,3 +143,23 @@ void string_clear(StringRef self) {
   assert(self);
   string_init(self, "", 0);
 }
+
+void string_insert(StringRef self, size_t index, const char* data) {
+  assert(self);
+  if (data) {
+    const size_t count = strlen(data);
+    const size_t length = string_length(self);
+    const size_t new_length = length + count;
+    if (string_capacity(self) < new_length) {
+      string_reserve(self, new_length);
+    }
+    if (0 < count) {
+      char* const begin = string_begin(self);
+      char* const head = begin + index;
+      char* const tail = head + count;
+      memmove(tail, head, length - index + 1);
+      strncpy(head, data, count);
+      self->length_ = new_length;
+    }
+  }
+}
