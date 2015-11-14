@@ -273,7 +273,7 @@ TEST_F(StringTest, resize) {
     EXPECT_EQ(data3[i], string_data(v)[i]);
   }
   string_resize(v, 3);
-  EXPECT_EQ(3, string_length(v));
+  EXPECT_EQ(3U, string_length(v));
   for (i = 0; i <= 3; ++i) {
     EXPECT_EQ(data4[i], string_data(v)[i]);
   }
@@ -305,7 +305,7 @@ TEST_F(StringTest, find) {
   const char missed[] = "dack";
   string_assign(v, data);
 
-  EXPECT_EQ(3, string_find(v, target));
+  EXPECT_EQ(3U, string_find(v, target));
   EXPECT_EQ(length, string_find(v, missed));
 }
 
@@ -315,7 +315,7 @@ TEST_F(StringTest, find_first_of) {
   const char missed[] = "xyz";
   string_assign(v, data);
 
-  EXPECT_EQ(3, string_find_first_of(v, target));
+  EXPECT_EQ(3U, string_find_first_of(v, target));
   EXPECT_EQ(string_npos, string_find(v, missed));
 }
 
@@ -325,6 +325,6 @@ TEST_F(StringTest, find_first_not_of) {
   const char allchars[] = "gfedcba";
   string_assign(v, data);
 
-  EXPECT_EQ(3, string_find_first_not_of(v, target));
+  EXPECT_EQ(3U, string_find_first_not_of(v, target));
   EXPECT_EQ(string_npos, string_find(v, allchars));
 }
