@@ -81,7 +81,7 @@ StringRef string_substr(StringRef self, size_t index, size_t count);
 /* index and count is treated same as string_erase */
 /* characters copied to dst is not null-terminated */
 /* return the number of characters copied to dst */
-/* behaviour is undefined if dst has not enough storage */
+/* behavior is undefined if dst has not enough storage */
 size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index);
 /* resize */
 /* additional null-characters are appended
@@ -96,10 +96,12 @@ size_t string_find(StringRef self, const char* str);
 /* find_first_of */
 /* return index of the first matched character in self */
 /* otherwise, return string_npos */
+/* behavior is undefined if str is NULL */
 size_t string_find_first_of(StringRef self, const char* str);
 /* find_first_not_of */
 /* return index of the first matched character in self */
 /* otherwise, return string_npos */
+/* behavior is undefined if str is NULL */
 size_t string_find_first_not_of(StringRef self, const char* str);
 
 #endif  /* KMC_C89_COMPILER_STDSTRING_H */
