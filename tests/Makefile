@@ -4,6 +4,7 @@ STAGE1_DIR = stage1
 STAGE2_DIR = stage2
 GTEST_DIR = gtest
 VECTOR_TEST_DIR = vector_test
+LEXER_TEST_DIR = lexer_test
 
 
 source_test: stage1_test stage2_test
@@ -15,13 +16,16 @@ stage2_test:
 	cd $(STAGE2_DIR); make source_test
 
 
-unit_test: gtest vector_test
+unit_test: gtest vector_test lexer_test
 
 gtest:
 	cd $(GTEST_DIR); make unit_test
 
 vector_test: gtest
 	cd $(VECTOR_TEST_DIR); make unit_test
+
+lexer_test: gtest
+	cd $(LEXER_TEST_DIR); make unit_test
 
 
 CLEAN_TARGETS = stage1_clean stage2_clean gtest_clean vector_test_clean
