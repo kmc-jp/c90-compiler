@@ -44,6 +44,15 @@ size_t string_length(StringRef self) {
   return self->length_;
 }
 
+void string_reserve(StringRef self, size_t size) {
+  assert(self);
+  if (string_capacity(self) < size) {
+    char* old_data = string_data(self);
+    string_new(self, old_data, string_length(self), size);
+    safe_free(old_data);
+  }
+}
+
 size_t string_capacity(StringRef self) {
   assert(self);
   return self->capacity_;
