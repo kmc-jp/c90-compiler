@@ -316,3 +316,11 @@ size_t string_find_first_of(StringRef self, const char* str) {
     return found == string_length(self) ? string_npos : found;
   }
 }
+
+size_t string_find_first_not_of(StringRef self, const char* str) {
+  assert(self);
+  {
+    const size_t found = strspn(string_data(self), str);
+    return found == string_length(self) ? string_npos : found;
+  }
+}
