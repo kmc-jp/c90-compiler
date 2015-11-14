@@ -10,6 +10,9 @@ struct String {
 
 const size_t string_npos = (size_t)(-1);
 
+static void string_set_end(StringRef self, char data) {
+  self->data_[self->length_] = data;
+}
 static void string_free(StringRef self) {
   safe_free(self->data_);
 }
@@ -186,7 +189,7 @@ void string_push_back(StringRef self, char data) {
   {
     const size_t length = string_length(self);
     string_reserve(self, length + 1);
-    *string_end(self) = data;
+    string_set_end(self, data);
     ++self->length_;
     *string_end(self) = '\0';
   }
