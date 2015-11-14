@@ -157,9 +157,10 @@ void string_insert(StringRef self, size_t index, const char* data) {
       char* const begin = string_begin(self);
       char* const head = begin + index;
       char* const tail = head + count;
-      memmove(tail, head, length - index + 1);
+      memmove(tail, head, length - index);
       strncpy(head, data, count);
       self->length_ = new_length;
+      *string_end(self) = '\0';
     }
   }
 }
@@ -170,14 +171,15 @@ void string_erase(StringRef self, size_t index, size_t count) {
     const size_t length = string_length(self);
     const size_t capacity = string_capacity(self);
     if (count == string_npos || length < index + count) {
-      self->data_[index] = '\0';
       self->length_ = index;
     } else {
       char* const begin = string_begin(self);
       char* const head = begin + index;
       char* const tail = head + count;
-      memmove(head, tail, length - index - count + 1);
-      self->length_ = length - count;
+      const size_t new_length = length - count;
+      memmove(head, tail, new_length - index);
+      self->length_ = new_length;
     }
+    *string_end(self) = '\0';
   }
 }
