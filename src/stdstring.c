@@ -286,3 +286,12 @@ void string_resize(StringRef self, size_t size) {
     *string_end(self) = '\0';
   }
 }
+
+void string_swap(StringRef self, StringRef other) {
+  assert(self);
+  {
+    struct String tmp = *self;
+    *self = *other;
+    *other = tmp;
+  }
+}
