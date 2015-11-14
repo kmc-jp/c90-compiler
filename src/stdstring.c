@@ -10,10 +10,13 @@ struct String {
 
 const size_t string_npos = (size_t)(-1);
 
+static void string_alloc(StringRef self, size_t size) {
+  self->data_ = safe_array_malloc(char, size);
+}
 static void string_new(StringRef self, const char* src,
                        size_t length, size_t size) {
   const size_t capacity = enough_capacity(size + 1);
-  self->data_ = safe_array_malloc(char, capacity);
+  string_alloc(self, capacity);
   strncpy(self->data_, src, length + 1);
   self->length_ = length;
   self->capacity_ = capacity - 1;
