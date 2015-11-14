@@ -37,8 +37,8 @@ TEST_F(StringTest, ctor_with_data) {
   EXPECT_STREQ(data, string_data(v2));
   EXPECT_EQ(data[0], string_front(v2));
   EXPECT_EQ(data[length], string_back(v2));
-  EXPECT_EQ(data[0], *string_begin(v));
-  EXPECT_EQ(data[length], *string_end(v));
+  EXPECT_EQ('\0', *string_begin(v));
+  EXPECT_EQ('\0', *string_end(v));
   string_assign(v, data);
   for (i = 0 ; i < length ; ++i) {
     EXPECT_EQ(data[i], string_at(v, i));
