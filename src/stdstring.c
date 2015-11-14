@@ -159,8 +159,7 @@ void string_insert(StringRef self, size_t index, const char* data) {
     const size_t new_length = length + count;
     string_reserve(self, new_length);
     if (0 < count) {
-      char* const begin = string_begin(self);
-      char* const head = begin + index;
+      char* const head = string_data(self) + index;
       char* const tail = head + count;
       memmove(tail, head, length - index);
       strncpy(head, data, count);
@@ -176,8 +175,7 @@ void string_erase(StringRef self, size_t index, size_t count) {
     if (count == string_npos || length < index + count) {
       string_set_length(self, index);
     } else {
-      char* const begin = string_begin(self);
-      char* const head = begin + index;
+      char* const head = string_data(self) + index;
       char* const tail = head + count;
       const size_t new_length = length - count;
       memmove(head, tail, new_length - index);
@@ -230,7 +228,7 @@ void string_replace(StringRef self, size_t index, size_t count,
       const size_t new_length = length + data_length - count ;
       string_reserve(self, new_length);
       {
-        char* const head = string_begin(self) + index;
+        char* const head = string_data(self) + index;
         char* const dst = head + data_length;
         char* const src = head + count;
         memmove(dst, src, length - index - count);
@@ -290,10 +288,10 @@ void string_swap(StringRef self, StringRef other) {
 size_t string_find(StringRef self, const char* str) {
   assert(self);
   {
-    char* const begin = string_begin(self);
-    char* const head = strstr(begin, str);
+    char* const data = string_data(self);
+    char* const head = strstr(data, str);
     if (head) {
-      return head - begin;
+      return head - data;
     } else {
       return string_npos;
     }
