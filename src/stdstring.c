@@ -4,6 +4,7 @@
 struct String {
   char* data_;
   size_t length_;
+  size_t capacity_;
 };
 
 const size_t string_npos = (size_t)(-1);
