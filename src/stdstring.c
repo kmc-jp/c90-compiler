@@ -50,11 +50,8 @@ void string_copy(StringRef self, StringRef src) {
   assert(self && src);
   {
     const size_t length = string_length(src);
-    size_t capacity = string_capacity(self);
-    if (capacity < length) {
-      capacity = enough_capacity(length + 1) - 1;
-      string_free(self);
-      string_alloc(self, capacity + 1);
+    if (string_capacity(self) < length) {
+      string_extend(self, length);
     }
     string_init(self, string_data(src), length);
   }
@@ -64,11 +61,8 @@ void string_assign(StringRef self, const char* src) {
   assert(self);
   {
     const size_t length = src ? strlen(src) : 0;
-    size_t capacity = string_capacity(self);
-    if (capacity < length) {
-      capacity = enough_capacity(length + 1) - 1;
-      string_free(self);
-      string_alloc(self, capacity + 1);
+    if (string_capacity(self) < length) {
+      string_extend(self, length);
     }
     string_init(self, src, length);
   }
