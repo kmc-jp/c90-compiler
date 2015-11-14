@@ -30,7 +30,7 @@ TEST_F(StringTest, dtor) {
 }
 
 TEST_F(StringTest, ctor_with_data) {
-  const char * const data = "abcde";
+  const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
   size_t i = 0;
   StringRef v2 = string_ctor(data);
@@ -50,7 +50,7 @@ TEST_F(StringTest, ctor_with_data) {
 }
 
 TEST_F(StringTest, copy) {
-  const char * const data = "abcde";
+  const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
   StringRef v2 = string_ctor(data);
 
@@ -64,7 +64,7 @@ TEST_F(StringTest, copy) {
 }
 
 TEST_F(StringTest, assign) {
-  const char * const data = "abcde";
+  const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
 
   string_assign(v, data);
@@ -84,7 +84,7 @@ TEST_F(StringTest, reserve) {
 }
 
 TEST_F(StringTest, shrink_to_fit) {
-  const char * const data = "abcde";
+  const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
   string_assign(v, data);
 
@@ -95,7 +95,7 @@ TEST_F(StringTest, shrink_to_fit) {
   EXPECT_LE(length, string_capacity(v));
 }
 TEST_F(StringTest, clear) {
-  const char * const data = "abcde";
+  const char data[] = "abcde";
   string_assign(v, data);
 
   string_clear(v);
@@ -103,9 +103,9 @@ TEST_F(StringTest, clear) {
 }
 
 TEST_F(StringTest, insert) {
-  const char * const data1 = "abcij";
-  const char * const data2 = "defgh";
-  const char * const data3 = "abcdefghijj";
+  const char data1[] = "abcij";
+  const char data2[] = "defgh";
+  const char data3[] = "abcdefghijj";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
   string_assign(v, data1);
@@ -117,8 +117,8 @@ TEST_F(StringTest, insert) {
 }
 
 TEST_F(StringTest, erase) {
-  const char * const data1 = "abcjihgfde";
-  const char * const data2 = "abcde";
+  const char data1[] = "abcjihgfde";
+  const char data2[] = "abcde";
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
   string_assign(v, data1);
 
@@ -126,13 +126,13 @@ TEST_F(StringTest, erase) {
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length2, string_length(v));
   EXPECT_STREQ(data2, string_data(v));
-  
+
   string_erase(v, 0, 5);
   EXPECT_TRUE(string_empty(v));
 }
 
 TEST_F(StringTest, push_back) {
-  const char * const data = "abcjihgfde";
+  const char data[] = "abcjihgfde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
   size_t i = 0;
 
@@ -145,8 +145,8 @@ TEST_F(StringTest, push_back) {
 }
 
 TEST_F(StringTest, pop_back) {
-  const char * const data1 = "abcdefghij";
-  const char * const data2 = "abcde";
+  const char data1[] = "abcdefghij";
+  const char data2[] = "abcde";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
   string_assign(v, data1);
@@ -165,9 +165,9 @@ TEST_F(StringTest, pop_back) {
 }
 
 TEST_F(StringTest, append) {
-  const char * const data1 = "abcij";
-  const char * const data2 = "defgh";
-  const char * const data3 = "abcdefghijj";
+  const char data1[] = "abcij";
+  const char data2[] = "defgh";
+  const char data3[] = "abcdefghijj";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
 
