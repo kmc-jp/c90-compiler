@@ -21,7 +21,7 @@ static void string_free(StringRef self) {
   safe_free(self->data_);
 }
 static void string_init(StringRef self, const char* src, size_t length) {
-  strncpy(self->data_, src, length + 1);
+  memcpy(self->data_, src, length);
   string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
@@ -162,7 +162,7 @@ void string_insert(StringRef self, size_t index, const char* data) {
       char* const head = string_data(self) + index;
       char* const tail = head + count;
       memmove(tail, head, length - index);
-      strncpy(head, data, count);
+      memcpy(head, data, count);
       string_set_length(self, new_length);
     }
   }
@@ -205,7 +205,7 @@ void string_append(StringRef self, const char* data) {
     const size_t count = strlen(data);
     const size_t new_length = string_length(self) + count;
     string_reserve(self, new_length);
-    strncpy(string_end(self), data, count);
+    memcpy(string_end(self), data, count);
     string_set_length(self, new_length);
   }
 }
@@ -232,7 +232,7 @@ void string_replace(StringRef self, size_t index, size_t count,
         char* const dst = head + data_length;
         char* const src = head + count;
         memmove(dst, src, length - index - count);
-        strncpy(head, data, data_length);
+        memcpy(head, data, data_length);
         string_set_length(self, new_length);
       }
     }
@@ -259,7 +259,7 @@ size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    memmove(dst, src, count);
+    memcpy(dst, src, count);
     return count;
   }
 }
