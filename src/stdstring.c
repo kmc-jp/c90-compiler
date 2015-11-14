@@ -11,10 +11,12 @@ const size_t string_npos = (size_t)(-1);
 
 StringRef string_ctor(const char* src) {
   const size_t length = src ? strlen(src) : 0;
+  const size_t size = enough_capacity(length + 1);
   const StringRef self = safe_malloc(struct String);
-  self->data_ = safe_array_malloc(char, length + 1);
+  self->data_ = safe_array_malloc(char, size);
   strncpy(self->data_, src, length + 1);
   self->length_ = length;
+  self->capacity_ = size - 1;
   return self;
 }
 
