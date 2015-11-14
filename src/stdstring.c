@@ -32,10 +32,13 @@ static void string_new(StringRef self, const char* src,
 }
 
 StringRef string_ctor(const char* src) {
-  const size_t length = src ? strlen(src) : 0;
-  const StringRef self = safe_malloc(struct String);
-  string_new(self, src, length, length);
-  return self;
+  src = src ? src : "";
+  {
+    const size_t length = strlen(src);
+    const StringRef self = safe_malloc(struct String);
+    string_new(self, src, length, length);
+    return self;
+  }
 }
 
 void string_dtor(StringRef* pself) {
@@ -59,8 +62,9 @@ void string_copy(StringRef self, StringRef src) {
 
 void string_assign(StringRef self, const char* src) {
   assert(self);
+  src = src ? src : "";
   {
-    const size_t length = src ? strlen(src) : 0;
+    const size_t length = strlen(src);
     if (string_capacity(self) < length) {
       string_extend(self, length);
     }
