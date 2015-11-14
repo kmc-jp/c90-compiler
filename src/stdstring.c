@@ -77,6 +77,11 @@ char string_at(StringRef self, size_t index) {
   return string_data(self)[index];
 }
 
+char string_front(StringRef self) {
+  assert(self);
+  return string_data(self)[0];
+}
+
 char* string_data(StringRef self) {
   assert(self);
   return self->data_;
