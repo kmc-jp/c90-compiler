@@ -209,3 +209,8 @@ void string_append(StringRef self, const char* data) {
     *string_end(self) = '\0';
   }
 }
+
+int string_compare(StringRef self, StringRef other) {
+  assert(self && other);
+  return strcmp(string_data(self), string_data(other));
+}
