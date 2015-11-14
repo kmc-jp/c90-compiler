@@ -37,15 +37,15 @@ static void string_new(StringRef self, const char* src,
   string_alloc(self, enough_capacity(size + 1));
   string_init(self, src, length);
 }
+StringRef string_ctor_impl(const char* src, size_t length) {
+  const StringRef self = safe_malloc(struct String);
+  string_new(self, src, length, length);
+  return self;
+}
 
 StringRef string_ctor(const char* src) {
   src = src ? src : "";
-  {
-    const size_t length = strlen(src);
-    const StringRef self = safe_malloc(struct String);
-    string_new(self, src, length, length);
-    return self;
-  }
+  return string_ctor_impl(src, strlen(src));
 }
 
 void string_dtor(StringRef* pself) {
@@ -245,20 +245,11 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
   assert(self);
   {
     const size_t length = string_length(self);
-    char* const head = string_data(self) + index;
+    char* const src = string_data(self) + index;
     if (count == string_npos || length < index + count) {
-      StringRef substr = string_ctor(head);
-      return substr;
-    } else {
-      char* const tail = head + count;
-      const char tmp = *tail;
-      *tail = '\0';
-      {
-        StringRef substr = string_ctor(head);
-        *tail = tmp;
-        return substr;
-      }
+      count = length - index;
     }
+    return string_ctor_impl(src, count);
   }
 }
 
