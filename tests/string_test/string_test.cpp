@@ -300,13 +300,12 @@ TEST_F(StringTest, swap) {
 
 TEST_F(StringTest, find) {
   const char data[] = "abcdefg";
-  const size_t length = sizeof(data) / sizeof(char) - 1;
   const char target[] = "def";
   const char missed[] = "dack";
   string_assign(v, data);
 
   EXPECT_EQ(3U, string_find(v, target));
-  EXPECT_EQ(length, string_find(v, missed));
+  EXPECT_EQ(string_npos, string_find(v, missed));
 }
 
 TEST_F(StringTest, find_first_of) {
