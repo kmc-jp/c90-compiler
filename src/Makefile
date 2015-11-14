@@ -15,6 +15,8 @@ LLVM_CXXFLAGS = `llvm-config --cxxflags`
 LLVM_LDFLAGS = `llvm-config --ldflags`
 LLVM_LIBS = `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
+OBJS += lex.yy.o
+
 include $(TOP_DIR)/Makefile.in
 
 CFLAGS += $(LLVM_CFLAGS)
@@ -26,3 +28,8 @@ build: $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LIBS) -o $@
+
+lex.yy.c lex.yy.h: lexer.l
+	$(LEX) --header-file=lex.yy.h -o lex.yy.c lexer.l
+
+lexer_adapter.o: lex.yy.h lex.yy.o
