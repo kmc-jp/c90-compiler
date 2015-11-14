@@ -150,9 +150,7 @@ void string_insert(StringRef self, size_t index, const char* data) {
     const size_t count = strlen(data);
     const size_t length = string_length(self);
     const size_t new_length = length + count;
-    if (string_capacity(self) < new_length) {
-      string_reserve(self, new_length);
-    }
+    string_reserve(self, new_length);
     if (0 < count) {
       char* const begin = string_begin(self);
       char* const head = begin + index;
@@ -188,9 +186,7 @@ void string_push_back(StringRef self, char data) {
   assert(self);
   {
     const size_t length = string_length(self);
-    if (length == string_capacity(self)) {
-      string_reserve(self, length + 1);
-    }
+    string_reserve(self, length + 1);
     *string_end(self) = data;
     ++self->length_;
     *string_end(self) = '\0';
