@@ -97,6 +97,11 @@ char* string_begin(StringRef self) {
   return self->data_;
 }
 
+char* string_end(StringRef self) {
+  assert(self);
+  return self->data_ + string_length(self);
+}
+
 size_t string_length(StringRef self) {
   assert(self);
   return self->length_;
