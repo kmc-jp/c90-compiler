@@ -1,4 +1,4 @@
-# c89-compiler/tests/vector_test/Makefile
+# c89-compiler/tests/lexer_test/Makefile
 
 TOP_DIR := ../..
 SRC_DIR := $(TOP_DIR)/src
@@ -9,22 +9,24 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-VECTOR_SRCS := utility.c
-VECTOR_OBJS := $(VECTOR_SRCS:%.c=$(SRC_DIR)/%.o)
-TARGET := vector_test.out
-OBJS += $(VECTOR_OBJS)
+LEX_SRCS := lex.yy.c yacc_mock.c use_vector.c utility.c
+LEX_OBJS := $(LEX_SRCS:%.c=$(SRC_DIR)/%.o)
+TARGET := lexer_test.out
+CLEAN_OBJS += $(LEX_OBJS)
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJS) $(LEX_OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(TARGET): $(GTEST_TARGET)
 
+$(OBJS): $(LEX_OBJS)
+
 $(GTEST_TARGET):
 	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
 
-$(VECTOR_OBJS): $(SRC_DIR)/%:
+$(LEX_OBJS): $(SRC_DIR)/%:
 	$(MAKE) -C $(SRC_DIR) $*
 
 do_test: $(TARGET)
