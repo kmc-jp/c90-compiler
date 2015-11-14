@@ -68,6 +68,11 @@ void string_assign(StringRef self, const char* src) {
   }
 }
 
+char string_at(StringRef self, size_t index) {
+  assert(self);
+  return string_data(self)[index];
+}
+
 char* string_data(StringRef self) {
   assert(self);
   return self->data_;
