@@ -21,12 +21,8 @@ static void string_new(StringRef self, const char* src,
 
 StringRef string_ctor(const char* src) {
   const size_t length = src ? strlen(src) : 0;
-  const size_t size = enough_capacity(length + 1);
   const StringRef self = safe_malloc(struct String);
-  self->data_ = safe_array_malloc(char, size);
-  strncpy(self->data_, src, length + 1);
-  self->length_ = length;
-  self->capacity_ = size - 1;
+  string_new(self, src, length, length);
   return self;
 }
 
