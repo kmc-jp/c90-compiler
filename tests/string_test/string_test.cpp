@@ -261,7 +261,7 @@ TEST_F(StringTest, resize) {
   const char data4[] = "abc";
   int i = 0;
   string_assign(v, data1);
-  
+
   string_resize(v, 5);
   EXPECT_EQ(5U, string_length(v));
   for (i = 0; i <= 5; ++i) {
