@@ -28,3 +28,8 @@ void string_dtor(StringRef* pself) {
     safe_free(*pself);
   }
 }
+
+char* string_data(StringRef self) {
+  assert(self);
+  return self->data_;
+}
