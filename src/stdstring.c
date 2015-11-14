@@ -79,12 +79,12 @@ char string_at(StringRef self, size_t index) {
 
 char string_front(StringRef self) {
   assert(self);
-  return string_data(self)[0];
+  return *string_begin(self);
 }
 
 char string_back(StringRef self) {
   assert(self);
-  return string_data(self)[string_length(self)];
+  return *string_end(self);
 }
 
 char* string_data(StringRef self) {
