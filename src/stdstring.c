@@ -10,12 +10,19 @@ struct String {
 
 const size_t string_npos = (size_t)(-1);
 
+static void string_set_end(StringRef self, char data) {
+  self->data_[self->length_] = data;
+}
+static void string_set_length(StringRef self, size_t length) {
+  self->length_ = length;
+  self->data_[length] = '\0';
+}
 static void string_free(StringRef self) {
   safe_free(self->data_);
 }
 static void string_init(StringRef self, const char* src, size_t length) {
-  strncpy(self->data_, src, length + 1);
-  self->length_ = length;
+  memcpy(self->data_, src, length);
+  string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
   self->data_ = safe_array_malloc(char, size);
@@ -30,15 +37,15 @@ static void string_new(StringRef self, const char* src,
   string_alloc(self, enough_capacity(size + 1));
   string_init(self, src, length);
 }
+StringRef string_ctor_impl(const char* src, size_t length) {
+  const StringRef self = safe_malloc(struct String);
+  string_new(self, src, length, length);
+  return self;
+}
 
 StringRef string_ctor(const char* src) {
   src = src ? src : "";
-  {
-    const size_t length = strlen(src);
-    const StringRef self = safe_malloc(struct String);
-    string_new(self, src, length, length);
-    return self;
-  }
+  return string_ctor_impl(src, strlen(src));
 }
 
 void string_dtor(StringRef* pself) {
@@ -94,12 +101,12 @@ char* string_data(StringRef self) {
 
 char* string_begin(StringRef self) {
   assert(self);
-  return self->data_;
+  return string_data(self);
 }
 
 char* string_end(StringRef self) {
   assert(self);
-  return self->data_ + string_length(self);
+  return string_data(self) + string_length(self);
 }
 
 bool string_empty(StringRef self) {
@@ -141,7 +148,7 @@ void string_shrink_to_fit(StringRef self) {
 
 void string_clear(StringRef self) {
   assert(self);
-  string_init(self, "", 0);
+  string_set_length(self, 0);
 }
 
 void string_insert(StringRef self, size_t index, const char* data) {
@@ -152,13 +159,11 @@ void string_insert(StringRef self, size_t index, const char* data) {
     const size_t new_length = length + count;
     string_reserve(self, new_length);
     if (0 < count) {
-      char* const begin = string_begin(self);
-      char* const head = begin + index;
+      char* const head = string_data(self) + index;
       char* const tail = head + count;
       memmove(tail, head, length - index);
-      strncpy(head, data, count);
-      self->length_ = new_length;
-      *string_end(self) = '\0';
+      memcpy(head, data, count);
+      string_set_length(self, new_length);
     }
   }
 }
@@ -168,16 +173,14 @@ void string_erase(StringRef self, size_t index, size_t count) {
   {
     const size_t length = string_length(self);
     if (count == string_npos || length < index + count) {
-      self->length_ = index;
+      string_set_length(self, index);
     } else {
-      char* const begin = string_begin(self);
-      char* const head = begin + index;
+      char* const head = string_data(self) + index;
       char* const tail = head + count;
       const size_t new_length = length - count;
       memmove(head, tail, new_length - index);
-      self->length_ = new_length;
+      string_set_length(self, new_length);
     }
-    *string_end(self) = '\0';
   }
 }
 
@@ -186,16 +189,14 @@ void string_push_back(StringRef self, char data) {
   {
     const size_t length = string_length(self);
     string_reserve(self, length + 1);
-    *string_end(self) = data;
-    ++self->length_;
-    *string_end(self) = '\0';
+    string_set_end(self, data);
+    string_set_length(self, length + 1);
   }
 }
 
 void string_pop_back(StringRef self) {
   assert(self);
-  --self->length_;
-  *string_end(self) = '\0';
+  string_set_length(self, string_length(self) - 1);
 }
 
 void string_append(StringRef self, const char* data) {
@@ -204,9 +205,8 @@ void string_append(StringRef self, const char* data) {
     const size_t count = strlen(data);
     const size_t new_length = string_length(self) + count;
     string_reserve(self, new_length);
-    strncpy(string_end(self), data, count);
-    self->length_ = new_length;
-    *string_end(self) = '\0';
+    memcpy(string_end(self), data, count);
+    string_set_length(self, new_length);
   }
 }
 
@@ -222,21 +222,20 @@ void string_replace(StringRef self, size_t index, size_t count,
     const size_t length = string_length(self);
     const size_t data_length = strlen(data);
     if (count == string_npos || length < index + count) {
-      strncpy(string_data(self) + index, data, data_length);
-      self->length_ = index + data_length;
-    } else {
-      const size_t new_length = length + data_length - count ;
+      count = length - index;
+    }
+    {
+      const size_t new_length = length + data_length - count;
       string_reserve(self, new_length);
-      self->length_ = new_length;
       {
-        char* const head = string_begin(self) + index;
+        char* const head = string_data(self) + index;
         char* const dst = head + data_length;
         char* const src = head + count;
         memmove(dst, src, length - index - count);
-        strncpy(head, data, data_length);
+        memcpy(head, data, data_length);
+        string_set_length(self, new_length);
       }
     }
-    *string_end(self) = '\0';
   }
 }
 
@@ -244,20 +243,11 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
   assert(self);
   {
     const size_t length = string_length(self);
-    char* const head = string_data(self) + index;
+    char* const src = string_data(self) + index;
     if (count == string_npos || length < index + count) {
-      StringRef substr = string_ctor(head);
-      return substr;
-    } else {
-      char* const tail = head + count;
-      const char tmp = *tail;
-      *tail = '\0';
-      {
-        StringRef substr = string_ctor(head);
-        *tail = tmp;
-        return substr;
-      }
+      count = length - index;
     }
+    return string_ctor_impl(src, count);
   }
 }
 
@@ -269,7 +259,7 @@ size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    memmove(dst, src, count);
+    memcpy(dst, src, count);
     return count;
   }
 }
@@ -282,8 +272,7 @@ void string_resize(StringRef self, size_t size) {
       string_reserve(self, size);
       memset(string_end(self), 0, size - length);
     }
-    self->length_ = size;
-    *string_end(self) = '\0';
+    string_set_length(self, size);
   }
 }
 
@@ -299,10 +288,10 @@ void string_swap(StringRef self, StringRef other) {
 size_t string_find(StringRef self, const char* str) {
   assert(self);
   {
-    char* const begin = string_begin(self);
-    char* const head = strstr(begin, str);
+    char* const data = string_data(self);
+    char* const head = strstr(data, str);
     if (head) {
-      return head - begin;
+      return head - data;
     } else {
       return string_npos;
     }
