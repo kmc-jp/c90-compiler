@@ -101,12 +101,12 @@ char* string_data(StringRef self) {
 
 char* string_begin(StringRef self) {
   assert(self);
-  return self->data_;
+  return string_data(self);
 }
 
 char* string_end(StringRef self) {
   assert(self);
-  return self->data_ + string_length(self);
+  return string_data(self) + string_length(self);
 }
 
 bool string_empty(StringRef self) {
