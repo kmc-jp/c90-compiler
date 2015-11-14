@@ -102,6 +102,11 @@ char* string_end(StringRef self) {
   return self->data_ + string_length(self);
 }
 
+bool string_empty(StringRef self) {
+  assert(self);
+  return string_length(self) == 0;
+}
+
 size_t string_length(StringRef self) {
   assert(self);
   return self->length_;
