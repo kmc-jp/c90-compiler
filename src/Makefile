@@ -17,3 +17,7 @@ $(TARGET): $(OBJS)
 
 lex.yy.c lex.yy.h: lexer.l
 	$(LEX) --header-file=lex.yy.h -o lex.yy.c lexer.l
+
+lex.yy.o: CFLAGS += -Wno-unused-function
+
+main.o: CFLAGS += -Wno-long-long
