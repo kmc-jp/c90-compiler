@@ -38,3 +38,8 @@ size_t string_length(StringRef self) {
   assert(self);
   return self->length_;
 }
+
+size_t string_capacity(StringRef self) {
+  assert(self);
+  return self->capacity_;
+}
