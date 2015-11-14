@@ -21,9 +21,9 @@ static void string_init(StringRef self, const char* src,
 }
 static void string_new(StringRef self, const char* src,
                        size_t length, size_t size) {
-  const size_t capacity = enough_capacity(size + 1);
-  string_alloc(self, capacity);
-  string_init(self, src, length, capacity - 1);
+  const size_t capacity = enough_capacity(size + 1) - 1;
+  string_alloc(self, capacity + 1);
+  string_init(self, src, length, capacity);
 }
 static void string_free(StringRef self) {
   safe_free(self->data_);
