@@ -194,9 +194,9 @@ TEST_F(StringTest, string_compare){
     for (j = 0 ; j < count ; ++j) {
       result = string_compare(vs[i], vs[j]);
       if (i < j){
-        EXPECT_LT(0, result);
-      } else if (i > j) {
         EXPECT_GT(0, result);
+      } else if (i > j) {
+        EXPECT_LT(0, result);
       } else {
         EXPECT_EQ(0, result);
       }
