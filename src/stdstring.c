@@ -198,3 +198,15 @@ void string_pop_back(StringRef self) {
   --self->length_;
   *string_end(self) = '\0';
 }
+
+void string_append(StringRef self, const char* data) {
+  assert(self);
+  if (data) {
+    const size_t count = strlen(data);
+    const size_t new_length = string_length(self) + count;
+    string_reserve(self, new_length);
+    strncpy(string_end(self), data, count);
+    self->length_ = new_length;
+    *string_end(self) = '\0';
+  }
+}
