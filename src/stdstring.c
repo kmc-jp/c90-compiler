@@ -183,3 +183,16 @@ void string_erase(StringRef self, size_t index, size_t count) {
     *string_end(self) = '\0';
   }
 }
+
+void string_push_back(StringRef self, char data) {
+  assert(self);
+  {
+    const size_t length = string_length(self);
+    if (length == string_capacity(self)) {
+      string_reserve(self, length + 1);
+    }
+    *string_end(self) = data;
+    ++self->length_;
+    *string_end(self) = '\0';
+  }
+}
