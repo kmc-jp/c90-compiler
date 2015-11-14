@@ -82,6 +82,11 @@ char string_front(StringRef self) {
   return string_data(self)[0];
 }
 
+char string_back(StringRef self) {
+  assert(self);
+  return string_data(self)[string_length(self)];
+}
+
 char* string_data(StringRef self) {
   assert(self);
   return self->data_;
