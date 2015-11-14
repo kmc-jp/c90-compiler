@@ -196,3 +196,9 @@ void string_push_back(StringRef self, char data) {
     *string_end(self) = '\0';
   }
 }
+
+void string_pop_back(StringRef self) {
+  assert(self);
+  --self->length_;
+  *string_end(self) = '\0';
+}
