@@ -105,7 +105,7 @@ TEST_F(StringTest, clear) {
 TEST_F(StringTest, insert) {
   const char data1[] = "abcij";
   const char data2[] = "defgh";
-  const char data3[] = "abcdefghijj";
+  const char data3[] = "abcdefghij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
   string_assign(v, data1);
@@ -167,7 +167,7 @@ TEST_F(StringTest, pop_back) {
 TEST_F(StringTest, append) {
   const char data1[] = "abcij";
   const char data2[] = "defgh";
-  const char data3[] = "abcdefghijj";
+  const char data3[] = "abcdefghij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
 
@@ -191,7 +191,7 @@ TEST_F(StringTest, string_compare){
     vs[i] = string_ctor(data[i]);
   }
   for (i = 0; i < count ; ++i) {
-    for (j = 0 ; j < count ; ++i) {
+    for (j = 0 ; j < count ; ++j) {
       result = string_compare(vs[i], vs[j]);
       if (i < j){
         EXPECT_LT(0, result);
@@ -325,6 +325,6 @@ TEST_F(StringTest, find_first_not_of) {
   const char allchars[] = "gfedcba";
   string_assign(v, data);
 
-  EXPECT_EQ(3, string_find_first_of(v, target));
+  EXPECT_EQ(3, string_find_first_not_of(v, target));
   EXPECT_EQ(string_npos, string_find(v, allchars));
 }
