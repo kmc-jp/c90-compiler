@@ -273,3 +273,16 @@ size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
     return count;
   }
 }
+
+void string_resize(StringRef self, size_t size) {
+  assert(self);
+  {
+    const size_t length = string_length(self);
+    if (length < size) {
+      string_reserve(self, size);
+      memset(string_end(self), 0, size - length);
+    }
+    self->length_ = size;
+    *string_end(self) = '\0';
+  }
+}
