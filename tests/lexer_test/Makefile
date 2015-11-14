@@ -25,7 +25,6 @@ CFLAGS += $(INCLUDE)
 CXXFLAGS += $(INCLUDE)
 LDFLAGS += -L$(GTEST_DIR)
 LIBS += -lgtest -lpthread
-OBJS += $(SRC_DIR)/lex.yy.o
 
 unit_test: $(TARGET)
 
