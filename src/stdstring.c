@@ -12,6 +12,7 @@ const size_t string_npos = (size_t)(-1);
 
 static void string_alloc(StringRef self, size_t size) {
   self->data_ = safe_array_malloc(char, size);
+  self->capacity_ = size - 1;
 }
 static void string_init(StringRef self, const char* src, size_t length) {
   strncpy(self->data_, src, length + 1);
@@ -19,8 +20,7 @@ static void string_init(StringRef self, const char* src, size_t length) {
 }
 static void string_new(StringRef self, const char* src,
                        size_t length, size_t size) {
-  const size_t capacity = enough_capacity(size + 1) - 1;
-  string_alloc(self, capacity + 1);
+  string_alloc(self, enough_capacity(size + 1));
   string_init(self, src, length);
 }
 static void string_free(StringRef self) {
