@@ -138,3 +138,8 @@ void string_shrink_to_fit(StringRef self) {
     }
   }
 }
+
+void string_clear(StringRef self) {
+  assert(self);
+  string_init(self, "", 0);
+}
