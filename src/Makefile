@@ -9,6 +9,7 @@ include $(SRC_DIR)/Makefile.common
 LEX := flex
 TARGET := kmc89
 OBJS += lex.yy.o
+CLEAN_OBJS += lex.yy.c lex.yy.h
 
 build: $(TARGET)
 
