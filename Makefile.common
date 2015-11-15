@@ -12,14 +12,17 @@ CXX_OBJS := $(CXX_SRCS:.cpp=.o)
 
 OBJS := $(C_OBJS) $(CC_OBJS) $(CXX_OBJS)
 DEPENDS = $(OBJS:.o=.d)
+CLEAN_OBJS :=
+DISTCLEAN_TARGETS :=
 
 CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2
 DEPEND_FLAGS := -MMD -MP
 C89_RESTRICT_FLAGS := -ansi -pedantic
+CXX11_FLAGS := -std=c++11
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
-CXXFLAGS ?= $(COMMON_FLAGS)
+CXXFLAGS ?= $(COMMON_FLAGS) $(CXX11_FLAGS)
 CFLAGS += $(DEPEND_FLAGS)
 CXXFLAGS += $(DEPEND_FLAGS)
 RM := rm -f
@@ -37,9 +40,9 @@ AR := ar rcs
 -include $(DEPENDS)
 
 clean:
-	$(RM) $(OBJS) $(DEPENDS)
+	$(RM) $(OBJS) $(DEPENDS) $(CLEAN_OBJS)
 
 distclean: clean
-	$(RM) $(TARGET)
+	$(RM) $(TARGET) $(DISTCLEAN_TARGETS)
 
 .PHONY: clean distclean

@@ -19,4 +19,4 @@ do_test: $(DO_TEST_TARGETS)
 $(DO_TEST_TARGETS): $(DO_TEST_PREFIX)%: %
 	./$*
 
-.PHONY: source_test
+.PHONY: source_test do_test
