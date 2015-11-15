@@ -45,6 +45,8 @@ size_t string_length(StringRef self);
 void string_reserve(StringRef self, size_t size);
 /* capacity */
 size_t string_capacity(StringRef self);
+/* shrink_to_fit */
+void string_shrink_to_fit(StringRef self);
 /* clear */
 void string_clear(StringRef self);
 /* insert */

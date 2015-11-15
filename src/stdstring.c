@@ -128,6 +128,19 @@ size_t string_capacity(StringRef self) {
   return self->capacity_;
 }
 
+void string_shrink_to_fit(StringRef self) {
+  assert(self);
+  {
+    const size_t length = string_length(self);
+    if (length < string_capacity(self)) {
+      char* old_data = string_data(self);
+      string_alloc(self, length + 1);
+      string_init(self, old_data, length);
+      safe_free(old_data);
+    }
+  }
+}
+
 void string_clear(StringRef self) {
   assert(self);
   string_set_length(self, 0);
