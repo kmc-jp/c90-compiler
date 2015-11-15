@@ -29,8 +29,10 @@ static void string_alloc(StringRef self, size_t size) {
   self->capacity_ = size - 1;
 }
 static void string_extend(StringRef self, size_t size) {
-  string_free(self);
-  string_alloc(self, size);
+  if (self->capacity_ < size) {
+    string_free(self);
+    string_alloc(self, size);
+  }
 }
 static void string_new(StringRef self, const char* src,
                        size_t length, size_t size) {
@@ -60,9 +62,7 @@ void string_copy(StringRef self, StringRef src) {
   assert(self && src);
   {
     const size_t length = string_length(src);
-    if (string_capacity(self) < length) {
-      string_extend(self, length);
-    }
+    string_extend(self, length);
     string_init(self, string_data(src), length);
   }
 }
@@ -72,9 +72,7 @@ void string_assign(StringRef self, const char* src) {
   src = src ? src : "";
   {
     const size_t length = strlen(src);
-    if (string_capacity(self) < length) {
-      string_extend(self, length);
-    }
+    string_extend(self, length);
     string_init(self, src, length);
   }
 }
