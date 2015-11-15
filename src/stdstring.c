@@ -133,10 +133,10 @@ void string_shrink_to_fit(StringRef self) {
   {
     const size_t length = string_length(self);
     if (length < string_capacity(self)) {
-      char* old_data = string_data(self);
-      string_alloc(self, length + 1);
+      char* original = string_data(self);
+      string_alloc(self, length);
       string_init(self, old_data, length);
-      safe_free(old_data);
+      safe_free(original);
     }
   }
 }
