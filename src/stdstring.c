@@ -271,9 +271,9 @@ size_t string_find(StringRef self, const char* str) {
   assert(self);
   {
     char* const data = string_data(self);
-    char* const head = strstr(data, str);
-    if (head) {
-      return head - data;
+    char* const found = strstr(data, str);
+    if (found) {
+      return found - data;
     } else {
       return string_npos;
     }
