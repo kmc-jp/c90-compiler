@@ -34,14 +34,10 @@ static void string_extend(StringRef self, size_t size) {
     string_alloc(self, size);
   }
 }
-static void string_new(StringRef self, const char* src,
-                       size_t length, size_t size) {
-  string_alloc(self, size);
-  string_init(self, src, length);
-}
 StringRef string_ctor_impl(const char* src, size_t length) {
   const StringRef self = safe_malloc(struct String);
-  string_new(self, src, length, length);
+  string_alloc(self, length);
+  string_init(self, src, length);
   return self;
 }
 
@@ -121,7 +117,8 @@ void string_reserve(StringRef self, size_t size) {
   assert(self);
   if (string_capacity(self) < size) {
     char* original = string_data(self);
-    string_new(self, original, string_length(self), size);
+    string_alloc(self, size);
+    string_init(self, original, string_length(self));
     safe_free(original);
   }
 }
