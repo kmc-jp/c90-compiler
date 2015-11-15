@@ -25,21 +25,19 @@ static void string_init(StringRef self, const char* src, size_t length) {
   string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
-  self->data_ = safe_array_malloc(char, size);
+  self->data_ = safe_array_malloc(char, enough_capacity(size + 1));
   self->capacity_ = size - 1;
 }
 static void string_extend(StringRef self, size_t size) {
-  string_free(self);
-  string_alloc(self, enough_capacity(size + 1));
-}
-static void string_new(StringRef self, const char* src,
-                       size_t length, size_t size) {
-  string_alloc(self, enough_capacity(size + 1));
-  string_init(self, src, length);
+  if (self->capacity_ < size) {
+    string_free(self);
+    string_alloc(self, size);
+  }
 }
 StringRef string_ctor_impl(const char* src, size_t length) {
   const StringRef self = safe_malloc(struct String);
-  string_new(self, src, length, length);
+  string_alloc(self, length);
+  string_init(self, src, length);
   return self;
 }
 
@@ -60,9 +58,7 @@ void string_copy(StringRef self, StringRef src) {
   assert(self && src);
   {
     const size_t length = string_length(src);
-    if (string_capacity(self) < length) {
-      string_extend(self, length);
-    }
+    string_extend(self, length);
     string_init(self, string_data(src), length);
   }
 }
@@ -72,9 +68,7 @@ void string_assign(StringRef self, const char* src) {
   src = src ? src : "";
   {
     const size_t length = strlen(src);
-    if (string_capacity(self) < length) {
-      string_extend(self, length);
-    }
+    string_extend(self, length);
     string_init(self, src, length);
   }
 }
@@ -122,9 +116,10 @@ size_t string_length(StringRef self) {
 void string_reserve(StringRef self, size_t size) {
   assert(self);
   if (string_capacity(self) < size) {
-    char* old_data = string_data(self);
-    string_new(self, old_data, string_length(self), size);
-    safe_free(old_data);
+    char* original = string_data(self);
+    string_alloc(self, size);
+    string_init(self, original, string_length(self));
+    safe_free(original);
   }
 }
 
@@ -138,10 +133,10 @@ void string_shrink_to_fit(StringRef self) {
   {
     const size_t length = string_length(self);
     if (length < string_capacity(self)) {
-      char* old_data = string_data(self);
-      string_alloc(self, length + 1);
+      char* original = string_data(self);
+      string_alloc(self, length);
       string_init(self, old_data, length);
-      safe_free(old_data);
+      safe_free(original);
     }
   }
 }
@@ -289,9 +284,9 @@ size_t string_find(StringRef self, const char* str) {
   assert(self);
   {
     char* const data = string_data(self);
-    char* const head = strstr(data, str);
-    if (head) {
-      return head - data;
+    char* const found = strstr(data, str);
+    if (found) {
+      return found - data;
     } else {
       return string_npos;
     }
