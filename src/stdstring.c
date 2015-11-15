@@ -25,16 +25,16 @@ static void string_init(StringRef self, const char* src, size_t length) {
   string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
-  self->data_ = safe_array_malloc(char, size);
+  self->data_ = safe_array_malloc(char, enough_capacity(size + 1));
   self->capacity_ = size - 1;
 }
 static void string_extend(StringRef self, size_t size) {
   string_free(self);
-  string_alloc(self, enough_capacity(size + 1));
+  string_alloc(self, size);
 }
 static void string_new(StringRef self, const char* src,
                        size_t length, size_t size) {
-  string_alloc(self, enough_capacity(size + 1));
+  string_alloc(self, size);
   string_init(self, src, length);
 }
 StringRef string_ctor_impl(const char* src, size_t length) {
