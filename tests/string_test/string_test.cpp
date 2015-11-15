@@ -20,7 +20,6 @@ TEST_F(StringTest, ctor) {
   EXPECT_EQ('\0', *string_end(v));
   EXPECT_TRUE(string_empty(v));
   EXPECT_EQ(0U, string_length(v));
-  EXPECT_EQ(0U, string_capacity(v));
 }
 
 TEST_F(StringTest, dtor) {
