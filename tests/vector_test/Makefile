@@ -1,33 +1,33 @@
 # c89-compiler/tests/vector_test/Makefile
 
-TOP_DIR = ../..
-SRC_DIR = $(TOP_DIR)/src
-TESTS_DIR = $(TOP_DIR)/tests
-GTEST_DIR = $(TESTS_DIR)/gtest
+TOP_DIR := ../..
+SRC_DIR := $(TOP_DIR)/src
+TESTS_DIR := $(TOP_DIR)/tests
+GTEST_DIR := $(TESTS_DIR)/gtest
 
-GTEST_LIB = $(GTEST_DIR)/libgtest.a
-UTILITY_OBJ = $(SRC_DIR)/utility.o
+include $(TOP_DIR)/Makefile.common
+include $(GTEST_DIR)/Makefile.common
+include $(TESTS_DIR)/Makefile.common
 
-C_SRCS = $(wildcard *.c)
-CXX_SRCS = $(wildcard *.cpp)
-C_OBJS = $(C_SRCS:.c=.o)
-CXX_OBJS = $(CXX_SRCS:.cpp=.o)
-OBJS = $(C_OBJS) $(CXX_OBJS)
-TARGET = vector_test.out
-INCLUDE = -I$(TESTS_DIR) -I$(SRC_DIR)
-
-include $(TOP_DIR)/Makefile.in
-
-CFLAGS += $(INCLUDE)
-CXXFLAGS += $(INCLUDE)
-LDFLAGS += -L$(GTEST_DIR)
-LIBS += -lgtest -lpthread
+VECTOR_SRCS := utility.c
+VECTOR_OBJS := $(VECTOR_SRCS:%.c=$(SRC_DIR)/%.o)
+TARGET := vector_test.out
+OBJS += $(VECTOR_OBJS)
 
 unit_test: $(TARGET)
 
-$(TARGET): $(OBJS) $(UTILITY_OBJ)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-$(TARGET): $(GTEST_LIB)
+$(TARGET): $(GTEST_TARGET)
 
-.PHONY: unit_test
+$(GTEST_TARGET):
+	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
+
+$(VECTOR_OBJS): $(SRC_DIR)/%:
+	$(MAKE) -C $(SRC_DIR) $*
+
+do_test: $(TARGET)
+	./$(TARGET)
+
+.PHONY: unit_test do_test

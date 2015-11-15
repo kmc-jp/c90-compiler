@@ -1,35 +1,26 @@
 # c89-compiler/src/Makefile
 
-TOP_DIR = ..
+TOP_DIR := ..
+SRC_DIR := .
 
-C_SRCS = $(wildcard *.c)
-CXX_SRCS = $(wildcard *.cpp)
-C_OBJS = $(C_SRCS:.c=.o)
-CXX_OBJS = $(CXX_SRCS:.cpp=.o)
-OBJS = $(C_OBJS) $(CXX_OBJS)
-TARGET = kmc89
+include $(TOP_DIR)/Makefile.common
+include $(SRC_DIR)/Makefile.common
 
-LLVM_MODULES = core analysis bitwriter
-LLVM_CFLAGS = `llvm-config --cflags`
-LLVM_CXXFLAGS = `llvm-config --cxxflags`
-LLVM_LDFLAGS = `llvm-config --ldflags`
-LLVM_LIBS = `llvm-config --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
-
+LEX := flex
+TARGET := kmc89
 OBJS += lex.yy.o
+CLEAN_OBJS += lex.yy.c lex.yy.h
 
-include $(TOP_DIR)/Makefile.in
-
-CFLAGS += $(LLVM_CFLAGS)
-CXXFLAGS += $(LLVM_CXXFLAGS)
-LDFLAGS += $(LLVM_LDFLAGS)
-LIBS += $(LLVM_LIBS)
-
-build: $(OBJS) $(TARGET)
+build: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(LDFLAGS) $^ $(LIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 lex.yy.c lex.yy.h: lexer.l
 	$(LEX) --header-file=lex.yy.h -o lex.yy.c lexer.l
 
-lexer_adapter.o: lex.yy.h lex.yy.o
+lex.yy.o: CFLAGS += -Wno-unused-function
+
+main.o: CFLAGS += -Wno-long-long
+
+.PHONY: build

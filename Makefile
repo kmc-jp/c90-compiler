@@ -1,49 +1,47 @@
 # c89-compiler/Makefile
 
-SRC_DIR = src
-TESTS_DIR = tests
+SRC_DIR := src
+TESTS_DIR := tests
+DIRS := $(SRC_DIR) $(TESTS_DIR)
 
-TARGET = kmc89
-RM = rm -f
+TARGET := kmc89
+RM := rm -f
+
+CLEAN_PREFIX := clean_
+DISTCLEAN_PREFIX := distclean_
+
+TEST_TARGETS := unit_test source_test do_test
+CLEAN_TARGETS := $(addprefix $(CLEAN_PREFIX),$(DIRS))
+DISTCLEAN_TARGETS := $(addprefix $(DISTCLEAN_PREFIX),$(DIRS))
 
 
-all: $(TARGET) test
+all: $(TARGET)
 
 $(TARGET): build
 	cp $(SRC_DIR)/$(TARGET) $(TARGET)
 
 build:
-	cd $(SRC_DIR); make build
+	$(MAKE) -C $(SRC_DIR) build
 
 
-test: unit_test source_test
+test: $(TEST_TARGETS)
 
-unit_test: build
-	cd $(TESTS_DIR); make unit_test
-
-source_test:
-	cd $(TESTS_DIR); make source_test
+$(TEST_TARGETS):
+	$(MAKE) -C $(TESTS_DIR) $@
 
 
-clean: src_clean tests_clean
+clean: $(CLEAN_TARGETS)
 
-src_clean:
-	cd $(SRC_DIR); make clean
-
-tests_clean:
-	cd $(TESTS_DIR); make clean
+$(CLEAN_TARGETS): $(CLEAN_PREFIX)%:
+	$(MAKE) -C $* clean
 
 
-distclean: src_distclean tests_distclean
+distclean: $(DISTCLEAN_TARGETS)
 	$(RM) $(TARGET)
 
-src_distclean:
-	cd $(SRC_DIR); make distclean
-
-tests_distclean:
-	cd $(TESTS_DIR); make distclean
+$(DISTCLEAN_TARGETS): $(DISTCLEAN_PREFIX)%:
+	$(MAKE) -C $* distclean
 
 
-.PHONY: all build test unit_test source_test\
-	clean src_clean tests_clean\
-	distclean src_distclean tests_distclean
+.PHONY: all build test clean distclean\
+	$(TEST_TARGETS) $(CLEAN_TARGETS) $(DISTCLEAN_TARGETS)
