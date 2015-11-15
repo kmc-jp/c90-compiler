@@ -8,11 +8,11 @@ include $(TESTS_DIR)/Makefile.common
 
 TARGET := libgtest.a
 
-CXXFLAGS += -Wno-missing-field-initializers
-
 unit_test: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(AR) $@ $^
+
+gtest-all.o: CXXFLAGS += -Wno-missing-field-initializers
 
 .PHONY: unit_test
