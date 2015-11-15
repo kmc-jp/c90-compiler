@@ -135,7 +135,7 @@ void string_shrink_to_fit(StringRef self) {
     if (length < string_capacity(self)) {
       char* original = string_data(self);
       string_alloc(self, length);
-      string_init(self, old_data, length);
+      string_init(self, original, length);
       safe_free(original);
     }
   }
