@@ -25,10 +25,10 @@ void initialize_lexer(void) {
   lexer_string_literal = VECTORFUNC(char, ctor)();
 }
 %}
-ESCSEQ    "\\"[\\\'\"abfnrtv0?]
-NONESCSEQ [^\\]
-CHARACTER {ESCSEQ}|{NONESCSEQ}
-IDENT     [_a-z][_a-zA-Z0-9]*
+ESCAPE_SEQUENCE    "\\"[\\\'\"abfnrtv0?]
+NOT_ESCAPE_SEQUENCE [^\\]
+CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
+IDENTIFIER     [_a-z][_a-zA-Z0-9]*
 DIGIT2    "0b"("0"|1[01]*)
 DIGIT4    "0q"("0"|[1-3][0-3]*)
 DIGIT8    "0"("0"|[1-7][0-7]*)
@@ -149,9 +149,9 @@ CHAR16    "\\x"[0-9A-F]+
 "while"     return WHILE;
 "the_answer"  return FORTY_TWO; /* funny easter egg */
 
-{IDENT} {
+{IDENTIFIER} {
   copy_to_yylval(yytext, yyleng);
-  return IDENT;
+  return IDENTIFIER;
 }
 
 "'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
