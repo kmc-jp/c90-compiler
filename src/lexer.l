@@ -90,16 +90,16 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 ">=" return GE;
 "&&" return AND;
 "||" return OR;
-"+=" return ADDASSIGN;
-"-=" return SUBASSIGN;
-"*=" return MULASSIGN;
-"/=" return DIVASSIGN;
-"%=" return MODASSIGN;
-"<<=" return LSHIFTASSIGN;
-">>=" return RSHIFTASSIGN;
-"&=" return ANDASSIGN;
-"|=" return ORASSIGN;
-"^=" return XORASSIGN;
+"+=" return ADD_ASSIGN;
+"-=" return SUB_ASSIGN;
+"*=" return MUL_ASSIGN;
+"/=" return DIV_ASSIGN;
+"%=" return MOD_ASSIGN;
+"<<=" return LSHIFT_ASSIGN;
+">>=" return RSHIFT_ASSIGN;
+"&=" return AND_ASSIGN;
+"|=" return OR_ASSIGN;
+"^=" return XOR_ASSIGN;
 
 "auto"     return AUTO;
 "break"    return BREAK;
