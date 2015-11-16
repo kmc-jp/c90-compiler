@@ -93,8 +93,8 @@ CHAR16 "\\x"[0-9A-F]+
 "&=" return BANDASSIGN;
 "^=" return BXORASSIGN;
 "|=" return BORASSIGN;
-"[" return LBRAKET;
-"]" return RBRAKET;
+"[" return LBRACKET;
+"]" return RBRACKET;
 "(" return LPAREN;
 ")" return RPAREN;
 "{" return LBRACE;
