@@ -32,5 +32,5 @@
 *.dSYM/
 
 kmc89
-lex.yy.c
-lex.yy.h
+lex.yy.*
+parser.tab.*
