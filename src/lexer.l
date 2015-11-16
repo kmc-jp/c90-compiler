@@ -80,8 +80,8 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 "->" return ARROW;
 "++" return INCREMENT;
 "--" return DECREMENT;
-"<<" return BLSHIFT;
-">>" return BRSHIFT;
+"<<" return LSHIFT;
+">>" return RSHIFT;
 "==" return EQ;
 "!=" return NEQ;
 "<" return LT;
@@ -95,8 +95,8 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 "*=" return MULASSIGN;
 "/=" return DIVASSIGN;
 "%=" return MODASSIGN;
-"<<=" return BLSHIFTASSIGN;
-">>=" return BRSHIFTASSIGN;
+"<<=" return LSHIFTASSIGN;
+">>=" return RSHIFTASSIGN;
 "&=" return BANDASSIGN;
 "|=" return BORASSIGN;
 "^=" return BXORASSIGN;
