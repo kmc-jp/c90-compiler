@@ -88,8 +88,8 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 ">" return GT;
 "<=" return LE;
 ">=" return GE;
-"&&" return LAND;
-"||" return LOR;
+"&&" return AND;
+"||" return OR;
 "+=" return ADDASSIGN;
 "-=" return SUBASSIGN;
 "*=" return MULASSIGN;
@@ -97,9 +97,9 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 "%=" return MODASSIGN;
 "<<=" return LSHIFTASSIGN;
 ">>=" return RSHIFTASSIGN;
-"&=" return BANDASSIGN;
-"|=" return BORASSIGN;
-"^=" return BXORASSIGN;
+"&=" return ANDASSIGN;
+"|=" return ORASSIGN;
+"^=" return XORASSIGN;
 
 "auto"     return AUTO;
 "break"    return BREAK;
