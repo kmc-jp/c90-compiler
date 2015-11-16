@@ -36,6 +36,7 @@ DIGIT10 "0"|[1-9][0-9]*
 DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
 CHAR8 "\\"[0-7]+
 CHAR16 "\\x"[0-9A-F]+
+SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}]
 %x COMMENT
 %x STRING
 %%
@@ -72,12 +73,10 @@ CHAR16 "\\x"[0-9A-F]+
   return INT_LITERAL;
 }
 
-"[" return LBRACKET;
-"]" return RBRACKET;
-"(" return LPAREN;
-")" return RPAREN;
-"{" return LBRACE;
-"}" return RBRACE;
+{SINGLE_CHARACTER_TOKEN} {
+  return *yytext;
+}
+
 "->" return ARROW;
 "++" return INCREMENT;
 "--" return DECREMENT;
