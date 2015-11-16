@@ -36,7 +36,7 @@ DIGIT10 "0"|[1-9][0-9]*
 DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
 CHAR8 "\\"[0-7]+
 CHAR16 "\\x"[0-9A-F]+
-SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}]
+SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%]
 %x COMMENT
 %x STRING
 %%
@@ -80,11 +80,6 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}]
 "->" return ARROW;
 "++" return INCREMENT;
 "--" return DECREMENT;
-"+" return PLUS;
-"-" return MINUS;
-"*" return ASTE;
-"/" return DIV;
-"%" return MOD;
 "<<" return BLSHIFT;
 ">>" return BRSHIFT;
 "==" return EQ;
