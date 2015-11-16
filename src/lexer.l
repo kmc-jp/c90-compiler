@@ -132,7 +132,6 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 "void"     return VOID;
 "volatile" return VOLATILE;
 "while"    return WHILE;
-"the_answer"  return FORTY_TWO; /* funny easter egg */
 
 {IDENTIFIER} {
   copy_to_yylval(yytext, yyleng);
