@@ -44,7 +44,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ('&', lex_first_token("&n"));
   EXPECT_EQ('+', lex_first_token("+ ++n"));
   EXPECT_EQ('-', lex_first_token("- --n"));
-  EXPECT_EQ(NEG, lex_first_token("!*p"));
+  EXPECT_EQ('!', lex_first_token("!*p"));
   EXPECT_EQ('/', lex_first_token("/!n"));
   EXPECT_EQ('%', lex_first_token("%!n"));
   EXPECT_EQ(BLSHIFT, lex_first_token("<<*p"));
@@ -53,14 +53,14 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(GT, lex_first_token(">!n"));
   EXPECT_EQ(LE, lex_first_token("<=!n"));
   EXPECT_EQ(GE, lex_first_token(">=!n"));
-  EXPECT_EQ(ASSIGN, lex_first_token("=++n"));
+  EXPECT_EQ('=', lex_first_token("=++n"));
   EXPECT_EQ(NEQ, lex_first_token("!=!n"));
   EXPECT_EQ('^', lex_first_token("^&n"));
   EXPECT_EQ(LAND, lex_first_token("&& &n"));
   EXPECT_EQ(LOR, lex_first_token("||&n"));
   EXPECT_EQ('|', lex_first_token("|&n"));
-  EXPECT_EQ(QUESTION, lex_first_token("?*p"));
-  EXPECT_EQ(ASSIGN, lex_first_token("=!n"));
+  EXPECT_EQ('?', lex_first_token("?*p"));
+  EXPECT_EQ('=', lex_first_token("=!n"));
   EXPECT_EQ(MULASSIGN, lex_first_token("*=*p"));
   EXPECT_EQ(ADDASSIGN, lex_first_token("+=++n"));
   EXPECT_EQ(ADDASSIGN, lex_first_token("+=-n"));
@@ -71,9 +71,9 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(BANDASSIGN, lex_first_token("&=&n"));
   EXPECT_EQ(BXORASSIGN, lex_first_token("^=!n"));
   EXPECT_EQ(BORASSIGN, lex_first_token("|=!n"));
-  EXPECT_EQ(COMMA, lex_first_token(",!n"));
-  EXPECT_EQ(COLON, lex_first_token(":&n"));
-  EXPECT_EQ(SEMICOLON, lex_first_token(";;;;;"));
+  EXPECT_EQ(',', lex_first_token(",!n"));
+  EXPECT_EQ(':', lex_first_token(":&n"));
+  EXPECT_EQ(';', lex_first_token(";;;;;"));
 
   EXPECT_EQ(AUTO, lex_first_token("auto"));
   EXPECT_EQ(BREAK, lex_first_token("break"));
