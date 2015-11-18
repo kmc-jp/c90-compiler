@@ -96,7 +96,13 @@ parameter-list
 
 parameter-declaration
 : declaration-specifiers declarator
-/* | declaration-specifiers abstract-declarator.opt */
+| declaration-specifiers abstract-declarator.opt
+;
+
+/* 6.5.5 Types names */
+abstract-declarator.opt
+: %empty
+/* | abstruct-declarator */
 ;
 
 /* 6.6.2 Compound statement, or block */
