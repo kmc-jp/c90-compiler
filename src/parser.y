@@ -59,6 +59,11 @@ type-specifier
 /* | typedef-name */
 ;
 
+/* 6.5.4 Declarators */
+declarator
+: pointer.opt direct-declarator
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
