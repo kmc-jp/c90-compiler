@@ -64,6 +64,11 @@ declarator
 : pointer.opt direct-declarator
 ;
 
+pointer.opt
+: %empty
+/* | pointer */
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
