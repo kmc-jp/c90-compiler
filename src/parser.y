@@ -102,6 +102,11 @@ declaration-list.opt
 /* | declaration-list */
 ;
 
+statement-list.opt
+: %empty
+/* | statement-list */
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
