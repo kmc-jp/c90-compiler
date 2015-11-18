@@ -41,7 +41,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(DECREMENT, lex_first_token("-->=0"));
   EXPECT_EQ('*', lex_first_token("*p"));
   EXPECT_EQ('*', lex_first_token("*42"));
-  EXPECT_EQ(AMP, lex_first_token("&n"));
+  EXPECT_EQ('&', lex_first_token("&n"));
   EXPECT_EQ('+', lex_first_token("+ ++n"));
   EXPECT_EQ('-', lex_first_token("- --n"));
   EXPECT_EQ(NEG, lex_first_token("!*p"));
@@ -55,10 +55,10 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(GE, lex_first_token(">=!n"));
   EXPECT_EQ(ASSIGN, lex_first_token("=++n"));
   EXPECT_EQ(NEQ, lex_first_token("!=!n"));
-  EXPECT_EQ(BXOR, lex_first_token("^&n"));
+  EXPECT_EQ('^', lex_first_token("^&n"));
   EXPECT_EQ(LAND, lex_first_token("&& &n"));
   EXPECT_EQ(LOR, lex_first_token("||&n"));
-  EXPECT_EQ(BOR, lex_first_token("|&n"));
+  EXPECT_EQ('|', lex_first_token("|&n"));
   EXPECT_EQ(QUESTION, lex_first_token("?*p"));
   EXPECT_EQ(ASSIGN, lex_first_token("=!n"));
   EXPECT_EQ(MULASSIGN, lex_first_token("*=*p"));
