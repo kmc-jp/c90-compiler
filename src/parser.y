@@ -93,6 +93,10 @@ parameter-declaration
 ;
 
 /* 6.6.2 Compound statement, or block */
+compound-statement
+: '{' declaration-list.opt statement-list.opt '}'
+;
+
 declaration-list.opt
 : %empty
 /* | declaration-list */
