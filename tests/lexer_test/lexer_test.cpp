@@ -47,8 +47,8 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ('!', lex_first_token("!*p"));
   EXPECT_EQ('/', lex_first_token("/!n"));
   EXPECT_EQ('%', lex_first_token("%!n"));
-  EXPECT_EQ(BLSHIFT, lex_first_token("<<*p"));
-  EXPECT_EQ(BRSHIFT, lex_first_token(">>*p"));
+  EXPECT_EQ(LSHIFT, lex_first_token("<<*p"));
+  EXPECT_EQ(RSHIFT, lex_first_token(">>*p"));
   EXPECT_EQ(LT, lex_first_token("<!n"));
   EXPECT_EQ(GT, lex_first_token(">!n"));
   EXPECT_EQ(LE, lex_first_token("<=!n"));
@@ -56,8 +56,8 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ('=', lex_first_token("=++n"));
   EXPECT_EQ(NEQ, lex_first_token("!=!n"));
   EXPECT_EQ('^', lex_first_token("^&n"));
-  EXPECT_EQ(LAND, lex_first_token("&& &n"));
-  EXPECT_EQ(LOR, lex_first_token("||&n"));
+  EXPECT_EQ(AND, lex_first_token("&& &n"));
+  EXPECT_EQ(OR, lex_first_token("||&n"));
   EXPECT_EQ('|', lex_first_token("|&n"));
   EXPECT_EQ('?', lex_first_token("?*p"));
   EXPECT_EQ('=', lex_first_token("=!n"));
@@ -66,11 +66,11 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(ADDASSIGN, lex_first_token("+=-n"));
   EXPECT_EQ(SUBASSIGN, lex_first_token("-=--n"));
   EXPECT_EQ(SUBASSIGN, lex_first_token("-=-n"));
-  EXPECT_EQ(BLSHIFTASSIGN, lex_first_token("<<=-n"));
-  EXPECT_EQ(BRSHIFTASSIGN, lex_first_token(">>=-n"));
-  EXPECT_EQ(BANDASSIGN, lex_first_token("&=&n"));
-  EXPECT_EQ(BXORASSIGN, lex_first_token("^=!n"));
-  EXPECT_EQ(BORASSIGN, lex_first_token("|=!n"));
+  EXPECT_EQ(LSHIFTASSIGN, lex_first_token("<<=-n"));
+  EXPECT_EQ(RSHIFTASSIGN, lex_first_token(">>=-n"));
+  EXPECT_EQ(ANDASSIGN, lex_first_token("&=&n"));
+  EXPECT_EQ(XORASSIGN, lex_first_token("^=!n"));
+  EXPECT_EQ(ORASSIGN, lex_first_token("|=!n"));
   EXPECT_EQ(',', lex_first_token(",!n"));
   EXPECT_EQ(':', lex_first_token(":&n"));
   EXPECT_EQ(';', lex_first_token(";;;;;"));
