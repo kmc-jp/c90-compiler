@@ -29,6 +29,20 @@ constant
 | CHARACTER_CONSTANT
 ;
 
+/* 6.5 Declarations */
+declaration-specifiers
+:
+/* : storage-class-specifier declaration-specifiers.opt */
+     type-specifier declaration-specifiers.opt
+/* | type-specifier declaration-specifiers.opt */
+/* | type-qualifier declaration-specifiers.opt */
+;
+
+declaration-specifiers.opt
+: %empty
+| declaration-specifiers
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
