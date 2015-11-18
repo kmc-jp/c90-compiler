@@ -33,4 +33,9 @@ translation-unit
 : external-declaration
 | translation-unit external-declaration
 
+external-declaration
+: function-definition
+/* | declaration */
+;
+
 %%
