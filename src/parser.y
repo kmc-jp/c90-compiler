@@ -29,6 +29,7 @@ constant
 | CHARACTER_CONSTANT
 ;
 
+/* 6.7 External definitions */
 translation-unit
 : external-declaration
 | translation-unit external-declaration
@@ -38,6 +39,8 @@ external-declaration
 /* | declaration */
 ;
 
+/* 6.7.1 Function definitions */
 function-definition
 : declaration-specifiers.opt declarator declaration-list.opt compound-statement
+
 %%
