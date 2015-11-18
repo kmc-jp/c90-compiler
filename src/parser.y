@@ -12,6 +12,8 @@
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
 
+%start translation-unit
+
 %%
 
 keyword
@@ -26,5 +28,9 @@ constant
 | INTEGER_CONSTANT
 | CHARACTER_CONSTANT
 ;
+
+translation-unit
+: external-declaration
+| translation-unit external-declaration
 
 %%
