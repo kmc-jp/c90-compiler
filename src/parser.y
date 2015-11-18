@@ -92,6 +92,12 @@ parameter-declaration
 /* | declaration-specifiers abstract-declarator.opt */
 ;
 
+/* 6.6.2 Compound statement, or block */
+declaration-list.opt
+: %empty
+/* | declaration-list */
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
