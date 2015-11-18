@@ -30,12 +30,12 @@ Token lex_first_token(const std::string &code) {
 }
 
 TEST(LexerTest, HandlesSingleToken) {
-  EXPECT_EQ(LBRAKET, lex_first_token("[42"));
-  EXPECT_EQ(RBRAKET, lex_first_token("]+"));
-  EXPECT_EQ(LPAREN, lex_first_token("(["));
-  EXPECT_EQ(RPAREN, lex_first_token(")}"));
-  EXPECT_EQ(LBRACE, lex_first_token("{("));
-  EXPECT_EQ(RBRACE, lex_first_token("}}"));
+  EXPECT_EQ('[', lex_first_token("[42"));
+  EXPECT_EQ(']', lex_first_token("]+"));
+  EXPECT_EQ('(', lex_first_token("(["));
+  EXPECT_EQ(')', lex_first_token(")}"));
+  EXPECT_EQ('{', lex_first_token("{("));
+  EXPECT_EQ('}', lex_first_token("}}"));
   EXPECT_EQ(ARROW, lex_first_token("->>="));
   EXPECT_EQ(INCREMENT, lex_first_token("+++="));
   EXPECT_EQ(DECREMENT, lex_first_token("-->=0"));
