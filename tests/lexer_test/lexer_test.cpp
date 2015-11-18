@@ -74,7 +74,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(COMMA, lex_first_token(",!n"));
   EXPECT_EQ(COLON, lex_first_token(":&n"));
   EXPECT_EQ(SEMICOLON, lex_first_token(";;;;;"));
-  
+
   EXPECT_EQ(AUTO, lex_first_token("auto"));
   EXPECT_EQ(BREAK, lex_first_token("break"));
   EXPECT_EQ(CASE, lex_first_token("case"));
@@ -107,7 +107,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(VOLATILE, lex_first_token("volatile"));
   EXPECT_EQ(WHILE, lex_first_token("while"));
   EXPECT_EQ(FORTY_TWO, lex_first_token("the_answer"));
-  
+
   EXPECT_EQ(IDENTIFIER, lex_first_token("automobile"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("breakable"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("case_42"));
@@ -140,7 +140,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(IDENTIFIER, lex_first_token("volatile__volat42"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("_while_"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("forty_two_million"));
-  
+
   EXPECT_EQ(INT_LITERAL, lex_first_token("42"));
   EXPECT_EQ(INT_LITERAL, lex_first_token("+42"));
   EXPECT_EQ(INT_LITERAL, lex_first_token("-42"));
@@ -154,7 +154,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(INT_LITERAL, lex_first_token("-42L"));
   EXPECT_EQ(INT_LITERAL, lex_first_token("+42l"));
   EXPECT_EQ(INT_LITERAL, lex_first_token("0x42ul"));
-  
+
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14"));
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("+3.14"));
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-.14"));
@@ -165,7 +165,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-3.14f"));
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-3.14L"));
   EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14l"));
-  
+
   EXPECT_EQ(CHAR_LITERAL, lex_first_token("'*'"));
   EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\a')"));
   EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\b')"));
@@ -183,4 +183,3 @@ TEST(LexerTest, HandlesSingleToken) {
 
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
 }
-
