@@ -1,10 +1,14 @@
 %{
 %}
 
-%token AUTO BREAK CASE CHAR CONST CONTINUE DEFAULT DO
-%token DOUBLE ELSE ENUM EXTERN FLOAT FOR GOTO IF
-%token INT LONG REGISTER RETURN SHORT SIGNED SIZEOF STATIC
-%token STRUCT SWITCH TYPEDEF UNION UNSIGNED VOID VOLATILE WHILE
+%token AUTO "auto" BREAK "break" CASE "case" CHAR "char"
+%token CONST "const" CONTINUE "continue" DEFAULT "default" DO "do"
+%token DOUBLE "double" ELSE "else" ENUM "enum" EXTERN "extern"
+%token FLOAT "float" FOR "for" GOTO "goto" IF "if"
+%token INT "int" LONG "long" REGISTER "register" RETURN "return"
+%token SHORT "short" SIGNED "signed" SIZEOF "sizeof" STATIC "static"
+%token STRUCT "struct" SWITCH "switch" TYPEDEF "typedef" UNION "union"
+%token UNSIGNED "unsigned" VOID "void" VOLATILE "volatile" WHILE "while"
 
 %token IDENTIFIER
 %token INTEGER_CONSTANT
@@ -17,11 +21,14 @@
 %%
 
 keyword
-: AUTO | BREAK | CASE | CHAR | CONST | CONTINUE | DEFAULT | DO
-| DOUBLE | ELSE | ENUM | EXTERN | FLOAT | FOR | GOTO | IF
-| INT | LONG | REGISTER | RETURN | SHORT | SIGNED | SIZEOF | STATIC
-| STRUCT | SWITCH | TYPEDEF | UNION | UNSIGNED | VOID | VOLATILE | WHILE
-;
+: "auto" | "break" | "case" | "char"
+| "const" | "continue" | "default" | "do"
+| "double" | "else" | "enum" | "extern"
+| "float" | "for" | "goto" | "if"
+| "int" | "long" | "register" | "return"
+| "short" | "signed" | "sizeof" | "static"
+| "struct" | "switch" | "typedef" | "union"
+| "unsigned" | "void" | "volatile" | "while"
 
 constant
 : FLOATING_CONSTANT
@@ -45,15 +52,15 @@ declaration-specifiers.opt
 
 /* 6.5.2 Type specifiers */
 type-specifier
-: VOID
-| CHAR
-| SHORT
-| INT
-| LONG
-| FLOAT
-| DOUBLE
-| SIGNED
-| UNSIGNED
+: "void"
+| "char"
+| "short"
+| "int"
+| "long"
+| "float"
+| "double"
+| "signed"
+| "unsigned"
 /* | struct-or-union-specifier */
 /* | enum-specifier */
 /* | typedef-name */
