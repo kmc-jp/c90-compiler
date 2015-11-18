@@ -106,7 +106,6 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(VOID, lex_first_token("void"));
   EXPECT_EQ(VOLATILE, lex_first_token("volatile"));
   EXPECT_EQ(WHILE, lex_first_token("while"));
-  EXPECT_EQ(FORTY_TWO, lex_first_token("the_answer"));
 
   EXPECT_EQ(IDENTIFIER, lex_first_token("automobile"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("breakable"));
