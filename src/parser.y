@@ -82,6 +82,11 @@ parameter-type-list
 /* | parameter-list ',' "..." */
 ;
 
+parameter-list
+: parameter-declaration
+| parameter-list ',' parameter-declaration
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
