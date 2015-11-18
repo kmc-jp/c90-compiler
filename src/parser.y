@@ -43,6 +43,22 @@ declaration-specifiers.opt
 | declaration-specifiers
 ;
 
+/* 6.5.2 Type specifiers */
+type-specifier
+: VOID
+| CHAR
+| SHORT
+| INT
+| LONG
+| FLOAT
+| DOUBLE
+| SIGNED
+| UNSIGNED
+/* | struct-or-union-specifier */
+/* | enum-specifier */
+/* | typedef-name */
+;
+
 /* 6.7 External definitions */
 translation-unit
 : external-declaration
