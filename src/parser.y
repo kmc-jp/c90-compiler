@@ -64,6 +64,14 @@ declarator
 : pointer.opt direct-declarator
 ;
 
+direct-declarator
+: IDENTIFIER
+/* | '{' declarator '}' */
+/* | direct-declarator '[' constant-expression.opt ']' */
+| direct-declarator '(' parameter-type-list ')'
+/* | direct-declarator '(' identifier-list.opt')' */
+;
+
 pointer.opt
 : %empty
 /* | pointer */
