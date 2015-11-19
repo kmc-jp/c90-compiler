@@ -1,7 +1,6 @@
 extern "C" {
 #include <stdio.h>
 #include <string.h>
-#include "lexer_adapter.h"
 #include "use_vector.h"
 }
 #include "gtest/gtest.h"
