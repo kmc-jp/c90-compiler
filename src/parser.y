@@ -1,5 +1,17 @@
 %{
+#include <stdio.h>
+int yylex(void);
+void yyerror(const char *);
 %}
+
+%union {
+  char* null_terminated;
+}
+
+%token ARROW INCREMENT DECREMENT LEFT_SHIFT RIGHT_SHIFT
+%token EQUAL NOT_EQUAL LESS GREATER LESS_EQUAL GREATER_EQUAL
+%token AND OR ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
+%token LEFT_SHIFT_ASSIGN RIGHT_SHIFT_ASSIGN AND_ASSIGN OR_ASSIGN XOR_ASSIGN
 
 %token AUTO "auto" BREAK "break" CASE "case" CHAR "char"
 %token CONST "const" CONTINUE "continue" DEFAULT "default" DO "do"
@@ -135,3 +147,7 @@ function-definition
 : declaration-specifiers.opt declarator declaration-list.opt compound-statement
 
 %%
+
+void yyerror(const char* s) {
+  fprintf(stderr, "%s\n", s);
+}

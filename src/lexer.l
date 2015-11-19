@@ -1,30 +1,17 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "token.h"
-#include "yacc_mock.h"
 #include "utility.h"
 #include "use_vector.h"
-/* #include "y.tab.h" */
-
-int yywrap(void) {
-  return 1;
-}
-
-void copy_to_yylval(char *src, int size) {
-  char *literal = safe_array_malloc(char, size + 1);
-  strncpy(literal, src, size);
-  literal[size] = '\0';
-  yylval = literal;
-}
-
-VECTORREF(char) lexer_string_literal;
-
-void initialize_lexer(void) {
-  do_initialize_vector();
-  lexer_string_literal = VECTORFUNC(char, ctor)();
-}
+extern VECTORREF(char) lexer_string_literal;
+void initialize_lexer(void);
+void copy_to_yylval(char *src, int size);
 %}
+%top{
+#include "parser.tab.h"
+void scan_from_file(const char* filename);
+void scan_from_string(const char* code);
+}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
 NOT_ESCAPE_SEQUENCE [^\\]
 CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
@@ -65,12 +52,12 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 
 [+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
+  return FLOATING_CONSTANT;
 }
 
 [+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
   copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
+  return INTEGER_CONSTANT;
 }
 
 {SINGLE_CHARACTER_TOKEN} {
@@ -140,7 +127,7 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 
 "'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
   copy_to_yylval(yytext, yyleng);
-  return CHAR_LITERAL;
+  return CHARACTER_CONSTANT;
 }
 
 . {
@@ -148,3 +135,34 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
   exit(EXIT_FAILURE);
 }
 %%
+
+VECTORREF(char) lexer_string_literal;
+
+int yywrap(void) {
+  return 1;
+}
+
+void initialize_lexer(void) {
+  initialize_vector();
+  lexer_string_literal = VECTORFUNC(char, ctor)();
+}
+
+void copy_to_yylval(char *src, int size) {
+  char *literal = safe_array_malloc(char, size + 1);
+  strncpy(literal, src, size);
+  literal[size] = '\0';
+  yylval.null_terminated = literal;
+}
+
+void scan_from_file(const char* file) {
+  FILE* const fp = fopen(file, "r");
+  if (fp == NULL) {
+    fprintf(stderr, "fatal error: failed to open %s\n", file);
+    exit(EXIT_FAILURE);
+  }
+  yyin = fp;
+}
+
+void scan_from_string(const char* str) {
+  yy_scan_string(str);
+}
