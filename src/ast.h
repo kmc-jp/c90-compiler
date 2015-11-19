@@ -1,0 +1,4 @@
+#ifndef KMC_C89_COMPILER_AST_H
+#define KMC_C89_COMPILER_AST_H
+
+#endif  /* KMC_C89_COMPILER_AST_H */
