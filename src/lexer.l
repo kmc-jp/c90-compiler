@@ -19,7 +19,7 @@ void copy_to_yylval(char *src, int size) {
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
-  do_initialize_vector();
+  initialize_vector();
   lexer_string_literal = VECTORFUNC(char, ctor)();
 }
 %}
