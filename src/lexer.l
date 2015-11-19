@@ -1,7 +1,6 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "token.h"
 #include "utility.h"
 #include "use_vector.h"
 /* #include "y.tab.h" */
