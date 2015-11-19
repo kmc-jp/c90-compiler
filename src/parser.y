@@ -1,4 +1,6 @@
 %{
+int yylex(void);
+void yyerror(const char *);
 %}
 
 %token AUTO "auto" BREAK "break" CASE "case" CHAR "char"
