@@ -4,6 +4,11 @@ int yylex(void);
 void yyerror(const char *);
 %}
 
+%token ARROW INCREMENT DECREMENT LEFT_SHIFT RIGHT_SHIFT
+%token EQUAL NOT_EQUAL LESS GREATER LESS_EQUAL GREATER_EQUAL
+%token AND OR ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
+%token LEFT_SHIFT_ASSIGN RIGHT_SHIFT_ASSIGN AND_ASSIGN OR_ASSIGN XOR_ASSIGN
+
 %token AUTO "auto" BREAK "break" CASE "case" CHAR "char"
 %token CONST "const" CONTINUE "continue" DEFAULT "default" DO "do"
 %token DOUBLE "double" ELSE "else" ENUM "enum" EXTERN "extern"
