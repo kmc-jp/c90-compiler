@@ -4,6 +4,10 @@ int yylex(void);
 void yyerror(const char *);
 %}
 
+%union {
+  char* null_terminated;
+}
+
 %token ARROW INCREMENT DECREMENT LEFT_SHIFT RIGHT_SHIFT
 %token EQUAL NOT_EQUAL LESS GREATER LESS_EQUAL GREATER_EQUAL
 %token AND OR ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN

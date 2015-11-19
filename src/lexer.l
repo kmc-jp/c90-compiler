@@ -13,7 +13,7 @@ void copy_to_yylval(char *src, int size) {
   char *literal = safe_array_malloc(char, size + 1);
   strncpy(literal, src, size);
   literal[size] = '\0';
-  yylval = literal;
+  yylval.null_terminated = literal;
 }
 
 VECTORREF(char) lexer_string_literal;
