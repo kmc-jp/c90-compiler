@@ -4,24 +4,9 @@
 #include "utility.h"
 #include "use_vector.h"
 #include "parser.tab.h"
-
-int yywrap(void) {
-  return 1;
-}
-
-void copy_to_yylval(char *src, int size) {
-  char *literal = safe_array_malloc(char, size + 1);
-  strncpy(literal, src, size);
-  literal[size] = '\0';
-  yylval.null_terminated = literal;
-}
-
-VECTORREF(char) lexer_string_literal;
-
-void initialize_lexer(void) {
-  initialize_vector();
-  lexer_string_literal = VECTORFUNC(char, ctor)();
-}
+extern VECTORREF(char) lexer_string_literal;
+void initialize_lexer(void);
+void copy_to_yylval(char *src, int size);
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
 NOT_ESCAPE_SEQUENCE [^\\]
@@ -146,3 +131,21 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
   exit(EXIT_FAILURE);
 }
 %%
+
+VECTORREF(char) lexer_string_literal;
+
+int yywrap(void) {
+  return 1;
+}
+
+void initialize_lexer(void) {
+  initialize_vector();
+  lexer_string_literal = VECTORFUNC(char, ctor)();
+}
+
+void copy_to_yylval(char *src, int size) {
+  char *literal = safe_array_malloc(char, size + 1);
+  strncpy(literal, src, size);
+  literal[size] = '\0';
+  yylval.null_terminated = literal;
+}
