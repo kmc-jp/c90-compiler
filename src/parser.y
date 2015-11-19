@@ -1,4 +1,5 @@
 %{
+#include <stdio.h>
 int yylex(void);
 void yyerror(const char *);
 %}
@@ -137,3 +138,7 @@ function-definition
 : declaration-specifiers.opt declarator declaration-list.opt compound-statement
 
 %%
+
+void yyerror(const char* s) {
+  fprintf(stderr, "%s\n", s);
+}
