@@ -2,11 +2,14 @@ extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "lex.yy.h"
+#include "parser.tab.h"
 #include "use_vector.h"
 }
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
+
+typedef yytokentype Token;
 
 std::vector<Token> lex_from_file(const std::string &filename) {
   scan_from_file(filename.c_str());
