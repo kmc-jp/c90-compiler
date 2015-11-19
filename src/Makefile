@@ -25,7 +25,7 @@ build: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-$(LEX_INTERMEDIATE): $(LEX_SRC)
+$(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
 	$(LEX) $<
 
 $(LEX_TARGET): CFLAGS += -Wno-unused-function
