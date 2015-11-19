@@ -1,6 +1,7 @@
 extern "C" {
 #include <stdio.h>
 #include <string.h>
+#include "lex.yy.h"
 #include "use_vector.h"
 }
 #include "gtest/gtest.h"
@@ -8,7 +9,7 @@ extern "C" {
 #include <string>
 
 std::vector<Token> lex_from_file(const std::string &filename) {
-  yyin_from_file(filename.c_str());
+  scan_from_file(filename.c_str());
   std::vector<Token> tokens;
   Token tok;
   while ((tok = (Token)yylex()) != 0) {
@@ -22,7 +23,7 @@ Token lex_first_token(const std::string &code) {
   str.reserve(code.length() + 1);
   str.assign(code);
   str.resize(code.length() + 1);
-  yyin_from_string(str.data());
+  scan_from_string(str.data());
   Token tok = (Token)yylex();
   return tok;
 }
