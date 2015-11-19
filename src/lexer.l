@@ -8,6 +8,10 @@ extern VECTORREF(char) lexer_string_literal;
 void initialize_lexer(void);
 void copy_to_yylval(char *src, int size);
 %}
+%top{
+void scan_from_file(const char* filename);
+void scan_from_string(const char* code);
+}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
 NOT_ESCAPE_SEQUENCE [^\\]
 CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
@@ -148,4 +152,17 @@ void copy_to_yylval(char *src, int size) {
   strncpy(literal, src, size);
   literal[size] = '\0';
   yylval.null_terminated = literal;
+}
+
+void scan_from_file(const char* file) {
+  FILE* const fp = fopen(file, "r");
+  if (fp == NULL) {
+    fprintf(stderr, "fatal error: failed to open %s\n", file);
+    exit(EXIT_FAILURE);
+  }
+  yyin = fp;
+}
+
+void scan_from_string(const char* str) {
+  yy_scan_string(str);
 }
