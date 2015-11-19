@@ -33,6 +33,9 @@ $(LEX_TARGET): CFLAGS += -Wno-unused-function
 $(YACC_INTERMEDIATE): $(YACC_SRC)
 	$(YACC) $(YACC_OPTION) $<
 
+# for now
+$(YACC_INTERMEDIATE): YACC_OPTION += -Wno-other
+
 main.o: CFLAGS += -Wno-long-long
 
 .PHONY: build
