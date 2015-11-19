@@ -46,7 +46,7 @@ declaration-specifiers
 ;
 
 declaration-specifiers.opt
-: %empty
+: /* empty */
 | declaration-specifiers
 ;
 
@@ -80,7 +80,7 @@ direct-declarator
 ;
 
 pointer.opt
-: %empty
+: /* empty */
 /* | pointer */
 ;
 
@@ -101,7 +101,7 @@ parameter-declaration
 
 /* 6.5.5 Types names */
 abstract-declarator.opt
-: %empty
+: /* empty */
 /* | abstruct-declarator */
 ;
 
@@ -111,12 +111,12 @@ compound-statement
 ;
 
 declaration-list.opt
-: %empty
+: /* empty */
 /* | declaration-list */
 ;
 
 statement-list.opt
-: %empty
+: /* empty */
 /* | statement-list */
 ;
 
