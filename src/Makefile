@@ -7,7 +7,8 @@ include $(TOP_DIR)/Makefile.common
 include $(SRC_DIR)/Makefile.common
 
 LEX_SRC := lexer.l
-LEX_INTERMEDIATE := lex.yy.c
+LEX_INTERMEDIATE_HEADER := lex.yy.h
+LEX_INTERMEDIATE := lex.yy.c $(LEX_INTERMEDIATE_HEADER)
 LEX_TARGET := lex.yy.o
 YACC_SRC := parser.y
 YACC_INTERMEDIATE := parser.tab.c parser.tab.h
@@ -26,7 +27,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
-	$(LEX) $<
+	$(LEX) --header-file=$(LEX_INTERMEDIATE_HEADER) $<
 
 $(LEX_TARGET): CFLAGS += -Wno-unused-function
 
