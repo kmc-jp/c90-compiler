@@ -3,12 +3,12 @@
 #define YY_USER_INIT initialize_lexer()
 #include "utility.h"
 #include "use_vector.h"
-#include "parser.tab.h"
 extern VECTORREF(char) lexer_string_literal;
 void initialize_lexer(void);
 void copy_to_yylval(char *src, int size);
 %}
 %top{
+#include "parser.tab.h"
 void scan_from_file(const char* filename);
 void scan_from_string(const char* code);
 }

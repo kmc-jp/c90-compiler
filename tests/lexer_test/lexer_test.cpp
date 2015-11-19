@@ -2,7 +2,6 @@ extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "lex.yy.h"
-#include "parser.tab.h"
 #include "use_vector.h"
 }
 #include "gtest/gtest.h"
