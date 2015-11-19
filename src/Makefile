@@ -7,14 +7,14 @@ include $(TOP_DIR)/Makefile.common
 include $(SRC_DIR)/Makefile.common
 
 LEX_SRC := lexer.l
-LEX_INTERMEDIATE_HEADER := lex.yy.h
-LEX_INTERMEDIATE := lex.yy.c $(LEX_INTERMEDIATE_HEADER)
+LEX_INTERMEDIATE := lex.yy.c lex.yy.h
 LEX_TARGET := lex.yy.o
 YACC_SRC := parser.y
 YACC_INTERMEDIATE := parser.tab.c parser.tab.h
 YACC_TARGET := parser.tab.o
 
 LEX := flex
+LEX_OPTION := --header-file=$(filter %.h,$(LEX_INTERMEDIATE))
 YACC := bison
 YACC_OPTION := -d
 TARGET := kmc89
@@ -27,7 +27,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
-	$(LEX) --header-file=$(LEX_INTERMEDIATE_HEADER) $<
+	$(LEX) $(LEX_OPTION) $<
 
 $(LEX_TARGET): CFLAGS += -Wno-unused-function
 
