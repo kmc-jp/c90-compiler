@@ -6,24 +6,31 @@ SRC_DIR := .
 include $(TOP_DIR)/Makefile.common
 include $(SRC_DIR)/Makefile.common
 
+LEX_SRC := lexer.l
+LEX_INTERMEDIATE := lex.yy.c lex.yy.h
+LEX_TARGET := lex.yy.o
+YACC_SRC := parser.y
+YACC_INTERMEDIATE := parser.tab.c parser.tab.h
+YACC_TARGET := parser.tab.o
+
 LEX := flex
 YACC := bison
 YACC_OPTION := -d
 TARGET := kmc89
-OBJS += lex.yy.o parser.tab.o
-CLEAN_OBJS += lex.yy.c lex.yy.h parser.tab.c parser.tab.h
+OBJS += $(LEX_TARGET) $(YACC_TARGET)
+CLEAN_OBJS += $(LEX_INTERMEDIATE) $(YACC_INTERMEDIATE)
 
 build: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-lex.yy.c lex.yy.h: lexer.l
+$(LEX_INTERMEDIATE): $(LEX_SRC)
 	$(LEX) --header-file=lex.yy.h -o lex.yy.c lexer.l
 
-lex.yy.o: CFLAGS += -Wno-unused-function
+$(LEX_TARGET): CFLAGS += -Wno-unused-function
 
-parser.tab.c parser.tab.h: parser.y
+$(YACC_INTERMEDIATE): $(YACC_SRC)
 	$(YACC) $(YACC_OPTION) $<
 
 main.o: CFLAGS += -Wno-long-long
