@@ -43,6 +43,7 @@ void yyerror(const char *);
 %type <ast> type-specifier
 %type <ast> declarator
 %type <ast> direct-declarator
+%type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
 
@@ -158,7 +159,9 @@ pointer.opt
 ;
 
 parameter-type-list
-: parameter-list
+: parameter-list {
+  $$ = $[parameter-list];
+}
 /* | parameter-list ',' "..." */
 ;
 
