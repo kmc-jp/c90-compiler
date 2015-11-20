@@ -24,6 +24,7 @@ DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
 CHAR8 "\\"[0-7]+
 CHAR16 "\\x"[0-9A-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
+BLANK [ \a\b\f\n\r\t\v\0]
 %x COMMENT
 %x STRING
 %%
@@ -129,6 +130,8 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
   copy_to_yylval(yytext, yyleng);
   return CHARACTER_CONSTANT;
 }
+
+{BLANK} {}
 
 . {
   printf("could not lex: %s\n", yytext);
