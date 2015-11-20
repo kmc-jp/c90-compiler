@@ -7,11 +7,16 @@ void yyerror(const char *);
 
 %code requires {
 #include "ast.h"
+#include "use_vector.h"
 }
 
 %union {
   char* null_terminated;
   AST ast;
+}
+
+%initial-action {
+  initialize_vector();
 }
 
 %token ARROW INCREMENT DECREMENT LEFT_SHIFT RIGHT_SHIFT
