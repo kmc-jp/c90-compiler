@@ -1,8 +1,33 @@
+#include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <llvm-c/Analysis.h>
 #include <llvm-c/BitWriter.h>
 #include <llvm-c/Core.h>
+#include "parser.tab.h"
 #include "utility.h"
+
+LLVMTypeRef function_type(const struct AstFunctionDefinition* definition) {
+  const LLVMTypeRef return_type = definition->type.llvm;
+  const ASTVEC param_list = definition->parameter_list;
+  const unsigned param_count = (unsigned)ASTFUNC(size)(param_list);
+  if (param_count == 0 ||
+      (param_count == 1 &&
+       ASTFUNC(data)(param_list)->ast.declaration.specifier.tag ==
+       AST_TYPE_VOID)) {
+    return LLVMFunctionType(return_type, NULL, 0, false);
+  } else {
+    LLVMTypeRef* const param_type_list =
+        safe_array_malloc(LLVMTypeRef, param_count);
+    const AST* iter = ASTFUNC(begin)(param_list);
+    unsigned i = 0;
+    for (i = 0; i < param_count; ++i, ++iter) {
+      assert(iter->tag == AST_DECLARATION);
+      param_type_list[i] = iter->ast.declaration.specifier.llvm;
+    }
+    return LLVMFunctionType(return_type, param_type_list, param_count, false);
+  }
+}
 
 int main(int argc, char *argv[]) {
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
