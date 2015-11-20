@@ -38,6 +38,7 @@ void yyerror(const char *);
 %type <ast> type-specifier
 %type <ast> declarator
 %type <ast> direct-declarator
+%type <ast> parameter-declaration
 
 %start translation-unit
 
@@ -161,8 +162,16 @@ parameter-list
 ;
 
 parameter-declaration
-: declaration-specifiers declarator
-| declaration-specifiers abstract-declarator.opt
+: declaration-specifiers declarator {
+  $$.tag = AST_DECLARATION;
+  $$.ast.declaration.specifier = $[declaration-specifiers].ast.type;
+  $$.ast.declaration.identifier = $[declarator].ast.identifier;
+}
+| declaration-specifiers abstract-declarator.opt {
+  $$.tag = AST_DECLARATION;
+  $$.ast.declaration.specifier = $[declaration-specifiers].ast.type;
+  $$.ast.declaration.identifier.symbol = "";
+}
 ;
 
 /* 6.5.5 Types names */
