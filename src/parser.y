@@ -36,6 +36,7 @@ void yyerror(const char *);
 
 %type <ast> declaration-specifiers
 %type <ast> type-specifier
+%type <ast> declarator
 %type <ast> direct-declarator
 
 %start translation-unit
@@ -128,7 +129,9 @@ type-specifier
 
 /* 6.5.4 Declarators */
 declarator
-: pointer.opt direct-declarator
+: pointer.opt direct-declarator {
+  $$ = $[direct-declarator];
+}
 ;
 
 direct-declarator
