@@ -1,8 +1,10 @@
 %{
 #include <stdio.h>
 #include <llvm-c/Core.h>
+#include "ast.h"
 int yylex(void);
 void yyerror(const char *);
+static AST g_parser_result;
 %}
 
 %code requires {
@@ -51,7 +53,7 @@ void yyerror(const char *);
 %type <ast> external-declaration
 %type <ast> function-definition
 
-%start translation-unit
+%start entry-point
 
 %%
 
@@ -251,6 +253,11 @@ function-definition
   $$.ast.function_definition.type = $[declaration-specifiers.opt].ast.type;
   $$.ast.function_definition.identifier = $[declarator].ast.function_declaration.identifier;
   $$.ast.function_definition.parameter_list = $[declarator].ast.function_declaration.parameter_list;
+}
+
+entry-point
+: translation-unit {
+  g_parser_result = $[translation-unit];
 }
 
 %%
