@@ -13,6 +13,7 @@ enum AstTag {
   AST_IDENTIFIER,
   AST_DECLARATION,
   AST_PARAMETER_LIST,
+  AST_FUNCTION_DECLARATION,
   ASTTAG_ENUM_END
 };
 
@@ -43,6 +44,11 @@ struct AstDeclaration {
   struct AstIdentifier identifier;
 };
 
+struct AstFunctionDeclaration {
+  struct AstIdentifier identifier;
+  ASTVEC parameter_list;
+};
+
 struct Ast {
   enum AstTag tag;
   union AstBase {
@@ -51,6 +57,7 @@ struct Ast {
     struct AstType type;
     struct AstIdentifier identifier;
     struct AstDeclaration declaration;
+    struct AstFunctionDeclaration function_declaration;
   } ast;
 };
 
