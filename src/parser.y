@@ -10,6 +10,7 @@ static AST g_parser_result;
 %code requires {
 #include "ast.h"
 #include "use_vector.h"
+AST parse(const char* file);
 }
 
 %union {
@@ -264,4 +265,16 @@ entry-point
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
+}
+AST parse(const char* file) {
+  scan_from_file(file);
+  const int result = yyparse();
+  if (result == 0) {
+    return g_parser_result;
+  } else if (result == 1) {
+    fprintf(stderr, "%s\n", "error: parsing failed because of invalid input");
+  } else if (result == 2) {
+    fprintf(stderr, "%s\n", "error: parsing failed due to memory exhaustion");
+  }
+  exit(EXIT_FAILURE);
 }
