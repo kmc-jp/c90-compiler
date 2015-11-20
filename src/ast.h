@@ -6,6 +6,7 @@
 enum AstTag {
   AST_TYPE,
   AST_IDENTIFIER,
+  AST_DECLARATION,
   ASTTAG_ENUM_END
 };
 
@@ -31,11 +32,17 @@ struct AstIdentifier {
   char* symbol;
 };
 
+struct AstDeclaration {
+  struct AstType specifier;
+  struct AstIdentifier identifier;
+};
+
 struct Ast {
   enum AstTag tag;
   union AstBase {
     struct AstType type;
     struct AstIdentifier identifier;
+    struct AstDeclaration declaration;
   } ast;
 };
 
