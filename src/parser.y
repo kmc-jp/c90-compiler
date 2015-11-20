@@ -43,6 +43,7 @@ void yyerror(const char *);
 %type <ast> type-specifier
 %type <ast> declarator
 %type <ast> direct-declarator
+%type <ast> parameter-list
 %type <ast> parameter-declaration
 
 %start translation-unit
@@ -161,9 +162,16 @@ parameter-type-list
 /* | parameter-list ',' "..." */
 ;
 
-parameter-list
-: parameter-declaration
-| parameter-list ',' parameter-declaration
+parameter-list[lhs]
+: parameter-declaration {
+  $$.tag = AST_PARAMETER_LIST;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[parameter-declaration]);
+}
+| parameter-list[rhs] ',' parameter-declaration {
+  $[lhs] = $[rhs];
+  ASTFUNC(push_back)($$.ast.vec, &$[parameter-declaration]);
+}
 ;
 
 parameter-declaration
