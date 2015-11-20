@@ -41,25 +41,27 @@ void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
 
 int main(int argc, char *argv[]) {
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
-  /* int main() { return 0; } */
-  LLVMTypeRef main_type = LLVMFunctionType(LLVMInt32Type(), NULL, 0, false);
-  LLVMValueRef main_func = LLVMAddFunction(module, "main", main_type);
-  LLVMBasicBlockRef main_entry = LLVMAppendBasicBlock(main_func, "main_entry");
-  LLVMValueRef return_value = LLVMConstInt(LLVMInt32Type(), 0, false);
   LLVMBuilderRef builder = LLVMCreateBuilder();
-  LLVMPositionBuilderAtEnd(builder, main_entry);
-  LLVMBuildRet(builder, return_value);
+  AST ast = parse(argv[1]);
+  AST* iter = NULL;
+  int i = 0;
+  assert(ast.tag == AST_TRANSLATION_UNIT);
+  for (iter = ASTFUNC(begin)(ast.ast.vec);
+       iter != ASTFUNC(end)(ast.ast.vec); ++iter) {
+    ++i;
+    assert(iter->tag == AST_FUNCTION_DEFINITION);
+    build_function_definition(module, builder, &iter->ast.function_definition);
+  }
   {
     char *error = NULL;
     LLVMVerifyModule(module, LLVMAbortProcessAction, &error);
     LLVMDisposeMessage(error);
   }
   if (LLVMWriteBitcodeToFile(module, "main.bc") != 0) {
-    fputs("failed to write bitcode to file\n", stderr);
+    fputs("failed to write bitcode to file", stderr);
   }
   LLVMDisposeBuilder(builder);
   LLVMDisposeModule(module);
   return 0;
   UNUSED(argc);
-  UNUSED(argv);
 }
