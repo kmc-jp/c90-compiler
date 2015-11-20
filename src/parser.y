@@ -34,6 +34,7 @@ void yyerror(const char *);
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
 
+%type <ast> declaration-specifiers
 %type <ast> type-specifier
 
 %start translation-unit
@@ -58,9 +59,11 @@ constant
 
 /* 6.5 Declarations */
 declaration-specifiers
-:
 /* : storage-class-specifier declaration-specifiers.opt */
-     type-specifier declaration-specifiers.opt
+: type-specifier declaration-specifiers.opt {
+  /* TODO */
+  $$ = $[type-specifier];  /* ignore two or more specifiers */
+}
 /* | type-specifier declaration-specifiers.opt */
 /* | type-qualifier declaration-specifiers.opt */
 ;
