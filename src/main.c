@@ -29,6 +29,16 @@ LLVMTypeRef function_type(const struct AstFunctionDefinition* definition) {
   }
 }
 
+void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
+                               const struct AstFunctionDefinition* definition) {
+  LLVMTypeRef type = function_type(definition);
+  const char* const name = definition->identifier.symbol;
+  LLVMValueRef func = LLVMAddFunction(module, name, type);
+  LLVMBasicBlockRef entry = LLVMAppendBasicBlock(func, "entry");
+  LLVMPositionBuilderAtEnd(builder, entry);
+  LLVMBuildRetVoid(builder);
+}
+
 int main(int argc, char *argv[]) {
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
   /* int main() { return 0; } */
