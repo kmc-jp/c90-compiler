@@ -28,7 +28,7 @@ void yyerror(const char *);
 %token STRUCT "struct" SWITCH "switch" TYPEDEF "typedef" UNION "union"
 %token UNSIGNED "unsigned" VOID "void" VOLATILE "volatile" WHILE "while"
 
-%token IDENTIFIER
+%token <null_terminated> IDENTIFIER
 %token INTEGER_CONSTANT
 %token FLOATING_CONSTANT
 %token CHARACTER_CONSTANT
@@ -36,6 +36,7 @@ void yyerror(const char *);
 
 %type <ast> declaration-specifiers
 %type <ast> type-specifier
+%type <ast> direct-declarator
 
 %start translation-unit
 
@@ -131,7 +132,10 @@ declarator
 ;
 
 direct-declarator
-: IDENTIFIER
+: IDENTIFIER {
+  $$.tag = AST_IDENTIFIER;
+  $$.ast.identifier.symbol = $[IDENTIFIER];
+}
 /* | '{' declarator '}' */
 /* | direct-declarator '[' constant-expression.opt ']' */
 | direct-declarator '(' parameter-type-list ')'

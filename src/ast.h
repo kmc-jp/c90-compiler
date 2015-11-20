@@ -5,6 +5,7 @@
 
 enum AstTag {
   AST_TYPE,
+  AST_IDENTIFIER,
   ASTTAG_ENUM_END
 };
 
@@ -26,10 +27,15 @@ struct AstType {
   LLVMTypeRef llvm;
 };
 
+struct AstIdentifier {
+  char* symbol;
+};
+
 struct Ast {
   enum AstTag tag;
   union AstBase {
     struct AstType type;
+    struct AstIdentifier identifier;
   } ast;
 };
 
