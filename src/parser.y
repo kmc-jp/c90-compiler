@@ -229,11 +229,11 @@ translation-unit[lhs]
 : external-declaration {
   $$.tag = AST_TRANSLATION_UNIT;
   $$.ast.vec = ASTFUNC(ctor)();
-  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration].ast);
+  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration]);
 }
 | translation-unit[rhs] external-declaration {
   $[lhs] = $[rhs];
-  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration].ast);
+  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration]);
 }
 
 external-declaration
