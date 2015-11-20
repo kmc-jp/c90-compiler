@@ -47,6 +47,7 @@ void yyerror(const char *);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> external-declaration
 %type <ast> function-definition
 
 %start translation-unit
@@ -225,7 +226,9 @@ translation-unit
 | translation-unit external-declaration
 
 external-declaration
-: function-definition
+: function-definition {
+  $$ = $[function-definition];
+}
 /* | declaration */
 ;
 
