@@ -47,6 +47,7 @@ void yyerror(const char *);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> function-definition
 
 %start translation-unit
 
@@ -230,7 +231,16 @@ external-declaration
 
 /* 6.7.1 Function definitions */
 function-definition
-: declaration-specifiers.opt declarator declaration-list.opt compound-statement
+: declaration-specifiers.opt declarator declaration-list.opt compound-statement {
+  if ($[declarator].tag != AST_FUNCTION_DECLARATION) {
+    yyerror("invalid function definition");
+    YYERROR;
+  }
+  $$.tag = AST_FUNCTION_DEFINITION;
+  $$.ast.function_definition.type = $[declaration-specifiers.opt].ast.type;
+  $$.ast.function_definition.identifier = $[declarator].ast.function_declaration.identifier;
+  $$.ast.function_definition.parameter_list = $[declarator].ast.function_declaration.parameter_list;
+}
 
 %%
 
