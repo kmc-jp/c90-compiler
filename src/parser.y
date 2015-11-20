@@ -47,6 +47,7 @@ void yyerror(const char *);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> translation-unit
 %type <ast> external-declaration
 %type <ast> function-definition
 
@@ -221,9 +222,16 @@ statement-list.opt
 ;
 
 /* 6.7 External definitions */
-translation-unit
-: external-declaration
-| translation-unit external-declaration
+translation-unit[lhs]
+: external-declaration {
+  $$.tag = AST_TRANSLATION_UNIT;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration].ast);
+}
+| translation-unit[rhs] external-declaration {
+  $[lhs] = $[rhs];
+  ASTFUNC(push_back)($$.ast.vec, &$[external-declaration].ast);
+}
 
 external-declaration
 : function-definition {
