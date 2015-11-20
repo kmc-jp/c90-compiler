@@ -4,22 +4,32 @@
 #include <llvm-c/Core.h>
 
 enum AstTag {
-  AST_VOID_TYPE,
-  AST_CHAR_TYPE,
-  AST_SHORT_TYPE,
-  AST_INT_TYPE,
-  AST_LONG_TYPE,
-  AST_FLOAT_TYPE,
-  AST_DOUBLE_TYPE,
-  AST_SIGNED_TYPE,
-  AST_UNSIGNED_TYPE,
+  AST_TYPE,
   ASTTAG_ENUM_END
+};
+
+enum AstTypeTag {
+  AST_TYPE_VOID,
+  AST_TYPE_CHAR,
+  AST_TYPE_SHORT,
+  AST_TYPE_INT,
+  AST_TYPE_LONG,
+  AST_TYPE_FLOAT,
+  AST_TYPE_DOUBLE,
+  AST_TYPE_SIGNED,
+  AST_TYPE_UNSIGNED,
+  ASTTYPETAG_ENUM_END
+};
+
+struct AstType {
+  enum AstTypeTag tag;
+  LLVMTypeRef llvm;
 };
 
 struct Ast {
   enum AstTag tag;
   union AstBase {
-    LLVMTypeRef type;
+    struct AstType type;
   } ast;
 };
 

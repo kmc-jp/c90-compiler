@@ -76,40 +76,49 @@ declaration-specifiers.opt
 /* 6.5.2 Type specifiers */
 type-specifier
 : "void" {
-  $$.tag = AST_VOID_TYPE;
-  $$.ast.type = LLVMVoidType();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_VOID;
+  $$.ast.type.llvm = LLVMVoidType();
 }
 | "char" {
-  $$.tag = AST_CHAR_TYPE;
-  $$.ast.type = LLVMInt8Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_CHAR;
+  $$.ast.type.llvm = LLVMInt8Type();
 }
 | "short" {
-  $$.tag = AST_SHORT_TYPE;
-  $$.ast.type = LLVMInt16Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_SHORT;
+  $$.ast.type.llvm = LLVMInt16Type();
 }
 | "int" {
-  $$.tag = AST_INT_TYPE;
-  $$.ast.type = LLVMInt32Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_INT;
+  $$.ast.type.llvm = LLVMInt32Type();
 }
 | "long" {
-  $$.tag = AST_LONG_TYPE;
-  $$.ast.type = LLVMInt32Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_LONG;
+  $$.ast.type.llvm = LLVMInt32Type();
 }
 | "float" {
-  $$.tag = AST_FLOAT_TYPE;
-  $$.ast.type = LLVMFloatType();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_FLOAT;
+  $$.ast.type.llvm = LLVMFloatType();
 }
 | "double" {
-  $$.tag = AST_DOUBLE_TYPE;
-  $$.ast.type = LLVMDoubleType();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_DOUBLE;
+  $$.ast.type.llvm = LLVMDoubleType();
 }
 | "signed" {
-  $$.tag = AST_SIGNED_TYPE;
-  $$.ast.type = LLVMInt32Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_SIGNED;
+  $$.ast.type.llvm = LLVMInt32Type();
 }
 | "unsigned" {
-  $$.tag = AST_UNSIGNED_TYPE;
-  $$.ast.type = LLVMInt32Type();
+  $$.tag = AST_TYPE;
+  $$.ast.type.tag = AST_TYPE_UNSIGNED;
+  $$.ast.type.llvm = LLVMInt32Type();
 }
 /* | struct-or-union-specifier */
 /* | enum-specifier */
