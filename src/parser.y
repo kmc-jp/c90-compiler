@@ -142,14 +142,18 @@ declarator
 }
 ;
 
-direct-declarator
+direct-declarator[lhs]
 : IDENTIFIER {
   $$.tag = AST_IDENTIFIER;
   $$.ast.identifier.symbol = $[IDENTIFIER];
 }
 /* | '{' declarator '}' */
 /* | direct-declarator '[' constant-expression.opt ']' */
-| direct-declarator '(' parameter-type-list ')'
+| direct-declarator[rhs] '(' parameter-type-list ')' {
+  $$.tag = AST_FUNCTION_DECLARATION;
+  $[lhs].ast.function_declaration.identifier = $[rhs].ast.identifier;
+  $$.ast.function_declaration.parameter_list = $[parameter-type-list].ast.vec;
+}
 /* | direct-declarator '(' identifier-list.opt')' */
 ;
 
