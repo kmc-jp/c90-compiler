@@ -1,11 +1,17 @@
 %{
 #include <stdio.h>
+#include <llvm-c/Core.h>
 int yylex(void);
 void yyerror(const char *);
 %}
 
+%code requires {
+#include "ast.h"
+}
+
 %union {
   char* null_terminated;
+  AST ast;
 }
 
 %token ARROW INCREMENT DECREMENT LEFT_SHIFT RIGHT_SHIFT
@@ -27,6 +33,8 @@ void yyerror(const char *);
 %token FLOATING_CONSTANT
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
+
+%type <ast> type-specifier
 
 %start translation-unit
 
@@ -64,15 +72,42 @@ declaration-specifiers.opt
 
 /* 6.5.2 Type specifiers */
 type-specifier
-: "void"
-| "char"
-| "short"
-| "int"
-| "long"
-| "float"
-| "double"
-| "signed"
-| "unsigned"
+: "void" {
+  $$.tag = AST_VOID_TYPE;
+  $$.ast.type = LLVMVoidType();
+}
+| "char" {
+  $$.tag = AST_CHAR_TYPE;
+  $$.ast.type = LLVMInt8Type();
+}
+| "short" {
+  $$.tag = AST_SHORT_TYPE;
+  $$.ast.type = LLVMInt16Type();
+}
+| "int" {
+  $$.tag = AST_INT_TYPE;
+  $$.ast.type = LLVMInt32Type();
+}
+| "long" {
+  $$.tag = AST_LONG_TYPE;
+  $$.ast.type = LLVMInt32Type();
+}
+| "float" {
+  $$.tag = AST_FLOAT_TYPE;
+  $$.ast.type = LLVMFloatType();
+}
+| "double" {
+  $$.tag = AST_DOUBLE_TYPE;
+  $$.ast.type = LLVMDoubleType();
+}
+| "signed" {
+  $$.tag = AST_SIGNED_TYPE;
+  $$.ast.type = LLVMInt32Type();
+}
+| "unsigned" {
+  $$.tag = AST_UNSIGNED_TYPE;
+  $$.ast.type = LLVMInt32Type();
+}
 /* | struct-or-union-specifier */
 /* | enum-specifier */
 /* | typedef-name */
