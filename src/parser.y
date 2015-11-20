@@ -40,6 +40,7 @@ void yyerror(const char *);
 %token STRING_LITERAL
 
 %type <ast> declaration-specifiers
+%type <ast> declaration-specifiers.opt
 %type <ast> type-specifier
 %type <ast> declarator
 %type <ast> direct-declarator
@@ -80,7 +81,9 @@ declaration-specifiers
 
 declaration-specifiers.opt
 : /* empty */
-| declaration-specifiers
+| declaration-specifiers {
+  $$ = $[declaration-specifiers];
+}
 ;
 
 /* 6.5.2 Type specifiers */
