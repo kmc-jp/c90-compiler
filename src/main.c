@@ -107,7 +107,6 @@ void build_block(LLVMModuleRef module, LLVMBuilderRef builder,
   size_t i = 0;
   const AST* const begin = ASTFUNC(begin)(compound_statement);
   const size_t count = ASTFUNC(size)(compound_statement);
-  printf("statement count: %lu\n", count);
   for (i = 0; i < count; ++i) {
     switch (begin[i].tag) {
       case AST_COMPOUND_STATEMENT:
