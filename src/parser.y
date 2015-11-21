@@ -209,6 +209,17 @@ abstract-declarator.opt
 /* | abstruct-declarator */
 ;
 
+/* 6.6 Statements */
+statement
+: compound-statement
+/* : labeled-statement */
+/* | compound-statement */
+| expression-statement
+/* | selection-statement */
+/* | iteration-statement */
+| jump-statement
+;
+
 /* 6.6.2 Compound statement, or block */
 compound-statement
 : '{' declaration-list.opt statement-list.opt '}'
