@@ -74,6 +74,14 @@ constant
 | CHARACTER_CONSTANT
 ;
 
+/* 6.3.1 Primary expression */
+primary-expression
+: IDENTIFIER
+/* | constant */
+| STRING_LITERAL
+| '(' expression ')'
+;
+
 /* 6.3.17 Comma operator */
 expression
 : assignment-expression
