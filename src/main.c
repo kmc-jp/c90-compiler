@@ -62,6 +62,10 @@ LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder,
         for (i = 0; i < argument_count; ++i) {
           arguments[i] = build_expression(module, builder, begin + i);
         }
+        if (LLVMGetTypeKind(LLVMGetReturnType(function_type)) ==
+            LLVMVoidTypeKind) {
+          identifier = "";
+        }
         return LLVMBuildCall(builder, function, arguments,
                              argument_count, identifier);
       }
