@@ -91,7 +91,9 @@ primary-expression
   $$.tag = AST_STRING_LITERAL;
   $$.ast.string_literal.string = $[STRING_LITERAL];
 }
-| '(' expression ')'
+| '(' expression ')' {
+  $$ = $[expression]
+}
 ;
 
 /* 6.3.2 Postfix operators */
