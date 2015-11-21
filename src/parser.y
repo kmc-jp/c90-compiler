@@ -58,6 +58,7 @@ AST parse(const char* file);
 %type <ast> parameter-list
 %type <ast> parameter-declaration
 %type <ast> expression-statement
+%type <ast> jump-statement
 %type <ast> translation-unit
 %type <ast> external-declaration
 %type <ast> function-definition
@@ -350,7 +351,11 @@ jump-statement
 /* | "continue" ';' */
 /* | "break" ';' */
 /* | "return" expression.opt ';' */
-: "return" expression.opt ';'
+: "return" expression.opt ';' {
+  $$.tag = AST_RETURN_STATEMENT;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[expression.opt]);
+}
 ;
 
 /* 6.7 External definitions */
