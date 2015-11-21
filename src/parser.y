@@ -58,6 +58,7 @@ AST parse(const char* file);
 %type <ast> parameter-list
 %type <ast> parameter-declaration
 %type <ast> statement-list
+%type <ast> statement-list.opt
 %type <ast> expression-statement
 %type <ast> jump-statement
 %type <ast> translation-unit
@@ -340,8 +341,13 @@ statement-list[lhs]
 ;
 
 statement-list.opt
-: /* empty */
-| statement-list
+: /* empty */ {
+  $$.tag = AST_STATEMENT_LIST;
+  $$.ast.vec = ASTFUNC(ctor)();
+}
+| statement-list {
+  $$ = $[statement-list];
+}
 ;
 
 /* 6.6.3 Expression and null statements  */
