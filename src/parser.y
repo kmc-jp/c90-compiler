@@ -293,6 +293,15 @@ expression-statement
 : expression.opt ';'
 ;
 
+/* 6.6.6 Jump statements */
+jump-statement
+/* : "goto" IDENTIFIER ';' */
+/* | "continue" ';' */
+/* | "break" ';' */
+/* | "return" expression.opt ';' */
+: "return" expression.opt ';'
+;
+
 /* 6.7 External definitions */
 translation-unit[lhs]
 : external-declaration {
