@@ -74,6 +74,17 @@ constant
 | CHARACTER_CONSTANT
 ;
 
+/* 6.3.17 Comma operator */
+expression
+: assignment-expression
+/* | expression ',' assignment-expression */
+;
+
+expression.opt
+: /* empty */
+| expression
+;
+
 /* 6.5 Declarations */
 declaration-specifiers
 /* : storage-class-specifier declaration-specifiers.opt */
