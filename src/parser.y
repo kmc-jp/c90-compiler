@@ -43,6 +43,7 @@ AST parse(const char* file);
 %token <null_terminated> STRING_LITERAL
 
 %type <ast> primary-expression
+%type <ast> assignment-expression
 %type <ast> expression
 %type <ast> declaration-specifiers
 %type <ast> declaration-specifiers.opt
@@ -114,7 +115,9 @@ argument-expression-list.opt
 /* 6.3.16 Assignment operators */
 assignment-expression
   /* short cut */
-: postfix-expression
+: postfix-expression {
+  $$ = $[postfix-expression];
+}
 /* : conditional-expression */
 /* | unary-expression assignment-operator assignment-expression */
 ;
