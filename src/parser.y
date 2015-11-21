@@ -240,6 +240,11 @@ statement-list.opt
 | statement-list
 ;
 
+/* 6.6.3 Expression and null statements  */
+expression-statement
+: expression.opt ';'
+;
+
 /* 6.7 External definitions */
 translation-unit[lhs]
 : external-declaration {
