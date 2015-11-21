@@ -128,6 +128,19 @@ void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
   build_block(module, builder, definition->compound_statement);
 }
 
+void add_print_declaration(LLVMModuleRef module) {
+  LLVMTypeRef void_type = LLVMVoidType();
+  LLVMTypeRef char_type = LLVMInt8Type();
+  LLVMTypeRef int_type = LLVMInt32Type();
+  LLVMTypeRef char_ptr_type = LLVMPointerType(char_type, 0);
+  LLVMTypeRef print_type =
+      LLVMFunctionType(void_type, &char_ptr_type, 1, false);
+  LLVMTypeRef print_num_type =
+      LLVMFunctionType(void_type, &int_type, 1, false);
+  LLVMAddFunction(module, "print", print_type);
+  LLVMAddFunction(module, "print_num", print_num_type);
+}
+
 int main(int argc, char *argv[]) {
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
   LLVMBuilderRef builder = LLVMCreateBuilder();
@@ -138,6 +151,7 @@ int main(int argc, char *argv[]) {
   AST* iter = NULL;
   int i = 0;
   assert(ast.tag == AST_TRANSLATION_UNIT);
+  add_print_declaration(module);
   for (iter = ASTFUNC(begin)(ast.ast.vec);
        iter != ASTFUNC(end)(ast.ast.vec); ++iter) {
     ++i;
