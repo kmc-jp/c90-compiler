@@ -90,6 +90,34 @@ void build_return(LLVMModuleRef module, LLVMBuilderRef builder,
   }
 }
 
+void build_block(LLVMModuleRef module, LLVMBuilderRef builder,
+                 ASTVEC compound_statement) {
+  size_t i = 0;
+  const AST* const begin = ASTFUNC(begin)(compound_statement);
+  const size_t count = ASTFUNC(size)(compound_statement);
+  printf("statement count: %lu\n", count);
+  for (i = 0; i < count; ++i) {
+    switch (begin[i].tag) {
+      case AST_COMPOUND_STATEMENT:
+        build_block(module, builder, begin[i].ast.vec);
+        break;
+      case AST_EXPRESSION_STATEMENT: {
+        AST* statement = ASTFUNC(data)(begin[i].ast.vec);
+        build_expression(module, builder, statement);
+      }
+        break;
+      case AST_RETURN_STATEMENT: {
+        AST* statement = ASTFUNC(data)(begin[i].ast.vec);
+        build_return(module, builder, statement);
+      }
+        break;
+      default:
+        fprintf(stderr, "%d: Not supported\n", begin[i].tag);
+        break;
+    }
+  }
+}
+
 void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
                                const struct AstFunctionDefinition* definition) {
   LLVMTypeRef type = function_type(definition);
@@ -97,7 +125,7 @@ void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
   LLVMValueRef func = LLVMAddFunction(module, name, type);
   LLVMBasicBlockRef entry = LLVMAppendBasicBlock(func, "entry");
   LLVMPositionBuilderAtEnd(builder, entry);
-  LLVMBuildRetVoid(builder);
+  build_block(module, builder, definition->compound_statement);
 }
 
 int main(int argc, char *argv[]) {
