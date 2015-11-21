@@ -44,6 +44,7 @@ AST parse(const char* file);
 
 %type <ast> primary-expression
 %type <ast> argument-expression-list
+%type <ast> argument-expression-list.opt
 %type <ast> assignment-expression
 %type <ast> expression
 %type <ast> declaration-specifiers
@@ -116,8 +117,13 @@ argument-expression-list[lhs]
 ;
 
 argument-expression-list.opt
-: /* empty */
-| argument-expression-list
+: /* empty */ {
+  $$.tag = AST_ARGUMENT_EXPRESSION_LIST;
+  $$.ast.vec = ASTFUNC(ctor)();
+}
+| argument-expression-list {
+  $$ = $[argument-expression-list];
+}
 ;
 
 /* 6.3.16 Assignment operators */
