@@ -77,7 +77,10 @@ constant
 
 /* 6.3.1 Primary expression */
 primary-expression
-: IDENTIFIER
+: IDENTIFIER {
+  $$.tag = AST_IDENTIFIER;
+  $$.ast.identifier.symbol = $[IDENTIFIER];
+}
 /* | constant */
 | STRING_LITERAL {
   $$.tag = AST_STRING_LITERAL;
