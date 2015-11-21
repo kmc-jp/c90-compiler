@@ -82,6 +82,17 @@ primary-expression
 | '(' expression ')'
 ;
 
+/* 6.3.2 Postfix operators */
+postfix-expression
+: primary-expression
+/* | postfix-expression '[' expression ']' */
+| postfix-expression '(' argument-expression-list.opt ')'
+/* | postfix-expression '.' IDENTIFIER */
+/* | postfix-expression '->' IDENTIFIER */
+/* | postfix-expression "++" */
+/* | postfix-expression "--" */
+;
+
 /* 6.3.17 Comma operator */
 expression
 : assignment-expression
