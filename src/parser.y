@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <llvm-c/Core.h>
 #include "ast.h"
+#include "lex.yy.h"
 int yylex(void);
 void yyerror(const char *);
 static AST g_parser_result;

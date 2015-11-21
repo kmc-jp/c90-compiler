@@ -31,7 +31,7 @@ $(OBJS): $(YACC_INTERMEDIATE)
 $(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
 	$(LEX) $(LEX_OPTION) $<
 
-$(LEX_TARGET): CFLAGS += -Wno-unused-function
+$(LEX_TARGET): CFLAGS += -Wno-unused-function -Wno-sign-compare
 
 $(YACC_INTERMEDIATE): $(YACC_SRC)
 	$(YACC) $(YACC_OPTION) $<
