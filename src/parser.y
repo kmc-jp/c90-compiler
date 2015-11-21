@@ -230,9 +230,14 @@ declaration-list.opt
 /* | declaration-list */
 ;
 
+statement-list
+: statement
+| statement-list statement
+;
+
 statement-list.opt
 : /* empty */
-/* | statement-list */
+| statement-list
 ;
 
 /* 6.7 External definitions */
