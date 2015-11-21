@@ -63,6 +63,7 @@ struct AstFunctionDefinition {
   struct AstType type;
   struct AstIdentifier identifier;
   ASTVEC parameter_list;
+  ASTVEC compound_statement;
 };
 
 struct AstStringLiteral {

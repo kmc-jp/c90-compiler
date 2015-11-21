@@ -413,6 +413,7 @@ function-definition
   $$.ast.function_definition.type = $[declaration-specifiers.opt].ast.type;
   $$.ast.function_definition.identifier = $[declarator].ast.function_declaration.identifier;
   $$.ast.function_definition.parameter_list = $[declarator].ast.function_declaration.parameter_list;
+  $$.ast.function_definition.compound_statement = $[compound-statement].ast.vec;
 }
 
 entry-point
