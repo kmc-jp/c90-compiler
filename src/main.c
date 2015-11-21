@@ -80,6 +80,16 @@ LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder,
   }
 }
 
+void build_return(LLVMModuleRef module, LLVMBuilderRef builder,
+                  const AST* expression) {
+  LLVMValueRef value = build_expression(module, builder, expression);
+  if (value) {
+    LLVMBuildRet(builder, value);
+  } else {
+    LLVMBuildRetVoid(builder);
+  }
+}
+
 void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
                                const struct AstFunctionDefinition* definition) {
   LLVMTypeRef type = function_type(definition);
