@@ -93,6 +93,16 @@ postfix-expression
 /* | postfix-expression "--" */
 ;
 
+argument-expression-list
+: assignment-expression
+| argument-expression-list ',' assignment-expression
+;
+
+argument-expression-list.opt
+: /* empty */
+| argument-expression-list
+;
+
 /* 6.3.17 Comma operator */
 expression
 : assignment-expression
