@@ -43,12 +43,20 @@ LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder,
         const AST* const begin = ASTFUNC(begin)(argument_list);
         const unsigned argument_count = ASTFUNC(size)(argument_list);
         LLVMValueRef* arguments = NULL;
+        unsigned param_count = 0;
+        LLVMTypeRef function_type = NULL;
         unsigned i = 0;
         if (function == NULL) {
           fprintf(stderr, "unknown function name\n");
         }
         if (argument_count == 0) {
           return LLVMBuildCall(builder, function, NULL, 0, identifier);
+        }
+        function_type = LLVMGetElementType(LLVMTypeOf(function));
+        param_count = LLVMCountParamTypes(function_type);
+        if (argument_count != param_count) {
+          fprintf(stderr, "count of parameter differ: %d != %d\n",
+                  argument_count, param_count);
         }
         arguments = safe_array_malloc(LLVMValueRef, argument_count);
         for (i = 0; i < argument_count; ++i) {
