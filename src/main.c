@@ -167,8 +167,15 @@ int main(int argc, char *argv[]) {
   for (iter = ASTFUNC(begin)(ast.ast.vec);
        iter != ASTFUNC(end)(ast.ast.vec); ++iter) {
     ++i;
-    assert(iter->tag == AST_FUNCTION_DEFINITION);
-    build_function_definition(module, builder, &iter->ast.function_definition);
+    switch (iter->tag) {
+      case AST_FUNCTION_DEFINITION:
+        build_function_definition(module, builder,
+                                  &iter->ast.function_definition);
+        break;
+      default:
+        assert(false);
+        break;
+    }
   }
   {
     char *error = NULL;
