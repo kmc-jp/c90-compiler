@@ -57,6 +57,7 @@ AST parse(const char* file);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> statement
 %type <ast> compound-statement
 %type <ast> statement-list
 %type <ast> statement-list.opt
@@ -310,13 +311,19 @@ abstract-declarator.opt
 
 /* 6.6 Statements */
 statement
-: compound-statement
+: compound-statement {
+  $$ = $[compound-statement];
+}
 /* : labeled-statement */
 /* | compound-statement */
-| expression-statement
+| expression-statement {
+  $$ = $[expression-statement];
+}
 /* | selection-statement */
 /* | iteration-statement */
-| jump-statement
+| jump-statement {
+  $$ = $[jump-statement];
+}
 ;
 
 /* 6.6.2 Compound statement, or block */
