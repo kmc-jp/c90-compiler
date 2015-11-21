@@ -131,6 +131,9 @@ void build_function_definition(LLVMModuleRef module, LLVMBuilderRef builder,
 int main(int argc, char *argv[]) {
   LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
   LLVMBuilderRef builder = LLVMCreateBuilder();
+  const size_t name_len = strlen(argv[1]);
+  char* bc_name = NULL;
+  const size_t bc_len = name_len + 2;
   AST ast = parse(argv[1]);
   AST* iter = NULL;
   int i = 0;
@@ -146,7 +149,11 @@ int main(int argc, char *argv[]) {
     LLVMVerifyModule(module, LLVMAbortProcessAction, &error);
     LLVMDisposeMessage(error);
   }
-  if (LLVMWriteBitcodeToFile(module, "main.bc") != 0) {
+  bc_name = safe_array_malloc(char, bc_len);
+  strncpy(bc_name, argv[1], bc_len);
+  bc_name[bc_len - 3] = 'b';
+  bc_name[bc_len - 2] = 'c';
+  if (LLVMWriteBitcodeToFile(module, bc_name) != 0) {
     fputs("failed to write bitcode to file", stderr);
   }
   LLVMDisposeBuilder(builder);
