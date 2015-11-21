@@ -57,6 +57,7 @@ AST parse(const char* file);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> statement-list
 %type <ast> expression-statement
 %type <ast> jump-statement
 %type <ast> translation-unit
@@ -326,9 +327,16 @@ declaration-list.opt
 /* | declaration-list */
 ;
 
-statement-list
-: statement
-| statement-list statement
+statement-list[lhs]
+: statement {
+  $$.tag = AST_STATEMENT_LIST;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[statement]);
+}
+| statement-list[rhs] statement {
+  $[lhs] = $[rhs];
+  ASTFUNC(push_back)($$.ast.vec, &$[statement]);
+}
 ;
 
 statement-list.opt
