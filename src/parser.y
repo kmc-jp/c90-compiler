@@ -57,6 +57,7 @@ AST parse(const char* file);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> compound-statement
 %type <ast> statement-list
 %type <ast> statement-list.opt
 %type <ast> expression-statement
@@ -320,7 +321,10 @@ statement
 
 /* 6.6.2 Compound statement, or block */
 compound-statement
-: '{' declaration-list.opt statement-list.opt '}'
+: '{' declaration-list.opt statement-list.opt '}' {
+  $$.tag = AST_COMPOUND_STATEMENT;
+  $$.ast.vec = $[statement-list.opt].ast.vec;
+}
 ;
 
 declaration-list.opt
