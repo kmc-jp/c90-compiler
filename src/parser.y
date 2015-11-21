@@ -40,8 +40,9 @@ AST parse(const char* file);
 %token INTEGER_CONSTANT
 %token FLOATING_CONSTANT
 %token CHARACTER_CONSTANT
-%token STRING_LITERAL
+%token <null_terminated> STRING_LITERAL
 
+%type <ast> primary-expression
 %type <ast> declaration-specifiers
 %type <ast> declaration-specifiers.opt
 %type <ast> type-specifier
@@ -78,7 +79,10 @@ constant
 primary-expression
 : IDENTIFIER
 /* | constant */
-| STRING_LITERAL
+| STRING_LITERAL {
+  $$.tag = AST_STRING_LITERAL;
+  $$.ast.string_literal.string = $[STRING_LITERAL];
+}
 | '(' expression ')'
 ;
 
