@@ -18,6 +18,7 @@ enum AstTag {
   AST_TRANSLATION_UNIT,
   AST_STRING_LITERAL,
   AST_ARGUMENT_EXPRESSION_LIST,
+  AST_FUNCTION_CALL,
   ASTTAG_ENUM_END
 };
 
@@ -63,6 +64,11 @@ struct AstStringLiteral {
   char* string;
 };
 
+struct AstFunctionCall {
+  struct AstIdentifier identifier;
+  ASTVEC argument_list;
+};
+
 struct Ast {
   enum AstTag tag;
   union AstBase {
@@ -74,6 +80,7 @@ struct Ast {
     struct AstFunctionDeclaration function_declaration;
     struct AstFunctionDefinition function_definition;
     struct AstStringLiteral string_literal;
+    struct AstFunctionCall function_call;
   } ast;
 };
 
