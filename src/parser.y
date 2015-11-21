@@ -57,6 +57,7 @@ AST parse(const char* file);
 %type <ast> parameter-type-list
 %type <ast> parameter-list
 %type <ast> parameter-declaration
+%type <ast> expression-statement
 %type <ast> translation-unit
 %type <ast> external-declaration
 %type <ast> function-definition
@@ -336,7 +337,11 @@ statement-list.opt
 
 /* 6.6.3 Expression and null statements  */
 expression-statement
-: expression.opt ';'
+: expression.opt ';' {
+  $$.tag = AST_EXPRESSION_STATEMENT;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[expression.opt]);
+}
 ;
 
 /* 6.6.6 Jump statements */
