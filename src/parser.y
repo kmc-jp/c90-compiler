@@ -48,6 +48,7 @@ AST parse(const char* file);
 %type <ast> argument-expression-list.opt
 %type <ast> assignment-expression
 %type <ast> expression
+%type <ast> expression.opt
 %type <ast> declaration-specifiers
 %type <ast> declaration-specifiers.opt
 %type <ast> type-specifier
@@ -92,7 +93,7 @@ primary-expression
   $$.ast.string_literal.string = $[STRING_LITERAL];
 }
 | '(' expression ')' {
-  $$ = $[expression]
+  $$ = $[expression];
 }
 ;
 
@@ -158,8 +159,13 @@ expression
 ;
 
 expression.opt
-: /* empty */
-| expression
+: /* empty */ {
+  $$.tag = AST_NULL_EXPRESSION;
+  $$.ast.dummy = NULL;
+}
+| expression {
+  $$ = $[expression];
+}
 ;
 
 /* 6.5 Declarations */
