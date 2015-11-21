@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <llvm-c/Analysis.h>
 #include <llvm-c/BitWriter.h>
 #include <llvm-c/Core.h>
@@ -26,6 +27,56 @@ LLVMTypeRef function_type(const struct AstFunctionDefinition* definition) {
       param_type_list[i] = iter->ast.declaration.specifier.llvm;
     }
     return LLVMFunctionType(return_type, param_type_list, param_count, false);
+  }
+}
+
+LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder,
+                              const AST* expression) {
+  switch (expression->tag) {
+    case AST_NULL_EXPRESSION:
+      return NULL;
+    case AST_FUNCTION_CALL:
+      {
+        char* identifier = expression->ast.function_call.identifier.symbol;
+        LLVMValueRef function = LLVMGetNamedFunction(module, identifier);
+        ASTVEC argument_list = expression->ast.function_call.argument_list;
+        const AST* const begin = ASTFUNC(begin)(argument_list);
+        const unsigned argument_count = ASTFUNC(size)(argument_list);
+        LLVMValueRef* arguments = NULL;
+        unsigned i = 0;
+        if (function == NULL) {
+          fprintf(stderr, "unknown function name\n");
+        }
+        if (argument_count == 0) {
+          return LLVMBuildCall(builder, function, NULL, 0, identifier);
+        }
+        arguments = safe_array_malloc(LLVMValueRef, argument_count);
+        for (i = 0; i < argument_count; ++i) {
+          arguments[i] = build_expression(module, builder, begin + i);
+        }
+        return LLVMBuildCall(builder, function, arguments,
+                             argument_count, identifier);
+      }
+      break;
+    case AST_IDENTIFIER:
+      fprintf(stderr, "%d: Not supported\n", expression->tag);
+      return NULL;
+      break;
+    case AST_STRING_LITERAL:
+      {
+        char* string = expression->ast.string_literal.string;
+        return LLVMConstString(string, strlen(string), false);
+      }
+    case AST_INTEGER_CONSTANT:
+      {
+        char* integer = expression->ast.integer_constant;
+        return LLVMConstIntOfStringAndSize(LLVMInt32Type(),
+                                           integer, strlen(integer), 10);
+      }
+    default:
+      fprintf(stderr, "%d: Not supported\n", expression->tag);
+      return NULL;
+      break;
   }
 }
 
