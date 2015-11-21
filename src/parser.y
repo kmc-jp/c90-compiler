@@ -43,6 +43,7 @@ AST parse(const char* file);
 %token <null_terminated> STRING_LITERAL
 
 %type <ast> primary-expression
+%type <ast> postfix-expression
 %type <ast> argument-expression-list
 %type <ast> argument-expression-list.opt
 %type <ast> assignment-expression
@@ -94,10 +95,20 @@ primary-expression
 ;
 
 /* 6.3.2 Postfix operators */
-postfix-expression
-: primary-expression
+postfix-expression[lhs]
+: primary-expression {
+  $$ = $[primary-expression];
+}
 /* | postfix-expression '[' expression ']' */
-| postfix-expression '(' argument-expression-list.opt ')'
+| postfix-expression[rhs] '(' argument-expression-list.opt ')' {
+  if ($[lhs].tag != AST_IDENTIFIER) {
+    yyerror("function name should be identifier");
+    YYERROR;
+  }
+  $$.tag = AST_FUNCTION_CALL;
+  $$.ast.function_call.identifier = $[lhs].ast.identifier;
+  $$.ast.function_call.argument_list = $[argument-expression-list.opt].ast.vec;
+}
 /* | postfix-expression '.' IDENTIFIER */
 /* | postfix-expression '->' IDENTIFIER */
 /* | postfix-expression "++" */
