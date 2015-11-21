@@ -103,6 +103,14 @@ argument-expression-list.opt
 | argument-expression-list
 ;
 
+/* 6.3.16 Assignment operators */
+assignment-expression
+  /* short cut */
+: postfix-expression
+/* : conditional-expression */
+/* | unary-expression assignment-operator assignment-expression */
+;
+
 /* 6.3.17 Comma operator */
 expression
 : assignment-expression
