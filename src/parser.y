@@ -37,7 +37,7 @@ AST parse(const char* file);
 %token UNSIGNED "unsigned" VOID "void" VOLATILE "volatile" WHILE "while"
 
 %token <null_terminated> IDENTIFIER
-%token INTEGER_CONSTANT
+%token <null_terminated> INTEGER_CONSTANT
 %token FLOATING_CONSTANT
 %token CHARACTER_CONSTANT
 %token <null_terminated> STRING_LITERAL
@@ -82,9 +82,13 @@ keyword
 | "unsigned" | "void" | "volatile" | "while"
 
 constant
-: FLOATING_CONSTANT
-| INTEGER_CONSTANT
-| CHARACTER_CONSTANT
+: INTEGER_CONSTANT {
+  $$.tag = AST_INTEGER_CONSTANT;
+  $$.ast.integer_constant = $[INTEGER_CONSTANT];
+}
+/* : FLOATING_CONSTANT */
+/* | INTEGER_CONSTANT */
+/* | CHARACTER_CONSTANT */
 ;
 
 /* 6.3.1 Primary expression */

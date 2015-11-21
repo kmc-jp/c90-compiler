@@ -24,6 +24,7 @@ enum AstTag {
   AST_RETURN_STATEMENT,
   AST_STATEMENT_LIST,
   AST_COMPOUND_STATEMENT,
+  AST_INTEGER_CONSTANT,
   ASTTAG_ENUM_END
 };
 
@@ -87,6 +88,7 @@ struct Ast {
     struct AstFunctionDefinition function_definition;
     struct AstStringLiteral string_literal;
     struct AstFunctionCall function_call;
+    char* integer_constant;
   } ast;
 };
 
