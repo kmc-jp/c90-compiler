@@ -43,6 +43,7 @@ AST parse(const char* file);
 %token <null_terminated> STRING_LITERAL
 
 %type <ast> primary-expression
+%type <ast> argument-expression-list
 %type <ast> assignment-expression
 %type <ast> expression
 %type <ast> declaration-specifiers
@@ -102,9 +103,16 @@ postfix-expression
 /* | postfix-expression "--" */
 ;
 
-argument-expression-list
-: assignment-expression
-| argument-expression-list ',' assignment-expression
+argument-expression-list[lhs]
+: assignment-expression {
+  $$.tag = AST_ARGUMENT_EXPRESSION_LIST;
+  $$.ast.vec = ASTFUNC(ctor)();
+  ASTFUNC(push_back)($$.ast.vec, &$[assignment-expression]);
+}
+| argument-expression-list[rhs] ',' assignment-expression {
+  $[lhs] = $[rhs];
+  ASTFUNC(push_back)($$.ast.vec, &$[assignment-expression]);
+}
 ;
 
 argument-expression-list.opt
