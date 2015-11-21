@@ -43,6 +43,7 @@ AST parse(const char* file);
 %token <null_terminated> STRING_LITERAL
 
 %type <ast> primary-expression
+%type <ast> expression
 %type <ast> declaration-specifiers
 %type <ast> declaration-specifiers.opt
 %type <ast> type-specifier
@@ -120,7 +121,9 @@ assignment-expression
 
 /* 6.3.17 Comma operator */
 expression
-: assignment-expression
+: assignment-expression {
+  $$ = $[assignment-expression];
+}
 /* | expression ',' assignment-expression */
 ;
 
