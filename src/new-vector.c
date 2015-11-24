@@ -39,7 +39,7 @@ static Type* vector_get_end(VectorRef self) {
   return self->finish_;
 }
 static void vector_extend(VectorRef self, size_t size) {
-  if (self->end_ - self->start_ < size) {
+  if (vector_get_capacity(self) < size) {
     vector_free(self);
     vector_alloc(self, size);
   }
