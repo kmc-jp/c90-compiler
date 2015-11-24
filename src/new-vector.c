@@ -106,7 +106,7 @@ void vector_reserve(VectorRef self, size_t size) {
     struct Vector original = *self;
     vector_alloc(self, size);
     vector_copy(self, &original);
-    vector_dtor(&original);
+    vector_free(&original);
   }
 }
 size_t vector_capacity(VectorRef self) {
@@ -121,7 +121,7 @@ void vector_shrink_to_fit(VectorRef self) {
       struct Vector original = *self;
       vector_alloc(self, size);
       vector_copy(self, &original);
-      vector_dtor(&original);
+      vector_free(&original);
     }
   }
 }
