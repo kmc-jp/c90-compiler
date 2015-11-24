@@ -109,3 +109,7 @@ void vector_reserve(VectorRef self, size_t size) {
     vector_dtor(&original);
   }
 }
+size_t vector_capacity(VectorRef self) {
+  assert(self);
+  return vector_get_capacity(self);
+}
