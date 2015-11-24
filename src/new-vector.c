@@ -47,6 +47,12 @@ static void vector_extend(VectorRef self, size_t size) {
 static void vector_set_size(VectorRef self, size_t size) {
   self->finish_ = self->start_ + size;
 }
+static void vector_fill(Type* dst, Type fill, size_t count) {
+  size_t i = 0;
+  for (i = 0; i < count; ++i) {
+    dst[i] = fill;
+  }
+}
 
 
 VectorRef vector_ctor(void) {
