@@ -33,7 +33,7 @@ static void vector_extend(VectorRef self, size_t size) {
   }
 }
 static void vector_set_size(VectorRef self, size_t size) {
-  self->finish_ = self_start_ + size;
+  self->finish_ = self->start_ + size;
 }
 
 
