@@ -155,3 +155,12 @@ void vector_erase(VectorRef self, size_t index, size_t count) {
     vector_set_size(index);
   }
 }
+void vector_push_back(VectorRef self, Type data) {
+  assert(self);
+  {
+    const size_t new_size = vector_size(self) + 1;
+    vector_reserve(self, new_size);
+    *vector_end(self) = data;
+    vector_set_size(self, new_size);
+  }
+}
