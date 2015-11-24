@@ -113,3 +113,15 @@ size_t vector_capacity(VectorRef self) {
   assert(self);
   return vector_get_capacity(self);
 }
+void vector_shrink_to_fit(VectorRef self) {
+  assert(self);
+  {
+    const size_t size = vector_size(self);
+    if (size < vector_capacity(self)) {
+      struct Vector original = *self;
+      vector_alloc(self, size);
+      vector_copy(self, &original);
+      vector_dtor(&original);
+    }
+  }
+}
