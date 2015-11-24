@@ -55,6 +55,11 @@ static void vector_fill(Type* dst, Type fill, size_t count) {
 }
 
 
+VectorRef make_vector(const Type* src, size_t count) {
+  const VectorRef self = vector_ctor();
+  vector_assign(self, src, count);
+  return self;
+}
 VectorRef vector_ctor(void) {
   return vectorref_alloc();
 }
