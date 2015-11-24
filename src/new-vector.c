@@ -100,3 +100,12 @@ size_t vector_size(VectorRef self) {
   assert(self);
   return vector_get_size(self);
 }
+void vector_reserve(VectorRef self, size_t size) {
+  assert(self);
+  if (vector_capacity(self) < size) {
+    struct Vector original = *self;
+    vector_alloc(self, size);
+    vector_copy(self, &original);
+    vector_dtor(&original);
+  }
+}
