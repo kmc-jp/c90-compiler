@@ -1,4 +1,5 @@
 #include "new-vector.h"
+#include <assert.h>
 
 /* vector of Type */
 struct Vector {
