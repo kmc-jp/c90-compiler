@@ -35,3 +35,7 @@ void vector_dtor(VectorRef self) {
   vector_free(self);
   vectorref_free(self);
 }
+void vector_copy(VectorRef self, VectorRef src) {
+  assert(self && src);
+  vector_assign(self, vector_data(src), vector_size(src));
+}
