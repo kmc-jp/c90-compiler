@@ -68,3 +68,21 @@ void vector_assign(VectorRef self, const Type* src, size_t count) {
   vector_set_size(self, count);
   VECTOR_MEMORY_COPY(vector_data(self), src, count);
 }
+Type vector_at(VectorRef self, size_t index) {
+  return vector_data(self)[index];
+}
+Type vector_front(VectorRef self) {
+  return vector_begin(self)[0];
+}
+Type vector_back(VectorRef self) {
+  return vector_end(self)[-1];
+}
+Type* vector_data(VectorRef self) {
+  return vector_get_begin(self);
+}
+Type* vector_begin(VectorRef self) {
+  return vector_get_begin(self);
+}
+Type* vector_end(VectorRef self) {
+  return vector_get_end(self);
+}
