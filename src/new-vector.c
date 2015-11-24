@@ -164,3 +164,7 @@ void vector_push_back(VectorRef self, Type data) {
     vector_set_size(self, new_size);
   }
 }
+void vector_pop_back(VectorRef self) {
+  assert(self);
+  vector_set_size(self, vector_size(self) - 1);
+}
