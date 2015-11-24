@@ -9,6 +9,8 @@ typedef struct String* StringRef;
 /* represent index of end of string */
 extern const size_t string_npos;
 
+/* string generator */
+StringRef make_string(const char* src, size_t length);
 /* constructor */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */

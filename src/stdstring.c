@@ -35,7 +35,9 @@ static void string_extend(StringRef self, size_t size) {
     string_alloc(self, size);
   }
 }
-StringRef string_ctor_impl(const char* src, size_t length) {
+
+
+StringRef make_string(const char* src, size_t length) {
   const StringRef self = safe_malloc(struct String);
   string_alloc(self, length);
   string_init(self, src, length);
@@ -44,7 +46,7 @@ StringRef string_ctor_impl(const char* src, size_t length) {
 
 StringRef string_ctor(const char* src) {
   src = src ? src : "";
-  return string_ctor_impl(src, strlen(src));
+  return make_string(src, strlen(src));
 }
 
 void string_dtor(StringRef* pself) {
@@ -243,7 +245,7 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    return string_ctor_impl(src, count);
+    return make_string(src, count);
   }
 }
 
