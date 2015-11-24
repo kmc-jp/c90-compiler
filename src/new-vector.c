@@ -25,6 +25,12 @@ static void vector_free(VectorRef self) {
   safe_free(self->start_);
   self->finish_ = self->end_ = NULL;
 }
+static void vector_extend(VectorRef self, size_t size) {
+  if (self->end_ - self->start_ < size) {
+    vector_free(self);
+    vector_alloc(self, size);
+  }
+}
 
 
 VectorRef vector_ctor(void) {
