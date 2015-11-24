@@ -12,6 +12,9 @@ static VectorRef vectorref_alloc(void) {
   self->start_ = self->finish_ = self->end_ = NULL;
   return self;
 }
+static void vectorref_free(VectorRef self) {
+  safe_free(self);
+}
 static void vector_alloc(VectorRef self, size_t size) {
   const size_t capacity = enough_capacity(size);
   self->start_ = safe_array_malloc(Type, capacity);
