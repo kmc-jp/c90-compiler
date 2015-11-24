@@ -125,3 +125,7 @@ void vector_shrink_to_fit(VectorRef self) {
     }
   }
 }
+void vector_clear(VectorRef self) {
+  assert(self);
+  vector_set_size(self, 0);
+}
