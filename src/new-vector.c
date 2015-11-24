@@ -21,3 +21,7 @@ static void vector_alloc(VectorRef self, size_t size) {
   self->finish_ = self->start_;
   self->end_ = self->start_ + capacity;
 }
+static void vector_free(VectorRef self) {
+  safe_free(self->start_);
+  self->finish_ = self->end_ = NULL;
+}
