@@ -182,3 +182,11 @@ void vector_resize(VectorRef self, size_t size, Type fill) {
   }
   vector_set_size(self, size);
 }
+void vector_swap(VectorRef self, VectorRef other) {
+  assert(self);
+  {
+    struct Vector tmp = *self;
+    *self = *other;
+    *other = tmp;
+  }
+}
