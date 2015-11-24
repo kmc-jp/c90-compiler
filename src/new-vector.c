@@ -92,3 +92,7 @@ Type* vector_end(VectorRef self) {
   assert(self);
   return vector_get_end(self);
 }
+bool vector_empty(VectorRef self) {
+  assert(self);
+  return vector_begin(self) == vector_end(self);
+}
