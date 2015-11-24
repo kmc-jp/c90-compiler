@@ -31,6 +31,9 @@ static void vector_extend(VectorRef self, size_t size) {
     vector_alloc(self, size);
   }
 }
+static void vector_set_size(VectorRef self, size_t size) {
+  self->finish_ = self_start_ + size;
+}
 
 
 VectorRef vector_ctor(void) {
