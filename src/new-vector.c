@@ -25,3 +25,8 @@ static void vector_free(VectorRef self) {
   safe_free(self->start_);
   self->finish_ = self->end_ = NULL;
 }
+
+
+VectorRef vector_ctor(void) {
+  return vectorref_alloc();
+}
