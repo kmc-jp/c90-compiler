@@ -48,3 +48,10 @@ void vector_copy(VectorRef self, VectorRef src) {
   assert(self && src);
   vector_assign(self, vector_data(src), vector_size(src));
 }
+void vector_assign(VectorRef self, const Type* src, size_t count) {
+  assert(self);
+  assert(count == 0 || src);
+  vector_extend(self, count);
+  vector_set_size(self, count);
+  VECTOR_MEMORY_COPY(vector_data(self), src, count);
+}
