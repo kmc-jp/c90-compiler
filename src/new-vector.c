@@ -30,3 +30,8 @@ static void vector_free(VectorRef self) {
 VectorRef vector_ctor(void) {
   return vectorref_alloc();
 }
+void vector_dtor(VectorRef self) {
+  assert(self);
+  vector_free(self);
+  vectorref_free(self);
+}
