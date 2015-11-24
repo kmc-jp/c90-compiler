@@ -96,3 +96,7 @@ bool vector_empty(VectorRef self) {
   assert(self);
   return vector_begin(self) == vector_end(self);
 }
+size_t vector_size(VectorRef self) {
+  assert(self);
+  return vector_get_size(self);
+}
