@@ -146,7 +146,7 @@ void vector_insert(VectorRef self, size_t index,
     Type* const tail = head + count;
     VECTOR_MEMORY_MOVE(tail, head, size - index);
     VECTOR_MEMORY_COPY(head, data, count);
-    vector_set_size(size + count);
+    vector_set_size(self, size + count);
   }
 }
 void vector_erase(VectorRef self, size_t index, size_t count) {
@@ -156,9 +156,9 @@ void vector_erase(VectorRef self, size_t index, size_t count) {
     Type* const head = vector_begin(self) + index;
     Type* const tail = head + count;
     VECTOR_MEMORY_MOVE(head, tail, new_size - index);
-    vector_set_size(new_size);
+    vector_set_size(self, new_size);
   } else {
-    vector_set_size(index);
+    vector_set_size(self, index);
   }
 }
 void vector_push_back(VectorRef self, Type data) {
