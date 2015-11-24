@@ -174,3 +174,11 @@ void vector_pop_back(VectorRef self) {
   assert(self);
   vector_set_size(self, vector_size(self) - 1);
 }
+void vector_resize(VectorRef self, size_t size, Type fill) {
+  assert(self);
+  if (vector_size(self) < size) {
+    vector_reserve(self, size);
+    vector_fill(vector_end(self), fill, size - vector_size(self));
+  }
+  vector_set_size(self, size);
+}
