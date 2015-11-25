@@ -16,10 +16,11 @@ typedef struct Vector* VectorRef;
 typedef struct VectorAllocator* VectorAllocatorRef;
 
 /* generate initialized vector */
-VectorRef make_vector(const Type* src, size_t count);
+VectorRef make_vector(VectorAllocatorRef allocator,
+                      const Type* src, size_t count);
 
 /* constructor */
-VectorRef vector_ctor(void);
+VectorRef vector_ctor(VectorAllocatorRef allocator);
 /* destructor */
 void vector_dtor(VectorRef* pself);
 /* operator= */

@@ -6,6 +6,7 @@ struct Vector {
   Type* start_;  /* first data */
   Type* finish_;  /* last data */
   Type* end_;  /* end of storage */
+  VectorAllocatorRef allocator_;
 };
 
 struct VectorAllocator {
@@ -25,23 +26,25 @@ void deallocate(VectorAllocatorRef allocator, void* ptr) {
   allocator->deallocator_(allocator, ptr);
 }
 
-static VectorRef vectorref_alloc(void) {
-  const VectorRef self = safe_malloc(struct Vector);
+static VectorRef vectorref_alloc(VectorAllocatorRef allocator) {
+  const VectorRef self = allocate_vector(allocator);
   self->start_ = self->finish_ = self->end_ = NULL;
+  self->allocator_ = allocator;
   return self;
 }
 static void vectorref_free(VectorRef* pself) {
-  safe_free(*pself);
+  deallocate((*pself)->allocator_, *pself);
+  *pself = NULL;
 }
 static void vector_alloc(VectorRef self, size_t size) {
   const size_t capacity = enough_capacity(size);
-  self->start_ = safe_array_malloc(Type, capacity);
+  self->start_ = allocate_type(self->allocator_, capacity);
   self->finish_ = self->start_;
   self->end_ = self->start_ + capacity;
 }
 static void vector_free(VectorRef self) {
-  safe_free(self->start_);
-  self->finish_ = self->end_ = NULL;
+  deallocate(self->allocator_, self->start_);
+  self->start_ = self->finish_ = self->end_ = NULL;
 }
 static size_t vector_get_size(VectorRef self) {
   return self->finish_ - self->start_;
@@ -66,13 +69,14 @@ static void vector_fill(Type* dst, Type fill, size_t count) {
 }
 
 
-VectorRef make_vector(const Type* src, size_t count) {
-  const VectorRef self = vector_ctor();
+VectorRef make_vector(VectorAllocatorRef allocator,
+                      const Type* src, size_t count) {
+  const VectorRef self = vector_ctor(allocator);
   vector_assign(self, src, count);
   return self;
 }
-VectorRef vector_ctor(void) {
-  return vectorref_alloc();
+VectorRef vector_ctor(VectorAllocatorRef allocator) {
+  return vectorref_alloc(allocator);
 }
 void vector_dtor(VectorRef* pself) {
   assert(pself);
