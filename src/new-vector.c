@@ -16,13 +16,13 @@ struct VectorAllocator {
   void (*deallocator_)(VectorAllocatorRef self, void* ptr);
 };
 
-VectorRef allocate_vector(VectorAllocatorRef allocator) {
+static VectorRef allocate_vector(VectorAllocatorRef allocator) {
   return allocator->vector_allocator_(allocator);
 }
-Type* allocate_type(VectorAllocatorRef allocator, size_t count) {
+static Type* allocate_type(VectorAllocatorRef allocator, size_t count) {
   return allocator->type_allocator_(allocator, count);
 }
-void deallocate(VectorAllocatorRef allocator, void* ptr) {
+static void deallocate(VectorAllocatorRef allocator, void* ptr) {
   allocator->deallocator_(allocator, ptr);
 }
 
