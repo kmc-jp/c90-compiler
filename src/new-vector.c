@@ -38,12 +38,6 @@ static Type* vector_get_begin(VectorRef self) {
 static Type* vector_get_end(VectorRef self) {
   return self->finish_;
 }
-static void vector_extend(VectorRef self, size_t size) {
-  if (vector_get_capacity(self) < size) {
-    vector_free(self);
-    vector_alloc(self, size);
-  }
-}
 static void vector_set_size(VectorRef self, size_t size) {
   self->finish_ = self->start_ + size;
 }
@@ -77,9 +71,12 @@ void vector_copy(VectorRef self, VectorRef src) {
 void vector_assign(VectorRef self, const Type* src, size_t count) {
   assert(self);
   assert(count == 0 || src);
-  vector_extend(self, count);
-  vector_set_size(self, count);
+  if (vector_capacity(self) < count) {
+    vector_free(self);
+    vector_alloc(self, count);
+  }
   VECTOR_MEMORY_COPY(vector_data(self), src, count);
+  vector_set_size(self, count);
 }
 Type vector_at(VectorRef self, size_t index) {
   assert(self);
