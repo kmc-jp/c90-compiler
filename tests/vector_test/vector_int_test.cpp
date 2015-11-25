@@ -108,7 +108,7 @@ TEST_F(VectorIntTest, push_back) {
   int value = 0;
   size_t i = 0;
   for (i = 0; i < 10; ++i, ++value) {
-    VINTF(push_back)(v, &value);
+    VINTF(push_back)(v, value);
   }
   EXPECT_FALSE(VINTF(empty)(v));
   EXPECT_EQ(10U, VINTF(size)(v));
@@ -139,10 +139,10 @@ TEST_F(VectorIntTest, pop_back) {
 TEST_F(VectorIntTest, resize) {
   size_t i = 0;
   int value = 0;
-  VINTF(resize)(v, 5, &value);
+  VINTF(resize)(v, 5, value);
   EXPECT_EQ(5U, VINTF(size)(v));
   value = 1;
-  VINTF(resize)(v, 10, &value);
+  VINTF(resize)(v, 10, value);
   EXPECT_EQ(10U, VINTF(size)(v));
   for (i = 0; i < 5; ++i) {
     EXPECT_EQ(0, VINTF(data)(v)[i]);
@@ -150,7 +150,7 @@ TEST_F(VectorIntTest, resize) {
   for (i = 5; i < 10; ++i) {
     EXPECT_EQ(1, VINTF(data)(v)[i]);
   }
-  VINTF(resize)(v, 3, NULL);
+  VINTF(resize)(v, 3, 0);
   EXPECT_EQ(3U, VINTF(size)(v));
   for (i = 0; i < 3; ++i) {
     EXPECT_EQ(0, VINTF(data)(v)[i]);
