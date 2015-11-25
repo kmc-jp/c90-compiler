@@ -13,8 +13,8 @@ static VectorRef vectorref_alloc(void) {
   self->start_ = self->finish_ = self->end_ = NULL;
   return self;
 }
-static void vectorref_free(VectorRef self) {
-  safe_free(self);
+static void vectorref_free(VectorRef* pself) {
+  safe_free(*pself);
 }
 static void vector_alloc(VectorRef self, size_t size) {
   const size_t capacity = enough_capacity(size);
@@ -63,10 +63,12 @@ VectorRef make_vector(const Type* src, size_t count) {
 VectorRef vector_ctor(void) {
   return vectorref_alloc();
 }
-void vector_dtor(VectorRef self) {
-  assert(self);
-  vector_free(self);
-  vectorref_free(self);
+void vector_dtor(VectorRef* pself) {
+  assert(pself);
+  if (*pself) {
+    vector_free(*pself);
+    vectorref_free(pself);
+  }
 }
 void vector_copy(VectorRef self, VectorRef src) {
   assert(self && src);

@@ -19,7 +19,7 @@ VectorRef make_vector(const Type* src, size_t count);
 /* constructor */
 VectorRef vector_ctor(void);
 /* destructor */
-void vector_dtor(VectorRef self);
+void vector_dtor(VectorRef* pself);
 /* operator= */
 void vector_copy(VectorRef self, VectorRef src);
 /* assign */
