@@ -12,6 +12,8 @@ typedef int Type;
 
 /* reference to vector of Type */
 typedef struct Vector* VectorRef;
+/* allocator for vector */
+typedef struct VectorAllocator* VectorAllocatorRef;
 
 /* generate initialized vector */
 VectorRef make_vector(const Type* src, size_t count);

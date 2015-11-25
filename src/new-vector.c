@@ -8,6 +8,13 @@ struct Vector {
   Type* end_;  /* end of storage */
 };
 
+struct VectorAllocator {
+  void* data_;
+  VectorRef (*vector_allocator_)(VectorAllocatorRef self);
+  Type* (*type_allocator_)(VectorAllocatorRef self, size_t count);
+  void (*deallocator_)(VectorAllocatorRef self, void* ptr);
+};
+
 static VectorRef vectorref_alloc(void) {
   const VectorRef self = safe_malloc(struct Vector);
   self->start_ = self->finish_ = self->end_ = NULL;
