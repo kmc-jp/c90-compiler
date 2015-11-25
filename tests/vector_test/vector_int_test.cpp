@@ -166,11 +166,12 @@ TEST_F(VectorIntTest, swap) {
     data1[i] = i;
     data2[i] = SIZE - i;
   }
-  VINTF(assign)(v, data1, SIZE);
-  EXPECT_FALSE(VINTF(empty)(v));
-  EXPECT_EQ(SIZE, VINTF(size)(v));
+  VINT v1 = VINTF(ctor)();
+  VINTF(assign)(v1, data1, SIZE);
+  EXPECT_FALSE(VINTF(empty)(v1));
+  EXPECT_EQ(SIZE, VINTF(size)(v1));
   for (int i = 0; (size_t)i < SIZE; ++i) {
-    EXPECT_EQ(i, VINTF(data)(v)[i]);
+    EXPECT_EQ(i, VINTF(data)(v1)[i]);
   }
   VINT v2 = VINTF(ctor)();
   VINTF(assign)(v2, data2, SIZE);
@@ -179,16 +180,17 @@ TEST_F(VectorIntTest, swap) {
   for (int i = 0; (size_t)i < SIZE; ++i) {
     EXPECT_EQ((int)(SIZE - i), VINTF(data)(v2)[i]);
   }
-  VINTF(swap)(v, v2);
-  EXPECT_FALSE(VINTF(empty)(v));
-  EXPECT_EQ(SIZE, VINTF(size)(v));
+  VINTF(swap)(v1, v2);
+  EXPECT_FALSE(VINTF(empty)(v1));
+  EXPECT_EQ(SIZE, VINTF(size)(v1));
   for (int i = 0; (size_t)i < SIZE; ++i) {
-    EXPECT_EQ((int)(SIZE - i), VINTF(data)(v)[i]);
+    EXPECT_EQ((int)(SIZE - i), VINTF(data)(v1)[i]);
   }
   EXPECT_FALSE(VINTF(empty)(v2));
   EXPECT_EQ(SIZE, VINTF(size)(v2));
   for (int i = 0; (size_t)i < SIZE; ++i) {
     EXPECT_EQ(i, VINTF(data)(v2)[i]);
   }
+  VINTF(dtor)(&v1);
   VINTF(dtor)(&v2);
 }
