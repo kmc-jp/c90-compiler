@@ -186,11 +186,14 @@ void vector_pop_back(VectorRef self) {
 }
 void vector_resize(VectorRef self, size_t size, Type fill) {
   assert(self);
-  if (vector_size(self) < size) {
-    vector_reserve(self, size);
-    vector_fill(vector_end(self), fill, size - vector_size(self));
+  {
+    const size_t old_size = vector_size(self);
+    if (old_size < size) {
+      vector_reserve(self, size);
+      vector_fill(vector_end(self), fill, size - old_size);
+    }
+    vector_set_size(self, size);
   }
-  vector_set_size(self, size);
 }
 void vector_swap(VectorRef self, VectorRef other) {
   assert(self);
