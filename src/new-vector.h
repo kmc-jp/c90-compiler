@@ -13,7 +13,7 @@ typedef int Type;
 /* reference to vector of Type */
 typedef struct Vector* VectorRef;
 /* allocator for vector */
-typedef struct VectorAllocator* VectorAllocatorRef;
+typedef const struct VectorAllocator* VectorAllocatorRef;
 
 /* generate initialized vector */
 VectorRef make_vector(VectorAllocatorRef allocator,
