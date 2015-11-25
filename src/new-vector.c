@@ -26,6 +26,20 @@ static void deallocate(VectorAllocatorRef allocator, void* ptr) {
   allocator->deallocator_(allocator, ptr);
 }
 
+static VectorRef default_allocate_vector(VectorAllocatorRef self) {
+  return safe_malloc(struct Vector);
+  UNUSED(self);
+}
+static Type* default_allocate_type(VectorAllocatorRef self, size_t count) {
+  return safe_array_malloc(Type, count);
+  UNUSED(self);
+}
+static void default_deallocate(VectorAllocatorRef self, void* ptr) {
+  safe_free(ptr);
+  UNUSED(self);
+}
+
+
 static VectorRef vectorref_alloc(VectorAllocatorRef allocator) {
   const VectorRef self = allocate_vector(allocator);
   self->start_ = self->finish_ = self->end_ = NULL;
