@@ -157,14 +157,18 @@ void vector_insert(VectorRef self, size_t index,
 }
 void vector_erase(VectorRef self, size_t index, size_t count) {
   assert(self);
-  if (index + count < vector_size(self)) {
-    const size_t new_size = vector_size(self) - count;
-    Type* const head = vector_begin(self) + index;
-    Type* const tail = head + count;
-    VECTOR_MEMORY_MOVE(head, tail, new_size - index);
-    vector_set_size(self, new_size);
-  } else {
-    vector_set_size(self, index);
+  {
+    const size_t size = vector_size(self);
+    if (size < index + count) {
+      count = size - index;
+    }
+    {
+      const size_t new_size = size - count;
+      Type* const head = vector_begin(self) + index;
+      Type* const tail = head + count;
+      VECTOR_MEMORY_MOVE(head, tail, new_size - index);
+      vector_set_size(self, new_size);
+    }
   }
 }
 void vector_push_back(VectorRef self, Type data) {
