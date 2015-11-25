@@ -15,6 +15,8 @@ typedef struct Vector* VectorRef;
 /* allocator for vector */
 typedef const struct VectorAllocator* VectorAllocatorRef;
 
+VectorAllocatorRef default_allocator(void);
+
 /* generate initialized vector */
 VectorRef make_vector(VectorAllocatorRef allocator,
                       const Type* src, size_t count);

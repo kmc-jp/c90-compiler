@@ -38,6 +38,15 @@ static void default_deallocate(VectorAllocatorRef self, void* ptr) {
   safe_free(ptr);
   UNUSED(self);
 }
+static const struct VectorAllocator g_default_allocator = {
+  NULL,
+  default_allocate_vector,
+  default_allocate_type,
+  default_deallocate
+};
+VectorAllocatorRef default_allocator(void) {
+  return &g_default_allocator;
+}
 
 
 static VectorRef vectorref_alloc(VectorAllocatorRef allocator) {
