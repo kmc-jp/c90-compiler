@@ -4,13 +4,20 @@
 #define VINT VectorRef
 #define VINTF(function) CONCAT(vector_, function)
 
+static const size_t SIZE = 100;
+
 class VectorIntTest : public ::testing::Test {
  protected:
-  VectorIntTest() : v(VINTF(ctor)()) {}
+  VectorIntTest() : v(VINTF(ctor)()) {
+    for (int i = 0; (size_t)i < SIZE; ++i) {
+      data[i] = i;
+    }
+  }
   ~VectorIntTest() {
     VINTF(dtor)(&v);
   }
   VINT v;
+  int data[SIZE];
 };
 
 TEST_F(VectorIntTest, ctor) {
@@ -29,34 +36,28 @@ TEST_F(VectorIntTest, dtor) {
 }
 
 TEST_F(VectorIntTest, copy) {
-  const int data[] = {0, 1, 2, 3, 4};
-  const size_t count = sizeof(data) / sizeof(int);
-  size_t i = 0;
   VINT v2 = VINTF(ctor)();
-  VINTF(assign)(v, data, count);
+  VINTF(assign)(v, data, SIZE);
   VINTF(copy)(v2, v);
   ASSERT_TRUE(VINTF(data)(v2) != NULL);
-  for (i = 0; i < count; ++i) {
-    EXPECT_EQ((int)i, VINTF(data)(v2)[i]);
+  for (int i = 0; (size_t)i < SIZE; ++i) {
+    EXPECT_EQ(i, VINTF(data)(v2)[i]);
   }
   EXPECT_FALSE(VINTF(empty)(v2));
-  EXPECT_EQ(count, VINTF(size)(v2));
-  EXPECT_LE(count, VINTF(capacity)(v2));
+  EXPECT_EQ(SIZE, VINTF(size)(v2));
+  EXPECT_LE(SIZE, VINTF(capacity)(v2));
   VINTF(dtor)(&v2);
 }
 
 TEST_F(VectorIntTest, assign) {
-  const int data[] = {0, 1, 2, 3, 4};
-  const size_t count = sizeof(data) / sizeof(int);
-  size_t i = 0;
-  VINTF(assign)(v, data, count);
+  VINTF(assign)(v, data, SIZE);
   ASSERT_TRUE(VINTF(data)(v) != NULL);
-  for (i = 0; i < count; ++i) {
-    EXPECT_EQ((int)i, VINTF(data)(v)[i]);
+  for (int i = 0; (size_t)i < SIZE; ++i) {
+    EXPECT_EQ(i, VINTF(data)(v)[i]);
   }
   EXPECT_FALSE(VINTF(empty)(v));
-  EXPECT_EQ(count, VINTF(size)(v));
-  EXPECT_LE(count, VINTF(capacity)(v));
+  EXPECT_EQ(SIZE, VINTF(size)(v));
+  EXPECT_LE(SIZE, VINTF(capacity)(v));
 }
 
 TEST_F(VectorIntTest, reserve) {
@@ -67,9 +68,7 @@ TEST_F(VectorIntTest, reserve) {
 }
 
 TEST_F(VectorIntTest, clear) {
-  const int data[] = {0, 1, 2, 3, 4};
-  const size_t count = sizeof(data) / sizeof(int);
-  VINTF(assign)(v, data, count);
+  VINTF(assign)(v, data, SIZE);
   VINTF(clear)(v);
   EXPECT_TRUE(VINTF(empty)(v));
 }
