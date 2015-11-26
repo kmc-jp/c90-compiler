@@ -3,11 +3,6 @@
 
 #include "utility.h"
 
-#define VECTOR_MEMORY_COPY(dst, src, count)             \
-  memory_copy((dst), (src), sizeof(Type), (count))
-#define VECTOR_MEMORY_MOVE(dst, src, count)             \
-  memory_move((dst), (src), sizeof(Type), (count))
-
 typedef int Type;
 
 /* reference to vector of Type */

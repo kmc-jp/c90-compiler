@@ -122,7 +122,7 @@ void vector_assign(VectorRef self, const Type* src, size_t count) {
     vector_free(self);
     vector_alloc(self, count);
   }
-  VECTOR_MEMORY_COPY(vector_data(self), src, count);
+  memory_copy(vector_data(self), src, sizeof(Type), count);
   vector_set_size(self, count);
 }
 Type vector_at(VectorRef self, size_t index) {
@@ -196,8 +196,8 @@ void vector_insert(VectorRef self, size_t index,
     {
       Type* const head = vector_begin(self) + index;
       Type* const tail = head + count;
-      VECTOR_MEMORY_MOVE(tail, head, size - index);
-      VECTOR_MEMORY_COPY(head, data, count);
+      memory_move(tail, head, sizeof(Type), size - index);
+      memory_copy(head, data, sizeof(Type), count);
       vector_set_size(self, size + count);
     }
   }
@@ -213,7 +213,7 @@ void vector_erase(VectorRef self, size_t index, size_t count) {
       const size_t new_size = size - count;
       Type* const head = vector_begin(self) + index;
       Type* const tail = head + count;
-      VECTOR_MEMORY_MOVE(head, tail, new_size - index);
+      memory_move(head, tail, sizeof(Type), new_size - index);
       vector_set_size(self, new_size);
     }
   }
