@@ -9,7 +9,7 @@ typedef int Type;
 /* reference to vector of Type */
 typedef struct Vector* VectorRef;
 
-AllocatorRef default_allocator(void);
+AllocatorRef vector_default_allocator(void);
 
 /* generate initialized vector */
 VectorRef make_vector(AllocatorRef allocator, const Type* src, size_t count);

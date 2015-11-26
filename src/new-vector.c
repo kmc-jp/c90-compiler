@@ -10,26 +10,26 @@ struct Vector {
   AllocatorRef allocator_;
 };
 
-static void* default_allocate_vector(void* manager) {
+static void* vector_default_allocate_container(void* manager) {
   return safe_malloc(struct Vector);
   UNUSED(manager);
 }
-static void* default_allocate_type(size_t count, void* manager) {
+static void* vector_default_allocate_element(size_t count, void* manager) {
   return safe_array_malloc(Type, count);
   UNUSED(manager);
 }
-static void default_deallocate(void* ptr, void* manager) {
+static void vector_default_deallocate(void* ptr, void* manager) {
   safe_free(ptr);
   UNUSED(manager);
 }
-static const struct Allocator g_default_allocator = {
+static const struct Allocator g_vector_default_allocator = {
   NULL,
-  default_allocate_vector,
-  default_allocate_type,
-  default_deallocate
+  vector_default_allocate_container,
+  vector_default_allocate_element,
+  vector_default_deallocate
 };
-AllocatorRef default_allocator(void) {
-  return &g_default_allocator;
+AllocatorRef vector_default_allocator(void) {
+  return &g_vector_default_allocator;
 }
 
 
@@ -84,7 +84,7 @@ VectorRef make_vector(AllocatorRef allocator,
 }
 VectorRef vector_ctor(AllocatorRef allocator) {
   if (!allocator) {
-    allocator = default_allocator();
+    allocator = vector_default_allocator();
   }
   return vectorref_alloc(allocator);
 }
