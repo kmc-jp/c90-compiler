@@ -1,4 +1,5 @@
 #include "new-vector.h"
+#include "allocator_impl.h"
 #include <assert.h>
 
 /* vector of Type */
@@ -9,17 +10,17 @@ struct Vector {
   AllocatorRef allocator_;
 };
 
-static VectorRef default_allocate_vector(AllocatorRef self) {
+static void* default_allocate_vector(void* manager) {
   return safe_malloc(struct Vector);
-  UNUSED(self);
+  UNUSED(manager);
 }
-static Type* default_allocate_type(AllocatorRef self, size_t count) {
+static void* default_allocate_type(size_t count, void* manager) {
   return safe_array_malloc(Type, count);
-  UNUSED(self);
+  UNUSED(manager);
 }
-static void default_deallocate(AllocatorRef self, void* ptr) {
+static void default_deallocate(void* ptr, void* manager) {
   safe_free(ptr);
-  UNUSED(self);
+  UNUSED(manager);
 }
 static const struct Allocator g_default_allocator = {
   NULL,
