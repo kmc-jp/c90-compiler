@@ -34,7 +34,7 @@ AllocatorRef vector_default_allocator(void) {
 
 
 static VectorRef vectorref_alloc(AllocatorRef allocator) {
-  const VectorRef self = allocate_vector(allocator);
+  const VectorRef self = allocate_container(allocator);
   self->start_ = self->finish_ = self->end_ = NULL;
   self->allocator_ = allocator;
   return self;
@@ -45,7 +45,7 @@ static void vectorref_free(VectorRef* pself) {
 }
 static void vector_alloc(VectorRef self, size_t size) {
   const size_t capacity = enough_capacity(size);
-  self->start_ = allocate_type(self->allocator_, capacity);
+  self->start_ = allocate_element(self->allocator_, capacity);
   self->finish_ = self->start_;
   self->end_ = self->start_ + capacity;
 }
