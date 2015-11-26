@@ -1,6 +1,8 @@
 #ifndef KMC_C89_COMPILER_ALLOCATOR_IMPL_H
 #define KMC_C89_COMPILER_ALLOCATOR_IMPL_H
 
+#include "utility.h"
+
 struct Allocator {
   void* manager_;
   void* (*container_allocator_)(void* manager);
