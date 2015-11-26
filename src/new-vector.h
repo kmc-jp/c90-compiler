@@ -2,22 +2,20 @@
 #define KMC_C89_COMPILER_NEW_VECTOR_H
 
 #include "utility.h"
+#include "allocator.h"
 
 typedef int Type;
 
 /* reference to vector of Type */
 typedef struct Vector* VectorRef;
-/* allocator for vector */
-typedef const struct VectorAllocator* VectorAllocatorRef;
 
-VectorAllocatorRef default_allocator(void);
+AllocatorRef default_allocator(void);
 
 /* generate initialized vector */
-VectorRef make_vector(VectorAllocatorRef allocator,
-                      const Type* src, size_t count);
+VectorRef make_vector(AllocatorRef allocator, const Type* src, size_t count);
 
 /* constructor */
-VectorRef vector_ctor(VectorAllocatorRef allocator);
+VectorRef vector_ctor(AllocatorRef allocator);
 /* destructor */
 void vector_dtor(VectorRef* pself);
 /* operator= */

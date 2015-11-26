@@ -6,50 +6,33 @@ struct Vector {
   Type* start_;  /* first data */
   Type* finish_;  /* last data */
   Type* end_;  /* end of storage */
-  VectorAllocatorRef allocator_;
+  AllocatorRef allocator_;
 };
 
-struct VectorAllocator {
-  void* data_;
-  VectorRef (*vector_allocator_)(VectorAllocatorRef self);
-  Type* (*type_allocator_)(VectorAllocatorRef self, size_t count);
-  void (*deallocator_)(VectorAllocatorRef self, void* ptr);
-};
-
-static VectorRef allocate_vector(VectorAllocatorRef allocator) {
-  return allocator->vector_allocator_(allocator);
-}
-static Type* allocate_type(VectorAllocatorRef allocator, size_t count) {
-  return allocator->type_allocator_(allocator, count);
-}
-static void deallocate(VectorAllocatorRef allocator, void* ptr) {
-  allocator->deallocator_(allocator, ptr);
-}
-
-static VectorRef default_allocate_vector(VectorAllocatorRef self) {
+static VectorRef default_allocate_vector(AllocatorRef self) {
   return safe_malloc(struct Vector);
   UNUSED(self);
 }
-static Type* default_allocate_type(VectorAllocatorRef self, size_t count) {
+static Type* default_allocate_type(AllocatorRef self, size_t count) {
   return safe_array_malloc(Type, count);
   UNUSED(self);
 }
-static void default_deallocate(VectorAllocatorRef self, void* ptr) {
+static void default_deallocate(AllocatorRef self, void* ptr) {
   safe_free(ptr);
   UNUSED(self);
 }
-static const struct VectorAllocator g_default_allocator = {
+static const struct Allocator g_default_allocator = {
   NULL,
   default_allocate_vector,
   default_allocate_type,
   default_deallocate
 };
-VectorAllocatorRef default_allocator(void) {
+AllocatorRef default_allocator(void) {
   return &g_default_allocator;
 }
 
 
-static VectorRef vectorref_alloc(VectorAllocatorRef allocator) {
+static VectorRef vectorref_alloc(AllocatorRef allocator) {
   const VectorRef self = allocate_vector(allocator);
   self->start_ = self->finish_ = self->end_ = NULL;
   self->allocator_ = allocator;
@@ -92,13 +75,13 @@ static void vector_fill(Type* dst, Type fill, size_t count) {
 }
 
 
-VectorRef make_vector(VectorAllocatorRef allocator,
+VectorRef make_vector(AllocatorRef allocator,
                       const Type* src, size_t count) {
   const VectorRef self = vector_ctor(allocator);
   vector_assign(self, src, count);
   return self;
 }
-VectorRef vector_ctor(VectorAllocatorRef allocator) {
+VectorRef vector_ctor(AllocatorRef allocator) {
   if (!allocator) {
     allocator = default_allocator();
   }
