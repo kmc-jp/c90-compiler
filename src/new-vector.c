@@ -99,6 +99,9 @@ VectorRef make_vector(VectorAllocatorRef allocator,
   return self;
 }
 VectorRef vector_ctor(VectorAllocatorRef allocator) {
+  if (!allocator) {
+    allocator = default_allocator();
+  }
   return vectorref_alloc(allocator);
 }
 void vector_dtor(VectorRef* pself) {
