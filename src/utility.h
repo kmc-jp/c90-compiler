@@ -19,17 +19,21 @@ typedef signed char bool;
 #define END_EXTERN_C
 #endif
 
-void* safe_malloc_impl(size_t size);
 #define safe_malloc(type)                       \
   (type*)safe_malloc_impl(sizeof(type))
-#define safe_array_malloc(type, size)           \
+#define safe_array_malloc(type, size)                   \
   (type*)safe_malloc_impl(sizeof(type) * (size))
+#define safe_free(ptr)                                          \
+  do { safe_free_impl(ptr); (ptr) = NULL; } while (false)
 
+BEGIN_EXTERN_C
+
+void* safe_malloc_impl(size_t size);
 void safe_free_impl(void* ptr);
-#define safe_free(ptr)                          \
-  do { safe_free_impl(ptr); ptr = NULL; } while(false)
 
 /* size <= capacity && capacity == pow(2, n) */
 size_t enough_capacity(size_t size);
+
+END_EXTERN_C
 
 #endif  /* KMC_C89_COMPILER_UTILITY_H */
