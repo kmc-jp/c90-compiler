@@ -23,14 +23,14 @@ static void VECTORFUNC(Type, default_deallocate)(void* ptr, void* manager) {
   safe_free(ptr);
   UNUSED(manager);
 }
-static const struct Allocator g_vector_default_allocator = {
-  NULL,
-  VECTORFUNC(Type, default_allocate_container),
-  VECTORFUNC(Type, default_allocate_element),
-  VECTORFUNC(Type, default_deallocate)
-};
 AllocatorRef VECTORFUNC(Type, default_allocator)(void) {
-  return &g_vector_default_allocator;
+  static const struct Allocator allocator = {
+    NULL,
+    VECTORFUNC(Type, default_allocate_container),
+    VECTORFUNC(Type, default_allocate_element),
+    VECTORFUNC(Type, default_deallocate)
+  };
+  return &allocator;
 }
 
 
