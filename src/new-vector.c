@@ -77,8 +77,8 @@ static void VECTORFUNC(Type, fill)(Type* dst, Type fill, size_t count) {
 }
 
 
-VECTORREF(Type) VECTORFUNC(Type, make_vector)(AllocatorRef allocator,
-                                              const Type* src, size_t count) {
+VECTORREF(Type) VECTORFUNC(Type, make_vector)(const Type* src, size_t count,
+                                              AllocatorRef allocator) {
   const VECTORREF(Type) self = VECTORFUNC(Type, ctor)(allocator);
   VECTORFUNC(Type, assign)(self, src, count);
   return self;

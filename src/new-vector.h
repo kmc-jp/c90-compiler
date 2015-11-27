@@ -21,8 +21,8 @@ BEGIN_EXTERN_C
 AllocatorRef VECTORFUNC(Type, default_allocator)(void);
 
 /* generate initialized vector */
-VECTORREF(Type) VECTORFUNC(Type, make_vector)(AllocatorRef allocator,
-                                              const Type* src, size_t count);
+VECTORREF(Type) VECTORFUNC(Type, make_vector)(const Type* src, size_t count,
+                                              AllocatorRef allocator);
 
 /* constructor */
 VECTORREF(Type) VECTORFUNC(Type, ctor)(AllocatorRef allocator);
