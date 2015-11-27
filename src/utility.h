@@ -11,6 +11,14 @@ typedef signed char bool;
 #define false ((bool)0)
 #endif  /* __cplusplus */
 
+#ifdef __cplusplus
+#define BEGIN_EXTERN_C extern "C" {
+#define END_EXTERN_C }
+#else
+#define BEGIN_EXTERN_C
+#define END_EXTERN_C
+#endif
+
 void* safe_malloc_impl(size_t size);
 #define safe_malloc(type)                       \
   (type*)safe_malloc_impl(sizeof(type))
