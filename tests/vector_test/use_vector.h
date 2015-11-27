@@ -1,0 +1,11 @@
+#ifndef KMC_C89_COMPILER_USE_VECTOR_H
+#define KMC_C89_COMPILER_USE_VECTOR_H
+
+#include "utility.h"
+#include "vector.h"
+
+BEGIN_EXTERN_C
+DECLARE_VECTOR(int)
+END_EXTERN_C
+
+#endif  /* KMC_C89_COMPILER_USE_VECTOR_H */
