@@ -14,71 +14,72 @@
 typedef int Type;
 
 /* reference to vector of Type */
-typedef struct Vector* VectorRef;
+typedef struct VECTOR(Type)* VECTORREF(Type);
 
 BEGIN_EXTERN_C
 
 AllocatorRef vector_default_allocator(void);
 
 /* generate initialized vector */
-VectorRef make_vector(AllocatorRef allocator, const Type* src, size_t count);
+VECTORREF(Type) make_vector(AllocatorRef allocator,
+                            const Type* src, size_t count);
 
 /* constructor */
-VectorRef vector_ctor(AllocatorRef allocator);
+VECTORREF(Type) vector_ctor(AllocatorRef allocator);
 /* destructor */
-void vector_dtor(VectorRef* pself);
+void vector_dtor(VECTORREF(Type)* pself);
 /* operator= */
-void vector_copy(VectorRef self, VectorRef src);
+void vector_copy(VECTORREF(Type) self, VECTORREF(Type) src);
 /* assign */
-void vector_assign(VectorRef self, const Type* src, size_t count);
+void vector_assign(VECTORREF(Type) self, const Type* src, size_t count);
 
 /* at */
 /* undefined behavior if out of range */
-Type vector_at(VectorRef self, size_t index);
+Type vector_at(VECTORREF(Type) self, size_t index);
 /* front */
 /* undefined behavior if empty */
-Type vector_front(VectorRef self);
+Type vector_front(VECTORREF(Type) self);
 /* front */
 /* undefined behavior if empty */
-Type vector_back(VectorRef self);
+Type vector_back(VECTORREF(Type) self);
 /* data */
 /* same as begin */
-Type* vector_data(VectorRef self);
+Type* vector_data(VECTORREF(Type) self);
 /* begin */
-Type* vector_begin(VectorRef self);
+Type* vector_begin(VECTORREF(Type) self);
 /* end */
-Type* vector_end(VectorRef self);
+Type* vector_end(VECTORREF(Type) self);
 
 /* empty */
-bool vector_empty(VectorRef self);
+bool vector_empty(VECTORREF(Type) self);
 /* size */
-size_t vector_size(VectorRef self);
+size_t vector_size(VECTORREF(Type) self);
 /* reserve */
-void vector_reserve(VectorRef self, size_t size);
+void vector_reserve(VECTORREF(Type) self, size_t size);
 /* capacity */
-size_t vector_capacity(VectorRef self);
+size_t vector_capacity(VECTORREF(Type) self);
 /* shrink_to_fit */
-void vector_shrink_to_fit(VectorRef self);
+void vector_shrink_to_fit(VECTORREF(Type) self);
 
 /* clear */
-void vector_clear(VectorRef self);
+void vector_clear(VECTORREF(Type) self);
 /* insert */
 /* undefined behavior if index is out of range */
-void vector_insert(VectorRef self, size_t index,
+void vector_insert(VECTORREF(Type) self, size_t index,
                    const Type* data, size_t count);
 /* erase */
 /* undefined behavior if index is out of range */
 /* remove from index to the end if 'index + count' is out of range */
-void vector_erase(VectorRef self, size_t index, size_t count);
+void vector_erase(VECTORREF(Type) self, size_t index, size_t count);
 /* push_back */
-void vector_push_back(VectorRef self, Type data);
+void vector_push_back(VECTORREF(Type) self, Type data);
 /* pop_back */
 /* undefined behavior if empty */
-void vector_pop_back(VectorRef self);
+void vector_pop_back(VECTORREF(Type) self);
 /* resize */
-void vector_resize(VectorRef self, size_t size, Type fill);
+void vector_resize(VECTORREF(Type) self, size_t size, Type fill);
 /* swap */
-void vector_swap(VectorRef self, VectorRef other);
+void vector_swap(VECTORREF(Type) self, VECTORREF(Type) other);
 
 END_EXTERN_C
 
