@@ -8,6 +8,8 @@
 #define CONCATENATE3(x, y, z) x ## y ## z
 #define CONCAT(x, y) CONCATENATE(x, y)
 #define CONCAT3(x, y, z) CONCATENATE3(x, y, z)
+#define TBRACKET(x) CONCAT3(T, x, T)
+#define TEMPLATE(type, identifier) CONCAT(identifier, TBRACKET(type))
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) < (y) ? (y) : (x))
