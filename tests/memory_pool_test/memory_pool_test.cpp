@@ -68,56 +68,39 @@ TEST_F(MemoryPoolTest, strings) {
 }
 
 TEST_F(MemoryPoolTest, built_in_types) {
-  bool* b =
-      palloc(bool, p, 1);
+  bool* b = palloc(bool, p, 1);
   *b = true;
-  char* c =
-      palloc(char, p, 2);
+  char* c = palloc(char, p, 2);
   *c = 2;
-  signed char* sc =
-      palloc(signed char, p, 3);
+  signed char* sc = palloc(signed char, p, 3);
   *sc = 3;
-  unsigned char* uc =
-      palloc(unsigned char, p, 5);
+  unsigned char* uc = palloc(unsigned char, p, 5);
   *uc = 5;
-  short* s =
-      palloc(short, p, 7);
+  short* s = palloc(short, p, 7);
   *s = 7;
-  unsigned short* us =
-      palloc(unsigned short, p, 11);
+  unsigned short* us = palloc(unsigned short, p, 11);
   *us = 11;
-  int* i =
-      palloc(int, p, 13);
+  int* i = palloc(int, p, 13);
   *i = 13;
-  unsigned int* ui =
-      palloc(unsigned int, p, 17);
+  unsigned int* ui = palloc(unsigned int, p, 17);
   *ui = 17;
-  long* l =
-      palloc(long, p, 19);
+  long* l = palloc(long, p, 19);
   *l = 19;
-  unsigned long* ul =
-      palloc(unsigned long, p, 23);
+  unsigned long* ul = palloc(unsigned long, p, 23);
   *ul = 23;
-  long long* ll =
-      palloc(long long, p, 29);
+  long long* ll = palloc(long long, p, 29);
   *ll = 29;
-  unsigned long long* ull =
-      palloc(unsigned long long, p, 31);
+  unsigned long long* ull = palloc(unsigned long long, p, 31);
   *ull = 31;
-  float* f =
-      palloc(float, p, 37);
+  float* f = palloc(float, p, 37);
   *f = 37;
-  double* d =
-      palloc(double, p, 41);
+  double* d = palloc(double, p, 41);
   *d = 41;
-  long double* ld =
-      palloc(long double, p, 43);
+  long double* ld = palloc(long double, p, 43);
   *ld = 43;
-  size_t* st =
-      palloc(size_t, p, 47);
+  size_t* st = palloc(size_t, p, 47);
   *st = 47;
-  ptrdiff_t* pt =
-      palloc(ptrdiff_t, p, 53);
+  ptrdiff_t* pt = palloc(ptrdiff_t, p, 53);
   *pt = 53;
 
   EXPECT_EQ(true, *b);
