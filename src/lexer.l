@@ -37,6 +37,7 @@ DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
 CHAR8 "\\"[0-7]+
 CHAR16 "\\x"[0-9A-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
+WHITESPACE [ \t\n]
 %x COMMENT
 %x STRING
 %%
@@ -62,6 +63,8 @@ SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
     VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
   }
 }
+
+WHITESPACE ;
 
 [+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   copy_to_yylval(yytext, yyleng);
