@@ -34,3 +34,4 @@
 kmc89
 lex.yy.c
 lex.yy.h
+*.d

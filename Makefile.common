@@ -1,6 +1,6 @@
 # c89-compiler/Makefile.common
 
-.SUFFIXES: .out .o .c .cc .cpp
+.SUFFIXES: .out .o .c .cc .cpp .d
 
 C_SRCS := $(wildcard *.c)
 CC_SRCS := $(wildcard *.cc)
@@ -11,16 +11,20 @@ CC_OBJS := $(CC_SRCS:.cc=.o)
 CXX_OBJS := $(CXX_SRCS:.cpp=.o)
 
 OBJS := $(C_OBJS) $(CC_OBJS) $(CXX_OBJS)
+DEPENDS = $(OBJS:.o=.d)
 CLEAN_OBJS :=
 DISTCLEAN_TARGETS :=
 
 CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2
+DEPEND_FLAGS := -MMD -MP
 C89_RESTRICT_FLAGS := -ansi -pedantic
 CXX11_FLAGS := -std=c++11
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
 CXXFLAGS ?= $(COMMON_FLAGS) $(CXX11_FLAGS)
+CFLAGS += $(DEPEND_FLAGS)
+CXXFLAGS += $(DEPEND_FLAGS)
 RM := rm -f
 AR := ar rcs
 
@@ -33,8 +37,10 @@ AR := ar rcs
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+-include $(DEPENDS)
+
 clean:
-	$(RM) $(OBJS) $(CLEAN_OBJS)
+	$(RM) $(OBJS) $(DEPENDS) $(CLEAN_OBJS)
 
 distclean: clean
 	$(RM) $(TARGET) $(DISTCLEAN_TARGETS)
