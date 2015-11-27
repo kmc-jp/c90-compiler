@@ -8,7 +8,7 @@ static const size_t SIZE = 100;
 
 class VectorIntTest : public ::testing::Test {
  protected:
-  VectorIntTest() : v(VINTF(ctor)()) {
+  VectorIntTest() : v(VINTF(ctor)(NULL)) {
     for (int i = 0; (size_t)i < SIZE; ++i) {
       data[i] = i;
     }
@@ -30,13 +30,13 @@ TEST_F(VectorIntTest, ctor) {
 }
 
 TEST_F(VectorIntTest, dtor) {
-  VINT v2 = VINTF(ctor)();
+  VINT v2 = VINTF(ctor)(NULL);
   VINTF(dtor)(&v2);
   EXPECT_EQ(NULL, v2);
 }
 
 TEST_F(VectorIntTest, copy) {
-  VINT v2 = VINTF(ctor)();
+  VINT v2 = VINTF(ctor)(NULL);
   VINTF(assign)(v, data, SIZE);
   VINTF(copy)(v2, v);
   ASSERT_TRUE(VINTF(data)(v2) != NULL);
@@ -166,14 +166,14 @@ TEST_F(VectorIntTest, swap) {
     data1[i] = i;
     data2[i] = SIZE - i;
   }
-  VINT v1 = VINTF(ctor)();
+  VINT v1 = VINTF(ctor)(NULL);
   VINTF(assign)(v1, data1, SIZE);
   EXPECT_FALSE(VINTF(empty)(v1));
   EXPECT_EQ(SIZE, VINTF(size)(v1));
   for (int i = 0; (size_t)i < SIZE; ++i) {
     EXPECT_EQ(i, VINTF(data)(v1)[i]);
   }
-  VINT v2 = VINTF(ctor)();
+  VINT v2 = VINTF(ctor)(NULL);
   VINTF(assign)(v2, data2, SIZE);
   EXPECT_FALSE(VINTF(empty)(v2));
   EXPECT_EQ(SIZE, VINTF(size)(v2));
