@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
-extern "C" {
 #include "use_vector.h"
-}
 
 class VectorIntEnvironment : public ::testing::Environment {
   virtual void SetUp() {
