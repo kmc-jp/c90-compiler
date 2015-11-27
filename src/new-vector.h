@@ -4,6 +4,13 @@
 #include "utility.h"
 #include "allocator.h"
 
+#define VECTOR(type) \
+  TEMPLATE(type, Vector)
+#define VECTORREF(type) \
+  TEMPLATE(type, VectorRef)
+#define VECTORFUNC(type, function) \
+  CONCAT(VECTOR(type), function)
+
 typedef int Type;
 
 /* reference to vector of Type */
