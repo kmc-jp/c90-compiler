@@ -7,6 +7,12 @@ void yyerror(const char *);
 int yylex(void);
 }
 
+%code requires {
+#include "ast.h"
+}
+
+%define api.value.type { AstRef }
+
 %token IDENTIFIER
 %token INTEGER_CONSTANT
 %token FLOATING_CONSTANT
