@@ -1,5 +1,11 @@
-%{
-%}
+%code {
+#include <stdio.h>
+void yyerror(const char *);
+}
+
+%code provides {
+int yylex(void);
+}
 
 %token IDENTIFIER
 %token INTEGER_CONSTANT
@@ -24,3 +30,7 @@ string-literal
 ;
 
 %%
+
+void yyerror(const char* s) {
+  fprintf(stderr, "%s\n", s);
+}
