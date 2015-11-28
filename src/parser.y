@@ -1,0 +1,12 @@
+%{
+%}
+
+%token IDENTIFIER
+
+%%
+
+identifier
+: IDENTIFIER
+;
+
+%%
