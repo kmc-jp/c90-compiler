@@ -9,9 +9,8 @@ int yylex(void);
 
 %code requires {
 #include "ast.h"
+#define YYSTYPE AstRef
 }
-
-%define api.value.type { AstRef }
 
 %token IDENTIFIER
 %token INTEGER_CONSTANT
