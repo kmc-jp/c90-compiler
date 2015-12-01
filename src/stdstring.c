@@ -34,6 +34,17 @@ AllocatorRef string_default_allocator(void) {
   return &allocator;
 }
 
+static StringRef string_container_alloc(AllocatorRef allocator) {
+  const StringRef self = allocate_container(allocator);
+  self->data_ = NULL;
+  self->length_ = self->capacity_ = 0;
+  self->allocator_ = allocator;
+  return self;
+}
+static void string_container_free(StringRef* pself) {
+  deallocate((*pself)->allocator_, *pself);
+  *pself = NULL;
+}
 static void string_set_end(StringRef self, char data) {
   self->data_[self->length_] = data;
 }
