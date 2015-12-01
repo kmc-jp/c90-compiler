@@ -12,6 +12,19 @@ struct String {
 
 const size_t string_npos = (size_t)(-1);
 
+static void* default_allocate_container(void* manager) {
+  return safe_malloc(struct String);
+  UNUSED(manager);
+}
+static void* default_allocate_element(size_t count, void* manager) {
+  return safe_array_malloc(char, count);
+  UNUSED(manager);
+}
+static void default_deallocate(void* ptr, void* manager) {
+  safe_free(ptr);
+  UNUSED(manager);
+}
+
 static void string_set_end(StringRef self, char data) {
   self->data_[self->length_] = data;
 }
