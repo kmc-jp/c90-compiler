@@ -1,11 +1,13 @@
 #include "stdstring.h"
 #include <assert.h>
 #include <string.h>
+#include "allocator.h"
 
 struct String {
   char* data_;
   size_t length_;
   size_t capacity_;
+  AllocatorRef allocator_;
 };
 
 const size_t string_npos = (size_t)(-1);
