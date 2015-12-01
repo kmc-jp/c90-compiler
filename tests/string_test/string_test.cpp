@@ -5,7 +5,7 @@ extern "C" {
 
 class StringTest : public ::testing::Test {
  protected:
-  StringTest() : v(string_ctor(NULL)) {}
+  StringTest() : v(string_ctor(NULL, NULL)) {}
   ~StringTest() {
     string_dtor(&v);
   }
@@ -23,7 +23,7 @@ TEST_F(StringTest, ctor) {
 }
 
 TEST_F(StringTest, dtor) {
-  StringRef v2 = string_ctor(NULL);
+  StringRef v2 = string_ctor(NULL, NULL);
   string_dtor(&v2);
   EXPECT_EQ(NULL, v2);
 }
@@ -32,7 +32,7 @@ TEST_F(StringTest, ctor_with_data) {
   const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
   size_t i = 0;
-  StringRef v2 = string_ctor(data);
+  StringRef v2 = string_ctor(data, NULL);
   EXPECT_STREQ(data, string_data(v2));
   EXPECT_EQ(data[0], string_front(v2));
   EXPECT_EQ(data[length], string_back(v2));
@@ -51,7 +51,7 @@ TEST_F(StringTest, ctor_with_data) {
 TEST_F(StringTest, copy) {
   const char data[] = "abcde";
   const size_t length = sizeof(data) / sizeof(char) - 1;
-  StringRef v2 = string_ctor(data);
+  StringRef v2 = string_ctor(data, NULL);
 
   string_copy(v, v2);
   ASSERT_TRUE(string_data(v) != NULL);
@@ -187,7 +187,7 @@ TEST_F(StringTest, string_compare){
   StringRef vs[count];
   int i = 0, j = 1, result = 0;
   for (i = 0; i < count ; ++i) {
-    vs[i] = string_ctor(data[i]);
+    vs[i] = string_ctor(data[i], NULL);
   }
   for (i = 0; i < count ; ++i) {
     for (j = 0 ; j < count ; ++j) {
@@ -283,7 +283,7 @@ TEST_F(StringTest, swap) {
   const char data2[] = "xyz";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
-  StringRef v2 = string_ctor(data2);
+  StringRef v2 = string_ctor(data2, NULL);
   string_assign(v, data1);
 
   string_swap(v, v2);
