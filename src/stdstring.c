@@ -53,7 +53,7 @@ static void string_set_length(StringRef self, size_t length) {
   self->data_[length] = '\0';
 }
 static void string_free(StringRef self) {
-  safe_free(self->data_);
+  deallocate(self->allocator_, self->data_);
 }
 static void string_init(StringRef self, const char* src, size_t length) {
   memcpy(self->data_, src, length);
@@ -61,7 +61,7 @@ static void string_init(StringRef self, const char* src, size_t length) {
 }
 static void string_alloc(StringRef self, size_t size) {
   const size_t capacity = enough_capacity(size + 1) - 1;
-  self->data_ = safe_array_malloc(char, capacity + 1);
+  self->data_ = allocate_element(self->allocator_, capacity + 1);
   self->capacity_ = capacity;
 }
 static void string_extend(StringRef self, size_t size) {
