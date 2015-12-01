@@ -1,7 +1,7 @@
 #include "stdstring.h"
 #include <assert.h>
 #include <string.h>
-#include "allocator.h"
+#include "allocator_impl.h"
 
 struct String {
   char* data_;
@@ -23,6 +23,15 @@ static void* default_allocate_element(size_t count, void* manager) {
 static void default_deallocate(void* ptr, void* manager) {
   safe_free(ptr);
   UNUSED(manager);
+}
+AllocatorRef string_default_allocator(void) {
+  static const struct Allocator allocator = {
+    NULL,
+    default_allocate_container,
+    default_allocate_element,
+    default_deallocate
+  };
+  return &allocator;
 }
 
 static void string_set_end(StringRef self, char data) {
