@@ -9,7 +9,7 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-STRING_SRCS := utility.c stdstring.c
+STRING_SRCS := utility.c stdstring.c allocator.c
 STRING_OBJS := $(STRING_SRCS:%.c=$(SRC_DIR)/%.o)
 TARGET = string_test.out
 OBJS += $(STRING_OBJS)
