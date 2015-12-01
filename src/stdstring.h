@@ -13,11 +13,11 @@ extern const size_t string_npos;
 AllocatorRef string_default_allocator(void);
 
 /* string generator */
-StringRef make_string(const char* src, size_t length);
+StringRef make_string(const char* src, size_t length, AllocatorRef allocator);
 /* constructor */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */
-StringRef string_ctor(const char* src);
+StringRef string_ctor(const char* src, AllocatorRef allocator);
 /* destructor */
 /* *pself is set to NULL after destruction */
 void string_dtor(StringRef* pself);
