@@ -73,7 +73,8 @@ static void string_extend(StringRef self, size_t size) {
 
 
 StringRef make_string(const char* src, size_t length, AllocatorRef allocator) {
-  const StringRef self = safe_malloc(struct String);
+  const StringRef self = string_container_alloc(
+      allocator ? allocator : string_default_allocator());
   string_alloc(self, length);
   string_init(self, src, length);
   return self;
@@ -88,7 +89,7 @@ void string_dtor(StringRef* pself) {
   assert(pself);
   if (*pself) {
     string_free(*pself);
-    safe_free(*pself);
+    string_container_free(pself);
   }
 }
 
