@@ -5,7 +5,7 @@ extern "C" {
 
 class StringTest : public ::testing::Test {
  protected:
-  StringTest() : v(string_ctor(NULL)) {}
+  StringTest() : v(string_ctor("")) {}
   ~StringTest() {
     string_dtor(&v);
   }
@@ -23,7 +23,7 @@ TEST_F(StringTest, ctor) {
 }
 
 TEST_F(StringTest, dtor) {
-  StringRef v2 = string_ctor(NULL);
+  StringRef v2 = string_ctor("");
   string_dtor(&v2);
   EXPECT_EQ(NULL, v2);
 }
