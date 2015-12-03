@@ -55,6 +55,7 @@ StringRef make_string(const char* src, size_t length) {
 }
 
 StringRef string_ctor(const char* src) {
+  assert(src);
   return make_string(src, strlen(src));
 }
 
@@ -76,7 +77,7 @@ void string_copy(StringRef self, StringRef src) {
 }
 
 void string_assign(StringRef self, const char* src) {
-  assert(self);
+  assert(self && src);
   {
     const size_t length = strlen(src);
     string_extend(self, length);
@@ -163,7 +164,7 @@ void string_clear(StringRef self) {
 }
 
 void string_insert(StringRef self, size_t index, StringRef data) {
-  assert(self);
+  assert(self && data);
   {
     const size_t count = string_length(data);
     const size_t length = string_length(self);
@@ -211,7 +212,7 @@ void string_pop_back(StringRef self) {
 }
 
 void string_append(StringRef self, StringRef data) {
-  assert(self);
+  assert(self && data);
   {
     const size_t count = string_length(data);
     const size_t new_length = string_length(self) + count;
@@ -228,7 +229,7 @@ int string_compare(StringRef self, StringRef other) {
 
 void string_replace(StringRef self, size_t index, size_t count,
                     StringRef data) {
-  assert(self);
+  assert(self && data);
   {
     const size_t length = string_length(self);
     const size_t data_length = string_length(data);
@@ -263,7 +264,7 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
 }
 
 size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
-  assert(self);
+  assert(self && dst);
   {
     const size_t length = string_length(self);
     char* const src = string_data(self) + index;
@@ -288,7 +289,7 @@ void string_resize(StringRef self, size_t size) {
 }
 
 void string_swap(StringRef self, StringRef other) {
-  assert(self);
+  assert(self && other);
   {
     struct String tmp = *self;
     *self = *other;
@@ -297,7 +298,7 @@ void string_swap(StringRef self, StringRef other) {
 }
 
 size_t string_find(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     char* const data = string_data(self);
     char* const found = strstr(data, str);
@@ -310,7 +311,7 @@ size_t string_find(StringRef self, const char* str) {
 }
 
 size_t string_find_first_of(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     const size_t found = strcspn(string_data(self), str);
     return found == string_length(self) ? string_npos : found;
@@ -318,7 +319,7 @@ size_t string_find_first_of(StringRef self, const char* str) {
 }
 
 size_t string_find_first_not_of(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     const size_t found = strspn(string_data(self), str);
     return found == string_length(self) ? string_npos : found;
