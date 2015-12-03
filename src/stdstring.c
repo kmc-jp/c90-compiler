@@ -274,7 +274,7 @@ void string_resize(StringRef self, size_t size) {
     const size_t length = string_length(self);
     if (length < size) {
       string_reserve(self, size);
-      memset(string_end(self), 0, size - length);
+      memset(string_end(self), '\0', size - length);
     }
     string_set_length(self, size);
   }
