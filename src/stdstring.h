@@ -53,6 +53,7 @@ void string_shrink_to_fit(StringRef self);
 void string_clear(StringRef self);
 /* insert */
 /* behavior is undefined if index is out of range */
+/* behavior is undefined if data is NULL */
 void string_insert(StringRef self, size_t index, const char* data);
 /* erase */
 /* remove from index to the end if 'index + count' is out of range */
@@ -65,6 +66,7 @@ void string_push_back(StringRef self, char data);
 /* behavior is undefined if self is empty */
 void string_pop_back(StringRef self);
 /* append */
+/* behavior is undefined if data is NULL */
 void string_append(StringRef self, const char* data);
 /* compare */
 /* return negative value if self is lexicographically less than other */
@@ -73,6 +75,7 @@ void string_append(StringRef self, const char* data);
 int string_compare(StringRef self, StringRef other);
 /* replace */
 /* index and count is treated same as string_erase */
+/* behavior is undefined if data is NULL */
 void string_replace(StringRef self, size_t index, size_t count,
                     const char* data);
 /* substr */
@@ -95,6 +98,7 @@ void string_swap(StringRef self, StringRef other);
 /* find */
 /* return index of the first character of the first matched substring in self */
 /* otherwise, return string_npos */
+/* behavior is undefined if str is NULL */
 size_t string_find(StringRef self, const char* str);
 /* find_first_of */
 /* return index of the first matched character in self */
