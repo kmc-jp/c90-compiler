@@ -68,8 +68,7 @@ void string_push_back(StringRef self, char data);
 /* behavior is undefined if self is empty */
 void string_pop_back(StringRef self);
 /* append */
-/* behavior is undefined if data is NULL */
-void string_append(StringRef self, const char* data);
+void string_append(StringRef self, StringRef data);
 /* compare */
 /* return negative value if self is lexicographically less than other */
 /* return 0 if self and other is equal */

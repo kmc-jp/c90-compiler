@@ -207,13 +207,13 @@ void string_pop_back(StringRef self) {
   string_set_length(self, string_length(self) - 1);
 }
 
-void string_append(StringRef self, const char* data) {
+void string_append(StringRef self, StringRef data) {
   assert(self);
   if (data) {
-    const size_t count = strlen(data);
+    const size_t count = string_length(data);
     const size_t new_length = string_length(self) + count;
     string_reserve(self, new_length);
-    memcpy(string_end(self), data, count);
+    memcpy(string_end(self), string_data(data), count);
     string_set_length(self, new_length);
   }
 }
