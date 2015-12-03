@@ -267,7 +267,7 @@ size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    memcpy(dst, src, count);
+    memmove(dst, src, count);
     return count;
   }
 }
