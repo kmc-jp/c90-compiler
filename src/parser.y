@@ -21,7 +21,8 @@ int yylex(void);
 %%
 
 identifier.opt
-: IDENTIFIER
+: /* empty */
+| IDENTIFIER
 ;
 
 identifier
