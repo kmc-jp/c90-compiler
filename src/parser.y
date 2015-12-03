@@ -343,7 +343,7 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-subabstract-declarator
+| pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
@@ -362,7 +362,7 @@ typedef-name
 
 initializer
 : assignment-expression
-| '{' initilizer '}'
+| '{' initializer '}'
 | '{' initializer-list ',' '}'
 ;
 
