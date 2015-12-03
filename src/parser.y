@@ -20,6 +20,29 @@ int yylex(void);
 
 %%
 
+identifier.opt
+: IDENTIFIER
+;
+
+identifier
+: IDENTIFIER
+;
+
+enumeration-constant
+: IDENTIFIER
+;
+
+constant
+: FLOATING_CONSTANT
+| INTEGER_CONSTANT
+| enumeration-constant
+| CHARACTER_CONSTANT
+;
+
+string-literal
+: STRING_LITERAL
+;
+
 primary-expression
 : identifier
 | constant
