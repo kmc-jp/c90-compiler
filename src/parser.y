@@ -18,6 +18,8 @@ int yylex(void);
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
 
+%start translation-unit
+
 %%
 
 identifier.opt
