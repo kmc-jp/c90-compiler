@@ -8,7 +8,7 @@ struct String {
   size_t capacity_;  /* capacity of data_ without terminating null character */
 };
 
-const size_t string_npos = (size_t)(-1);
+const size_t string_npos = (size_t)(-1);  /* big enough size */
 
 static void string_set_end(StringRef self, char data) {
   self->data_[self->length_] = data;
