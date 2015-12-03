@@ -91,7 +91,12 @@ char string_front(StringRef self) {
 
 char string_back(StringRef self) {
   assert(self);
-  return *string_end(self);
+  if (string_empty(self)) {
+    /* return null character */
+    return string_end(self)[0];
+  }
+  /* return end of string */
+  return string_end(self)[-1];
 }
 
 char* string_data(StringRef self) {
