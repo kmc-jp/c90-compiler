@@ -10,6 +10,7 @@ struct String {
 
 const size_t string_npos = (size_t)(-1);  /* big enough size */
 
+/* private functions for implementations follow */
 static void string_set_end(StringRef self, char data) {
   self->data_[self->length_] = data;
 }
