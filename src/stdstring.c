@@ -21,8 +21,12 @@ static void string_set_length(StringRef self, size_t length) {
 static void string_free(StringRef self) {
   safe_free(self->data_);
 }
-static void string_init(StringRef self, const char* src, size_t length) {
+static void string_init_copy(StringRef self, const char* src, size_t length) {
   memcpy(self->data_, src, length);
+  string_set_length(self, length);
+}
+static void string_init_move(StringRef self, const char* src, size_t length) {
+  memmove(self->data_, src, length);
   string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
@@ -43,7 +47,7 @@ static void string_extend(StringRef self, size_t size) {
 StringRef make_string(const char* src, size_t length) {
   const StringRef self = safe_malloc(struct String);
   string_alloc(self, length);
-  string_init(self, src, length);
+  string_init_copy(self, src, length);
   return self;
 }
 
@@ -64,7 +68,7 @@ void string_copy(StringRef self, StringRef src) {
   {
     const size_t length = string_length(src);
     string_extend(self, length);
-    string_init(self, string_data(src), length);
+    string_init_copy(self, string_data(src), length);
   }
 }
 
@@ -73,7 +77,7 @@ void string_assign(StringRef self, const char* src) {
   {
     const size_t length = strlen(src);
     string_extend(self, length);
-    string_init(self, src, length);
+    string_init_move(self, src, length);
   }
 }
 
@@ -127,7 +131,7 @@ void string_reserve(StringRef self, size_t size) {
   if (string_capacity(self) < size) {
     char* original = string_data(self);
     string_alloc(self, size);
-    string_init(self, original, string_length(self));
+    string_init_copy(self, original, string_length(self));
     safe_free(original);
   }
 }
@@ -144,7 +148,7 @@ void string_shrink_to_fit(StringRef self) {
     if (length < string_capacity(self)) {
       char* original = string_data(self);
       string_alloc(self, length);
-      string_init(self, original, length);
+      string_init_copy(self, original, length);
       safe_free(original);
     }
   }
