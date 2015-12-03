@@ -31,9 +31,9 @@ postfix-expression
 | postfix-expression '[' expression ']'
 | postfix-expression '(' argument-expression-list.opt ')'
 | postfix-expression '.' identifier
-| postfix-expression '->' identifier
-| postfix-expression '++'
-| postfix-expression '--'
+| postfix-expression "->" identifier
+| postfix-expression "++"
+| postfix-expression "--"
 ;
 
 argument-expression-list
@@ -43,11 +43,11 @@ argument-expression-list
 
 unary-expression
 : postfix-expression
-| '++' unary-expression
-| '--' unary-expression
+| "++" unary-expression
+| "--" unary-expression
 | unary-operator cast-expression
-| 'sizeof' unary-expression
-| 'sizeof' '(' type-name ')'
+| "sizeof" unary-expression
+| "sizeof" '(' type-name ')'
 ;
 
 unary-operator
@@ -78,22 +78,22 @@ additive-expression
 
 shift-expression
 : additive-expression
-| shift-expression '<<' additive-expression
-| shift-expression '>>' additive-expression
+| shift-expression "<<" additive-expression
+| shift-expression ">>" additive-expression
 ;
 
 relational-expression
 : shift-expression
 | relational-expression '<' shift-expression
 | relational-expression '>' shift-expression
-| relational-expression '<=' shift-expression
-| relational-expression '>=' shift-expression
+| relational-expression "<=" shift-expression
+| relational-expression ">=" shift-expression
 ;
 
 equality-expression
 : relational-expression
-| equality-expression '==' relational-expression
-| equality-expression '!=' relational-expression
+| equality-expression "==" relational-expression
+| equality-expression "!=" relational-expression
 ;
 
 AND-expression
@@ -113,12 +113,12 @@ inclusive-OR-expression
 
 logical-AND-expression
 : inclusive-OR-expression
-| logical-AND-expression '&&' inclusive-OR-expression
+| logical-AND-expression "&&" inclusive-OR-expression
 ;
 
 logical-OR-expression
 : logical-AND-expression
-| logical-OR-expression '||' logical-AND-expression
+| logical-OR-expression "||" logical-AND-expression
 ;
 
 conditional-expression
@@ -133,16 +133,16 @@ assignment-expression
 
 assignment-operator
 : '='
-| '*='
-| '/='
-| '%='
-| '+='
-| '-='
-| '<<='
-| '>>='
-| '&='
-| '^='
-| '|='
+| "*="
+| "/="
+| "%="
+| "+="
+| "-="
+| "<<="
+| ">>="
+| "&="
+| "^="
+| "|="
 ;
 
 expression
@@ -175,11 +175,11 @@ init-declarator
 ;
 
 storage-class-specifier
-: 'typedef'
-| 'extern'
-| 'static'
-| 'auto'
-| 'register'
+: "typedef"
+| "extern"
+| "static"
+| "auto"
+| "register"
 ;
 
 type-specifier
@@ -189,8 +189,8 @@ struct-or-union-specifier
 ;
 
 struct-or-union
-: 'struct'
-| 'union'
+: "struct"
+| "union"
 ;
 
 struct-declaration-list
@@ -218,8 +218,8 @@ struct-declarator
 ;
 
 enum-specifier
-: 'enum' identifier.opt '{' enumerator-list '}'
-| 'enum' identifier
+: "enum" identifier.opt '{' enumerator-list '}'
+| "enum" identifier
 ;
 
 enumerator-list
@@ -233,8 +233,8 @@ enumerator
 ;
 
 type-qualifier
-: 'const'
-| 'volatile'
+: "const"
+| "volatile"
 ;
 
 declarator
@@ -261,7 +261,7 @@ type-qualifier-list
 
 parameter-type-list
 : parameter-list
-| parameter-list ',' '...'
+| parameter-list ',' "..."
 ;
 
 parameter-list
@@ -320,8 +320,8 @@ statement
 
 labeled-statement
 : identifier ':' statement
-| 'case' constant-expression ':' statement
-| 'default' ':' statement
+| "case" constant-expression ':' statement
+| "default" ':' statement
 ;
 
 compound-statement
@@ -343,22 +343,22 @@ expression-statement
 ;
 
 selection-statement
-: 'if' '(' expression ')' statement
-| 'if' '(' expression ')' statement 'else' statement
-| 'switch' '(' expression ')' statement
+: "if" '(' expression ')' statement
+| "if" '(' expression ')' statement "else" statement
+| "switch" '(' expression ')' statement
 ;
 
 iteration-statement
-: 'while' '(' expression ')' statement
-| 'do' statement 'while' '(' expression ')' ';'
-| 'for' '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+: "while" '(' expression ')' statement
+| "do" statement "while" '(' expression ')' ';'
+| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement
-: 'goto' identifier ';'
-| 'continue' ';'
-| 'break' ';'
-| 'return' expression.opt ';'
+: "goto" identifier ';'
+| "continue" ';'
+| "break" ';'
+| "return" expression.opt ';'
 ;
 
 translation-unit
