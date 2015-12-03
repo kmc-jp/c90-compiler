@@ -48,7 +48,6 @@ StringRef make_string(const char* src, size_t length) {
 }
 
 StringRef string_ctor(const char* src) {
-  src = src ? src : "";
   return make_string(src, strlen(src));
 }
 
@@ -71,7 +70,6 @@ void string_copy(StringRef self, StringRef src) {
 
 void string_assign(StringRef self, const char* src) {
   assert(self);
-  src = src ? src : "";
   {
     const size_t length = strlen(src);
     string_extend(self, length);

@@ -10,8 +10,10 @@ typedef struct String* StringRef;
 extern const size_t string_npos;
 
 /* string generator */
+/* behavior is undefined if src is NULL */
 StringRef make_string(const char* src, size_t length);
 /* constructor */
+/* behavior is undefined if src is NULL */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */
 StringRef string_ctor(const char* src);
@@ -21,6 +23,7 @@ void string_dtor(StringRef* pself);
 /* operator= */
 void string_copy(StringRef self, StringRef src);
 /* assign */
+/* behavior is undefined if src is NULL */
 void string_assign(StringRef self, const char* src);
 /* at */
 /* behavior is undefined if index is out of range */
