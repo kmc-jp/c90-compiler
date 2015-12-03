@@ -35,7 +35,7 @@ TEST_F(StringTest, ctor_with_data) {
   StringRef v2 = string_ctor(data);
   EXPECT_STREQ(data, string_data(v2));
   EXPECT_EQ(data[0], string_front(v2));
-  EXPECT_EQ(data[length], string_back(v2));
+  EXPECT_EQ(data[length - 1], string_back(v2));
   EXPECT_EQ('a', *string_begin(v2));
   EXPECT_EQ('\0', *string_end(v2));
   string_assign(v2, data);
