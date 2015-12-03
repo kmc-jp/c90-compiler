@@ -45,10 +45,13 @@ static void string_extend(StringRef self, size_t size) {
 
 
 StringRef make_string(const char* src, size_t length) {
-  const StringRef self = safe_malloc(struct String);
-  string_alloc(self, length);
-  string_init_copy(self, src, length);
-  return self;
+  assert(src);
+  {
+    const StringRef self = safe_malloc(struct String);
+    string_alloc(self, length);
+    string_init_copy(self, src, length);
+    return self;
+  }
 }
 
 StringRef string_ctor(const char* src) {
