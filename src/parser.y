@@ -36,6 +36,10 @@ postfix-expression
 | postfix-expression "--"
 ;
 
+argument-expression-list.opt
+: /* empty */
+| argument-expression-list
+
 argument-expression-list
 : assignment-expression
 | argument-expression-list ',' assignment-expression
@@ -145,10 +149,18 @@ assignment-operator
 | "|="
 ;
 
+expression.opt
+: /* empty */
+| expression
+
 expression
 : assignment-expression
 | expression ',' assignment-expression
 ;
+
+constant-expression.opt
+: /* empty */
+| constant-expression
 
 constant-expression
 : conditional-expression
@@ -158,11 +170,19 @@ declaration
 : declaration-specifiers init-declarator-list.opt ';'
 ;
 
+declaration-specifiers.opt
+: /* empty */
+| declaration-specifiers
+
 declaration-specifiers
 : storage-class-specifier declaration-specifiers.opt
 | type-specifier declaration-specifiers.opt
 | type-qualifier declaration-specifiers.opt
 ;
+
+init-declarator-list.opt
+: /* empty */
+| init-declarator-list
 
 init-declarator-list
 : init-declarator
@@ -216,6 +236,10 @@ struct-declaration
 : specifier-qualifier-list struct-declarator-list ';'
 ;
 
+specifier-qualifier-list.opt
+: /* empty */
+| specifier-qualifier-list
+
 specifier-qualifier-list
 : type-specifier specifier-qualifier-list.opt
 | type-qualifier specifier-qualifier-list.opt
@@ -251,6 +275,10 @@ type-qualifier
 | "volatile"
 ;
 
+declarator.opt
+: /* empty */
+| declarator
+
 declarator
 : pointer.opt direct-declarator
 ;
@@ -263,10 +291,18 @@ direct-declarator
 | direct-declarator '(' identifier-list.opt ')'
 ;
 
+pointer.opt
+: /* empty */
+| pointer
+
 pointer
 : '*' type-qualifier-list.opt
 | '*' type-qualifier-list.opt pointer
 ;
+
+type-qualifier-list.opt
+: /* empty */
+| type-qualifier-list
 
 type-qualifier-list
 : type-qualifier
@@ -288,6 +324,10 @@ parameter-declaration
 | declaration-specifiers abstract-declarator.opt
 ;
 
+identifier-list.opt
+: /* empty */
+| identifier-list
+
 identifier-list
 : identifier
 | identifier-list ',' identifier
@@ -297,10 +337,18 @@ type-name
 : specifier-qualifier-list abstract-declarator.opt
 ;
 
+abstract-declarator.opt
+: /* empty */
+| abstract-declarator
+
 abstract-declarator
 : pointer
 | pointer.opt direct-subabstract-declarator
 ;
+
+direct-abstract-declarator.opt
+: /* empty */
+| direct-abstract-declarator
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
@@ -342,10 +390,18 @@ compound-statement
 : '{' declaration-list.opt statement-list.opt '}'
 ;
 
+declaration-list.opt
+: /* empty */
+| declaration-list
+
 declaration-list
 : declaration
 | declaration-list declaration
 ;
+
+statement-list.opt
+: /* empty */
+| statement-list
 
 statement-list
 : statement
