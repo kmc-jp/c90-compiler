@@ -161,7 +161,7 @@ void string_clear(StringRef self) {
 
 void string_insert(StringRef self, size_t index, StringRef data) {
   assert(self);
-  if (data) {
+  {
     const size_t count = string_length(data);
     const size_t length = string_length(self);
     const size_t new_length = length + count;
@@ -209,7 +209,7 @@ void string_pop_back(StringRef self) {
 
 void string_append(StringRef self, StringRef data) {
   assert(self);
-  if (data) {
+  {
     const size_t count = string_length(data);
     const size_t new_length = string_length(self) + count;
     string_reserve(self, new_length);
