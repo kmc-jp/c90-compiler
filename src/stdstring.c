@@ -159,10 +159,10 @@ void string_clear(StringRef self) {
   string_set_length(self, 0);
 }
 
-void string_insert(StringRef self, size_t index, const char* data) {
+void string_insert(StringRef self, size_t index, StringRef data) {
   assert(self);
   if (data) {
-    const size_t count = strlen(data);
+    const size_t count = string_length(data);
     const size_t length = string_length(self);
     const size_t new_length = length + count;
     string_reserve(self, new_length);
@@ -170,7 +170,7 @@ void string_insert(StringRef self, size_t index, const char* data) {
       char* const head = string_data(self) + index;
       char* const tail = head + count;
       memmove(tail, head, length - index);
-      memcpy(head, data, count);
+      memcpy(head, string_data(data), count);
       string_set_length(self, new_length);
     }
   }

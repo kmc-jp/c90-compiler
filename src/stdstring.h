@@ -56,8 +56,7 @@ void string_shrink_to_fit(StringRef self);
 void string_clear(StringRef self);
 /* insert */
 /* behavior is undefined if index is out of range */
-/* behavior is undefined if data is NULL */
-void string_insert(StringRef self, size_t index, const char* data);
+void string_insert(StringRef self, size_t index, StringRef data);
 /* erase */
 /* remove from index to the end if 'index + count' is out of range */
 /* remove from index to the end if count is string_npos */
