@@ -26,7 +26,9 @@ static void string_init(StringRef self, const char* src, size_t length) {
   string_set_length(self, length);
 }
 static void string_alloc(StringRef self, size_t size) {
+  /* capacity do not include terminating null character */
   const size_t capacity = enough_capacity(size + 1) - 1;
+  /* storage hold terminating null character */
   self->data_ = safe_array_malloc(char, capacity + 1);
   self->capacity_ = capacity;
 }
