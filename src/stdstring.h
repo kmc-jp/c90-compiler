@@ -76,9 +76,8 @@ void string_append(StringRef self, StringRef data);
 int string_compare(StringRef self, StringRef other);
 /* replace */
 /* index and count is treated same as string_erase */
-/* behavior is undefined if data is NULL */
 void string_replace(StringRef self, size_t index, size_t count,
-                    const char* data);
+                    StringRef data);
 /* substr */
 /* index and count is treated same as string_erase */
 /* returned object must be destructed */

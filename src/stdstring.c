@@ -224,11 +224,11 @@ int string_compare(StringRef self, StringRef other) {
 }
 
 void string_replace(StringRef self, size_t index, size_t count,
-                    const char* data) {
+                    StringRef data) {
   assert(self);
-  if (data) {
+  {
     const size_t length = string_length(self);
-    const size_t data_length = strlen(data);
+    const size_t data_length = string_length(data);
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
@@ -240,7 +240,7 @@ void string_replace(StringRef self, size_t index, size_t count,
         char* const dst = head + data_length;
         char* const src = head + count;
         memmove(dst, src, length - index - count);
-        memcpy(head, data, data_length);
+        memcpy(head, string_data(data), data_length);
         string_set_length(self, new_length);
       }
     }
