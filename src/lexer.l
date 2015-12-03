@@ -115,6 +115,7 @@ WHITESPACE ;
 "double"   return DOUBLE;
 "else"     return ELSE;
 "enum"     return ENUM;
+"extern"   return EXTERN;
 "float"    return FLOAT;
 "for"      return FOR;
 "goto"     return GOTO;
