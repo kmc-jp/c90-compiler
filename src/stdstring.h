@@ -80,6 +80,7 @@ void string_replace(StringRef self, size_t index, size_t count,
 /* returned object must be destructed */
 StringRef string_substr(StringRef self, size_t index, size_t count);
 /* copy */
+/* correspoinding to std::basic_string::copy */
 /* index and count is treated same as string_erase */
 /* characters copied to dst is not null-terminated */
 /* return the number of characters copied to dst */
