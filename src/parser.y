@@ -31,15 +31,15 @@ identifier
 : IDENTIFIER
 ;
 
-enumeration-constant
-: IDENTIFIER
-;
-
 constant
 : FLOATING_CONSTANT
 | INTEGER_CONSTANT
 | enumeration-constant
 | CHARACTER_CONSTANT
+;
+
+enumeration-constant
+: IDENTIFIER
 ;
 
 string-literal
