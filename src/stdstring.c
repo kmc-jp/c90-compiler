@@ -3,9 +3,9 @@
 #include <string.h>
 
 struct String {
-  char* data_;
-  size_t length_;
-  size_t capacity_;
+  char* data_;  /* contents of string */
+  size_t length_;  /* length of data_ without terminating null character */
+  size_t capacity_;  /* capacity of data_ without terminating null character */
 };
 
 const size_t string_npos = (size_t)(-1);
