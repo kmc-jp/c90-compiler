@@ -54,6 +54,6 @@ $(DISTCLEAN_TARGETS): $(DISTCLEAN_PREFIX)%:
 	$(MAKE) -C $* distclean
 
 
-.PHONY: source_test unit_test do_test clean distclean\
-	$(SOURCE_TEST_TARGETS) $(UNIT_TEST_TARGETS) $(DO_TEST_TARGETS)\
+.PHONY: source_test unit_test do_test clean distclean \
+	$(SOURCE_TEST_TARGETS) $(UNIT_TEST_TARGETS) $(DO_TEST_TARGETS) \
 	$(CLEAN_TARGETS) $(DISTCLEAN_TARGETS)
