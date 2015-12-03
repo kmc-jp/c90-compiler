@@ -183,6 +183,20 @@ storage-class-specifier
 ;
 
 type-specifier
+: "void"
+| "char"
+| "short"
+| "int"
+| "long"
+| "float"
+| "double"
+| "signed"
+| "unsigned"
+| struct-or-union-specifier
+| enum-specifier
+| typedef-name
+;
+
 struct-or-union-specifier
 : struct-or-union identifier.opt '{' struct-declaration-list '}'
 | struct-or-union identifier
