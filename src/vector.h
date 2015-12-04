@@ -11,11 +11,13 @@
 #define VECTORFUNC(type, function) \
   CONCAT(VECTOR(type), function)
 
-#define DECLARE_VECTOR(Type) \
+#define DECLARE_VECTORREF(Type) \
   /* reference to vector of Type */ \
   typedef struct VECTOR(Type)* VECTORREF(Type); \
 
-#define DECLARE_VECTOR_FUNCTION(Type) \
+#define DECLARE_VECTOR(Type) \
+  DECLARE_VECTORREF(Type) \
+  \
   AllocatorRef VECTORFUNC(Type, default_allocator)(void); \
   \
   /* generate initialized vector */ \
