@@ -21,3 +21,10 @@ size_t enough_capacity(size_t size) {
   }
   return capacity;
 }
+bool is_power_of_two(size_t size) {
+  return size == enough_capacity(size);
+}
+size_t align_offset(void* address, size_t alignment) {
+  const size_t fraction = (size_t)address % alignment;
+  return (fraction == 0) ? 0 : (alignment - fraction);
+}
