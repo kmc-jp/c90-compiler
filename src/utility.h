@@ -37,4 +37,7 @@ bool is_power_of_two(size_t size);
 /* return offset address require to satisfy alignment */
 size_t align_offset(void* address, size_t alignment);
 
+void memory_copy(void* dst, void* src, size_t size, size_t count);
+void memory_move(void* dst, void* src, size_t size, size_t count);
+
 #endif  /* KMC_C89_COMPILER_UTILITY_H */
