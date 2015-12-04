@@ -1,4 +1,5 @@
-#include "new-vector.h"
+#ifndef KMC_C89_COMPILER_VECTOR_IMPL_H
+#define KMC_C89_COMPILER_VECTOR_IMPL_H
 #include "allocator_impl.h"
 #include <assert.h>
 
@@ -251,3 +252,5 @@
       *other = tmp; \
     } \
   } \
+
+#endif  /* KMC_C89_COMPILER_VECTOR_IMPL_H */

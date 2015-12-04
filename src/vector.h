@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_NEW_VECTOR_H
-#define KMC_C89_COMPILER_NEW_VECTOR_H
+#ifndef KMC_C89_COMPILER_VECTOR_H
+#define KMC_C89_COMPILER_VECTOR_H
 
 #include "utility.h"
 #include "allocator.h"
@@ -84,4 +84,6 @@
   void VECTORFUNC(Type, swap)(VECTORREF(Type) self, \
                               VECTORREF(Type) other); \
 
-#endif  /* KMC_C89_COMPILER_NEW_VECTOR_H */
+#include "vector_impl.h"
+
+#endif  /* KMC_C89_COMPILER_VECTOR_H */
