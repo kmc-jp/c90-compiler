@@ -9,6 +9,8 @@ typedef int Type;
 /* reference to vector of Type */
 typedef struct Vector* VectorRef;
 
+BEGIN_EXTERN_C
+
 AllocatorRef vector_default_allocator(void);
 
 /* generate initialized vector */
@@ -70,5 +72,7 @@ void vector_pop_back(VectorRef self);
 void vector_resize(VectorRef self, size_t size, Type fill);
 /* swap */
 void vector_swap(VectorRef self, VectorRef other);
+
+END_EXTERN_C
 
 #endif  /* KMC_C89_COMPILER_NEW_VECTOR_H */
