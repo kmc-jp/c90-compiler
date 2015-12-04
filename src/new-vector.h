@@ -18,68 +18,69 @@ typedef struct VECTOR(Type)* VECTORREF(Type);
 
 BEGIN_EXTERN_C
 
-AllocatorRef vector_default_allocator(void);
+AllocatorRef VECTORFUNC(Type, default_allocator)(void);
 
 /* generate initialized vector */
-VECTORREF(Type) make_vector(AllocatorRef allocator,
-                            const Type* src, size_t count);
+VECTORREF(Type) VECTORFUNC(Type, make_vector)(AllocatorRef allocator,
+                                              const Type* src, size_t count);
 
 /* constructor */
-VECTORREF(Type) vector_ctor(AllocatorRef allocator);
+VECTORREF(Type) VECTORFUNC(Type, ctor)(AllocatorRef allocator);
 /* destructor */
-void vector_dtor(VECTORREF(Type)* pself);
+void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pself);
 /* operator= */
-void vector_copy(VECTORREF(Type) self, VECTORREF(Type) src);
+void VECTORFUNC(Type, copy)(VECTORREF(Type) self, VECTORREF(Type) src);
 /* assign */
-void vector_assign(VECTORREF(Type) self, const Type* src, size_t count);
+void VECTORFUNC(Type, assign)(VECTORREF(Type) self,
+                              const Type* src, size_t count);
 
 /* at */
 /* undefined behavior if out of range */
-Type vector_at(VECTORREF(Type) self, size_t index);
+Type VECTORFUNC(Type, at)(VECTORREF(Type) self, size_t index);
 /* front */
 /* undefined behavior if empty */
-Type vector_front(VECTORREF(Type) self);
+Type VECTORFUNC(Type, front)(VECTORREF(Type) self);
 /* front */
 /* undefined behavior if empty */
-Type vector_back(VECTORREF(Type) self);
+Type VECTORFUNC(Type, back)(VECTORREF(Type) self);
 /* data */
 /* same as begin */
-Type* vector_data(VECTORREF(Type) self);
+Type* VECTORFUNC(Type, data)(VECTORREF(Type) self);
 /* begin */
-Type* vector_begin(VECTORREF(Type) self);
+Type* VECTORFUNC(Type, begin)(VECTORREF(Type) self);
 /* end */
-Type* vector_end(VECTORREF(Type) self);
+Type* VECTORFUNC(Type, end)(VECTORREF(Type) self);
 
 /* empty */
-bool vector_empty(VECTORREF(Type) self);
+bool VECTORFUNC(Type, empty)(VECTORREF(Type) self);
 /* size */
-size_t vector_size(VECTORREF(Type) self);
+size_t VECTORFUNC(Type, size)(VECTORREF(Type) self);
 /* reserve */
-void vector_reserve(VECTORREF(Type) self, size_t size);
+void VECTORFUNC(Type, reserve)(VECTORREF(Type) self, size_t size);
 /* capacity */
-size_t vector_capacity(VECTORREF(Type) self);
+size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) self);
 /* shrink_to_fit */
-void vector_shrink_to_fit(VECTORREF(Type) self);
+void VECTORFUNC(Type, shrink_to_fit)(VECTORREF(Type) self);
 
 /* clear */
-void vector_clear(VECTORREF(Type) self);
+void VECTORFUNC(Type, clear)(VECTORREF(Type) self);
 /* insert */
 /* undefined behavior if index is out of range */
-void vector_insert(VECTORREF(Type) self, size_t index,
-                   const Type* data, size_t count);
+void VECTORFUNC(Type, insert)(VECTORREF(Type) self, size_t index,
+                              const Type* data, size_t count);
 /* erase */
 /* undefined behavior if index is out of range */
 /* remove from index to the end if 'index + count' is out of range */
-void vector_erase(VECTORREF(Type) self, size_t index, size_t count);
+void VECTORFUNC(Type, erase)(VECTORREF(Type) self, size_t index, size_t count);
 /* push_back */
-void vector_push_back(VECTORREF(Type) self, Type data);
+void VECTORFUNC(Type, push_back)(VECTORREF(Type) self, Type data);
 /* pop_back */
 /* undefined behavior if empty */
-void vector_pop_back(VECTORREF(Type) self);
+void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self);
 /* resize */
-void vector_resize(VECTORREF(Type) self, size_t size, Type fill);
+void VECTORFUNC(Type, resize)(VECTORREF(Type) self, size_t size, Type fill);
 /* swap */
-void vector_swap(VECTORREF(Type) self, VECTORREF(Type) other);
+void VECTORFUNC(Type, swap)(VECTORREF(Type) self, VECTORREF(Type) other);
 
 END_EXTERN_C
 
