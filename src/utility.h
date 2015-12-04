@@ -5,7 +5,10 @@
 
 #define UNUSED(x) (void)(x)
 #define CONCATENATE(x, y) x ## y
+#define CONCATENATE3(x, y, z) x ## y ## z
 #define CONCAT(x, y) CONCATENATE(x, y)
+#define CONCAT3(x, y, z) CONCATENATE3(x, y, z)
+
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) < (y) ? (y) : (x))
 
