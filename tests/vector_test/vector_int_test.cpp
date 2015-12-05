@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "new-vector.h"
+#include "use_vector.h"
 
-#define VINT VectorRef
-#define VINTF(function) CONCAT(vector_, function)
+#define VINT VECTORREF(int)
+#define VINTF(function) VECTORFUNC(int, function)
 
 static const size_t SIZE = 100;
 

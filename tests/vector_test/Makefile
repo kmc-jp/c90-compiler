@@ -9,7 +9,7 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-VECTOR_SRCS := utility.c new-vector.c allocator.c
+VECTOR_SRCS := utility.c allocator.c
 VECTOR_OBJS := $(VECTOR_SRCS:%.c=$(SRC_DIR)/%.o)
 TARGET := vector_test.out
 OBJS += $(VECTOR_OBJS)
