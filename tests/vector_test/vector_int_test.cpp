@@ -1,7 +1,5 @@
-extern "C" {
-#include "use_vector.h"
-}
 #include "gtest/gtest.h"
+#include "use_vector.h"
 
 #define VINT VECTORREF(int)
 #define VINTF(function) VECTORFUNC(int, function)

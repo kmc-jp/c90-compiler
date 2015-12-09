@@ -1,10 +1,8 @@
-extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "lexer_adapter.h"
 #include "use_vector.h"
 #include "token.h"
-}
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
