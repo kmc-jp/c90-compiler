@@ -13,8 +13,10 @@ extern const size_t string_npos;
 AllocatorRef string_default_allocator(void);
 
 /* string generator */
+/* behavior is undefined if src is NULL */
 StringRef make_string(const char* src, size_t length, AllocatorRef allocator);
 /* constructor */
+/* behavior is undefined if src is NULL */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */
 StringRef string_ctor(const char* src, AllocatorRef allocator);
@@ -24,6 +26,7 @@ void string_dtor(StringRef* pself);
 /* operator= */
 void string_copy(StringRef self, StringRef src);
 /* assign */
+/* behavior is undefined if src is NULL */
 void string_assign(StringRef self, const char* src);
 /* at */
 /* behavior is undefined if index is out of range */
@@ -56,7 +59,7 @@ void string_shrink_to_fit(StringRef self);
 void string_clear(StringRef self);
 /* insert */
 /* behavior is undefined if index is out of range */
-void string_insert(StringRef self, size_t index, const char* data);
+void string_insert(StringRef self, size_t index, StringRef data);
 /* erase */
 /* remove from index to the end if 'index + count' is out of range */
 /* remove from index to the end if count is string_npos */
@@ -68,7 +71,7 @@ void string_push_back(StringRef self, char data);
 /* behavior is undefined if self is empty */
 void string_pop_back(StringRef self);
 /* append */
-void string_append(StringRef self, const char* data);
+void string_append(StringRef self, StringRef data);
 /* compare */
 /* return negative value if self is lexicographically less than other */
 /* return 0 if self and other is equal */
@@ -77,12 +80,13 @@ int string_compare(StringRef self, StringRef other);
 /* replace */
 /* index and count is treated same as string_erase */
 void string_replace(StringRef self, size_t index, size_t count,
-                    const char* data);
+                    StringRef data);
 /* substr */
 /* index and count is treated same as string_erase */
 /* returned object must be destructed */
 StringRef string_substr(StringRef self, size_t index, size_t count);
 /* copy */
+/* correspoinding to std::basic_string::copy */
 /* index and count is treated same as string_erase */
 /* characters copied to dst is not null-terminated */
 /* return the number of characters copied to dst */
@@ -97,6 +101,7 @@ void string_swap(StringRef self, StringRef other);
 /* find */
 /* return index of the first character of the first matched substring in self */
 /* otherwise, return string_npos */
+/* behavior is undefined if str is NULL */
 size_t string_find(StringRef self, const char* str);
 /* find_first_of */
 /* return index of the first matched character in self */

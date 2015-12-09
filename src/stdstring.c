@@ -4,13 +4,13 @@
 #include "allocator_impl.h"
 
 struct String {
-  char* data_;
-  size_t length_;
-  size_t capacity_;
+  char* data_;  /* contents of string */
+  size_t length_;  /* length of data_ without terminating null character */
+  size_t capacity_;  /* capacity of data_ without terminating null character */
   AllocatorRef allocator_;
 };
 
-const size_t string_npos = (size_t)(-1);
+const size_t string_npos = (size_t)(-1);  /* big enough size */
 
 static void* default_allocate_container(void* manager) {
   return safe_malloc(struct String);
@@ -34,6 +34,7 @@ AllocatorRef string_default_allocator(void) {
   return &allocator;
 }
 
+/* private functions for implementations follow */
 static StringRef string_container_alloc(AllocatorRef allocator) {
   const StringRef self = allocate_container(allocator);
   self->data_ = NULL;
@@ -55,12 +56,18 @@ static void string_set_length(StringRef self, size_t length) {
 static void string_free(StringRef self) {
   deallocate(self->allocator_, self->data_);
 }
-static void string_init(StringRef self, const char* src, size_t length) {
+static void string_init_copy(StringRef self, const char* src, size_t length) {
   memcpy(self->data_, src, length);
   string_set_length(self, length);
 }
+static void string_init_move(StringRef self, const char* src, size_t length) {
+  memmove(self->data_, src, length);
+  string_set_length(self, length);
+}
 static void string_alloc(StringRef self, size_t size) {
+  /* capacity do not include terminating null character */
   const size_t capacity = enough_capacity(size + 1) - 1;
+  /* storage hold terminating null character */
   self->data_ = allocate_element(self->allocator_, capacity + 1);
   self->capacity_ = capacity;
 }
@@ -73,15 +80,18 @@ static void string_extend(StringRef self, size_t size) {
 
 
 StringRef make_string(const char* src, size_t length, AllocatorRef allocator) {
-  const StringRef self = string_container_alloc(
-      allocator ? allocator : string_default_allocator());
-  string_alloc(self, length);
-  string_init(self, src, length);
-  return self;
+  assert(src);
+  {
+    const StringRef self = string_container_alloc(
+        allocator ? allocator : string_default_allocator());
+    string_alloc(self, length);
+    string_init_copy(self, src, length);
+    return self;
+  }
 }
 
 StringRef string_ctor(const char* src, AllocatorRef allocator) {
-  src = src ? src : "";
+  assert(src);
   return make_string(src, strlen(src), allocator);
 }
 
@@ -98,17 +108,16 @@ void string_copy(StringRef self, StringRef src) {
   {
     const size_t length = string_length(src);
     string_extend(self, length);
-    string_init(self, string_data(src), length);
+    string_init_copy(self, string_data(src), length);
   }
 }
 
 void string_assign(StringRef self, const char* src) {
-  assert(self);
-  src = src ? src : "";
+  assert(self && src);
   {
     const size_t length = strlen(src);
     string_extend(self, length);
-    string_init(self, src, length);
+    string_init_move(self, src, length);
   }
 }
 
@@ -124,7 +133,12 @@ char string_front(StringRef self) {
 
 char string_back(StringRef self) {
   assert(self);
-  return *string_end(self);
+  if (string_empty(self)) {
+    /* return null character */
+    return string_end(self)[0];
+  }
+  /* return end of string */
+  return string_end(self)[-1];
 }
 
 char* string_data(StringRef self) {
@@ -157,7 +171,7 @@ void string_reserve(StringRef self, size_t size) {
   if (string_capacity(self) < size) {
     char* original = string_data(self);
     string_alloc(self, size);
-    string_init(self, original, string_length(self));
+    string_init_copy(self, original, string_length(self));
     safe_free(original);
   }
 }
@@ -174,7 +188,7 @@ void string_shrink_to_fit(StringRef self) {
     if (length < string_capacity(self)) {
       char* original = string_data(self);
       string_alloc(self, length);
-      string_init(self, original, length);
+      string_init_copy(self, original, length);
       safe_free(original);
     }
   }
@@ -185,10 +199,10 @@ void string_clear(StringRef self) {
   string_set_length(self, 0);
 }
 
-void string_insert(StringRef self, size_t index, const char* data) {
-  assert(self);
-  if (data) {
-    const size_t count = strlen(data);
+void string_insert(StringRef self, size_t index, StringRef data) {
+  assert(self && data);
+  {
+    const size_t count = string_length(data);
     const size_t length = string_length(self);
     const size_t new_length = length + count;
     string_reserve(self, new_length);
@@ -196,7 +210,7 @@ void string_insert(StringRef self, size_t index, const char* data) {
       char* const head = string_data(self) + index;
       char* const tail = head + count;
       memmove(tail, head, length - index);
-      memcpy(head, data, count);
+      memcpy(head, string_data(data), count);
       string_set_length(self, new_length);
     }
   }
@@ -233,13 +247,13 @@ void string_pop_back(StringRef self) {
   string_set_length(self, string_length(self) - 1);
 }
 
-void string_append(StringRef self, const char* data) {
-  assert(self);
-  if (data) {
-    const size_t count = strlen(data);
+void string_append(StringRef self, StringRef data) {
+  assert(self && data);
+  {
+    const size_t count = string_length(data);
     const size_t new_length = string_length(self) + count;
     string_reserve(self, new_length);
-    memcpy(string_end(self), data, count);
+    memcpy(string_end(self), string_data(data), count);
     string_set_length(self, new_length);
   }
 }
@@ -250,11 +264,11 @@ int string_compare(StringRef self, StringRef other) {
 }
 
 void string_replace(StringRef self, size_t index, size_t count,
-                    const char* data) {
-  assert(self);
-  if (data) {
+                    StringRef data) {
+  assert(self && data);
+  {
     const size_t length = string_length(self);
-    const size_t data_length = strlen(data);
+    const size_t data_length = string_length(data);
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
@@ -266,7 +280,7 @@ void string_replace(StringRef self, size_t index, size_t count,
         char* const dst = head + data_length;
         char* const src = head + count;
         memmove(dst, src, length - index - count);
-        memcpy(head, data, data_length);
+        memcpy(head, string_data(data), data_length);
         string_set_length(self, new_length);
       }
     }
@@ -286,14 +300,14 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
 }
 
 size_t string_copy_to(StringRef self, char* dst, size_t count, size_t index) {
-  assert(self);
+  assert(self && dst);
   {
     const size_t length = string_length(self);
     char* const src = string_data(self) + index;
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    memcpy(dst, src, count);
+    memmove(dst, src, count);
     return count;
   }
 }
@@ -304,14 +318,14 @@ void string_resize(StringRef self, size_t size) {
     const size_t length = string_length(self);
     if (length < size) {
       string_reserve(self, size);
-      memset(string_end(self), 0, size - length);
+      memset(string_end(self), '\0', size - length);
     }
     string_set_length(self, size);
   }
 }
 
 void string_swap(StringRef self, StringRef other) {
-  assert(self);
+  assert(self && other);
   {
     struct String tmp = *self;
     *self = *other;
@@ -320,7 +334,7 @@ void string_swap(StringRef self, StringRef other) {
 }
 
 size_t string_find(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     char* const data = string_data(self);
     char* const found = strstr(data, str);
@@ -333,7 +347,7 @@ size_t string_find(StringRef self, const char* str) {
 }
 
 size_t string_find_first_of(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     const size_t found = strcspn(string_data(self), str);
     return found == string_length(self) ? string_npos : found;
@@ -341,7 +355,7 @@ size_t string_find_first_of(StringRef self, const char* str) {
 }
 
 size_t string_find_first_not_of(StringRef self, const char* str) {
-  assert(self);
+  assert(self && str);
   {
     const size_t found = strspn(string_data(self), str);
     return found == string_length(self) ? string_npos : found;

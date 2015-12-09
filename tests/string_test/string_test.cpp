@@ -5,7 +5,7 @@ extern "C" {
 
 class StringTest : public ::testing::Test {
  protected:
-  StringTest() : v(string_ctor(NULL, NULL)) {}
+  StringTest() : v(string_ctor("", NULL)) {}
   ~StringTest() {
     string_dtor(&v);
   }
@@ -23,7 +23,7 @@ TEST_F(StringTest, ctor) {
 }
 
 TEST_F(StringTest, dtor) {
-  StringRef v2 = string_ctor(NULL, NULL);
+  StringRef v2 = string_ctor("", NULL);
   string_dtor(&v2);
   EXPECT_EQ(NULL, v2);
 }
@@ -35,7 +35,7 @@ TEST_F(StringTest, ctor_with_data) {
   StringRef v2 = string_ctor(data, NULL);
   EXPECT_STREQ(data, string_data(v2));
   EXPECT_EQ(data[0], string_front(v2));
-  EXPECT_EQ(data[length], string_back(v2));
+  EXPECT_EQ(data[length - 1], string_back(v2));
   EXPECT_EQ('a', *string_begin(v2));
   EXPECT_EQ('\0', *string_end(v2));
   string_assign(v2, data);
@@ -107,12 +107,14 @@ TEST_F(StringTest, insert) {
   const char data3[] = "abcdefghij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
+  StringRef v2 = string_ctor(data2, NULL);
   string_assign(v, data1);
 
-  string_insert(v, 3, data2);
+  string_insert(v, 3, v2);
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1 + length2, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
+  string_dtor(&v2);
 }
 
 TEST_F(StringTest, erase) {
@@ -169,16 +171,20 @@ TEST_F(StringTest, append) {
   const char data3[] = "abcdefghij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
+  StringRef v1 = string_ctor(data1, NULL);
+  StringRef v2 = string_ctor(data2, NULL);
 
-  string_append(v, data1);
+  string_append(v, v1);
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data1, string_data(v));
 
-  string_append(v, data2);
+  string_append(v, v2);
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1 + length2, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
+  string_dtor(&v2);
+  string_dtor(&v1);
 }
 
 TEST_F(StringTest, string_compare){
@@ -212,12 +218,14 @@ TEST_F(StringTest, replace) {
   const char data3[] = "abcxyzhij";
   const size_t length1 = sizeof(data1) / sizeof(char) - 1;
   const size_t length2 = sizeof(data2) / sizeof(char) - 1;
+  StringRef v2 = string_ctor(data2, NULL);
   string_assign(v, data1);
 
-  string_replace(v, 3, length2, data2);
+  string_replace(v, 3, length2, v2);
   EXPECT_FALSE(string_empty(v));
   EXPECT_EQ(length1, string_length(v));
   EXPECT_STREQ(data3, string_data(v));
+  string_dtor(&v2);
 }
 
 TEST_F(StringTest, substr) {
