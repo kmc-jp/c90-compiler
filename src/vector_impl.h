@@ -38,6 +38,18 @@
   } \
   \
   \
+  static struct VECTOR(Type) VECTORFUNC(Type, null_vector) \
+      (AllocatorRef allocator) { \
+    static struct VECTOR(Type) null; \
+    if (!allocator) { \
+      allocator = VECTORFUNC(Type, default_allocator)(); \
+    } \
+    null.start_ = NULL; \
+    null.finish_ = NULL; \
+    null.end_ = NULL; \
+    null.allocator_ = allocator; \
+    return null; \
+  } \
   static VECTORREF(Type) VECTORFUNC(Type, vector_alloc) \
       (AllocatorRef allocator) { \
     const VECTORREF(Type) self = allocate_container(allocator); \
