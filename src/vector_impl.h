@@ -205,6 +205,8 @@
     assert(count == 0 || data); \
     if (0 < count) { \
       const size_t size = VECTORFUNC(Type, size)(self); \
+      VECTORREF(Type) src = VECTORFUNC(Type, make_vector)(data, count, NULL); \
+      data = VECTORFUNC(Type, data)(src); \
       VECTORFUNC(Type, reserve)(self, size + count); \
       { \
         Type* const head = VECTORFUNC(Type, begin)(self) + index; \
@@ -213,6 +215,7 @@
         memory_copy(head, data, sizeof(Type), count); \
         VECTORFUNC(Type, set_size)(self, size + count); \
       } \
+      VECTORFUNC(Type, dtor)(&src); \
     } \
   } \
   void VECTORFUNC(Type, erase)(VECTORREF(Type) self, \
