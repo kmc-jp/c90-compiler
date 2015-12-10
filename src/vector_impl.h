@@ -126,12 +126,15 @@
                                 const Type* src, size_t count) { \
     assert(self); \
     assert(count == 0 || src); \
-    if (VECTORFUNC(Type, capacity)(self) < count) { \
-      VECTORFUNC(Type, free)(self); \
-      VECTORFUNC(Type, alloc)(self, count); \
+    if (0 < count) { \
+      struct VECTOR(Type) old = VECTORFUNC(Type, null_vector)(NULL); \
+      if (VECTORFUNC(Type, capacity)(self) < count) { \
+        old = *self; \
+        VECTORFUNC(Type, alloc)(self, count); \
+      } \
+      memory_move(VECTORFUNC(Type, data)(self), src, sizeof(Type), count); \
+      VECTORFUNC(Type, free)(&old); \
     } \
-    memory_copy(VECTORFUNC(Type, data)(self), src, \
-                sizeof(Type), count); \
     VECTORFUNC(Type, set_size)(self, count); \
   } \
   Type VECTORFUNC(Type, at)(VECTORREF(Type) self, size_t index) { \
