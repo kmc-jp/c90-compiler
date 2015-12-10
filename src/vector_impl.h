@@ -59,8 +59,7 @@
   static VECTORREF(Type) VECTORFUNC(Type, vector_alloc) \
       (AllocatorRef allocator) { \
     const VECTORREF(Type) self = allocate_container(allocator); \
-    self->start_ = self->finish_ = self->end_ = NULL; \
-    self->allocator_ = allocator; \
+    *self = VECTORFUNC(Type, null_vector)(allocator); \
     return self; \
   } \
   static void VECTORFUNC(Type, vector_free)(VECTORREF(Type)* pself) { \
@@ -76,7 +75,7 @@
   } \
   static void VECTORFUNC(Type, free)(VECTORREF(Type) self) { \
     deallocate(self->allocator_, self->start_); \
-    self->start_ = self->finish_ = self->end_ = NULL; \
+    *self = VECTORFUNC(Type, null_vector)(self->allocator_); \
   } \
   static void VECTORFUNC(Type, realloc)(VECTORREF(Type) self, size_t size) { \
     struct VECTOR(Type) old = *self; \
