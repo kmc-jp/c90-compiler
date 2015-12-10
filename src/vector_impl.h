@@ -210,11 +210,10 @@
     assert(self); \
     assert(count == 0 || data); \
     if (0 < count) { \
-      const size_t new_size = VECTORFUNC(Type, size)(self) + count; \
       struct VECTOR(Type) src = VECTORFUNC(Type, null_vector)(NULL); \
       VECTORFUNC(Type, assign)(&src, data, count); \
       data = VECTORFUNC(Type, data)(&src); \
-      VECTORFUNC(Type, reserve)(self, new_size); \
+      VECTORFUNC(Type, reserve)(self, VECTORFUNC(Type, size)(self) + count); \
       { \
         Type* const begin = VECTORFUNC(Type, begin)(self); \
         Type* const end = VECTORFUNC(Type, end)(self); \
@@ -223,7 +222,7 @@
         VECTOR_ELEMENT_MOVE(Type, tail, head, end); \
         VECTOR_ELEMENT_COPY(Type, head, data, data + count); \
       } \
-      VECTORFUNC(Type, set_size)(self, new_size); \
+      VECTORFUNC(Type, modify_size)(self, count); \
       VECTORFUNC(Type, free)(&src); \
     } \
   } \
