@@ -228,11 +228,12 @@
                                size_t index, size_t count) { \
     assert(self); \
     if (index + count < VECTORFUNC(Type, size)(self)) { \
-      const size_t new_size = VECTORFUNC(Type, size)(self) - count; \
-      Type* const head = VECTORFUNC(Type, begin)(self) + index; \
+      Type* const begin = VECTORFUNC(Type, begin)(self); \
+      Type* const end = VECTORFUNC(Type, end)(self); \
+      Type* const head = begin + index; \
       Type* const tail = head + count; \
-      memory_move(head, tail, sizeof(Type), new_size - index); \
-      VECTORFUNC(Type, set_size)(self, new_size); \
+      VECTOR_ELEMENT_MOVE(Type, head, tail, end); \
+      VECTORFUNC(Type, set_size)(self, VECTORFUNC(Type, size)(self) - count); \
     } else { \
       VECTORFUNC(Type, set_size)(self, index); \
     } \
