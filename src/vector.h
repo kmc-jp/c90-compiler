@@ -21,19 +21,17 @@
   AllocatorRef VECTORFUNC(T, default_allocator)(void); \
   \
   /* generate initialized vector */ \
-  VECTORREF(T) VECTORFUNC(T, make_vector)( \
-      const T* src, size_t count, AllocatorRef allocator); \
+  VECTORREF(T) VECTORFUNC(T, make_vector)(const T* src, size_t count, \
+                                          AllocatorRef allocator); \
   \
   /* constructor */ \
   VECTORREF(T) VECTORFUNC(T, ctor)(AllocatorRef allocator); \
   /* destructor */ \
   void VECTORFUNC(T, dtor)(VECTORREF(T)* pself); \
   /* operator= */ \
-  void VECTORFUNC(T, copy)(VECTORREF(T) self, \
-                              VECTORREF(T) src); \
+  void VECTORFUNC(T, copy)(VECTORREF(T) self, VECTORREF(T) src); \
   /* assign */ \
-  void VECTORFUNC(T, assign)(VECTORREF(T) self, \
-                                const T* src, size_t count); \
+  void VECTORFUNC(T, assign)(VECTORREF(T) self, const T* src, size_t count); \
   \
   /* at */ \
   /* undefined behavior if out of range */ \
@@ -68,23 +66,20 @@
   /* insert */ \
   /* undefined behavior if index is out of range */ \
   void VECTORFUNC(T, insert)(VECTORREF(T) self, size_t index, \
-                                const T* data, size_t count); \
+                             const T* data, size_t count); \
   /* erase */ \
   /* undefined behavior if index is out of range */ \
   /* remove from index to the end if 'index + count' is out of range */ \
-  void VECTORFUNC(T, erase)(VECTORREF(T) self, \
-                               size_t index, size_t count); \
+  void VECTORFUNC(T, erase)(VECTORREF(T) self, size_t index, size_t count); \
   /* push_back */ \
   void VECTORFUNC(T, push_back)(VECTORREF(T) self, T data); \
   /* pop_back */ \
   /* undefined behavior if empty */ \
   void VECTORFUNC(T, pop_back)(VECTORREF(T) self); \
   /* resize */ \
-  void VECTORFUNC(T, resize)(VECTORREF(T) self, \
-                                size_t size, T fill); \
+  void VECTORFUNC(T, resize)(VECTORREF(T) self, size_t size, T fill); \
   /* swap */ \
-  void VECTORFUNC(T, swap)(VECTORREF(T) self, \
-                              VECTORREF(T) other); \
+  void VECTORFUNC(T, swap)(VECTORREF(T) self, VECTORREF(T) other); \
 
 #include "vector_impl.h"
 

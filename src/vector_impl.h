@@ -41,14 +41,12 @@
     }; \
     return &allocator; \
   } \
-  static AllocatorRef VECTORFUNC(T, valid_allocator) \
-      (AllocatorRef allocator) { \
+  static AllocatorRef VECTORFUNC(T, valid_allocator)(AllocatorRef allocator) { \
     return allocator ? allocator : VECTORFUNC(T, default_allocator)(); \
   } \
   \
   \
-  static struct VECTOR(T) VECTORFUNC(T, null_vector) \
-      (AllocatorRef allocator) { \
+  static struct VECTOR(T) VECTORFUNC(T, null_vector)(AllocatorRef allocator) { \
     static struct VECTOR(T) null; \
     null.start_ = NULL; \
     null.finish_ = NULL; \
@@ -56,8 +54,7 @@
     null.allocator_ = VECTORFUNC(T, valid_allocator)(allocator); \
     return null; \
   } \
-  static VECTORREF(T) VECTORFUNC(T, vector_alloc) \
-      (AllocatorRef allocator) { \
+  static VECTORREF(T) VECTORFUNC(T, vector_alloc)(AllocatorRef allocator) { \
     const VECTORREF(T) self = allocate_container(allocator); \
     *self = VECTORFUNC(T, null_vector)(allocator); \
     return self; \
@@ -66,8 +63,7 @@
     deallocate((*pself)->allocator_, *pself); \
     *pself = NULL; \
   } \
-  static void VECTORFUNC(T, alloc)(VECTORREF(T) self, \
-                                      size_t size) { \
+  static void VECTORFUNC(T, alloc)(VECTORREF(T) self, size_t size) { \
     const size_t capacity = enough_capacity(size); \
     self->start_ = allocate_element(self->allocator_, capacity); \
     self->finish_ = self->start_; \
@@ -95,15 +91,13 @@
   static T* VECTORFUNC(T, get_end)(VECTORREF(T) self) { \
     return self->finish_; \
   } \
-  static void VECTORFUNC(T, set_size)(VECTORREF(T) self, \
-                                         size_t size) { \
+  static void VECTORFUNC(T, set_size)(VECTORREF(T) self, size_t size) { \
     self->finish_ = self->start_ + size; \
   } \
   static void VECTORFUNC(T, modify_size)(VECTORREF(T) self, int diff) { \
     self->finish_ += diff; \
   } \
-  static void VECTORFUNC(T, fill)(T* dst, T fill, \
-                                     size_t count) { \
+  static void VECTORFUNC(T, fill)(T* dst, T fill, size_t count) { \
     size_t i = 0; \
     for (i = 0; i < count; ++i) { \
       dst[i] = fill; \
@@ -111,8 +105,8 @@
   } \
   \
   \
-  VECTORREF(T) VECTORFUNC(T, make_vector)( \
-      const T* src, size_t count, AllocatorRef allocator) { \
+  VECTORREF(T) VECTORFUNC(T, make_vector)(const T* src, size_t count, \
+                                          AllocatorRef allocator) { \
     const VECTORREF(T) self = VECTORFUNC(T, ctor)(allocator); \
     VECTORFUNC(T, assign)(self, src, count); \
     return self; \
@@ -128,14 +122,12 @@
       VECTORFUNC(T, vector_free)(pself); \
     } \
   } \
-  void VECTORFUNC(T, copy)(VECTORREF(T) self, \
-                              VECTORREF(T) src) { \
+  void VECTORFUNC(T, copy)(VECTORREF(T) self, VECTORREF(T) src) { \
     assert(self && src); \
     VECTORFUNC(T, assign)(self, VECTORFUNC(T, data)(src), \
-                             VECTORFUNC(T, size)(src)); \
+                          VECTORFUNC(T, size)(src)); \
   } \
-  void VECTORFUNC(T, assign)(VECTORREF(T) self, \
-                                const T* src, size_t count) { \
+  void VECTORFUNC(T, assign)(VECTORREF(T) self, const T* src, size_t count) { \
     assert(self); \
     assert(count == 0 || src); \
     if (0 < count) { \
@@ -144,8 +136,7 @@
         old = *self; \
         VECTORFUNC(T, alloc)(self, count); \
       } \
-      VECTOR_ELEMENT_MOVE(T, VECTORFUNC(T, data)(self), \
-                          src, src + count); \
+      VECTOR_ELEMENT_MOVE(T, VECTORFUNC(T, data)(self), src, src + count); \
       VECTORFUNC(T, free)(&old); \
     } \
     VECTORFUNC(T, set_size)(self, count); \
@@ -176,8 +167,7 @@
   } \
   bool VECTORFUNC(T, empty)(VECTORREF(T) self) { \
     assert(self); \
-    return (VECTORFUNC(T, begin)(self) == \
-            VECTORFUNC(T, end)(self)); \
+    return VECTORFUNC(T, begin)(self) == VECTORFUNC(T, end)(self); \
   } \
   size_t VECTORFUNC(T, size)(VECTORREF(T) self) { \
     assert(self); \
@@ -204,7 +194,7 @@
     VECTORFUNC(T, set_size)(self, 0); \
   } \
   void VECTORFUNC(T, insert)(VECTORREF(T) self, size_t index, \
-                                const T* data, size_t count) { \
+                             const T* data, size_t count) { \
     assert(self); \
     assert(count == 0 || data); \
     if (0 < count) { \
@@ -224,8 +214,7 @@
       VECTORFUNC(T, free)(&src); \
     } \
   } \
-  void VECTORFUNC(T, erase)(VECTORREF(T) self, \
-                               size_t index, size_t count) { \
+  void VECTORFUNC(T, erase)(VECTORREF(T) self, size_t index, size_t count) { \
     assert(self); \
     if (index + count < VECTORFUNC(T, size)(self)) { \
       T* const begin = VECTORFUNC(T, begin)(self); \
@@ -248,8 +237,7 @@
     assert(self); \
     VECTORFUNC(T, modify_size)(self, -1); \
   } \
-  void VECTORFUNC(T, resize)(VECTORREF(T) self, \
-                                size_t size, T fill) { \
+  void VECTORFUNC(T, resize)(VECTORREF(T) self, size_t size, T fill) { \
     assert(self); \
     if (VECTORFUNC(T, size)(self) < size) { \
       const size_t count = size - VECTORFUNC(T, size)(self); \
@@ -258,8 +246,7 @@
     } \
     VECTORFUNC(T, set_size)(self, size); \
   } \
-  void VECTORFUNC(T, swap)(VECTORREF(T) self, \
-                              VECTORREF(T) other) { \
+  void VECTORFUNC(T, swap)(VECTORREF(T) self, VECTORREF(T) other) { \
     assert(self); \
     { \
       struct VECTOR(T) tmp = *self; \
