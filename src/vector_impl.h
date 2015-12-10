@@ -179,10 +179,7 @@
   void VECTORFUNC(Type, reserve)(VECTORREF(Type) self, size_t size) { \
     assert(self); \
     if (VECTORFUNC(Type, capacity)(self) < size) { \
-      struct VECTOR(Type) original = *self; \
-      VECTORFUNC(Type, alloc)(self, size); \
-      VECTORFUNC(Type, copy)(self, &original); \
-      VECTORFUNC(Type, free)(&original); \
+      VECTORFUNC(Type, realloc)(self, size); \
     } \
   } \
   size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) self) { \
@@ -191,14 +188,8 @@
   } \
   void VECTORFUNC(Type, shrink_to_fit)(VECTORREF(Type) self) { \
     assert(self); \
-    { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      if (size < VECTORFUNC(Type, capacity)(self)) { \
-        struct VECTOR(Type) original = *self; \
-        VECTORFUNC(Type, alloc)(self, size); \
-        VECTORFUNC(Type, copy)(self, &original); \
-        VECTORFUNC(Type, free)(&original); \
-      } \
+    if (VECTORFUNC(Type, size)(self) < VECTORFUNC(Type, capacity)(self)) { \
+      VECTORFUNC(Type, realloc)(self, VECTORFUNC(Type, size)(self)); \
     } \
   } \
   void VECTORFUNC(Type, clear)(VECTORREF(Type) self) { \
