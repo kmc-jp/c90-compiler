@@ -41,6 +41,10 @@
     }; \
     return &allocator; \
   } \
+  static AllocatorRef VECTORFUNC(Type, valid_allocator) \
+      (AllocatorRef allocator) { \
+    return allocator ? allocator : VECTORFUNC(Type, default_allocator)(); \
+  } \
   \
   \
   static struct VECTOR(Type) VECTORFUNC(Type, null_vector) \
