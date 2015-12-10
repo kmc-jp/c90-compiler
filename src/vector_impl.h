@@ -221,18 +221,14 @@
   void VECTORFUNC(Type, erase)(VECTORREF(Type) self, \
                                size_t index, size_t count) { \
     assert(self); \
-    { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      if (size < index + count) { \
-        count = size - index; \
-      } \
-      { \
-        const size_t new_size = size - count; \
-        Type* const head = VECTORFUNC(Type, begin)(self) + index; \
-        Type* const tail = head + count; \
-        memory_move(head, tail, sizeof(Type), new_size - index); \
-        VECTORFUNC(Type, set_size)(self, new_size); \
-      } \
+    if (index + count < VECTORFUNC(Type, size)(self)) { \
+      const size_t new_size = VECTORFUNC(Type, size)(self) - count; \
+      Type* const head = VECTORFUNC(Type, begin)(self) + index; \
+      Type* const tail = head + count; \
+      memory_move(head, tail, sizeof(Type), new_size - index); \
+      VECTORFUNC(Type, set_size)(self, new_size); \
+    } else { \
+      VECTORFUNC(Type, set_size)(self, index); \
     } \
   } \
   void VECTORFUNC(Type, push_back)(VECTORREF(Type) self, Type data) { \
