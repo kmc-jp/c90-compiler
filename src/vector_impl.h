@@ -242,12 +242,9 @@
   } \
   void VECTORFUNC(Type, push_back)(VECTORREF(Type) self, Type data) { \
     assert(self); \
-    { \
-      const size_t new_size = VECTORFUNC(Type, size)(self) + 1; \
-      VECTORFUNC(Type, reserve)(self, new_size); \
-      *VECTORFUNC(Type, end)(self) = data; \
-      VECTORFUNC(Type, set_size)(self, new_size); \
-    } \
+    VECTORFUNC(Type, reserve)(self, VECTORFUNC(Type, size)(self) + 1); \
+    *VECTORFUNC(Type, end)(self) = data; \
+    VECTORFUNC(Type, modify_size)(self, 1); \
   } \
   void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self) { \
     assert(self); \
