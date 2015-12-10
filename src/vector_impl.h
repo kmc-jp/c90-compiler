@@ -207,21 +207,21 @@
     assert(self); \
     assert(count == 0 || data); \
     if (0 < count) { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      const size_t new_size = size + count; \
-      VECTORREF(Type) src = VECTORFUNC(Type, make_vector)(data, count, NULL); \
-      data = VECTORFUNC(Type, data)(src); \
+      const size_t new_size = VECTORFUNC(Type, size)(self) + count; \
+      struct VECTOR(Type) src = VECTORFUNC(Type, null_vector)(NULL); \
+      VECTORFUNC(Type, assign)(&src, data, count); \
+      data = VECTORFUNC(Type, data)(&src); \
       VECTORFUNC(Type, reserve)(self, new_size); \
-      if (index < size) { \
-        Type* const head = VECTORFUNC(Type, begin)(self) + index; \
+      { \
+        Type* const begin = VECTORFUNC(Type, begin)(self); \
+        Type* const end = VECTORFUNC(Type, end)(self); \
+        Type* const head = begin + index; \
         Type* const tail = head + count; \
-        memory_move(tail, head, sizeof(Type), size - index); \
-        memory_copy(head, data, sizeof(Type), count); \
-      } else { \
-        memory_copy(VECTORFUNC(Type, end)(self), data, sizeof(Type), count); \
+        VECTOR_ELEMENT_MOVE(Type, tail, head, end); \
+        VECTOR_ELEMENT_COPY(Type, head, data, data + count); \
       } \
       VECTORFUNC(Type, set_size)(self, new_size); \
-      VECTORFUNC(Type, dtor)(&src); \
+      VECTORFUNC(Type, free)(&src); \
     } \
   } \
   void VECTORFUNC(Type, erase)(VECTORREF(Type) self, \
