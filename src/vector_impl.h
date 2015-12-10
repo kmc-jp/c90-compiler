@@ -50,13 +50,10 @@
   static struct VECTOR(Type) VECTORFUNC(Type, null_vector) \
       (AllocatorRef allocator) { \
     static struct VECTOR(Type) null; \
-    if (!allocator) { \
-      allocator = VECTORFUNC(Type, default_allocator)(); \
-    } \
     null.start_ = NULL; \
     null.finish_ = NULL; \
     null.end_ = NULL; \
-    null.allocator_ = allocator; \
+    null.allocator_ = VECTORFUNC(Type, valid_allocator)(allocator); \
     return null; \
   } \
   static VECTORREF(Type) VECTORFUNC(Type, vector_alloc) \
@@ -122,9 +119,7 @@
     return self; \
   } \
   VECTORREF(Type) VECTORFUNC(Type, ctor)(AllocatorRef allocator) { \
-    if (!allocator) { \
-      allocator = VECTORFUNC(Type, default_allocator)(); \
-    } \
+    allocator = VECTORFUNC(Type, valid_allocator)(allocator); \
     return VECTORFUNC(Type, vector_alloc)(allocator); \
   } \
   void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pself) { \
