@@ -143,7 +143,8 @@
         old = *self; \
         VECTORFUNC(Type, alloc)(self, count); \
       } \
-      memory_move(VECTORFUNC(Type, data)(self), src, sizeof(Type), count); \
+      VECTOR_ELEMENT_MOVE(Type, VECTORFUNC(Type, data)(self), \
+                          src, src + count); \
       VECTORFUNC(Type, free)(&old); \
     } \
     VECTORFUNC(Type, set_size)(self, count); \
