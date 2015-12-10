@@ -235,7 +235,7 @@
       Type* const head = begin + index; \
       Type* const tail = head + count; \
       VECTOR_ELEMENT_MOVE(Type, head, tail, end); \
-      VECTORFUNC(Type, set_size)(self, VECTORFUNC(Type, size)(self) - count); \
+      VECTORFUNC(Type, modify_size)(self, -count); \
     } else { \
       VECTORFUNC(Type, set_size)(self, index); \
     } \
