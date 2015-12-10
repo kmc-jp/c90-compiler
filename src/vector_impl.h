@@ -47,10 +47,7 @@
   \
   \
   static struct VECTOR(T) VECTORFUNC(T, null_vector)(AllocatorRef allocator) { \
-    static struct VECTOR(T) null; \
-    null.start_ = NULL; \
-    null.finish_ = NULL; \
-    null.end_ = NULL; \
+    static struct VECTOR(T) null = { NULL, NULL, NULL, NULL }; \
     null.allocator_ = VECTORFUNC(T, valid_allocator)(allocator); \
     return null; \
   } \
