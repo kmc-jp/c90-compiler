@@ -3,6 +3,11 @@
 #include "allocator_impl.h"
 #include <assert.h>
 
+#define VECTOR_ELEMENT_COPY(type, dst, first, last) \
+  memory_copy((dst), (first), sizeof(type), ((type*)(last) - (type*)(first)))
+#define VECTOR_ELEMENT_MOVE(type, dst, first, last) \
+  memory_move((dst), (first), sizeof(type), ((type*)(last) - (type*)(first)))
+
 #define DEFINE_VECTOR(Type) \
   /* vector of Type */ \
   struct VECTOR(Type) { \
