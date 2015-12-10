@@ -72,6 +72,12 @@
     deallocate(self->allocator_, self->start_); \
     self->start_ = self->finish_ = self->end_ = NULL; \
   } \
+  static void VECTORFUNC(Type, realloc)(VECTORREF(Type) self, size_t size) { \
+    struct VECTOR(Type) old = *self; \
+    VECTORFUNC(Type, alloc)(self, size); \
+    VECTORFUNC(Type, copy)(self, &old); \
+    VECTORFUNC(Type, free)(&old); \
+  } \
   static size_t VECTORFUNC(Type, get_size)(VECTORREF(Type) self) { \
     return self->finish_ - self->start_; \
   } \
