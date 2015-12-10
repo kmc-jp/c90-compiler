@@ -99,6 +99,9 @@
                                          size_t size) { \
     self->finish_ = self->start_ + size; \
   } \
+  static void VECTORFUNC(Type, modify_size)(VECTORREF(Type) self, int diff) { \
+    self->finish_ += diff; \
+  } \
   static void VECTORFUNC(Type, fill)(Type* dst, Type fill, \
                                      size_t count) { \
     size_t i = 0; \
