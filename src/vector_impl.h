@@ -248,7 +248,7 @@
   } \
   void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self) { \
     assert(self); \
-    VECTORFUNC(Type, set_size)(self, VECTORFUNC(Type, size)(self) - 1); \
+    VECTORFUNC(Type, modify_size)(self, -1); \
   } \
   void VECTORFUNC(Type, resize)(VECTORREF(Type) self, \
                                 size_t size, Type fill) { \
