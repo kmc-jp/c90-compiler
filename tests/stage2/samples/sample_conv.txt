@@ -1,0 +1,15 @@
+Samples
+Inputs: 1 m f
+Outputs: 5280.000000
+
+Inputs: 1 f m
+Outputs: 0.000189
+
+Inputs: 1000 m i
+Outputs: 63360000.000000
+
+Inputs: 1 i m
+Outputs: 0.000016
+
+Inputs: 47 m m
+Outputs: 47.000000
