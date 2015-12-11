@@ -3,81 +3,98 @@
 #include "allocator_impl.h"
 #include <assert.h>
 
-#define DEFINE_VECTOR(Type) \
-  /* vector of Type */ \
-  struct VECTOR(Type) { \
-    Type* start_;  /* first data */ \
-    Type* finish_;  /* last data */ \
-    Type* end_;  /* end of storage */ \
+#define VECTOR_ELEMENT_COPY(type, dst, first, last) \
+  memory_copy((dst), (first), sizeof(type), ((type*)(last) - (type*)(first)))
+#define VECTOR_ELEMENT_MOVE(type, dst, first, last) \
+  memory_move((dst), (first), sizeof(type), ((type*)(last) - (type*)(first)))
+
+#define DEFINE_VECTOR(T) \
+  /* vector of T */ \
+  struct VECTOR(T) { \
+    T* start_;  /* first data */ \
+    T* finish_;  /* last data */ \
+    T* end_;  /* end of storage */ \
     AllocatorRef allocator_; \
   }; \
   \
-  static void* VECTORFUNC(Type, default_allocate_container) \
+  static void* VECTORFUNC(T, default_allocate_container) \
       (void* manager) { \
-    return safe_malloc(struct VECTOR(Type)); \
+    return safe_malloc(struct VECTOR(T)); \
     UNUSED(manager); \
   } \
-  static void* VECTORFUNC(Type, default_allocate_element) \
+  static void* VECTORFUNC(T, default_allocate_element) \
       (size_t count, void* manager) { \
-    return safe_array_malloc(Type, count); \
+    return safe_array_malloc(T, count); \
     UNUSED(manager); \
   } \
-  static void VECTORFUNC(Type, default_deallocate) \
+  static void VECTORFUNC(T, default_deallocate) \
       (void* ptr, void* manager) { \
     safe_free(ptr); \
     UNUSED(manager); \
   } \
-  AllocatorRef VECTORFUNC(Type, default_allocator)(void) { \
+  AllocatorRef VECTORFUNC(T, default_allocator)(void) { \
     static const struct Allocator allocator = { \
       NULL, \
-      VECTORFUNC(Type, default_allocate_container), \
-      VECTORFUNC(Type, default_allocate_element), \
-      VECTORFUNC(Type, default_deallocate) \
+      VECTORFUNC(T, default_allocate_container), \
+      VECTORFUNC(T, default_allocate_element), \
+      VECTORFUNC(T, default_deallocate) \
     }; \
     return &allocator; \
   } \
+  static AllocatorRef VECTORFUNC(T, valid_allocator)(AllocatorRef allocator) { \
+    return allocator ? allocator : VECTORFUNC(T, default_allocator)(); \
+  } \
   \
   \
-  static VECTORREF(Type) VECTORFUNC(Type, vector_alloc) \
-      (AllocatorRef allocator) { \
-    const VECTORREF(Type) self = allocate_container(allocator); \
-    self->start_ = self->finish_ = self->end_ = NULL; \
-    self->allocator_ = allocator; \
+  static struct VECTOR(T) VECTORFUNC(T, null_vector)(AllocatorRef allocator) { \
+    static struct VECTOR(T) null = { NULL, NULL, NULL, NULL }; \
+    null.allocator_ = VECTORFUNC(T, valid_allocator)(allocator); \
+    return null; \
+  } \
+  static VECTORREF(T) VECTORFUNC(T, vector_alloc)(AllocatorRef allocator) { \
+    const VECTORREF(T) self = allocate_container(allocator); \
+    *self = VECTORFUNC(T, null_vector)(allocator); \
     return self; \
   } \
-  static void VECTORFUNC(Type, vector_free)(VECTORREF(Type)* pself) { \
+  static void VECTORFUNC(T, vector_free)(VECTORREF(T)* pself) { \
     deallocate((*pself)->allocator_, *pself); \
     *pself = NULL; \
   } \
-  static void VECTORFUNC(Type, alloc)(VECTORREF(Type) self, \
-                                      size_t size) { \
+  static void VECTORFUNC(T, alloc)(VECTORREF(T) self, size_t size) { \
     const size_t capacity = enough_capacity(size); \
     self->start_ = allocate_element(self->allocator_, capacity); \
     self->finish_ = self->start_; \
     self->end_ = self->start_ + capacity; \
   } \
-  static void VECTORFUNC(Type, free)(VECTORREF(Type) self) { \
+  static void VECTORFUNC(T, free)(VECTORREF(T) self) { \
     deallocate(self->allocator_, self->start_); \
-    self->start_ = self->finish_ = self->end_ = NULL; \
+    *self = VECTORFUNC(T, null_vector)(self->allocator_); \
   } \
-  static size_t VECTORFUNC(Type, get_size)(VECTORREF(Type) self) { \
+  static void VECTORFUNC(T, realloc)(VECTORREF(T) self, size_t size) { \
+    struct VECTOR(T) old = *self; \
+    VECTORFUNC(T, alloc)(self, size); \
+    VECTORFUNC(T, copy)(self, &old); \
+    VECTORFUNC(T, free)(&old); \
+  } \
+  static size_t VECTORFUNC(T, get_size)(VECTORREF(T) self) { \
     return self->finish_ - self->start_; \
   } \
-  static size_t VECTORFUNC(Type, get_capacity)(VECTORREF(Type) self) { \
+  static size_t VECTORFUNC(T, get_capacity)(VECTORREF(T) self) { \
     return self->end_ - self->start_; \
   } \
-  static Type* VECTORFUNC(Type, get_begin)(VECTORREF(Type) self) { \
+  static T* VECTORFUNC(T, get_begin)(VECTORREF(T) self) { \
     return self->start_; \
   } \
-  static Type* VECTORFUNC(Type, get_end)(VECTORREF(Type) self) { \
+  static T* VECTORFUNC(T, get_end)(VECTORREF(T) self) { \
     return self->finish_; \
   } \
-  static void VECTORFUNC(Type, set_size)(VECTORREF(Type) self, \
-                                         size_t size) { \
+  static void VECTORFUNC(T, set_size)(VECTORREF(T) self, size_t size) { \
     self->finish_ = self->start_ + size; \
   } \
-  static void VECTORFUNC(Type, fill)(Type* dst, Type fill, \
-                                     size_t count) { \
+  static void VECTORFUNC(T, modify_size)(VECTORREF(T) self, int diff) { \
+    self->finish_ += diff; \
+  } \
+  static void VECTORFUNC(T, fill)(T* dst, T fill, size_t count) { \
     size_t i = 0; \
     for (i = 0; i < count; ++i) { \
       dst[i] = fill; \
@@ -85,169 +102,151 @@
   } \
   \
   \
-  VECTORREF(Type) VECTORFUNC(Type, make_vector)( \
-      const Type* src, size_t count, AllocatorRef allocator) { \
-    const VECTORREF(Type) self = VECTORFUNC(Type, ctor)(allocator); \
-    VECTORFUNC(Type, assign)(self, src, count); \
+  VECTORREF(T) VECTORFUNC(T, make_vector)(const T* src, size_t count, \
+                                          AllocatorRef allocator) { \
+    const VECTORREF(T) self = VECTORFUNC(T, ctor)(allocator); \
+    VECTORFUNC(T, assign)(self, src, count); \
     return self; \
   } \
-  VECTORREF(Type) VECTORFUNC(Type, ctor)(AllocatorRef allocator) { \
-    if (!allocator) { \
-      allocator = VECTORFUNC(Type, default_allocator)(); \
-    } \
-    return VECTORFUNC(Type, vector_alloc)(allocator); \
+  VECTORREF(T) VECTORFUNC(T, ctor)(AllocatorRef allocator) { \
+    allocator = VECTORFUNC(T, valid_allocator)(allocator); \
+    return VECTORFUNC(T, vector_alloc)(allocator); \
   } \
-  void VECTORFUNC(Type, dtor)(VECTORREF(Type)* pself) { \
+  void VECTORFUNC(T, dtor)(VECTORREF(T)* pself) { \
     assert(pself); \
     if (*pself) { \
-      VECTORFUNC(Type, free)(*pself); \
-      VECTORFUNC(Type, vector_free)(pself); \
+      VECTORFUNC(T, free)(*pself); \
+      VECTORFUNC(T, vector_free)(pself); \
     } \
   } \
-  void VECTORFUNC(Type, copy)(VECTORREF(Type) self, \
-                              VECTORREF(Type) src) { \
+  void VECTORFUNC(T, copy)(VECTORREF(T) self, VECTORREF(T) src) { \
     assert(self && src); \
-    VECTORFUNC(Type, assign)(self, VECTORFUNC(Type, data)(src), \
-                             VECTORFUNC(Type, size)(src)); \
+    VECTORFUNC(T, assign)(self, VECTORFUNC(T, data)(src), \
+                          VECTORFUNC(T, size)(src)); \
   } \
-  void VECTORFUNC(Type, assign)(VECTORREF(Type) self, \
-                                const Type* src, size_t count) { \
+  void VECTORFUNC(T, assign)(VECTORREF(T) self, const T* src, size_t count) { \
     assert(self); \
     assert(count == 0 || src); \
-    if (VECTORFUNC(Type, capacity)(self) < count) { \
-      VECTORFUNC(Type, free)(self); \
-      VECTORFUNC(Type, alloc)(self, count); \
-    } \
-    memory_copy(VECTORFUNC(Type, data)(self), src, \
-                sizeof(Type), count); \
-    VECTORFUNC(Type, set_size)(self, count); \
-  } \
-  Type VECTORFUNC(Type, at)(VECTORREF(Type) self, size_t index) { \
-    assert(self); \
-    return VECTORFUNC(Type, data)(self)[index]; \
-  } \
-  Type VECTORFUNC(Type, front)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, begin)(self)[0]; \
-  } \
-  Type VECTORFUNC(Type, back)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, end)(self)[-1]; \
-  } \
-  Type* VECTORFUNC(Type, data)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, get_begin)(self); \
-  } \
-  Type* VECTORFUNC(Type, begin)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, get_begin)(self); \
-  } \
-  Type* VECTORFUNC(Type, end)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, get_end)(self); \
-  } \
-  bool VECTORFUNC(Type, empty)(VECTORREF(Type) self) { \
-    assert(self); \
-    return (VECTORFUNC(Type, begin)(self) == \
-            VECTORFUNC(Type, end)(self)); \
-  } \
-  size_t VECTORFUNC(Type, size)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, get_size)(self); \
-  } \
-  void VECTORFUNC(Type, reserve)(VECTORREF(Type) self, size_t size) { \
-    assert(self); \
-    if (VECTORFUNC(Type, capacity)(self) < size) { \
-      struct VECTOR(Type) original = *self; \
-      VECTORFUNC(Type, alloc)(self, size); \
-      VECTORFUNC(Type, copy)(self, &original); \
-      VECTORFUNC(Type, free)(&original); \
-    } \
-  } \
-  size_t VECTORFUNC(Type, capacity)(VECTORREF(Type) self) { \
-    assert(self); \
-    return VECTORFUNC(Type, get_capacity)(self); \
-  } \
-  void VECTORFUNC(Type, shrink_to_fit)(VECTORREF(Type) self) { \
-    assert(self); \
-    { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      if (size < VECTORFUNC(Type, capacity)(self)) { \
-        struct VECTOR(Type) original = *self; \
-        VECTORFUNC(Type, alloc)(self, size); \
-        VECTORFUNC(Type, copy)(self, &original); \
-        VECTORFUNC(Type, free)(&original); \
+    if (0 < count) { \
+      struct VECTOR(T) old = VECTORFUNC(T, null_vector)(NULL); \
+      if (VECTORFUNC(T, capacity)(self) < count) { \
+        old = *self; \
+        VECTORFUNC(T, alloc)(self, count); \
       } \
+      VECTOR_ELEMENT_MOVE(T, VECTORFUNC(T, data)(self), src, src + count); \
+      VECTORFUNC(T, free)(&old); \
+    } \
+    VECTORFUNC(T, set_size)(self, count); \
+  } \
+  T VECTORFUNC(T, at)(VECTORREF(T) self, size_t index) { \
+    assert(self); \
+    return VECTORFUNC(T, data)(self)[index]; \
+  } \
+  T VECTORFUNC(T, front)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, begin)(self)[0]; \
+  } \
+  T VECTORFUNC(T, back)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, end)(self)[-1]; \
+  } \
+  T* VECTORFUNC(T, data)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, get_begin)(self); \
+  } \
+  T* VECTORFUNC(T, begin)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, get_begin)(self); \
+  } \
+  T* VECTORFUNC(T, end)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, get_end)(self); \
+  } \
+  bool VECTORFUNC(T, empty)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, begin)(self) == VECTORFUNC(T, end)(self); \
+  } \
+  size_t VECTORFUNC(T, size)(VECTORREF(T) self) { \
+    assert(self); \
+    return VECTORFUNC(T, get_size)(self); \
+  } \
+  void VECTORFUNC(T, reserve)(VECTORREF(T) self, size_t size) { \
+    assert(self); \
+    if (VECTORFUNC(T, capacity)(self) < size) { \
+      VECTORFUNC(T, realloc)(self, size); \
     } \
   } \
-  void VECTORFUNC(Type, clear)(VECTORREF(Type) self) { \
+  size_t VECTORFUNC(T, capacity)(VECTORREF(T) self) { \
     assert(self); \
-    VECTORFUNC(Type, set_size)(self, 0); \
+    return VECTORFUNC(T, get_capacity)(self); \
   } \
-  void VECTORFUNC(Type, insert)(VECTORREF(Type) self, size_t index, \
-                                const Type* data, size_t count) { \
+  void VECTORFUNC(T, shrink_to_fit)(VECTORREF(T) self) { \
+    assert(self); \
+    if (VECTORFUNC(T, size)(self) < VECTORFUNC(T, capacity)(self)) { \
+      VECTORFUNC(T, realloc)(self, VECTORFUNC(T, size)(self)); \
+    } \
+  } \
+  void VECTORFUNC(T, clear)(VECTORREF(T) self) { \
+    assert(self); \
+    VECTORFUNC(T, set_size)(self, 0); \
+  } \
+  void VECTORFUNC(T, insert)(VECTORREF(T) self, size_t index, \
+                             const T* data, size_t count) { \
     assert(self); \
     assert(count == 0 || data); \
     if (0 < count) { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      VECTORFUNC(Type, reserve)(self, size + count); \
+      struct VECTOR(T) src = VECTORFUNC(T, null_vector)(NULL); \
+      VECTORFUNC(T, assign)(&src, data, count); \
+      data = VECTORFUNC(T, data)(&src); \
+      VECTORFUNC(T, reserve)(self, VECTORFUNC(T, size)(self) + count); \
       { \
-        Type* const head = VECTORFUNC(Type, begin)(self) + index; \
-        Type* const tail = head + count; \
-        memory_move(tail, head, sizeof(Type), size - index); \
-        memory_copy(head, data, sizeof(Type), count); \
-        VECTORFUNC(Type, set_size)(self, size + count); \
+        T* const begin = VECTORFUNC(T, begin)(self); \
+        T* const end = VECTORFUNC(T, end)(self); \
+        T* const head = begin + index; \
+        T* const tail = head + count; \
+        VECTOR_ELEMENT_MOVE(T, tail, head, end); \
+        VECTOR_ELEMENT_COPY(T, head, data, data + count); \
       } \
+      VECTORFUNC(T, modify_size)(self, count); \
+      VECTORFUNC(T, free)(&src); \
     } \
   } \
-  void VECTORFUNC(Type, erase)(VECTORREF(Type) self, \
-                               size_t index, size_t count) { \
+  void VECTORFUNC(T, erase)(VECTORREF(T) self, size_t index, size_t count) { \
     assert(self); \
-    { \
-      const size_t size = VECTORFUNC(Type, size)(self); \
-      if (size < index + count) { \
-        count = size - index; \
-      } \
-      { \
-        const size_t new_size = size - count; \
-        Type* const head = VECTORFUNC(Type, begin)(self) + index; \
-        Type* const tail = head + count; \
-        memory_move(head, tail, sizeof(Type), new_size - index); \
-        VECTORFUNC(Type, set_size)(self, new_size); \
-      } \
+    if (index + count < VECTORFUNC(T, size)(self)) { \
+      T* const begin = VECTORFUNC(T, begin)(self); \
+      T* const end = VECTORFUNC(T, end)(self); \
+      T* const head = begin + index; \
+      T* const tail = head + count; \
+      VECTOR_ELEMENT_MOVE(T, head, tail, end); \
+      VECTORFUNC(T, modify_size)(self, -count); \
+    } else { \
+      VECTORFUNC(T, set_size)(self, index); \
     } \
   } \
-  void VECTORFUNC(Type, push_back)(VECTORREF(Type) self, Type data) { \
+  void VECTORFUNC(T, push_back)(VECTORREF(T) self, T data) { \
     assert(self); \
-    { \
-      const size_t new_size = VECTORFUNC(Type, size)(self) + 1; \
-      VECTORFUNC(Type, reserve)(self, new_size); \
-      *VECTORFUNC(Type, end)(self) = data; \
-      VECTORFUNC(Type, set_size)(self, new_size); \
+    VECTORFUNC(T, reserve)(self, VECTORFUNC(T, size)(self) + 1); \
+    *VECTORFUNC(T, end)(self) = data; \
+    VECTORFUNC(T, modify_size)(self, 1); \
+  } \
+  void VECTORFUNC(T, pop_back)(VECTORREF(T) self) { \
+    assert(self); \
+    VECTORFUNC(T, modify_size)(self, -1); \
+  } \
+  void VECTORFUNC(T, resize)(VECTORREF(T) self, size_t size, T fill) { \
+    assert(self); \
+    if (VECTORFUNC(T, size)(self) < size) { \
+      const size_t count = size - VECTORFUNC(T, size)(self); \
+      VECTORFUNC(T, reserve)(self, size); \
+      VECTORFUNC(T, fill)(VECTORFUNC(T, end)(self), fill, count); \
     } \
+    VECTORFUNC(T, set_size)(self, size); \
   } \
-  void VECTORFUNC(Type, pop_back)(VECTORREF(Type) self) { \
-    assert(self); \
-    VECTORFUNC(Type, set_size)(self, VECTORFUNC(Type, size)(self) - 1); \
-  } \
-  void VECTORFUNC(Type, resize)(VECTORREF(Type) self, \
-                                size_t size, Type fill) { \
+  void VECTORFUNC(T, swap)(VECTORREF(T) self, VECTORREF(T) other) { \
     assert(self); \
     { \
-      const size_t old_size = VECTORFUNC(Type, size)(self); \
-      if (old_size < size) { \
-        VECTORFUNC(Type, reserve)(self, size); \
-        VECTORFUNC(Type, fill)(VECTORFUNC(Type, end)(self), \
-                               fill, size - old_size); \
-      } \
-      VECTORFUNC(Type, set_size)(self, size); \
-    } \
-  } \
-  void VECTORFUNC(Type, swap)(VECTORREF(Type) self, \
-                              VECTORREF(Type) other) { \
-    assert(self); \
-    { \
-      struct VECTOR(Type) tmp = *self; \
+      struct VECTOR(T) tmp = *self; \
       *self = *other; \
       *other = tmp; \
     } \
