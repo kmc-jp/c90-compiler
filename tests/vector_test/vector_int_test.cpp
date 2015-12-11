@@ -107,7 +107,7 @@ TEST_F(VectorIntTest, erase) {
   for (int i = index; (size_t)i < SIZE - index; ++i) {
     EXPECT_EQ((int)(i + index), VINTF(data)(v)[i]);
   }
-  VINTF(erase)(v, 0, SIZE);
+  VINTF(erase)(v, 0, SIZE * 10);
   EXPECT_TRUE(VINTF(empty)(v));
 }
 
