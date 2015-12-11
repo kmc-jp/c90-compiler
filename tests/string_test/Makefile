@@ -1,4 +1,4 @@
-# c89-compiler/tests/vector_test/Makefile
+# c89-compiler/tests/string_test/Makefile
 
 TOP_DIR := ../..
 SRC_DIR := $(TOP_DIR)/src
@@ -9,10 +9,10 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-VECTOR_SRCS := utility.c allocator.c
-VECTOR_OBJS := $(VECTOR_SRCS:%.c=$(SRC_DIR)/%.o)
-TARGET := vector_test.out
-OBJS += $(VECTOR_OBJS)
+STRING_SRCS := utility.c stdstring.c
+STRING_OBJS := $(STRING_SRCS:%.c=$(SRC_DIR)/%.o)
+TARGET = string_test.out
+OBJS += $(STRING_OBJS)
 
 unit_test: $(TARGET)
 
@@ -24,7 +24,7 @@ $(TARGET): $(GTEST_TARGET)
 $(GTEST_TARGET):
 	$(MAKE) -C $(GTEST_DIR) $(GTEST_LIB)
 
-$(VECTOR_OBJS): $(SRC_DIR)/%:
+$(STRING_OBJS): $(SRC_DIR)/%:
 	$(MAKE) -C $(SRC_DIR) $*
 
 do_test: $(TARGET)

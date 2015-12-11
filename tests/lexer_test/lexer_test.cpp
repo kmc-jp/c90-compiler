@@ -1,10 +1,8 @@
-extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "lexer_adapter.h"
 #include "use_vector.h"
 #include "token.h"
-}
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
@@ -86,6 +84,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(DOUBLE, lex_first_token("double"));
   EXPECT_EQ(ELSE, lex_first_token("else"));
   EXPECT_EQ(ENUM, lex_first_token("enum"));
+  EXPECT_EQ(EXTERN, lex_first_token("extern"));
   EXPECT_EQ(FLOAT, lex_first_token("float"));
   EXPECT_EQ(FOR, lex_first_token("for"));
   EXPECT_EQ(GOTO, lex_first_token("goto"));

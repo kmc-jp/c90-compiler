@@ -21,14 +21,13 @@ void copy_to_yylval(char *src, int size) {
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
-  do_initialize_vector();
-  lexer_string_literal = VECTORFUNC(char, ctor)();
+  lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
 }
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
 NOT_ESCAPE_SEQUENCE [^\\]
 CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
-IDENTIFIER [_a-z][_a-zA-Z0-9]*
+IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
 DIGIT2 "0b"("0"|1[01]*)
 DIGIT4 "0q"("0"|[1-3][0-3]*)
 DIGIT8 "0"("0"|[1-7][0-7]*)
@@ -60,7 +59,7 @@ WHITESPACE [ \t\n]
 <STRING>{CHARACTER} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
-    VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
+    VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
   }
 }
 
@@ -115,6 +114,7 @@ WHITESPACE ;
 "double"   return DOUBLE;
 "else"     return ELSE;
 "enum"     return ENUM;
+"extern"   return EXTERN;
 "float"    return FLOAT;
 "for"      return FOR;
 "goto"     return GOTO;
