@@ -1,4 +1,5 @@
 #include "new-vector.h"
+#include "allocator_impl.h"
 #include <assert.h>
 
 /* vector of Type */
@@ -6,25 +7,51 @@ struct Vector {
   Type* start_;  /* first data */
   Type* finish_;  /* last data */
   Type* end_;  /* end of storage */
+  AllocatorRef allocator_;
 };
 
-static VectorRef vectorref_alloc(void) {
-  const VectorRef self = safe_malloc(struct Vector);
+static void* vector_default_allocate_container(void* manager) {
+  return safe_malloc(struct Vector);
+  UNUSED(manager);
+}
+static void* vector_default_allocate_element(size_t count, void* manager) {
+  return safe_array_malloc(Type, count);
+  UNUSED(manager);
+}
+static void vector_default_deallocate(void* ptr, void* manager) {
+  safe_free(ptr);
+  UNUSED(manager);
+}
+static const struct Allocator g_vector_default_allocator = {
+  NULL,
+  vector_default_allocate_container,
+  vector_default_allocate_element,
+  vector_default_deallocate
+};
+AllocatorRef vector_default_allocator(void) {
+  return &g_vector_default_allocator;
+}
+
+
+static VectorRef vectorref_alloc(AllocatorRef allocator) {
+  const VectorRef self = allocate_container(allocator);
   self->start_ = self->finish_ = self->end_ = NULL;
+  self->allocator_ = allocator;
   return self;
 }
 static void vectorref_free(VectorRef* pself) {
-  safe_free(*pself);
+  deallocate((*pself)->allocator_, *pself);
+  *pself = NULL;
 }
 static void vector_alloc(VectorRef self, size_t size) {
   const size_t capacity = enough_capacity(size);
-  self->start_ = safe_array_malloc(Type, capacity);
+  self->start_ = allocate_element(self->allocator_, capacity);
   self->finish_ = self->start_;
   self->end_ = self->start_ + capacity;
 }
 static void vector_free(VectorRef self) {
-  safe_free(self->start_);
-  self->finish_ = self->end_ = NULL;
+  deallocate(self->allocator_, self->start_);
+  self->start_ = self->finish_ = self->end_ = NULL;
 }
 static size_t vector_get_size(VectorRef self) {
   return self->finish_ - self->start_;
@@ -49,13 +76,17 @@ static void vector_fill(Type* dst, Type fill, size_t count) {
 }
 
 
-VectorRef make_vector(const Type* src, size_t count) {
-  const VectorRef self = vector_ctor();
+VectorRef make_vector(AllocatorRef allocator,
+                      const Type* src, size_t count) {
+  const VectorRef self = vector_ctor(allocator);
   vector_assign(self, src, count);
   return self;
 }
-VectorRef vector_ctor(void) {
-  return vectorref_alloc();
+VectorRef vector_ctor(AllocatorRef allocator) {
+  if (!allocator) {
+    allocator = vector_default_allocator();
+  }
+  return vectorref_alloc(allocator);
 }
 void vector_dtor(VectorRef* pself) {
   assert(pself);
@@ -75,7 +106,7 @@ void vector_assign(VectorRef self, const Type* src, size_t count) {
     vector_free(self);
     vector_alloc(self, count);
   }
-  VECTOR_MEMORY_COPY(vector_data(self), src, count);
+  memory_copy(vector_data(self), src, sizeof(Type), count);
   vector_set_size(self, count);
 }
 Type vector_at(VectorRef self, size_t index) {
@@ -149,8 +180,8 @@ void vector_insert(VectorRef self, size_t index,
     {
       Type* const head = vector_begin(self) + index;
       Type* const tail = head + count;
-      VECTOR_MEMORY_MOVE(tail, head, size - index);
-      VECTOR_MEMORY_COPY(head, data, count);
+      memory_move(tail, head, sizeof(Type), size - index);
+      memory_copy(head, data, sizeof(Type), count);
       vector_set_size(self, size + count);
     }
   }
@@ -166,7 +197,7 @@ void vector_erase(VectorRef self, size_t index, size_t count) {
       const size_t new_size = size - count;
       Type* const head = vector_begin(self) + index;
       Type* const tail = head + count;
-      VECTOR_MEMORY_MOVE(head, tail, new_size - index);
+      memory_move(head, tail, sizeof(Type), new_size - index);
       vector_set_size(self, new_size);
     }
   }
