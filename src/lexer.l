@@ -21,8 +21,7 @@ void copy_to_yylval(char *src, int size) {
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
-  do_initialize_vector();
-  lexer_string_literal = VECTORFUNC(char, ctor)();
+  lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
 }
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
@@ -60,7 +59,7 @@ WHITESPACE [ \t\n]
 <STRING>{CHARACTER} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
-    VECTORFUNC(char, push_back)(lexer_string_literal, &(yytext[i]));
+    VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
   }
 }
 

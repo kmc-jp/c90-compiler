@@ -32,6 +32,8 @@
 *.dSYM/
 
 kmc89
-lex.yy.c
-lex.yy.h
+*.yy.c
+*.yy.h
+*.tab.c
+*.tab.h
 *.d
