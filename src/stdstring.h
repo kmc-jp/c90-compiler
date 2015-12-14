@@ -1,6 +1,7 @@
 #ifndef KMC_C89_COMPILER_STDSTRING_H
 #define KMC_C89_COMPILER_STDSTRING_H
 
+#include "allocator.h"
 #include "utility.h"
 
 typedef struct String* StringRef;
@@ -9,14 +10,16 @@ typedef struct String* StringRef;
 /* represent index of end of string */
 extern const size_t string_npos;
 
+AllocatorRef string_default_allocator(void);
+
 /* string generator */
 /* behavior is undefined if src is NULL */
-StringRef make_string(const char* src, size_t length);
+StringRef make_string(const char* src, size_t length, AllocatorRef allocator);
 /* constructor */
 /* behavior is undefined if src is NULL */
 /* returned object is intialized by src */
 /* returned object must be destructed by string_dtor */
-StringRef string_ctor(const char* src);
+StringRef string_ctor(const char* src, AllocatorRef allocator);
 /* destructor */
 /* *pself is set to NULL after destruction */
 void string_dtor(StringRef* pself);
