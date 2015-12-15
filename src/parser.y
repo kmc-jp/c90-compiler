@@ -24,7 +24,7 @@ int yylex(void);
 
 identifier.opt
 : /* empty */
-| IDENTIFIER
+| identifier
 ;
 
 identifier
@@ -32,14 +32,26 @@ identifier
 ;
 
 constant
-: FLOATING_CONSTANT
-| INTEGER_CONSTANT
+: floating-constant
+| integer-constant
 | enumeration-constant
-| CHARACTER_CONSTANT
+| character-constant
+;
+
+floating-constant
+: FLOATING_CONSTANT
+;
+
+integer-constant
+: INTEGER_CONSTANT
 ;
 
 enumeration-constant
-: IDENTIFIER
+: identifier
+;
+
+character-constant
+: CHARACTER_CONSTANT
 ;
 
 string-literal
@@ -65,6 +77,7 @@ postfix-expression
 argument-expression-list.opt
 : /* empty */
 | argument-expression-list
+;
 
 argument-expression-list
 : assignment-expression
@@ -178,6 +191,7 @@ assignment-operator
 expression.opt
 : /* empty */
 | expression
+;
 
 expression
 : assignment-expression
@@ -187,6 +201,7 @@ expression
 constant-expression.opt
 : /* empty */
 | constant-expression
+;
 
 constant-expression
 : conditional-expression
@@ -199,6 +214,7 @@ declaration
 declaration-specifiers.opt
 : /* empty */
 | declaration-specifiers
+;
 
 declaration-specifiers
 : storage-class-specifier declaration-specifiers.opt
@@ -209,6 +225,7 @@ declaration-specifiers
 init-declarator-list.opt
 : /* empty */
 | init-declarator-list
+;
 
 init-declarator-list
 : init-declarator
@@ -265,6 +282,7 @@ struct-declaration
 specifier-qualifier-list.opt
 : /* empty */
 | specifier-qualifier-list
+;
 
 specifier-qualifier-list
 : type-specifier specifier-qualifier-list.opt
@@ -304,6 +322,7 @@ type-qualifier
 declarator.opt
 : /* empty */
 | declarator
+;
 
 declarator
 : pointer.opt direct-declarator
@@ -320,6 +339,7 @@ direct-declarator
 pointer.opt
 : /* empty */
 | pointer
+;
 
 pointer
 : '*' type-qualifier-list.opt
@@ -329,6 +349,7 @@ pointer
 type-qualifier-list.opt
 : /* empty */
 | type-qualifier-list
+;
 
 type-qualifier-list
 : type-qualifier
@@ -353,6 +374,7 @@ parameter-declaration
 identifier-list.opt
 : /* empty */
 | identifier-list
+;
 
 identifier-list
 : identifier
@@ -366,6 +388,7 @@ type-name
 abstract-declarator.opt
 : /* empty */
 | abstract-declarator
+;
 
 abstract-declarator
 : pointer
@@ -375,6 +398,7 @@ abstract-declarator
 direct-abstract-declarator.opt
 : /* empty */
 | direct-abstract-declarator
+;
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
@@ -419,6 +443,7 @@ compound-statement
 declaration-list.opt
 : /* empty */
 | declaration-list
+;
 
 declaration-list
 : declaration
@@ -428,6 +453,7 @@ declaration-list
 statement-list.opt
 : /* empty */
 | statement-list
+;
 
 statement-list
 : statement
