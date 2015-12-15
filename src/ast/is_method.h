@@ -1,8 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_IS_METHOD_H
 #define KMC_C89_COMPILER_AST_IS_METHOD_H
 
-#include "ast.h"
-#include "utility.h"
+#include "../ast.h"
+#include "../utility.h"
 
 bool ast_is_identifier(AstRef ast);
 bool ast_is_constant(AstRef ast);
@@ -75,5 +75,7 @@ bool ast_is_jump_statement(AstRef ast);
 bool ast_is_translation_unit(AstRef ast);
 bool ast_is_external_declaration(AstRef ast);
 bool ast_is_function_definition(AstRef ast);
+
+bool ast_is_token(AstRef ast);
 
 #endif  /* KMC_C89_COMPILER_AST_IS_METHOD_H */

@@ -1,7 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_MAKE_METHOD_H
 #define KMC_C89_COMPILER_AST_MAKE_METHOD_H
 
-#include "ast.h"
+#include "../ast.h"
+#include "../utility.h"
 
 AstRef ast_make_identifier();
 AstRef ast_make_constant();
@@ -74,5 +75,7 @@ AstRef ast_make_jump_statement();
 AstRef ast_make_translation_unit();
 AstRef ast_make_external_declaration();
 AstRef ast_make_function_definition();
+
+AstRef ast_make_token(const char* src, size_t length);
 
 #endif  /* KMC_C89_COMPILER_AST_MAKE_METHOD_H */
