@@ -28,3 +28,7 @@ static struct Allocator g_ast_vector_allocator = {
 void ast_vector_allocator_ctor(void) {
   g_ast_vector_allocator.manager_ = ast_pool();
 }
+
+AstVectorRef ast_vector_ctor(void) {
+  return AST_VECTOR_FUNC(ctor)(&g_ast_vector_allocator);
+}
