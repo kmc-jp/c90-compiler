@@ -4,13 +4,13 @@
 #include "../ast.h"
 #include "../utility.h"
 
-AstRef ast_make_identifier();
-AstRef ast_make_constant();
-AstRef ast_make_floating_constant();
-AstRef ast_make_integer_constant();
-AstRef ast_make_enumeration_constant();
-AstRef ast_make_character_constant();
-AstRef ast_make_string_literal();
+AstRef ast_make_identifier(AstRef token);
+AstRef ast_make_constant(AstRef constant);
+AstRef ast_make_floating_constant(AstRef token);
+AstRef ast_make_integer_constant(AstRef token);
+AstRef ast_make_enumeration_constant(AstRef identifier);
+AstRef ast_make_character_constant(AstRef token);
+AstRef ast_make_string_literal(AstRef token);
 AstRef ast_make_primary_expression();
 AstRef ast_make_postfix_expression();
 AstRef ast_make_argument_expression_list();
