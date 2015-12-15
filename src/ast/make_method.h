@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_MAKE_METHOD_H
 #define KMC_C89_COMPILER_AST_MAKE_METHOD_H
 
-#include "ast.h"
+#include "../ast.h"
 
 AstRef ast_make_identifier();
 AstRef ast_make_constant();
