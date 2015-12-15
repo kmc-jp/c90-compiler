@@ -2,10 +2,9 @@
 #include <assert.h>
 #include "../allocator_impl.h"
 #include "../stdstring_impl.h"
+#include "../ast_method.h"
 #include "ast_impl.h"
 #include "pool.h"
-#include "make_method.h"
-#include "is_method.h"
 
 static void* ast_string_allocate_container(void* manager) {
   MemoryPoolRef pool = manager;
@@ -48,4 +47,12 @@ AstRef ast_make_token(const char* src, size_t length) {
 bool ast_is_token(AstRef ast) {
   assert(ast);
   return ast->tag == AST_TOKEN;
+}
+
+StringRef ast_get_token(AstRef ast) {
+  assert(ast);
+  if (ast_is_token(ast)) {
+    return ast->data.token;
+  }
+  return NULL;
 }
