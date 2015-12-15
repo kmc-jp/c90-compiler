@@ -13,8 +13,8 @@ int yylex(void);
 }
 
 %token IDENTIFIER
-%token INTEGER_CONSTANT
 %token FLOATING_CONSTANT
+%token INTEGER_CONSTANT
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
 
