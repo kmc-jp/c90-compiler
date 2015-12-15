@@ -1,4 +1,5 @@
 #include "pool.h"
+#include <assert.h>
 
 static MemoryPoolRef g_ast_pool = NULL;
 

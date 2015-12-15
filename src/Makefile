@@ -6,9 +6,14 @@ SRC_DIR := .
 include $(TOP_DIR)/Makefile.common
 include $(SRC_DIR)/Makefile.common
 
+AST_DIR := ast
+AST_SRCS := $(wildcard $(AST_DIR)/*.c)
+AST_OBJS := $(AST_SRCS:.c=.o)
+
 LEX := flex
 YACC := bison
 TARGET := kmc89
+OBJS += $(AST_OBJS)
 OBJS += lex.yy.o parser.tab.o
 CLEAN_OBJS += lex.yy.c lex.yy.h
 
