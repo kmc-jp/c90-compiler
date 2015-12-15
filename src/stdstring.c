@@ -1,16 +1,51 @@
 #include "stdstring.h"
 #include <assert.h>
 #include <string.h>
+#include "allocator_impl.h"
 
 struct String {
   char* data_;  /* contents of string */
   size_t length_;  /* length of data_ without terminating null character */
   size_t capacity_;  /* capacity of data_ without terminating null character */
+  AllocatorRef allocator_;
 };
 
 const size_t string_npos = (size_t)(-1);  /* big enough size */
 
+static void* default_allocate_container(void* manager) {
+  return safe_malloc(struct String);
+  UNUSED(manager);
+}
+static void* default_allocate_element(size_t count, void* manager) {
+  return safe_array_malloc(char, count);
+  UNUSED(manager);
+}
+static void default_deallocate(void* ptr, void* manager) {
+  safe_free(ptr);
+  UNUSED(manager);
+}
+AllocatorRef string_default_allocator(void) {
+  static const struct Allocator allocator = {
+    NULL,
+    default_allocate_container,
+    default_allocate_element,
+    default_deallocate
+  };
+  return &allocator;
+}
+
 /* private functions for implementations follow */
+static StringRef string_container_alloc(AllocatorRef allocator) {
+  const StringRef self = allocate_container(allocator);
+  self->data_ = NULL;
+  self->length_ = self->capacity_ = 0;
+  self->allocator_ = allocator;
+  return self;
+}
+static void string_container_free(StringRef* pself) {
+  deallocate((*pself)->allocator_, *pself);
+  *pself = NULL;
+}
 static void string_set_end(StringRef self, char data) {
   self->data_[self->length_] = data;
 }
@@ -19,7 +54,7 @@ static void string_set_length(StringRef self, size_t length) {
   self->data_[length] = '\0';
 }
 static void string_free(StringRef self) {
-  safe_free(self->data_);
+  deallocate(self->allocator_, self->data_);
 }
 static void string_init_copy(StringRef self, const char* src, size_t length) {
   memcpy(self->data_, src, length);
@@ -33,7 +68,7 @@ static void string_alloc(StringRef self, size_t size) {
   /* capacity do not include terminating null character */
   const size_t capacity = enough_capacity(size + 1) - 1;
   /* storage hold terminating null character */
-  self->data_ = safe_array_malloc(char, capacity + 1);
+  self->data_ = allocate_element(self->allocator_, capacity + 1);
   self->capacity_ = capacity;
 }
 static void string_extend(StringRef self, size_t size) {
@@ -44,26 +79,27 @@ static void string_extend(StringRef self, size_t size) {
 }
 
 
-StringRef make_string(const char* src, size_t length) {
+StringRef make_string(const char* src, size_t length, AllocatorRef allocator) {
   assert(src);
   {
-    const StringRef self = safe_malloc(struct String);
+    const StringRef self = string_container_alloc(
+        allocator ? allocator : string_default_allocator());
     string_alloc(self, length);
     string_init_copy(self, src, length);
     return self;
   }
 }
 
-StringRef string_ctor(const char* src) {
+StringRef string_ctor(const char* src, AllocatorRef allocator) {
   assert(src);
-  return make_string(src, strlen(src));
+  return make_string(src, strlen(src), allocator);
 }
 
 void string_dtor(StringRef* pself) {
   assert(pself);
   if (*pself) {
     string_free(*pself);
-    safe_free(*pself);
+    string_container_free(pself);
   }
 }
 
@@ -259,7 +295,7 @@ StringRef string_substr(StringRef self, size_t index, size_t count) {
     if (count == string_npos || length < index + count) {
       count = length - index;
     }
-    return make_string(src, count);
+    return make_string(src, count, self->allocator_);
   }
 }
 
