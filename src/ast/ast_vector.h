@@ -11,4 +11,6 @@ DECLARE_VECTOR(AstRef)
 
 typedef VECTORREF(AstRef) AstVectorRef;
 
+void ast_vector_allocator_ctor(void);
+
 #endif  /* KMC_C89_COMPILER_AST_AST_VECTOR_H */
