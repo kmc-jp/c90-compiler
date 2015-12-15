@@ -29,3 +29,7 @@ static struct Allocator g_string_allocator = {
 void ast_string_allocator_ctor(void) {
   g_string_allocator.manager_ = ast_pool();
 }
+
+StringRef ast_make_string(const char* src, size_t length) {
+  return make_string(src, length, &g_string_allocator);
+}
