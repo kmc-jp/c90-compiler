@@ -5,6 +5,7 @@
 #include "ast_impl.h"
 #include "pool.h"
 #include "make_method.h"
+#include "is_method.h"
 
 static void* ast_string_allocate_container(void* manager) {
   MemoryPoolRef pool = manager;
@@ -42,4 +43,9 @@ AstRef ast_make_token(const char* src, size_t length) {
   self->tag = AST_TOKEN;
   self->data.token = ast_make_string(src, length);
   return self;
+}
+
+bool ast_is_token(AstRef ast) {
+  assert(ast);
+  return ast->tag == AST_TOKEN;
 }
