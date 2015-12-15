@@ -3,6 +3,9 @@
 
 #include "../memory_pool.h"
 
+#define ast_palloc(type, count) \
+  palloc(type, ast_pool(), (count))
+
 void ast_pool_ctor(size_t size);
 void ast_pool_dtor(void);
 MemoryPoolRef ast_pool(void);
