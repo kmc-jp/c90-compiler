@@ -578,7 +578,7 @@ AstVectorRef ast_get_vector(AstRef ast) {
   return NULL;
 }
 
-StringRef ast_get_token(AstRef ast) {
+AstTokenRef ast_get_token(AstRef ast) {
   assert(ast);
   if (ast_is_token(ast)) {
     return ast->data.token;

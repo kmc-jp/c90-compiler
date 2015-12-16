@@ -3,7 +3,7 @@
 
 #include "../ast.h"
 #include "ast_vector.h"
-#include "../stdstring.h"
+#include "ast_string.h"
 
 struct Ast {
   enum AstTag tag;
@@ -81,7 +81,7 @@ struct Ast {
     AstFunctionDefinitionRef function_definition;
 
     AstVectorRef vector;
-    StringRef token;
+    AstTokenRef token;
   } data;
 };
 
