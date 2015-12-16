@@ -75,4 +75,6 @@ AstTranslationUnitRef ast_get_translation_unit(AstRef ast);
 AstExternalDeclarationRef ast_get_external_declaration(AstRef ast);
 AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);
 
+StringRef ast_get_token(AstRef ast);
+
 #endif  /* KMC_C89_COMPILER_AST_GET_METHOD_H */
