@@ -112,7 +112,7 @@ unary-expression
 : postfix-expression
 | prefix-increment-expression
 | prefix-decrement-expression
-| unary-operator cast-expression
+| unary-operator-expression
 | sizeof-expression
 | sizeof-type-expression
 ;
@@ -125,13 +125,13 @@ prefix-decrement-expression
 : "--" unary-expression
 ;
 
-unary-operator
-: '&'
-| '*'
-| '+'
-| '-'
-| '~'
-| '!'
+unary-operator-expression
+: address-expression
+| dereference-expression
+| unary-plus-expression
+| unary-minus-expression
+| complement-expression
+| logical-negate-expression
 ;
 
 sizeof-expression
@@ -140,6 +140,30 @@ sizeof-expression
 
 sizeof-type-expression
 : "sizeof" '(' type-name ')'
+;
+
+address-expression
+: '&' cast-expression
+;
+
+dereference-expression
+: '*' cast-expression
+;
+
+unary-plus-expression
+: '+' cast-expression
+;
+
+unary-minus-expression
+: '-' cast-expression
+;
+
+complement-expression
+: '~' cast-expression
+;
+
+logical-negate-expression
+: '!' cast-expression
 ;
 
 cast-expression
