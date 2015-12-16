@@ -2,6 +2,8 @@
 #define KMC_C89_COMPILER_AST_AST_IMPL_H
 
 #include "../ast.h"
+#include "ast_vector.h"
+#include "ast_string.h"
 
 struct Ast {
   enum AstTag tag;
@@ -77,7 +79,9 @@ struct Ast {
     AstTranslationUnitRef translation_unit;
     AstExternalDeclarationRef external_declaration;
     AstFunctionDefinitionRef function_definition;
-    char* token;
+
+    AstVectorRef vector;
+    AstTokenRef token;
   } data;
 };
 
