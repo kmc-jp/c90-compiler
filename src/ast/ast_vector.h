@@ -12,7 +12,6 @@ DECLARE_VECTOR(AstRef)
 typedef VECTORREF(AstRef) AstVectorRef;
 
 void ast_vector_allocator_ctor(void);
-AstVectorRef ast_vector_ctor(void);
 
 AstRef ast_make_vector(void);
 AstRef ast_push_vector(AstRef vector, AstRef element);
