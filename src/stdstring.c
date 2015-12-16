@@ -1,14 +1,7 @@
-#include "stdstring.h"
+#include "stdstring_impl.h"
 #include <assert.h>
 #include <string.h>
 #include "allocator_impl.h"
-
-struct String {
-  char* data_;  /* contents of string */
-  size_t length_;  /* length of data_ without terminating null character */
-  size_t capacity_;  /* capacity of data_ without terminating null character */
-  AllocatorRef allocator_;
-};
 
 const size_t string_npos = (size_t)(-1);  /* big enough size */
 
