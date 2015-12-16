@@ -1,10 +1,8 @@
 #include "get_method.h"
-#include <assert.h>
 #include "is_method.h"
 
 #define DEFINE_AST_GET_METHOD(lower, camel) \
   Ast ## camel ## Ref ast_get_ ## lower(AstRef ast) { \
-    assert(ast); \
     if (ast_is_ ## lower(ast)) { \
       return ast->data.lower; \
     } \
