@@ -9,6 +9,7 @@
 #include "ast/statements.h"
 #include "ast/external_definitions.h"
 #include "ast/ast_string.h"
+#include "ast/ast_vector.h"
 
 void ast_initialize_pool(size_t size);
 void ast_finalize_pool(void);
