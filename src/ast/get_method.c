@@ -569,3 +569,19 @@ AstFunctionDefinitionRef ast_get_function_definition(AstRef ast) {
   }
   return NULL;
 }
+
+AstVectorRef ast_get_vector(AstRef ast) {
+  assert(ast);
+  if (ast_is_vector(ast)) {
+    return ast->data.vector;
+  }
+  return NULL;
+}
+
+StringRef ast_get_token(AstRef ast) {
+  assert(ast);
+  if (ast_is_token(ast)) {
+    return ast->data.token;
+  }
+  return NULL;
+}

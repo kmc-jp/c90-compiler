@@ -76,6 +76,8 @@ AstRef ast_make_translation_unit();
 AstRef ast_make_external_declaration();
 AstRef ast_make_function_definition();
 
+AstRef ast_make_vector(void);
+AstRef ast_push_vector(AstRef vector, AstRef element);
 AstRef ast_make_token(const char* src, size_t length);
 
 #endif  /* KMC_C89_COMPILER_AST_MAKE_METHOD_H */

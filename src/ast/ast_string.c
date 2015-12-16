@@ -2,7 +2,6 @@
 #include <assert.h>
 #include "../allocator_impl.h"
 #include "../stdstring_impl.h"
-#include "../ast_method.h"
 #include "ast_impl.h"
 #include "pool.h"
 
@@ -42,17 +41,4 @@ AstRef ast_make_token(const char* src, size_t length) {
   self->tag = AST_TOKEN;
   self->data.token = ast_make_string(src, length);
   return self;
-}
-
-bool ast_is_token(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TOKEN;
-}
-
-StringRef ast_get_token(AstRef ast) {
-  assert(ast);
-  if (ast_is_token(ast)) {
-    return ast->data.token;
-  }
-  return NULL;
 }
