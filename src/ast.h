@@ -11,6 +11,12 @@ enum AstTag {
   AST_STRING_LITERAL,
   AST_PRIMARY_EXPRESSION,
   AST_POSTFIX_EXPRESSION,
+  AST_INDEX_ACCESS_EXPRESSION,
+  AST_FUNCTION_CALL_EXPRESSION,
+  AST_DOT_ACCESS_EXPRESSION,
+  AST_ARROW_ACCESS_EXPRESSION,
+  AST_POSTFIX_INCREMENT_EXPRESSION,
+  AST_POSTFIX_DECREMENT_EXPRESSION,
   AST_ARGUMENT_EXPRESSION_LIST,
   AST_UNARY_EXPRESSION,
   AST_UNARY_OPERATOR,
@@ -90,6 +96,12 @@ typedef struct AstCharacterConstant* AstCharacterConstantRef;
 typedef struct AstStringLiteral* AstStringLiteralRef;
 typedef struct AstPrimaryExpression* AstPrimaryExpressionRef;
 typedef struct AstPostfixExpression* AstPostfixExpressionRef;
+typedef struct AstIndexAccessExpression* AstIndexAccessExpressionRef;
+typedef struct AstFunctionCallExpression* AstFunctionCallExpressionRef;
+typedef struct AstDotAccessExpression* AstDotAccessExpressionRef;
+typedef struct AstArrowAccessExpression* AstArrowAccessExpressionRef;
+typedef struct AstPostfixIncrementExpression* AstPostfixIncrementExpressionRef;
+typedef struct AstPostfixDecrementExpression* AstPostfixDecrementExpressionRef;
 typedef struct AstArgumentExpressionList* AstArgumentExpressionListRef;
 typedef struct AstUnaryExpression* AstUnaryExpressionRef;
 typedef struct AstUnaryOperator* AstUnaryOperatorRef;
