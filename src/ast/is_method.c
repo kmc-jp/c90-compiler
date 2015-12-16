@@ -357,6 +357,11 @@ bool ast_is_function_definition(AstRef ast) {
   return ast->tag == AST_FUNCTION_DEFINITION;
 }
 
+bool ast_is_vector(AstRef ast) {
+  assert(ast);
+  return ast->tag == AST_VECTOR;
+}
+
 bool ast_is_token(AstRef ast) {
   assert(ast);
   return ast->tag == AST_TOKEN;

@@ -2,6 +2,7 @@
 #define KMC_C89_COMPILER_AST_AST_IMPL_H
 
 #include "../ast.h"
+#include "ast_vector.h"
 #include "../stdstring.h"
 
 struct Ast {
@@ -79,6 +80,7 @@ struct Ast {
     AstExternalDeclarationRef external_declaration;
     AstFunctionDefinitionRef function_definition;
 
+    AstVectorRef vector;
     StringRef token;
   } data;
 };
