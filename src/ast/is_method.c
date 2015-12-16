@@ -2,367 +2,82 @@
 #include <assert.h>
 #include "ast_impl.h"
 
-bool ast_is_identifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_IDENTIFIER;
-}
-
-bool ast_is_constant(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_CONSTANT;
-}
-
-bool ast_is_floating_constant(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_FLOATING_CONSTANT;
-}
-
-bool ast_is_integer_constant(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INTEGER_CONSTANT;
-}
-
-bool ast_is_enumeration_constant(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ENUMERATION_CONSTANT;
-}
-
-bool ast_is_character_constant(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_CHARACTER_CONSTANT;
-}
-
-bool ast_is_string_literal(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRING_LITERAL;
-}
-
-bool ast_is_primary_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_PRIMARY_EXPRESSION;
-}
-
-bool ast_is_postfix_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_POSTFIX_EXPRESSION;
-}
-
-bool ast_is_argument_expression_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ARGUMENT_EXPRESSION_LIST;
-}
-
-bool ast_is_unary_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_UNARY_EXPRESSION;
-}
-
-bool ast_is_unary_operator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_UNARY_OPERATOR;
-}
-
-bool ast_is_cast_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_CAST_EXPRESSION;
-}
-
-bool ast_is_multiplicative_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_MULTIPLICATIVE_EXPRESSION;
-}
-
-bool ast_is_additive_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ADDITIVE_EXPRESSION;
-}
-
-bool ast_is_shift_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_SHIFT_EXPRESSION;
-}
-
-bool ast_is_relational_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_RELATIONAL_EXPRESSION;
-}
-
-bool ast_is_equality_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_EQUALITY_EXPRESSION;
-}
-
-bool ast_is_and_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_AND_EXPRESSION;
-}
-
-bool ast_is_exclusive_or_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_EXCLUSIVE_OR_EXPRESSION;
-}
-
-bool ast_is_inclusive_or_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INCLUSIVE_OR_EXPRESSION;
-}
-
-bool ast_is_logical_and_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_LOGICAL_AND_EXPRESSION;
-}
-
-bool ast_is_logical_or_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_LOGICAL_OR_EXPRESSION;
-}
-
-bool ast_is_conditional_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_CONDITIONAL_EXPRESSION;
-}
-
-bool ast_is_assignment_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ASSIGNMENT_EXPRESSION;
-}
-
-bool ast_is_assignment_operator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ASSIGNMENT_OPERATOR;
-}
-
-bool ast_is_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_EXPRESSION;
-}
-
-bool ast_is_constant_expression(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_CONSTANT_EXPRESSION;
-}
-
-bool ast_is_declaration(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DECLARATION;
-}
-
-bool ast_is_declaration_specifiers(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DECLARATION_SPECIFIERS;
-}
-
-bool ast_is_init_declarator_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INIT_DECLARATOR_LIST;
-}
-
-bool ast_is_init_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INIT_DECLARATOR;
-}
-
-bool ast_is_storage_class_specifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STORAGE_CLASS_SPECIFIER;
-}
-
-bool ast_is_type_specifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TYPE_SPECIFIER;
-}
-
-bool ast_is_struct_or_union_specifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_OR_UNION_SPECIFIER;
-}
-
-bool ast_is_struct_or_union(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_OR_UNION;
-}
-
-bool ast_is_struct_declaration_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_DECLARATION_LIST;
-}
-
-bool ast_is_struct_declaration(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_DECLARATION;
-}
-
-bool ast_is_specifier_qualifier_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_SPECIFIER_QUALIFIER_LIST;
-}
-
-bool ast_is_struct_declarator_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_DECLARATOR_LIST;
-}
-
-bool ast_is_struct_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STRUCT_DECLARATOR;
-}
-
-bool ast_is_enum_specifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ENUM_SPECIFIER;
-}
-
-bool ast_is_enumerator_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ENUMERATOR_LIST;
-}
-
-bool ast_is_enumerator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ENUMERATOR;
-}
-
-bool ast_is_type_qualifier(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TYPE_QUALIFIER;
-}
-
-bool ast_is_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DECLARATOR;
-}
-
-bool ast_is_direct_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DIRECT_DECLARATOR;
-}
-
-bool ast_is_pointer(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_POINTER;
-}
-
-bool ast_is_type_qualifier_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TYPE_QUALIFIER_LIST;
-}
-
-bool ast_is_parameter_type_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_PARAMETER_TYPE_LIST;
-}
-
-bool ast_is_parameter_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_PARAMETER_LIST;
-}
-
-bool ast_is_parameter_declaration(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_PARAMETER_DECLARATION;
-}
-
-bool ast_is_identifier_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_IDENTIFIER_LIST;
-}
-
-bool ast_is_type_name(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TYPE_NAME;
-}
-
-bool ast_is_abstract_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ABSTRACT_DECLARATOR;
-}
-
-bool ast_is_direct_abstract_declarator(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DIRECT_ABSTRACT_DECLARATOR;
-}
-
-bool ast_is_typedef_name(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TYPEDEF_NAME;
-}
-
-bool ast_is_initializer(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INITIALIZER;
-}
-
-bool ast_is_initializer_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_INITIALIZER_LIST;
-}
-
-bool ast_is_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STATEMENT;
-}
-
-bool ast_is_labeled_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_LABELED_STATEMENT;
-}
-
-bool ast_is_compound_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_COMPOUND_STATEMENT;
-}
-
-bool ast_is_declaration_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_DECLARATION_LIST;
-}
-
-bool ast_is_statement_list(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_STATEMENT_LIST;
-}
-
-bool ast_is_expression_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_EXPRESSION_STATEMENT;
-}
-
-bool ast_is_selection_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_SELECTION_STATEMENT;
-}
-
-bool ast_is_iteration_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_ITERATION_STATEMENT;
-}
-
-bool ast_is_jump_statement(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_JUMP_STATEMENT;
-}
-
-bool ast_is_translation_unit(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TRANSLATION_UNIT;
-}
-
-bool ast_is_external_declaration(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_EXTERNAL_DECLARATION;
-}
-
-bool ast_is_function_definition(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_FUNCTION_DEFINITION;
-}
-
-bool ast_is_vector(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_VECTOR;
-}
-
-bool ast_is_token(AstRef ast) {
-  assert(ast);
-  return ast->tag == AST_TOKEN;
-}
+#define DEFINE_AST_IS_METHOD(lower, upper) \
+  bool ast_is_ ## lower(AstRef ast) { \
+    assert(ast); \
+    return ast->tag == AST_ ## upper; \
+  }
+
+DEFINE_AST_IS_METHOD(identifier, IDENTIFIER)
+DEFINE_AST_IS_METHOD(constant, CONSTANT)
+DEFINE_AST_IS_METHOD(floating_constant, FLOATING_CONSTANT)
+DEFINE_AST_IS_METHOD(integer_constant, INTEGER_CONSTANT)
+DEFINE_AST_IS_METHOD(enumeration_constant, ENUMERATION_CONSTANT)
+DEFINE_AST_IS_METHOD(character_constant, CHARACTER_CONSTANT)
+DEFINE_AST_IS_METHOD(string_literal, STRING_LITERAL)
+DEFINE_AST_IS_METHOD(primary_expression, PRIMARY_EXPRESSION)
+DEFINE_AST_IS_METHOD(postfix_expression, POSTFIX_EXPRESSION)
+DEFINE_AST_IS_METHOD(argument_expression_list, ARGUMENT_EXPRESSION_LIST)
+DEFINE_AST_IS_METHOD(unary_expression, UNARY_EXPRESSION)
+DEFINE_AST_IS_METHOD(unary_operator, UNARY_OPERATOR)
+DEFINE_AST_IS_METHOD(cast_expression, CAST_EXPRESSION)
+DEFINE_AST_IS_METHOD(multiplicative_expression, MULTIPLICATIVE_EXPRESSION)
+DEFINE_AST_IS_METHOD(additive_expression, ADDITIVE_EXPRESSION)
+DEFINE_AST_IS_METHOD(shift_expression, SHIFT_EXPRESSION)
+DEFINE_AST_IS_METHOD(relational_expression, RELATIONAL_EXPRESSION)
+DEFINE_AST_IS_METHOD(equality_expression, EQUALITY_EXPRESSION)
+DEFINE_AST_IS_METHOD(and_expression, AND_EXPRESSION)
+DEFINE_AST_IS_METHOD(exclusive_or_expression, EXCLUSIVE_OR_EXPRESSION)
+DEFINE_AST_IS_METHOD(inclusive_or_expression, INCLUSIVE_OR_EXPRESSION)
+DEFINE_AST_IS_METHOD(logical_and_expression, LOGICAL_AND_EXPRESSION)
+DEFINE_AST_IS_METHOD(logical_or_expression, LOGICAL_OR_EXPRESSION)
+DEFINE_AST_IS_METHOD(conditional_expression, CONDITIONAL_EXPRESSION)
+DEFINE_AST_IS_METHOD(assignment_expression, ASSIGNMENT_EXPRESSION)
+DEFINE_AST_IS_METHOD(assignment_operator, ASSIGNMENT_OPERATOR)
+DEFINE_AST_IS_METHOD(expression, EXPRESSION)
+DEFINE_AST_IS_METHOD(constant_expression, CONSTANT_EXPRESSION)
+DEFINE_AST_IS_METHOD(declaration, DECLARATION)
+DEFINE_AST_IS_METHOD(declaration_specifiers, DECLARATION_SPECIFIERS)
+DEFINE_AST_IS_METHOD(init_declarator_list, INIT_DECLARATOR_LIST)
+DEFINE_AST_IS_METHOD(init_declarator, INIT_DECLARATOR)
+DEFINE_AST_IS_METHOD(storage_class_specifier, STORAGE_CLASS_SPECIFIER)
+DEFINE_AST_IS_METHOD(type_specifier, TYPE_SPECIFIER)
+DEFINE_AST_IS_METHOD(struct_or_union_specifier, STRUCT_OR_UNION_SPECIFIER)
+DEFINE_AST_IS_METHOD(struct_or_union, STRUCT_OR_UNION)
+DEFINE_AST_IS_METHOD(struct_declaration_list, STRUCT_DECLARATION_LIST)
+DEFINE_AST_IS_METHOD(struct_declaration, STRUCT_DECLARATION)
+DEFINE_AST_IS_METHOD(specifier_qualifier_list, SPECIFIER_QUALIFIER_LIST)
+DEFINE_AST_IS_METHOD(struct_declarator_list, STRUCT_DECLARATOR_LIST)
+DEFINE_AST_IS_METHOD(struct_declarator, STRUCT_DECLARATOR)
+DEFINE_AST_IS_METHOD(enum_specifier, ENUM_SPECIFIER)
+DEFINE_AST_IS_METHOD(enumerator_list, ENUMERATOR_LIST)
+DEFINE_AST_IS_METHOD(enumerator, ENUMERATOR)
+DEFINE_AST_IS_METHOD(type_qualifier, TYPE_QUALIFIER)
+DEFINE_AST_IS_METHOD(declarator, DECLARATOR)
+DEFINE_AST_IS_METHOD(direct_declarator, DIRECT_DECLARATOR)
+DEFINE_AST_IS_METHOD(pointer, POINTER)
+DEFINE_AST_IS_METHOD(type_qualifier_list, TYPE_QUALIFIER_LIST)
+DEFINE_AST_IS_METHOD(parameter_type_list, PARAMETER_TYPE_LIST)
+DEFINE_AST_IS_METHOD(parameter_list, PARAMETER_LIST)
+DEFINE_AST_IS_METHOD(parameter_declaration, PARAMETER_DECLARATION)
+DEFINE_AST_IS_METHOD(identifier_list, IDENTIFIER_LIST)
+DEFINE_AST_IS_METHOD(type_name, TYPE_NAME)
+DEFINE_AST_IS_METHOD(abstract_declarator, ABSTRACT_DECLARATOR)
+DEFINE_AST_IS_METHOD(direct_abstract_declarator, DIRECT_ABSTRACT_DECLARATOR)
+DEFINE_AST_IS_METHOD(typedef_name, TYPEDEF_NAME)
+DEFINE_AST_IS_METHOD(initializer, INITIALIZER)
+DEFINE_AST_IS_METHOD(initializer_list, INITIALIZER_LIST)
+DEFINE_AST_IS_METHOD(statement, STATEMENT)
+DEFINE_AST_IS_METHOD(labeled_statement, LABELED_STATEMENT)
+DEFINE_AST_IS_METHOD(compound_statement, COMPOUND_STATEMENT)
+DEFINE_AST_IS_METHOD(declaration_list, DECLARATION_LIST)
+DEFINE_AST_IS_METHOD(statement_list, STATEMENT_LIST)
+DEFINE_AST_IS_METHOD(expression_statement, EXPRESSION_STATEMENT)
+DEFINE_AST_IS_METHOD(selection_statement, SELECTION_STATEMENT)
+DEFINE_AST_IS_METHOD(iteration_statement, ITERATION_STATEMENT)
+DEFINE_AST_IS_METHOD(jump_statement, JUMP_STATEMENT)
+DEFINE_AST_IS_METHOD(translation_unit, TRANSLATION_UNIT)
+DEFINE_AST_IS_METHOD(external_declaration, EXTERNAL_DECLARATION)
+DEFINE_AST_IS_METHOD(function_definition, FUNCTION_DEFINITION)
+DEFINE_AST_IS_METHOD(vector, VECTOR)
+DEFINE_AST_IS_METHOD(token, TOKEN)

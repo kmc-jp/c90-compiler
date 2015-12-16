@@ -31,14 +31,10 @@ void ast_string_allocator_ctor(void) {
   g_string_allocator.manager_ = ast_pool();
 }
 
-AstTokenRef ast_make_string(const char* src, size_t length) {
-  return make_string(src, length, &g_string_allocator);
-}
-
 AstRef ast_make_token(const char* src, size_t length) {
   AstRef self = ast_palloc(struct Ast);
   assert(src);
   self->tag = AST_TOKEN;
-  self->data.token = ast_make_string(src, length);
+  self->data.token = make_string(src, length, &g_string_allocator);
   return self;
 }

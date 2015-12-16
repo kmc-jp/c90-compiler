@@ -1,5 +1,4 @@
-#include "make_method.h"
-#include <assert.h>
+#include "lexical_elements.h"
 #include "ast_impl.h"
 #include "is_method.h"
 #include "pool.h"
@@ -34,7 +33,6 @@ struct AstStringLiteral {
 
 AstRef ast_make_identifier(AstRef token) {
   AstRef self = NULL;
-  assert(token);
   if (ast_is_token(token)) {
     AstIdentifierRef data = ast_palloc(struct AstIdentifier);
     data->token = token;
@@ -47,7 +45,6 @@ AstRef ast_make_identifier(AstRef token) {
 
 AstRef ast_make_constant(AstRef constant) {
   AstRef self = NULL;
-  assert(constant);
   if (ast_is_floating_constant(constant) ||
       ast_is_integer_constant(constant) ||
       ast_is_enumeration_constant(constant) ||
@@ -63,7 +60,6 @@ AstRef ast_make_constant(AstRef constant) {
 
 AstRef ast_make_floating_constant(AstRef token) {
   AstRef self = NULL;
-  assert(token);
   if (ast_is_token(token)) {
     AstFloatingConstantRef data = ast_palloc(struct AstFloatingConstant);
     data->token = token;
@@ -76,7 +72,6 @@ AstRef ast_make_floating_constant(AstRef token) {
 
 AstRef ast_make_integer_constant(AstRef token) {
   AstRef self = NULL;
-  assert(token);
   if (ast_is_token(token)) {
     AstIntegerConstantRef data = ast_palloc(struct AstIntegerConstant);
     data->token = token;
@@ -89,7 +84,6 @@ AstRef ast_make_integer_constant(AstRef token) {
 
 AstRef ast_make_enumeration_constant(AstRef identifier) {
   AstRef self = NULL;
-  assert(identifier);
   if (ast_is_identifier(identifier)) {
     AstEnumerationConstantRef data = ast_palloc(struct AstEnumerationConstant);
     data->identifier = identifier;
@@ -102,7 +96,6 @@ AstRef ast_make_enumeration_constant(AstRef identifier) {
 
 AstRef ast_make_character_constant(AstRef token) {
   AstRef self = NULL;
-  assert(token);
   if (ast_is_token(token)) {
     AstCharacterConstantRef data = ast_palloc(struct AstCharacterConstant);
     data->token = token;
@@ -115,7 +108,6 @@ AstRef ast_make_character_constant(AstRef token) {
 
 AstRef ast_make_string_literal(AstRef token) {
   AstRef self = NULL;
-  assert(token);
   if (ast_is_token(token)) {
     AstStringLiteralRef data = ast_palloc(struct AstStringLiteral);
     data->token = token;
