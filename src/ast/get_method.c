@@ -569,3 +569,11 @@ AstFunctionDefinitionRef ast_get_function_definition(AstRef ast) {
   }
   return NULL;
 }
+
+StringRef ast_get_token(AstRef ast) {
+  assert(ast);
+  if (ast_is_token(ast)) {
+    return ast->data.token;
+  }
+  return NULL;
+}
