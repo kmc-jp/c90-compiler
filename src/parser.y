@@ -110,11 +110,19 @@ argument-expression-list
 
 unary-expression
 : postfix-expression
-| "++" unary-expression
-| "--" unary-expression
+| prefix-increment-expression
+| prefix-decrement-expression
 | unary-operator cast-expression
-| "sizeof" unary-expression
-| "sizeof" '(' type-name ')'
+| sizeof-expression
+| sizeof-type-expression
+;
+
+prefix-increment-expression
+: "++" unary-expression
+;
+
+prefix-decrement-expression
+: "--" unary-expression
 ;
 
 unary-operator
@@ -124,6 +132,14 @@ unary-operator
 | '-'
 | '~'
 | '!'
+;
+
+sizeof-expression
+: "sizeof" unary-expression
+;
+
+sizeof-type-expression
+: "sizeof" '(' type-name ')'
 ;
 
 cast-expression
