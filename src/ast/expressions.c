@@ -31,7 +31,19 @@ struct AstArgumentExpressionList {
 struct AstUnaryExpression {
 };
 
+struct AstPrefixIncrementExpression {
+};
+
+struct AstPrefixDecrementExpression {
+};
+
 struct AstUnaryOperator {
+};
+
+struct AstSizeofExpression {
+};
+
+struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {

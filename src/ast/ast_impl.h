@@ -25,7 +25,11 @@ struct Ast {
     AstPostfixDecrementExpressionRef postfix_decrement_expression;
     AstArgumentExpressionListRef argument_expression_list;
     AstUnaryExpressionRef unary_expression;
+    AstPrefixIncrementExpressionRef prefix_increment_expression;
+    AstPrefixDecrementExpressionRef prefix_decrement_expression;
     AstUnaryOperatorRef unary_operator;
+    AstSizeofExpressionRef sizeof_expression;
+    AstSizeofTypeExpressionRef sizeof_type_expression;
     AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
     AstAdditiveExpressionRef additive_expression;

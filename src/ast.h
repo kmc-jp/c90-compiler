@@ -19,7 +19,11 @@ enum AstTag {
   AST_POSTFIX_DECREMENT_EXPRESSION,
   AST_ARGUMENT_EXPRESSION_LIST,
   AST_UNARY_EXPRESSION,
+  AST_PREFIX_INCREMENT_EXPRESSION,
+  AST_PREFIX_DECREMENT_EXPRESSION,
   AST_UNARY_OPERATOR,
+  AST_SIZEOF_EXPRESSION,
+  AST_SIZEOF_TYPE_EXPRESSION,
   AST_CAST_EXPRESSION,
   AST_MULTIPLICATIVE_EXPRESSION,
   AST_ADDITIVE_EXPRESSION,
@@ -104,7 +108,11 @@ typedef struct AstPostfixIncrementExpression* AstPostfixIncrementExpressionRef;
 typedef struct AstPostfixDecrementExpression* AstPostfixDecrementExpressionRef;
 typedef struct AstArgumentExpressionList* AstArgumentExpressionListRef;
 typedef struct AstUnaryExpression* AstUnaryExpressionRef;
+typedef struct AstPrefixIncrementExpression* AstPrefixIncrementExpressionRef;
+typedef struct AstPrefixDecrementExpression* AstPrefixDecrementExpressionRef;
 typedef struct AstUnaryOperator* AstUnaryOperatorRef;
+typedef struct AstSizeofExpression* AstSizeofExpressionRef;
+typedef struct AstSizeofTypeExpression* AstSizeofTypeExpressionRef;
 typedef struct AstCastExpression* AstCastExpressionRef;
 typedef struct AstMultiplicativeExpression* AstMultiplicativeExpressionRef;
 typedef struct AstAdditiveExpression* AstAdditiveExpressionRef;

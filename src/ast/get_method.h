@@ -20,7 +20,11 @@ AstPostfixIncrementExpressionRef ast_get_postfix_increment_expression(AstRef ast
 AstPostfixDecrementExpressionRef ast_get_postfix_decrement_expression(AstRef ast);
 AstArgumentExpressionListRef ast_get_argument_expression_list(AstRef ast);
 AstUnaryExpressionRef ast_get_unary_expression(AstRef ast);
+AstPrefixIncrementExpressionRef ast_get_prefix_increment_expression(AstRef ast);
+AstPrefixDecrementExpressionRef ast_get_prefix_decrement_expression(AstRef ast);
 AstUnaryOperatorRef ast_get_unary_operator(AstRef ast);
+AstSizeofExpressionRef ast_get_sizeof_expression(AstRef ast);
+AstSizeofTypeExpressionRef ast_get_sizeof_type_expression(AstRef ast);
 AstCastExpressionRef ast_get_cast_expression(AstRef ast);
 AstMultiplicativeExpressionRef ast_get_multiplicative_expression(AstRef ast);
 AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);
