@@ -1,3 +1,4 @@
+#include "lexical_elements.h"
 #include "ast_impl.h"
 
 struct AstIdentifier {

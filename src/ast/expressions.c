@@ -1,3 +1,4 @@
+#include "expressions.h"
 #include "ast_impl.h"
 
 struct AstPrimaryExpression {

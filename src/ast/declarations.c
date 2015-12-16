@@ -1,3 +1,4 @@
+#include "declarations.h"
 #include "ast_impl.h"
 
 struct AstDeclaration {
