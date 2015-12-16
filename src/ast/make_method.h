@@ -2,6 +2,7 @@
 #define KMC_C89_COMPILER_AST_MAKE_METHOD_H
 
 #include "../ast.h"
+#include "../utility.h"
 
 AstRef ast_make_identifier();
 AstRef ast_make_constant();
@@ -77,5 +78,6 @@ AstRef ast_make_function_definition();
 
 AstRef ast_make_vector(void);
 AstRef ast_push_vector(AstRef vector, AstRef element);
+AstRef ast_make_token(const char* src, size_t length);
 
 #endif  /* KMC_C89_COMPILER_AST_MAKE_METHOD_H */

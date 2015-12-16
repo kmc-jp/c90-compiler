@@ -76,5 +76,6 @@ AstExternalDeclarationRef ast_get_external_declaration(AstRef ast);
 AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);
 
 AstVectorRef ast_get_vector(AstRef ast);
+StringRef ast_get_token(AstRef ast);
 
 #endif  /* KMC_C89_COMPILER_AST_GET_METHOD_H */
