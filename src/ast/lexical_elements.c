@@ -47,7 +47,7 @@ AstRef ast_make_identifier(AstRef token) {
 
 AstRef ast_make_constant(AstRef constant) {
   AstRef self = NULL;
-  assert(token);
+  assert(constant);
   if (ast_is_floating_constant(constant) ||
       ast_is_integer_constant(constant) ||
       ast_is_enumeration_constant(constant) ||
@@ -89,7 +89,7 @@ AstRef ast_make_integer_constant(AstRef token) {
 
 AstRef ast_make_enumeration_constant(AstRef identifier) {
   AstRef self = NULL;
-  assert(token);
+  assert(identifier);
   if (ast_is_identifier(identifier)) {
     AstEnumerationConstantRef data = ast_palloc(struct AstEnumerationConstant);
     data->identifier = identifier;
