@@ -1,4 +1,6 @@
 #include "ast_vector.h"
+#include <assert.h>
+#include "../ast_method.h"
 #include "ast_impl.h"
 #include "pool.h"
 
@@ -38,5 +40,15 @@ AstRef ast_make_vector(void) {
   AstRef self = ast_palloc(struct Ast);
   self->tag = AST_VECTOR;
   self->data.vector = ast_vector_ctor();
+  return self;
+}
+
+AstRef ast_push_vector(AstRef vector, AstRef element) {
+  AstRef self = NULL;
+  assert(vector && element);
+  if (ast_is_vector(vector)) {
+    self = vector;
+    AST_VECTOR_FUNC(push_back)(ast_get_vector(vector), element);
+  }
   return self;
 }
