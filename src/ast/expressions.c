@@ -7,6 +7,24 @@ struct AstPrimaryExpression {
 struct AstPostfixExpression {
 };
 
+struct AstIndexAccessExpression {
+};
+
+struct AstFunctionCallExpression {
+};
+
+struct AstDotAccessExpression {
+};
+
+struct AstArrowAccessExpression {
+};
+
+struct AstPostfixIncrementExpression {
+};
+
+struct AstPostfixDecrementExpression {
+};
+
 struct AstArgumentExpressionList {
 };
 

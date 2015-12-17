@@ -66,12 +66,36 @@ primary-expression
 
 postfix-expression
 : primary-expression
-| postfix-expression '[' expression ']'
-| postfix-expression '(' argument-expression-list.opt ')'
-| postfix-expression '.' identifier
-| postfix-expression "->" identifier
-| postfix-expression "++"
-| postfix-expression "--"
+| index-access-expression
+| function-call-expression
+| dot-access-expression
+| arrow-access-expression
+| postfix-increment-expression
+| postfix-decrement-expression
+;
+
+index-access-expression
+: postfix-expression '[' expression ']'
+;
+
+function-call-expression
+: postfix-expression '(' argument-expression-list.opt ')'
+;
+
+dot-access-expression
+: postfix-expression '.' identifier
+;
+
+arrow-access-expression
+: postfix-expression "->" identifier
+;
+
+postfix-increment-expression
+: postfix-expression "++"
+;
+
+postfix-decrement-expression
+: postfix-expression "--"
 ;
 
 argument-expression-list.opt
