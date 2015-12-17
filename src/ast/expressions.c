@@ -55,6 +55,9 @@ struct AstEqualityExpression {
 struct AstAndExpression {
 };
 
+struct AstBinaryAndExpression {
+};
+
 struct AstExclusiveOrExpression {
 };
 
