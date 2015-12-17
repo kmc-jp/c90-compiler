@@ -2,8 +2,8 @@
 
 LLVM_CONFIG ?= llvm-config
 LLVM_MODULES := core analysis bitwriter
-LLVM_CFLAGS := `$(LLVM_CONFIG) --cflags`
-LLVM_CXXFLAGS := `$(LLVM_CONFIG) --cxxflags`
+LLVM_CFLAGS := `$(LLVM_CONFIG) --cflags | sed 's/-DNDEBUG\>//g'`
+LLVM_CXXFLAGS := `$(LLVM_CONFIG) --cxxflags | sed 's/-DNDEBUG\>//g'`
 LLVM_LDFLAGS := `$(LLVM_CONFIG) --ldflags`
 LLVM_LDLIBS := `$(LLVM_CONFIG) --libs $(LLVM_MODULES)` -lpthread -ldl -lncurses
 
