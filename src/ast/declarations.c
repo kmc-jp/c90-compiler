@@ -73,6 +73,7 @@ struct AstBitFieldDeclarator {
 };
 
 struct AstEnumSpecifier {
+  AstRef enum_specifier;
 };
 
 struct AstEnumDefinition {
@@ -312,6 +313,19 @@ AstRef ast_make_bit_field_declarator(AstRef declarator,
     self = ast_palloc(struct Ast);
     self->tag = AST_BIT_FIELD_DECLARATOR;
     self->data.bit_field_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enum_specifier(AstRef enum_specifier) {
+  AstRef self = NULL;
+  if (ast_is_enum_definition(enum_specifier) ||
+      ast_is_enum_declaration(enum_specifier)) {
+    AstEnumSpecifierRef data = ast_palloc(struct AstEnumSpecifier);
+    data->enum_specifier = enum_specifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUM_SPECIFIER;
+    self->data.enum_specifier = data;
   }
   return self;
 }
