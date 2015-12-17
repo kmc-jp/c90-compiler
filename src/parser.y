@@ -255,7 +255,11 @@ logical-OR-expression
 
 conditional-expression
 : logical-OR-expression
-| logical-OR-expression '?' expression ':' conditional-expression
+| ternary-expression
+;
+
+ternary-expression
+: logical-OR-expression '?' expression ':' conditional-expression
 ;
 
 assignment-expression
