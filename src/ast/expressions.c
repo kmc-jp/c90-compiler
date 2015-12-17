@@ -100,10 +100,10 @@ struct AstRelationalExpression {
 struct AstEqualityExpression {
 };
 
-struct AstEqualExpression {
+struct AstEqualToExpression {
 };
 
-struct AstNotEqualExpression {
+struct AstNotEqualToExpression {
 };
 
 struct AstAndExpression {

@@ -48,8 +48,8 @@ struct Ast {
     AstShiftExpressionRef shift_expression;
     AstRelationalExpressionRef relational_expression;
     AstEqualityExpressionRef equality_expression;
-    AstEqualExpressionRef equal_expression;
-    AstNotEqualExpressionRef not_equal_expression;
+    AstEqualToExpressionRef equal_to_expression;
+    AstNotEqualToExpressionRef not_equal_to_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;
