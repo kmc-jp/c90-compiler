@@ -284,7 +284,11 @@ expression.opt
 
 expression
 : assignment-expression
-| expression ',' assignment-expression
+| comma-expression
+;
+
+comma-expression
+: expression ',' assignment-expression
 ;
 
 constant-expression.opt
