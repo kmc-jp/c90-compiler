@@ -64,6 +64,7 @@ struct AstStructDeclaratorList {
 };
 
 struct AstStructDeclarator {
+  AstRef struct_declarator;
 };
 
 struct AstBitFieldDeclarator {
@@ -280,6 +281,19 @@ AstRef ast_make_struct_declarator_list(AstRef struct_declarator_list,
     AstStructDeclaratorListRef data = ast_get_struct_declarator_list(struct_declarator_list);
     ast_push_vector(data->struct_declarator_vector, struct_declarator);
     self = struct_declarator_list;
+  }
+  return self;
+}
+
+AstRef ast_make_struct_declarator(AstRef struct_declarator) {
+  AstRef self = NULL;
+  if (ast_is_declarator(struct_declarator) ||
+      ast_is_bit_field_declarator(struct_declarator)) {
+    AstStructDeclaratorRef data = ast_palloc(struct AstStructDeclarator);
+    data->struct_declarator = struct_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STRUCT_DECLARATOR;
+    self->data.struct_declarator = data;
   }
   return self;
 }
