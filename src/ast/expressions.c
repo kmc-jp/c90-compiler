@@ -118,6 +118,9 @@ struct AstLogicalOrExpression {
 struct AstConditionalExpression {
 };
 
+struct AstTernaryExpression {
+};
+
 struct AstAssignmentExpression {
 };
 
