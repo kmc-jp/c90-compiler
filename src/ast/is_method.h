@@ -43,6 +43,7 @@ bool ast_is_struct_or_union(AstRef ast);
 bool ast_is_struct_declaration_list(AstRef ast);
 bool ast_is_struct_declaration(AstRef ast);
 bool ast_is_specifier_qualifier_list(AstRef ast);
+bool ast_is_specifier_qualifier(AstRef ast);
 bool ast_is_struct_declarator_list(AstRef ast);
 bool ast_is_struct_declarator(AstRef ast);
 bool ast_is_enum_specifier(AstRef ast);

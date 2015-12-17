@@ -47,6 +47,7 @@ struct Ast {
     AstStructDeclarationListRef struct_declaration_list;
     AstStructDeclarationRef struct_declaration;
     AstSpecifierQualifierListRef specifier_qualifier_list;
+    AstSpecifierQualifierRef specifier_qualifier;
     AstStructDeclaratorListRef struct_declarator_list;
     AstStructDeclaratorRef struct_declarator;
     AstEnumSpecifierRef enum_specifier;

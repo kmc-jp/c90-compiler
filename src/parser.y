@@ -285,8 +285,12 @@ specifier-qualifier-list.opt
 ;
 
 specifier-qualifier-list
-: type-specifier specifier-qualifier-list.opt
-| type-qualifier specifier-qualifier-list.opt
+: specifier-qualifier specifier-qualifier-list.opt
+;
+
+specifier-qualifier
+: type-specifier
+| type-qualifier
 ;
 
 struct-declarator-list

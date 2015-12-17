@@ -42,6 +42,7 @@ AstStructOrUnionRef ast_get_struct_or_union(AstRef ast);
 AstStructDeclarationListRef ast_get_struct_declaration_list(AstRef ast);
 AstStructDeclarationRef ast_get_struct_declaration(AstRef ast);
 AstSpecifierQualifierListRef ast_get_specifier_qualifier_list(AstRef ast);
+AstSpecifierQualifierRef ast_get_specifier_qualifier(AstRef ast);
 AstStructDeclaratorListRef ast_get_struct_declarator_list(AstRef ast);
 AstStructDeclaratorRef ast_get_struct_declarator(AstRef ast);
 AstEnumSpecifierRef ast_get_enum_specifier(AstRef ast);

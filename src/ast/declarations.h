@@ -14,6 +14,7 @@ AstRef ast_make_struct_or_union();
 AstRef ast_make_struct_declaration_list();
 AstRef ast_make_struct_declaration();
 AstRef ast_make_specifier_qualifier_list();
+AstRef ast_make_specifier_qualifier();
 AstRef ast_make_struct_declarator_list();
 AstRef ast_make_struct_declarator();
 AstRef ast_make_enum_specifier();

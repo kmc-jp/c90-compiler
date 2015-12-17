@@ -37,6 +37,9 @@ struct AstStructDeclaration {
 struct AstSpecifierQualifierList {
 };
 
+struct AstSpecifierQualifier {
+};
+
 struct AstStructDeclaratorList {
 };
 
