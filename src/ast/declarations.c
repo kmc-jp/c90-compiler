@@ -38,6 +38,7 @@ struct AstStructOrUnionDeclaration {
 };
 
 struct AstStructOrUnion {
+  AstRef struct_or_union;
 };
 
 struct AstStructDeclarationList {
@@ -178,6 +179,18 @@ AstRef ast_make_struct_or_union_declaration(AstRef struct_or_union,
     self = ast_palloc(struct Ast);
     self->tag = AST_STRUCT_OR_UNION_DECLARATION;
     self->data.struct_or_union_declaration = data;
+  }
+  return self;
+}
+
+AstRef ast_make_struct_or_union(AstRef struct_or_union) {
+  AstRef self = NULL;
+  if (ast_is_token(struct_or_union)) {
+    AstStructOrUnionRef data = ast_palloc(struct AstStructOrUnion);
+    data->struct_or_union = struct_or_union;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STRUCT_OR_UNION;
+    self->data.struct_or_union = data;
   }
   return self;
 }
