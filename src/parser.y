@@ -151,10 +151,26 @@ shift-expression
 
 relational-expression
 : shift-expression
-| relational-expression '<' shift-expression
-| relational-expression '>' shift-expression
-| relational-expression "<=" shift-expression
-| relational-expression ">=" shift-expression
+| less-expression
+| greater-expression
+| less-or-equal-expression
+| greater-or-equal-expression
+;
+
+less-expression
+: relational-expression '<' shift-expression
+;
+
+greater-expression
+: relational-expression '>' shift-expression
+;
+
+less-or-equal-expression
+: relational-expression "<=" shift-expression
+;
+
+greater-or-expression
+: relational-expression ">=" shift-expression
 ;
 
 equality-expression
