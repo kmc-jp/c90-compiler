@@ -260,17 +260,61 @@ conditional-expression
 
 assignment-expression
 : conditional-expression
-| unary-expression '=' assignment-expression
-| unary-expression "*=" assignment-expression
-| unary-expression "/=" assignment-expression
-| unary-expression "%=" assignment-expression
-| unary-expression "+=" assignment-expression
-| unary-expression "-=" assignment-expression
-| unary-expression "<<=" assignment-expression
-| unary-expression ">>=" assignment-expression
-| unary-expression "&=" assignment-expression
-| unary-expression "^=" assignment-expression
-| unary-expression "|=" assignment-expression
+| simple-assignment-expression
+| multiplication-assignment-expression
+| division-assignment-expression
+| modulo-assignment-expression
+| addition-assignment-expression
+| subtraction-assignment-expression
+| left-shift-assignment-expression
+| right-shift-assignment-expression
+| AND-assignment-expression
+| XOR-assignment-expression
+| OR-assignment-expression
+;
+
+simple-assignment-expression
+: unary-expression '=' assignment-expression
+;
+
+multiplication-assignment-expression
+: unary-expression "*=" assignment-expression
+;
+
+division-assignment-expression
+: unary-expression "/=" assignment-expression
+;
+
+modulo-assignment-expression
+: unary-expression "%=" assignment-expression
+;
+
+addition-assignment-expression
+: unary-expression "+=" assignment-expression
+;
+
+subtraction-assignment-expression
+: unary-expression "-=" assignment-expression
+;
+
+left-shift-assignment-expression
+: unary-expression "<<=" assignment-expression
+;
+
+right-shift-assignment-expression
+: unary-expression ">>=" assignment-expression
+;
+
+AND-assignment-expression
+: unary-expression "&=" assignment-expression
+;
+
+XOR-assignment-expression
+: unary-expression "^=" assignment-expression
+;
+
+OR-assignment-expression
+: unary-expression "|=" assignment-expression
 ;
 
 expression.opt
