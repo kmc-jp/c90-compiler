@@ -170,7 +170,11 @@ AND-expression
 
 exclusive-OR-expression
 : AND-expression
-| exclusive-OR-expression '^' AND-expression
+| binary-exclusive-OR-expression
+;
+
+binary-exclusive-OR-expression
+: exclusive-OR-expression '^' AND-expression
 ;
 
 inclusive-OR-expression
