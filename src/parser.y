@@ -110,37 +110,102 @@ argument-expression-list
 
 unary-expression
 : postfix-expression
-| "++" unary-expression
-| "--" unary-expression
-| unary-operator cast-expression
-| "sizeof" unary-expression
-| "sizeof" '(' type-name ')'
+| prefix-increment-expression
+| prefix-decrement-expression
+| unary-operator-expression
+| sizeof-expression
+| sizeof-type-expression
 ;
 
-unary-operator
-: '&'
-| '*'
-| '+'
-| '~'
-| '!'
+prefix-increment-expression
+: "++" unary-expression
+;
+
+prefix-decrement-expression
+: "--" unary-expression
+;
+
+unary-operator-expression
+: address-expression
+| dereference-expression
+| unary-plus-expression
+| unary-minus-expression
+| complement-expression
+| logical-negate-expression
+;
+
+sizeof-expression
+: "sizeof" unary-expression
+;
+
+sizeof-type-expression
+: "sizeof" '(' type-name ')'
+;
+
+address-expression
+: '&' cast-expression
+;
+
+dereference-expression
+: '*' cast-expression
+;
+
+unary-plus-expression
+: '+' cast-expression
+;
+
+unary-minus-expression
+: '-' cast-expression
+;
+
+complement-expression
+: '~' cast-expression
+;
+
+logical-negate-expression
+: '!' cast-expression
+;
+
+cast-or-unary-expression
+: unary-expression
+| cast-expression
 ;
 
 cast-expression
-: unary-expression
-| '(' type-name ')' cast-expression
+: '(' type-name ')' cast-or-unary-expression
 ;
 
 multiplicative-expression
-: cast-expression
-| multiplicative-expression '*' cast-expression
-| multiplicative-expression '/' cast-expression
-| multiplicative-expression '%' cast-expression
+: cast-or-unary-expression
+| multiply-expression
+| divide-expression
+| modulo-expression
+;
+
+multiply-expression
+: multiplicative-expression '*' cast-or-unary-expression
+;
+
+divide-expression
+: multiplicative-expression '/' cast-or-unary-expression
+;
+
+modulo-expression
+: multiplicative-expression '%' cast-or-unary-expression
 ;
 
 additive-expression
 : multiplicative-expression
-| additive-expression '+' multiplicative-expression
-| additive-expression '-' multiplicative-expression
+| add-expression
+| subtract-expression
+;
+
+add-expression
+: additive-expression '+' multiplicative-expression
+;
+
+subtract-expression
+: additive-expression '-' multiplicative-expression
 ;
 
 shift-expression
@@ -380,6 +445,11 @@ type-qualifier-list
 | type-qualifier-list type-qualifier
 ;
 
+parameter-type-list.opt
+: /* empty */
+| parameter-type-list
+;
+
 parameter-type-list
 : parameter-list
 | parameter-list ',' "..."
@@ -426,8 +496,8 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression ']'
-| direct-abstract-declarator.opt '[' parameter-type-list ']'
+| direct-abstract-declarator.opt '[' constant-expression.opt ']'
+| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
