@@ -127,7 +127,11 @@ unary-operator
 
 cast-expression
 : unary-expression
-| '(' type-name ')' cast-expression
+| typed-cast-expression
+;
+
+typed-cast-expression
+: '(' type-name ')' cast-expression
 ;
 
 multiplicative-expression
