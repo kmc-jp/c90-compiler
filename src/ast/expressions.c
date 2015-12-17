@@ -46,6 +46,12 @@ struct AstAdditiveExpression {
 struct AstShiftExpression {
 };
 
+struct AstLeftShiftExpression {
+};
+
+struct AstRightShiftExpression {
+};
+
 struct AstRelationalExpression {
 };
 

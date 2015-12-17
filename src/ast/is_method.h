@@ -26,6 +26,8 @@ bool ast_is_cast_expression(AstRef ast);
 bool ast_is_multiplicative_expression(AstRef ast);
 bool ast_is_additive_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);
+bool ast_is_left_shift_expression(AstRef ast);
+bool ast_is_right_shift_expression(AstRef ast);
 bool ast_is_relational_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);
 bool ast_is_and_expression(AstRef ast);

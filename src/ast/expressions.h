@@ -18,6 +18,8 @@ AstRef ast_make_cast_expression();
 AstRef ast_make_multiplicative_expression();
 AstRef ast_make_additive_expression();
 AstRef ast_make_shift_expression();
+AstRef ast_make_left_shift_expression();
+AstRef ast_make_right_shift_expression();
 AstRef ast_make_relational_expression();
 AstRef ast_make_equality_expression();
 AstRef ast_make_and_expression();

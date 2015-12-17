@@ -24,6 +24,8 @@ enum AstTag {
   AST_MULTIPLICATIVE_EXPRESSION,
   AST_ADDITIVE_EXPRESSION,
   AST_SHIFT_EXPRESSION,
+  AST_LEFT_SHIFT_EXPRESSION,
+  AST_RIGHT_SHIFT_EXPRESSION,
   AST_RELATIONAL_EXPRESSION,
   AST_EQUALITY_EXPRESSION,
   AST_AND_EXPRESSION,
@@ -109,6 +111,8 @@ typedef struct AstCastExpression* AstCastExpressionRef;
 typedef struct AstMultiplicativeExpression* AstMultiplicativeExpressionRef;
 typedef struct AstAdditiveExpression* AstAdditiveExpressionRef;
 typedef struct AstShiftExpression* AstShiftExpressionRef;
+typedef struct AstLeftShiftExpression* AstLeftShiftExpressionRef;
+typedef struct AstRightShiftExpression* AstRightShiftExpressionRef;
 typedef struct AstRelationalExpression* AstRelationalExpressionRef;
 typedef struct AstEqualityExpression* AstEqualityExpressionRef;
 typedef struct AstAndExpression* AstAndExpressionRef;
