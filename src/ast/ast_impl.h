@@ -31,6 +31,10 @@ struct Ast {
     AstAdditiveExpressionRef additive_expression;
     AstShiftExpressionRef shift_expression;
     AstRelationalExpressionRef relational_expression;
+    AstLessExpressionRef less_expression;
+    AstGreaterExpressionRef greater_expression;
+    AstLessOrEqualExpressionRef less_or_equal_expression;
+    AstGreaterOrEqualExpressionRef greater_or_equal_expression;
     AstEqualityExpressionRef equality_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;

@@ -49,6 +49,18 @@ struct AstShiftExpression {
 struct AstRelationalExpression {
 };
 
+struct AstLessExpression {
+};
+
+struct AstGreaterExpression {
+};
+
+struct AstLessOrEqualExpression {
+};
+
+struct AstGreaterOrEqualExpression {
+};
+
 struct AstEqualityExpression {
 };
 
