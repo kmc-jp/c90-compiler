@@ -17,7 +17,7 @@ DISTCLEAN_TARGETS :=
 
 CC ?= gcc
 CXX ?= g++
-COMMON_FLAGS := -Wall -Wextra -O2
+COMMON_FLAGS := -Wall -Wextra -O2 -DDEBUG
 DEPEND_FLAGS := -MMD -MP
 C89_RESTRICT_FLAGS := -ansi -pedantic
 CXX11_FLAGS := -std=c++11
