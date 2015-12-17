@@ -127,10 +127,10 @@ unary-operator
 
 cast-or-unary-expression
 : unary-expression
-| typed-cast-expression
+| cast-expression
 ;
 
-typed-cast-expression
+cast-expression
 : '(' type-name ')' cast-or-unary-expression
 ;
 

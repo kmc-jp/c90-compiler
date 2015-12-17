@@ -27,7 +27,7 @@ struct Ast {
     AstUnaryExpressionRef unary_expression;
     AstUnaryOperatorRef unary_operator;
     AstCastOrUnaryExpressionRef cast_or_unary_expression;
-    AstTypedCastExpressionRef typed_cast_expression;
+    AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
     AstAdditiveExpressionRef additive_expression;
     AstShiftExpressionRef shift_expression;

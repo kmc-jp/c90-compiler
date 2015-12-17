@@ -23,7 +23,7 @@ bool ast_is_argument_expression_list(AstRef ast);
 bool ast_is_unary_expression(AstRef ast);
 bool ast_is_unary_operator(AstRef ast);
 bool ast_is_cast_or_unary_expression(AstRef ast);
-bool ast_is_typed_cast_expression(AstRef ast);
+bool ast_is_cast_expression(AstRef ast);
 bool ast_is_multiplicative_expression(AstRef ast);
 bool ast_is_additive_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);

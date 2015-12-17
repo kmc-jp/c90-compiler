@@ -37,7 +37,7 @@ struct AstUnaryOperator {
 struct AstCastOrUnaryExpression {
 };
 
-struct AstTypedCastExpression {
+struct AstCastExpression {
 };
 
 struct AstMultiplicativeExpression {
