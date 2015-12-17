@@ -31,6 +31,7 @@ AstUnaryPlusExpressionRef ast_get_unary_plus_expression(AstRef ast);
 AstUnaryMinusExpressionRef ast_get_unary_minus_expression(AstRef ast);
 AstComplementExpressionRef ast_get_complement_expression(AstRef ast);
 AstLogicalNegateExpressionRef ast_get_logical_negate_expression(AstRef ast);
+AstCastOrUnaryExpressionRef ast_get_cast_or_unary_expression(AstRef ast);
 AstCastExpressionRef ast_get_cast_expression(AstRef ast);
 AstMultiplicativeExpressionRef ast_get_multiplicative_expression(AstRef ast);
 AstMultiplyExpressionRef ast_get_multiply_expression(AstRef ast);

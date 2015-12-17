@@ -166,28 +166,32 @@ logical-negate-expression
 : '!' cast-expression
 ;
 
-cast-expression
+cast-or-unary-expression
 : unary-expression
-| '(' type-name ')' cast-expression
+| cast-expression
+;
+
+cast-expression
+: '(' type-name ')' cast-or-unary-expression
 ;
 
 multiplicative-expression
-: cast-expression
+: cast-or-unary-expression
 | multiply-expression
 | divide-expression
 | modulo-expression
 ;
 
 multiply-expression
-: multiplicative-expression '*' cast-expression
+: multiplicative-expression '*' cast-or-unary-expression
 ;
 
 divide-expression
-: multiplicative-expression '/' cast-expression
+: multiplicative-expression '/' cast-or-unary-expression
 ;
 
 modulo-expression
-: multiplicative-expression '%' cast-expression
+: multiplicative-expression '%' cast-or-unary-expression
 ;
 
 additive-expression

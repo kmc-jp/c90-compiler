@@ -36,6 +36,7 @@ struct Ast {
     AstUnaryMinusExpressionRef unary_minus_expression;
     AstComplementExpressionRef complement_expression;
     AstLogicalNegateExpressionRef logical_negate_expression;
+    AstCastOrUnaryExpressionRef cast_or_unary_expression;
     AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
     AstMultiplyExpressionRef multiply_expression;

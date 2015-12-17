@@ -32,6 +32,7 @@ bool ast_is_unary_plus_expression(AstRef ast);
 bool ast_is_unary_minus_expression(AstRef ast);
 bool ast_is_complement_expression(AstRef ast);
 bool ast_is_logical_negate_expression(AstRef ast);
+bool ast_is_cast_or_unary_expression(AstRef ast);
 bool ast_is_cast_expression(AstRef ast);
 bool ast_is_multiplicative_expression(AstRef ast);
 bool ast_is_multiply_expression(AstRef ast);

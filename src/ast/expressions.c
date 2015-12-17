@@ -64,6 +64,9 @@ struct AstComplementExpression {
 struct AstLogicalNegateExpression {
 };
 
+struct AstCastOrUnaryExpression {
+};
+
 struct AstCastExpression {
 };
 
