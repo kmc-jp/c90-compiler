@@ -43,6 +43,12 @@ struct AstMultiplicativeExpression {
 struct AstAdditiveExpression {
 };
 
+struct AstAddExpression {
+};
+
+struct AstSubtractExpression {
+};
+
 struct AstShiftExpression {
 };
 
