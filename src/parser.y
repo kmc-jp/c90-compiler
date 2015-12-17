@@ -485,6 +485,11 @@ type-qualifier-list
 | type-qualifier-list type-qualifier
 ;
 
+parameter-type-list.opt
+: /* empty */
+| parameter-type-list
+;
+
 parameter-type-list
 : parameter-list
 | parameter-list ',' "..."
@@ -531,8 +536,8 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression ']'
-| direct-abstract-declarator.opt '[' parameter-type-list ']'
+| direct-abstract-declarator.opt '[' constant-expression.opt ']'
+| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
