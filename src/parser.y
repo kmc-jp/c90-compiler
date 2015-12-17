@@ -238,18 +238,18 @@ exclusive-OR-expression
 | exclusive-OR-expression '^' AND-expression
 ;
 
-inclusive-OR-expression
+OR-expression
 : exclusive-OR-expression
-| binary-inclusive-OR-expression
+| binary-OR-expression
 ;
 
-binary-inclusive-OR-expression
-: inclusive-OR-expression '|' exclusive-OR-expression
+binary-OR-expression
+: OR-expression '|' exclusive-OR-expression
 ;
 
 logical-AND-expression
-: inclusive-OR-expression
-| logical-AND-expression "&&" inclusive-OR-expression
+: OR-expression
+| logical-AND-expression "&&" OR-expression
 ;
 
 logical-OR-expression
