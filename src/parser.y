@@ -245,7 +245,11 @@ inclusive-OR-expression
 
 logical-AND-expression
 : inclusive-OR-expression
-| logical-AND-expression "&&" inclusive-OR-expression
+| binary-logical-AND-expression
+;
+
+binary-logical-AND-expression
+: logical-AND-expression "&&" inclusive-OR-expression
 ;
 
 logical-OR-expression
