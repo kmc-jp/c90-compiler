@@ -169,7 +169,7 @@ less-or-equal-expression
 : relational-expression "<=" shift-expression
 ;
 
-greater-or-expression
+greater-or-equal-expression
 : relational-expression ">=" shift-expression
 ;
 
