@@ -61,6 +61,7 @@ struct AstDeclarator {
 };
 
 struct AstDirectDeclarator {
+  AstRef direct_declarator;
 };
 
 struct AstArrayDeclarator {
@@ -125,6 +126,21 @@ AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator) {
     self = ast_palloc(struct Ast);
     self->tag = AST_DECLARATOR;
     self->data.declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_direct_declarator(AstRef direct_declarator) {
+  AstRef self = NULL;
+  if (ast_is_identifier(direct_declarator) ||
+      ast_is_declarator(direct_declarator) ||
+      ast_is_array_declarator(direct_declarator) ||
+      ast_is_function_declarator(direct_declarator)) {
+    AstDirectDeclaratorRef data = ast_palloc(struct AstDirectDeclarator);
+    data->direct_declarator = direct_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DIRECT_DECLARATOR;
+    self->data.direct_declarator = data;
   }
   return self;
 }
