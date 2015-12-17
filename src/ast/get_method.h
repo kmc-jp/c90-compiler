@@ -21,7 +21,7 @@ AstPostfixDecrementExpressionRef ast_get_postfix_decrement_expression(AstRef ast
 AstArgumentExpressionListRef ast_get_argument_expression_list(AstRef ast);
 AstUnaryExpressionRef ast_get_unary_expression(AstRef ast);
 AstUnaryOperatorRef ast_get_unary_operator(AstRef ast);
-AstCastExpressionRef ast_get_cast_expression(AstRef ast);
+AstCastOrUnaryExpressionRef ast_get_cast_or_unary_expression(AstRef ast);
 AstTypedCastExpressionRef ast_get_typed_cast_expression(AstRef ast);
 AstMultiplicativeExpressionRef ast_get_multiplicative_expression(AstRef ast);
 AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);

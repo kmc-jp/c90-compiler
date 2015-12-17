@@ -125,20 +125,20 @@ unary-operator
 | '!'
 ;
 
-cast-expression
+cast-or-unary-expression
 : unary-expression
 | typed-cast-expression
 ;
 
 typed-cast-expression
-: '(' type-name ')' cast-expression
+: '(' type-name ')' cast-or-unary-expression
 ;
 
 multiplicative-expression
-: cast-expression
-| multiplicative-expression '*' cast-expression
-| multiplicative-expression '/' cast-expression
-| multiplicative-expression '%' cast-expression
+: cast-or-unary-expression
+| multiplicative-expression '*' cast-or-unary-expression
+| multiplicative-expression '/' cast-or-unary-expression
+| multiplicative-expression '%' cast-or-unary-expression
 ;
 
 additive-expression
