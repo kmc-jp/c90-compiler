@@ -20,6 +20,7 @@ struct AstStorageClassSpecifier {
 };
 
 struct AstTypeSpecifier {
+  AstRef type_specifier;
 };
 
 struct AstStructOrUnionSpecifier {
@@ -114,3 +115,18 @@ struct AstInitializer {
 
 struct AstInitializerList {
 };
+
+AstRef ast_make_type_specifier(AstRef type_specifier) {
+  AstRef self = NULL;
+  if (ast_is_token(type_specifier) ||
+      ast_is_struct_or_union_specifier(type_specifier) ||
+      ast_is_enum_specifier(type_specifier) ||
+      ast_is_typedef_name(type_specifier)) {
+    AstTypeSpecifierRef data = ast_palloc(struct AstTypeSpecifier);
+    data->type_specifier = type_specifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_SPECIFIER;
+    self->data.type_specifier = data;
+  }
+  return self;
+}
