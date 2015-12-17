@@ -20,7 +20,7 @@ AstRef ast_make_enum_specifier();
 AstRef ast_make_enumerator_list();
 AstRef ast_make_enumerator();
 AstRef ast_make_type_qualifier();
-AstRef ast_make_declarator();
+AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator);
 AstRef ast_make_direct_declarator();
 AstRef ast_make_array_declarator();
 AstRef ast_make_function_declarator();

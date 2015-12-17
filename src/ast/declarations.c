@@ -56,6 +56,8 @@ struct AstTypeQualifier {
 };
 
 struct AstDeclarator {
+  AstRef pointer; /* NULLABLE */
+  AstRef direct_declarator;
 };
 
 struct AstDirectDeclarator {
@@ -111,3 +113,18 @@ struct AstInitializer {
 
 struct AstInitializerList {
 };
+
+AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator) {
+  AstRef self = NULL;
+  if ((pointer == NULL ||
+       ast_is_pointer(pointer)) &&
+      ast_is_direct_declarator(direct_declarator)) {
+    AstDeclaratorRef data = ast_palloc(struct AstDeclarator);
+    data->pointer = pointer;
+    data->direct_declarator = direct_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DECLARATOR;
+    self->data.declarator = data;
+  }
+  return self;
+}
