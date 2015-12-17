@@ -165,7 +165,11 @@ equality-expression
 
 AND-expression
 : equality-expression
-| AND-expression '&' equality-expression
+| binary-AND-expression
+;
+
+binary-AND-expression
+: AND-expression '&' equality-expression
 ;
 
 exclusive-OR-expression
