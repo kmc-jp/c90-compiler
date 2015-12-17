@@ -121,9 +121,6 @@ struct AstConditionalExpression {
 struct AstAssignmentExpression {
 };
 
-struct AstAssignmentOperator {
-};
-
 struct AstExpression {
 };
 

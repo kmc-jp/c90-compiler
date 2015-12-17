@@ -51,7 +51,6 @@ bool ast_is_logical_and_expression(AstRef ast);
 bool ast_is_logical_or_expression(AstRef ast);
 bool ast_is_conditional_expression(AstRef ast);
 bool ast_is_assignment_expression(AstRef ast);
-bool ast_is_assignment_operator(AstRef ast);
 bool ast_is_expression(AstRef ast);
 bool ast_is_constant_expression(AstRef ast);
 bool ast_is_declaration(AstRef ast);

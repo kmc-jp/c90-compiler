@@ -260,21 +260,17 @@ conditional-expression
 
 assignment-expression
 : conditional-expression
-| unary-expression assignment-operator assignment-expression
-;
-
-assignment-operator
-: '='
-| "*="
-| "/="
-| "%="
-| "+="
-| "-="
-| "<<="
-| ">>="
-| "&="
-| "^="
-| "|="
+| unary-expression '=' assignment-expression
+| unary-expression "*=" assignment-expression
+| unary-expression "/=" assignment-expression
+| unary-expression "%=" assignment-expression
+| unary-expression "+=" assignment-expression
+| unary-expression "-=" assignment-expression
+| unary-expression "<<=" assignment-expression
+| unary-expression ">>=" assignment-expression
+| unary-expression "&=" assignment-expression
+| unary-expression "^=" assignment-expression
+| unary-expression "|=" assignment-expression
 ;
 
 expression.opt

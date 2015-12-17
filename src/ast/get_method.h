@@ -50,7 +50,6 @@ AstLogicalAndExpressionRef ast_get_logical_and_expression(AstRef ast);
 AstLogicalOrExpressionRef ast_get_logical_or_expression(AstRef ast);
 AstConditionalExpressionRef ast_get_conditional_expression(AstRef ast);
 AstAssignmentExpressionRef ast_get_assignment_expression(AstRef ast);
-AstAssignmentOperatorRef ast_get_assignment_operator(AstRef ast);
 AstExpressionRef ast_get_expression(AstRef ast);
 AstConstantExpressionRef ast_get_constant_expression(AstRef ast);
 AstDeclarationRef ast_get_declaration(AstRef ast);
