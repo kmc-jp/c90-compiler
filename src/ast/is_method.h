@@ -53,6 +53,7 @@ bool ast_is_conditional_expression(AstRef ast);
 bool ast_is_assignment_expression(AstRef ast);
 bool ast_is_assignment_operator(AstRef ast);
 bool ast_is_expression(AstRef ast);
+bool ast_is_comma_expression(AstRef ast);
 bool ast_is_constant_expression(AstRef ast);
 bool ast_is_declaration(AstRef ast);
 bool ast_is_declaration_specifiers(AstRef ast);

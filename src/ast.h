@@ -51,6 +51,7 @@ enum AstTag {
   AST_ASSIGNMENT_EXPRESSION,
   AST_ASSIGNMENT_OPERATOR,
   AST_EXPRESSION,
+  AST_COMMA_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
   AST_DECLARATION,
   AST_DECLARATION_SPECIFIERS,
@@ -152,6 +153,7 @@ typedef struct AstConditionalExpression* AstConditionalExpressionRef;
 typedef struct AstAssignmentExpression* AstAssignmentExpressionRef;
 typedef struct AstAssignmentOperator* AstAssignmentOperatorRef;
 typedef struct AstExpression* AstExpressionRef;
+typedef struct AstCommaExpression* AstCommaExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;
 typedef struct AstDeclaration* AstDeclarationRef;
 typedef struct AstDeclarationSpecifiers* AstDeclarationSpecifiersRef;
