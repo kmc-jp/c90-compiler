@@ -173,9 +173,21 @@ cast-expression
 
 multiplicative-expression
 : cast-expression
-| multiplicative-expression '*' cast-expression
-| multiplicative-expression '/' cast-expression
-| multiplicative-expression '%' cast-expression
+| multiply-expression
+| divide-expression
+| modulo-expression
+;
+
+multiply-expression
+: multiplicative-expression '*' cast-expression
+;
+
+divide-expression
+: multiplicative-expression '/' cast-expression
+;
+
+modulo-expression
+: multiplicative-expression '%' cast-expression
 ;
 
 additive-expression

@@ -38,6 +38,9 @@ struct Ast {
     AstLogicalNegateExpressionRef logical_negate_expression;
     AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
+    AstMultiplyExpressionRef multiply_expression;
+    AstDivideExpressionRef divide_expression;
+    AstModuloExpressionRef modulo_expression;
     AstAdditiveExpressionRef additive_expression;
     AstShiftExpressionRef shift_expression;
     AstRelationalExpressionRef relational_expression;

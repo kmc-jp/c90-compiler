@@ -70,6 +70,15 @@ struct AstCastExpression {
 struct AstMultiplicativeExpression {
 };
 
+struct AstMultiplyExpression {
+};
+
+struct AstDivideExpression {
+};
+
+struct AstModuloExpression {
+};
+
 struct AstAdditiveExpression {
 };
 
