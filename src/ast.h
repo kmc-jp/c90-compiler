@@ -49,6 +49,9 @@ enum AstTag {
   AST_TYPE_QUALIFIER,
   AST_DECLARATOR,
   AST_DIRECT_DECLARATOR,
+  AST_ARRAY_DECLARATOR,
+  AST_FUNCTION_DECLARATOR,
+  AST_OLD_STYLE_FUNCTION_DECLARATOR,
   AST_POINTER,
   AST_TYPE_QUALIFIER_LIST,
   AST_PARAMETER_TYPE_LIST,
@@ -128,6 +131,9 @@ typedef struct AstEnumerator* AstEnumeratorRef;
 typedef struct AstTypeQualifier* AstTypeQualifierRef;
 typedef struct AstDeclarator* AstDeclaratorRef;
 typedef struct AstDirectDeclarator* AstDirectDeclaratorRef;
+typedef struct AstArrayDeclarator* AstArrayDeclaratorRef;
+typedef struct AstFunctionDeclarator* AstFunctionDeclaratorRef;
+typedef struct AstOldStyleFunctionDeclarator* AstOldStyleFunctionDeclaratorRef;
 typedef struct AstPointer* AstPointerRef;
 typedef struct AstTypeQualifierList* AstTypeQualifierListRef;
 typedef struct AstParameterTypeList* AstParameterTypeListRef;

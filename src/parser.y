@@ -330,10 +330,22 @@ declarator
 
 direct-declarator
 : identifier
-| '{' declarator '}'
-| direct-declarator '[' constant-expression.opt ']'
-| direct-declarator '(' parameter-type-list ')'
-| direct-declarator '(' identifier-list.opt ')'
+| '(' declarator ')'
+| array-declarator
+| function-type-declarator
+| old-style-function-type-declarator
+;
+
+array-declarator
+: direct-declarator '[' constant-expression.opt ']'
+;
+
+function-type-declarator
+: direct-declarator '(' parameter-type-list ')'
+;
+
+old-style-function-type-declarator
+: direct-declarator '(' identifier-list.opt ')'
 ;
 
 pointer.opt

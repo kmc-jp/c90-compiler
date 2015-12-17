@@ -61,6 +61,15 @@ struct AstDeclarator {
 struct AstDirectDeclarator {
 };
 
+struct AstArrayDeclarator {
+};
+
+struct AstFunctionDeclarator {
+};
+
+struct AstOldStyleFunctionDeclarator {
+};
+
 struct AstPointer {
 };
 
