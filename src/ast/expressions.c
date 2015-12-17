@@ -112,6 +112,9 @@ struct AstInclusiveOrExpression {
 struct AstLogicalAndExpression {
 };
 
+struct AstBinaryLogicalAndExpression {
+};
+
 struct AstLogicalOrExpression {
 };
 
