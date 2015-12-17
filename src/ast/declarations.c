@@ -10,6 +10,8 @@ struct AstDeclaration {
 };
 
 struct AstDeclarationSpecifierList {
+  AstRef declaration_specifier;
+  AstRef declaration_specifier_list; /* NULLABLE */
 };
 
 struct AstDeclarationSpecifier {
@@ -116,6 +118,22 @@ AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_decla
     self = ast_palloc(struct Ast);
     self->tag = AST_DECLARATION;
     self->data.declaration = data;
+  }
+  return self;
+}
+
+AstRef ast_make_declaration_specifier_list(AstRef declaration_specifier,
+    AstRef declaration_specifier_list) {
+  AstRef self = NULL;
+  if (ast_is_declaration_specifier(declaration_specifier) &&
+      (declaration_specifier_list == NULL ||
+       ast_is_declaration_specifier_list(declaration_specifier_list))) {
+    AstDeclarationSpecifierListRef data = ast_palloc(struct AstDeclarationSpecifierList);
+    data->declaration_specifier = declaration_specifier;
+    data->declaration_specifier_list = declaration_specifier_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DECLARATION_SPECIFIER_LIST;
+    self->data.declaration_specifier_list = data;
   }
   return self;
 }
