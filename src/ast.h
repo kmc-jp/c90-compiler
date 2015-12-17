@@ -41,10 +41,10 @@ enum AstTag {
   AST_SUBTRACT_EXPRESSION,
   AST_SHIFT_EXPRESSION,
   AST_RELATIONAL_EXPRESSION,
-  AST_LESS_EXPRESSION,
-  AST_GREATER_EXPRESSION,
-  AST_LESS_OR_EQUAL_EXPRESSION,
-  AST_GREATER_OR_EQUAL_EXPRESSION,
+  AST_LESS_THAN_EXPRESSION,
+  AST_GREATER_THAN_EXPRESSION,
+  AST_LESS_THAN_OR_EQUAL_TO_EXPRESSION,
+  AST_GREATER_THAN_OR_EQUAL_TO_EXPRESSION,
   AST_EQUALITY_EXPRESSION,
   AST_AND_EXPRESSION,
   AST_EXCLUSIVE_OR_EXPRESSION,
@@ -146,10 +146,10 @@ typedef struct AstAddExpression* AstAddExpressionRef;
 typedef struct AstSubtractExpression* AstSubtractExpressionRef;
 typedef struct AstShiftExpression* AstShiftExpressionRef;
 typedef struct AstRelationalExpression* AstRelationalExpressionRef;
-typedef struct AstLessExpression* AstLessExpressionRef;
-typedef struct AstGreaterExpression* AstGreaterExpressionRef;
-typedef struct AstLessOrEqualExpression* AstLessOrEqualExpressionRef;
-typedef struct AstGreaterOrEqualExpression* AstGreaterOrEqualExpressionRef;
+typedef struct AstLessThanExpression* AstLessThanExpressionRef;
+typedef struct AstGreaterThanExpression* AstGreaterThanExpressionRef;
+typedef struct AstLessThanOrEqualToExpression* AstLessThanOrEqualToExpressionRef;
+typedef struct AstGreaterThanOrEqualToExpression* AstGreaterThanOrEqualToExpressionRef;
 typedef struct AstEqualityExpression* AstEqualityExpressionRef;
 typedef struct AstAndExpression* AstAndExpressionRef;
 typedef struct AstExclusiveOrExpression* AstExclusiveOrExpressionRef;
