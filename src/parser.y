@@ -159,8 +159,16 @@ relational-expression
 
 equality-expression
 : relational-expression
-| equality-expression "==" relational-expression
-| equality-expression "!=" relational-expression
+| equal-expression
+| not-equal-expression
+;
+
+equal-expression
+: equality-expression "==" relational-expression
+;
+
+not-equal-expression
+: equality-expression "!=" relational-expression
 ;
 
 AND-expression
