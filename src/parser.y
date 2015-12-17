@@ -177,15 +177,35 @@ cast-expression
 
 multiplicative-expression
 : cast-or-unary-expression
-| multiplicative-expression '*' cast-or-unary-expression
-| multiplicative-expression '/' cast-or-unary-expression
-| multiplicative-expression '%' cast-or-unary-expression
+| multiply-expression
+| divide-expression
+| modulo-expression
+;
+
+multiply-expression
+: multiplicative-expression '*' cast-or-unary-expression
+;
+
+divide-expression
+: multiplicative-expression '/' cast-or-unary-expression
+;
+
+modulo-expression
+: multiplicative-expression '%' cast-or-unary-expression
 ;
 
 additive-expression
 : multiplicative-expression
-| additive-expression '+' multiplicative-expression
-| additive-expression '-' multiplicative-expression
+| add-expression
+| subtract-expression
+;
+
+add-expression
+: additive-expression '+' multiplicative-expression
+;
+
+subtract-expression
+: additive-expression '-' multiplicative-expression
 ;
 
 shift-expression
