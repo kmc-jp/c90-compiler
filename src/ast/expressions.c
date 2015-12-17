@@ -52,6 +52,12 @@ struct AstRelationalExpression {
 struct AstEqualityExpression {
 };
 
+struct AstEqualExpression {
+};
+
+struct AstNotEqualExpression {
+};
+
 struct AstAndExpression {
 };
 

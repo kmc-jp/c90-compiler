@@ -32,6 +32,8 @@ struct Ast {
     AstShiftExpressionRef shift_expression;
     AstRelationalExpressionRef relational_expression;
     AstEqualityExpressionRef equality_expression;
+    AstEqualExpressionRef equal_expression;
+    AstNotEqualExpressionRef not_equal_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;

@@ -27,6 +27,8 @@ AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);
 AstShiftExpressionRef ast_get_shift_expression(AstRef ast);
 AstRelationalExpressionRef ast_get_relational_expression(AstRef ast);
 AstEqualityExpressionRef ast_get_equality_expression(AstRef ast);
+AstEqualExpressionRef ast_get_equal_expression(AstRef ast);
+AstNotEqualExpressionRef ast_get_not_equal_expression(AstRef ast);
 AstAndExpressionRef ast_get_and_expression(AstRef ast);
 AstExclusiveOrExpressionRef ast_get_exclusive_or_expression(AstRef ast);
 AstInclusiveOrExpressionRef ast_get_inclusive_or_expression(AstRef ast);
