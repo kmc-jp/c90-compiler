@@ -19,6 +19,7 @@ struct AstDeclarationSpecifier {
 };
 
 struct AstInitDeclaratorList {
+  AstVectorRef init_declarator_vector;
 };
 
 struct AstInitDeclarator {
@@ -149,6 +150,24 @@ AstRef ast_make_declaration_specifier(AstRef declaration_specifier) {
     self = ast_palloc(struct Ast);
     self->tag = AST_DECLARATION_SPECIFIER;
     self->data.declaration_specifier = data;
+  }
+  return self;
+}
+
+AstRef ast_make_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator) {
+  AstRef self = NULL;
+  if (init_declarator_list == NULL) {
+    AstInitDeclaratorListRef data = ast_palloc(struct AstInitDeclaratorList);
+    data->init_declarator_vector = ast_make_vector();
+    init_declarator_list = ast_palloc(struct Ast);
+    init_declarator_list->tag = AST_INIT_DECLARATOR_LIST;
+    init_declarator_list->data.init_declarator_list = data;
+  }
+  if (ast_is_init_declarator_list(init_declarator_list) &&
+      ast_is_init_declarator(init_declarator)) {
+    AstInitDeclaratorListRef data = ast_get_init_declarator_list(init_declarator_list);
+    ast_push_vector(data->init_declarator_vector, init_declarator);
+    self = init_declarator_list;
   }
   return self;
 }
