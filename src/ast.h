@@ -49,6 +49,17 @@ enum AstTag {
   AST_LOGICAL_OR_EXPRESSION,
   AST_CONDITIONAL_EXPRESSION,
   AST_ASSIGNMENT_EXPRESSION,
+  AST_SIMPLE_ASSIGNMENT_EXPRESSION,
+  AST_MULTIPLICATION_ASSIGNMENT_EXPRESSION,
+  AST_DIVISION_ASSIGNMENT_EXPRESSION,
+  AST_MODULO_ASSIGNMENT_EXPRESSION,
+  AST_ADDITION_ASSIGNMENT_EXPRESSION,
+  AST_SUBTRACTION_ASSIGNMENT_EXPRESSION,
+  AST_LEFT_SHIFT_ASSIGNMENT_EXPRESSION,
+  AST_RIGHT_SHIFT_ASSIGNMENT_EXPRESSION,
+  AST_AND_ASSIGNMENT_EXPRESSION,
+  AST_XOR_ASSIGNMENT_EXPRESSION,
+  AST_OR_ASSIGNMENT_EXPRESSION,
   AST_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
   AST_DECLARATION,
@@ -149,6 +160,17 @@ typedef struct AstLogicalAndExpression* AstLogicalAndExpressionRef;
 typedef struct AstLogicalOrExpression* AstLogicalOrExpressionRef;
 typedef struct AstConditionalExpression* AstConditionalExpressionRef;
 typedef struct AstAssignmentExpression* AstAssignmentExpressionRef;
+typedef struct AstSimpleAssignmentExpression* AstSimpleAssignmentExpressionRef;
+typedef struct AstMultiplicationAssignmentExpression* AstMultiplicationAssignmentExpressionRef;
+typedef struct AstDivisionAssignmentExpression* AstDivisionAssignmentExpressionRef;
+typedef struct AstModuloAssignmentExpression* AstModuloAssignmentExpressionRef;
+typedef struct AstAdditionAssignmentExpression* AstAdditionAssignmentExpressionRef;
+typedef struct AstSubtractionAssignmentExpression* AstSubtractionAssignmentExpressionRef;
+typedef struct AstLeftShiftAssignmentExpression* AstLeftShiftAssignmentExpressionRef;
+typedef struct AstRightShiftAssignmentExpression* AstRightShiftAssignmentExpressionRef;
+typedef struct AstAndAssignmentExpression* AstAndAssignmentExpressionRef;
+typedef struct AstXorAssignmentExpression* AstXorAssignmentExpressionRef;
+typedef struct AstOrAssignmentExpression* AstOrAssignmentExpressionRef;
 typedef struct AstExpression* AstExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;
 typedef struct AstDeclaration* AstDeclarationRef;

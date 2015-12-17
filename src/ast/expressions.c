@@ -121,6 +121,39 @@ struct AstConditionalExpression {
 struct AstAssignmentExpression {
 };
 
+struct AstSimpleAssignmentExpression {
+};
+
+struct AstMultiplicationAssignmentExpression {
+};
+
+struct AstDivisionAssignmentExpression {
+};
+
+struct AstModuloAssignmentExpression {
+};
+
+struct AstAdditionAssignmentExpression {
+};
+
+struct AstSubtractionAssignmentExpression {
+};
+
+struct AstLeftShiftAssignmentExpression {
+};
+
+struct AstRightShiftAssignmentExpression {
+};
+
+struct AstAndAssignmentExpression {
+};
+
+struct AstXorAssignmentExpression {
+};
+
+struct AstOrAssignmentExpression {
+};
+
 struct AstExpression {
 };
 

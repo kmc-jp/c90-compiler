@@ -43,6 +43,17 @@ AstRef ast_make_logical_and_expression();
 AstRef ast_make_logical_or_expression();
 AstRef ast_make_conditional_expression();
 AstRef ast_make_assignment_expression();
+AstRef ast_make_simple_assignment_expression();
+AstRef ast_make_multiplication_assignment_expression();
+AstRef ast_make_division_assignment_expression();
+AstRef ast_make_modulo_assignment_expression();
+AstRef ast_make_addition_assignment_expression();
+AstRef ast_make_subtraction_assignment_expression();
+AstRef ast_make_left_shift_assignment_expression();
+AstRef ast_make_right_shift_assignment_expression();
+AstRef ast_make_and_assignment_expression();
+AstRef ast_make_xor_assignment_expression();
+AstRef ast_make_or_assignment_expression();
 AstRef ast_make_expression();
 AstRef ast_make_constant_expression();
 
