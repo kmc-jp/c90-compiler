@@ -38,6 +38,8 @@ bool ast_is_multiply_expression(AstRef ast);
 bool ast_is_divide_expression(AstRef ast);
 bool ast_is_modulo_expression(AstRef ast);
 bool ast_is_additive_expression(AstRef ast);
+bool ast_is_add_expression(AstRef ast);
+bool ast_is_subtract_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);
 bool ast_is_relational_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);

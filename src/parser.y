@@ -192,8 +192,16 @@ modulo-expression
 
 additive-expression
 : multiplicative-expression
-| additive-expression '+' multiplicative-expression
-| additive-expression '-' multiplicative-expression
+| add-expression
+| subtract-expression
+;
+
+add-expression
+: additive-expression '+' multiplicative-expression
+;
+
+subtract-expression
+: additive-expression '-' multiplicative-expression
 ;
 
 shift-expression

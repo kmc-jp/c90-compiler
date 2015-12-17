@@ -30,6 +30,8 @@ AstRef ast_make_multiply_expression();
 AstRef ast_make_divide_expression();
 AstRef ast_make_modulo_expression();
 AstRef ast_make_additive_expression();
+AstRef ast_make_add_expression();
+AstRef ast_make_subtract_expression();
 AstRef ast_make_shift_expression();
 AstRef ast_make_relational_expression();
 AstRef ast_make_equality_expression();
