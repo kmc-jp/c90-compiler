@@ -45,6 +45,7 @@ enum AstTag {
   AST_AND_EXPRESSION,
   AST_EXCLUSIVE_OR_EXPRESSION,
   AST_INCLUSIVE_OR_EXPRESSION,
+  AST_BINARY_INCLUSIVE_OR_EXPRESSION,
   AST_LOGICAL_AND_EXPRESSION,
   AST_LOGICAL_OR_EXPRESSION,
   AST_CONDITIONAL_EXPRESSION,
@@ -146,6 +147,7 @@ typedef struct AstEqualityExpression* AstEqualityExpressionRef;
 typedef struct AstAndExpression* AstAndExpressionRef;
 typedef struct AstExclusiveOrExpression* AstExclusiveOrExpressionRef;
 typedef struct AstInclusiveOrExpression* AstInclusiveOrExpressionRef;
+typedef struct AstBinaryInclusiveOrExpression* AstBinaryInclusiveOrExpressionRef;
 typedef struct AstLogicalAndExpression* AstLogicalAndExpressionRef;
 typedef struct AstLogicalOrExpression* AstLogicalOrExpressionRef;
 typedef struct AstConditionalExpression* AstConditionalExpressionRef;

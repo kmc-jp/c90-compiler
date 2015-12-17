@@ -47,6 +47,7 @@ bool ast_is_equality_expression(AstRef ast);
 bool ast_is_and_expression(AstRef ast);
 bool ast_is_exclusive_or_expression(AstRef ast);
 bool ast_is_inclusive_or_expression(AstRef ast);
+bool ast_is_binary_inclusive_or_expression(AstRef ast);
 bool ast_is_logical_and_expression(AstRef ast);
 bool ast_is_logical_or_expression(AstRef ast);
 bool ast_is_conditional_expression(AstRef ast);

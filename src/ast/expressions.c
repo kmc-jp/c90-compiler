@@ -109,6 +109,9 @@ struct AstExclusiveOrExpression {
 struct AstInclusiveOrExpression {
 };
 
+struct AstBinaryInclusiveOrExpression {
+};
+
 struct AstLogicalAndExpression {
 };
 
