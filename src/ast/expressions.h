@@ -15,6 +15,7 @@ AstRef ast_make_argument_expression_list();
 AstRef ast_make_unary_expression();
 AstRef ast_make_unary_operator();
 AstRef ast_make_cast_expression();
+AstRef ast_make_typed_cast_expression();
 AstRef ast_make_multiplicative_expression();
 AstRef ast_make_additive_expression();
 AstRef ast_make_shift_expression();
