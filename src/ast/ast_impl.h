@@ -34,6 +34,7 @@ struct Ast {
     AstEqualityExpressionRef equality_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
+    AstBinaryExclusiveOrExpressionRef binary_exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;

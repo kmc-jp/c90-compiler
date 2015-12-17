@@ -58,6 +58,9 @@ struct AstAndExpression {
 struct AstExclusiveOrExpression {
 };
 
+struct AstBinaryExclusiveOrExpression {
+};
+
 struct AstInclusiveOrExpression {
 };
 
