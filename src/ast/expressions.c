@@ -37,13 +37,31 @@ struct AstPrefixIncrementExpression {
 struct AstPrefixDecrementExpression {
 };
 
-struct AstUnaryOperator {
+struct AstUnaryOperatorExpression {
 };
 
 struct AstSizeofExpression {
 };
 
 struct AstSizeofTypeExpression {
+};
+
+struct AstAddressExpression {
+};
+
+struct AstDereferenceExpression {
+};
+
+struct AstUnaryPlusExpression {
+};
+
+struct AstUnaryMinusExpression {
+};
+
+struct AstComplementExpression {
+};
+
+struct AstLogicalNegateExpression {
 };
 
 struct AstCastExpression {
