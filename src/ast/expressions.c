@@ -106,10 +106,10 @@ struct AstAndExpression {
 struct AstExclusiveOrExpression {
 };
 
-struct AstInclusiveOrExpression {
+struct AstOrExpression {
 };
 
-struct AstBinaryInclusiveOrExpression {
+struct AstBinaryOrExpression {
 };
 
 struct AstLogicalAndExpression {
