@@ -145,8 +145,16 @@ additive-expression
 
 shift-expression
 : additive-expression
-| shift-expression "<<" additive-expression
-| shift-expression ">>" additive-expression
+| left-shift-expression
+| right-shift-expression
+;
+
+left-shift-expression
+: shift-expression "<<" additive-expression
+;
+
+right-shift-expression
+: shift-expression ">>" additive-expression
 ;
 
 relational-expression
