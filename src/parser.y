@@ -240,7 +240,11 @@ exclusive-OR-expression
 
 inclusive-OR-expression
 : exclusive-OR-expression
-| inclusive-OR-expression '|' exclusive-OR-expression
+| binary-inclusive-OR-expression
+;
+
+binary-inclusive-OR-expression
+: inclusive-OR-expression '|' exclusive-OR-expression
 ;
 
 logical-AND-expression
