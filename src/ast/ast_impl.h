@@ -54,6 +54,8 @@ struct Ast {
     AstLessThanOrEqualToExpressionRef less_than_or_equal_to_expression;
     AstGreaterThanOrEqualToExpressionRef greater_than_or_equal_to_expression;
     AstEqualityExpressionRef equality_expression;
+    AstEqualToExpressionRef equal_to_expression;
+    AstNotEqualToExpressionRef not_equal_to_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;

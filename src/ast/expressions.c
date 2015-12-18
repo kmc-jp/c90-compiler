@@ -118,6 +118,12 @@ struct AstGreaterThanOrEqualToExpression {
 struct AstEqualityExpression {
 };
 
+struct AstEqualToExpression {
+};
+
+struct AstNotEqualToExpression {
+};
+
 struct AstAndExpression {
 };
 

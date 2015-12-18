@@ -50,6 +50,8 @@ bool ast_is_greater_than_expression(AstRef ast);
 bool ast_is_less_than_or_equal_to_expression(AstRef ast);
 bool ast_is_greater_than_or_equal_to_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);
+bool ast_is_equal_to_expression(AstRef ast);
+bool ast_is_not_equal_to_expression(AstRef ast);
 bool ast_is_and_expression(AstRef ast);
 bool ast_is_exclusive_or_expression(AstRef ast);
 bool ast_is_inclusive_or_expression(AstRef ast);
