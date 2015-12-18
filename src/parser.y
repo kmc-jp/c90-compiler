@@ -233,18 +233,18 @@ AND-expression
 | AND-expression '&' equality-expression
 ;
 
-XOR-expression
+bitwise-XOR-expression
 : AND-expression
 | binary-XOR-expression
 ;
 
 binary-XOR-expression
-: XOR-expression '^' AND-expression
+: bitwise-XOR-expression '^' AND-expression
 ;
 
 inclusive-OR-expression
-: XOR-expression
-| inclusive-OR-expression '|' XOR-expression
+: bitwise-XOR-expression
+| inclusive-OR-expression '|' bitwise-XOR-expression
 ;
 
 logical-AND-expression

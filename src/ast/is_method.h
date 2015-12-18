@@ -45,7 +45,7 @@ bool ast_is_shift_expression(AstRef ast);
 bool ast_is_relational_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);
 bool ast_is_and_expression(AstRef ast);
-bool ast_is_xor_expression(AstRef ast);
+bool ast_is_bitwise_xor_expression(AstRef ast);
 bool ast_is_binary_xor_expression(AstRef ast);
 bool ast_is_inclusive_or_expression(AstRef ast);
 bool ast_is_logical_and_expression(AstRef ast);
