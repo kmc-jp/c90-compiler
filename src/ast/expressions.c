@@ -16,7 +16,7 @@ struct AstFunctionCallExpression {
 struct AstMemberAccessExpression {
 };
 
-struct AstArrowAccessExpression {
+struct AstMemberAccessThroughPointerExpression {
 };
 
 struct AstPostfixIncrementExpression {

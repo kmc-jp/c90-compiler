@@ -15,7 +15,7 @@ AstPostfixExpressionRef ast_get_postfix_expression(AstRef ast);
 AstArraySubscriptExpressionRef ast_get_array_subscript_expression(AstRef ast);
 AstFunctionCallExpressionRef ast_get_function_call_expression(AstRef ast);
 AstMemberAccessExpressionRef ast_get_member_access_expression(AstRef ast);
-AstArrowAccessExpressionRef ast_get_arrow_access_expression(AstRef ast);
+AstMemberAccessThroughPointerExpressionRef ast_get_member_access_through_pointer_expression(AstRef ast);
 AstPostfixIncrementExpressionRef ast_get_postfix_increment_expression(AstRef ast);
 AstPostfixDecrementExpressionRef ast_get_postfix_decrement_expression(AstRef ast);
 AstArgumentExpressionListRef ast_get_argument_expression_list(AstRef ast);

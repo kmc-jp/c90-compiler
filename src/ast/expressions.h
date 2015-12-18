@@ -8,7 +8,7 @@ AstRef ast_make_postfix_expression();
 AstRef ast_make_array_subscript_expression();
 AstRef ast_make_function_call_expression();
 AstRef ast_make_member_access_expression();
-AstRef ast_make_arrow_access_expression();
+AstRef ast_make_member_access_through_pointer_expression();
 AstRef ast_make_postfix_increment_expression();
 AstRef ast_make_postfix_decrement_expression();
 AstRef ast_make_argument_expression_list();

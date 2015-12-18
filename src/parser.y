@@ -69,7 +69,7 @@ postfix-expression
 | array-subscript-expression
 | function-call-expression
 | member-access-expression
-| arrow-access-expression
+| member-access-through-pointer-expression
 | postfix-increment-expression
 | postfix-decrement-expression
 ;
@@ -86,7 +86,7 @@ member-access-expression
 : postfix-expression '.' identifier
 ;
 
-arrow-access-expression
+member-access-through-pointer-expression
 : postfix-expression "->" identifier
 ;
 

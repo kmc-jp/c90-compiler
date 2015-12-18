@@ -16,7 +16,7 @@ bool ast_is_postfix_expression(AstRef ast);
 bool ast_is_array_subscript_expression(AstRef ast);
 bool ast_is_function_call_expression(AstRef ast);
 bool ast_is_member_access_expression(AstRef ast);
-bool ast_is_arrow_access_expression(AstRef ast);
+bool ast_is_member_access_through_pointer_expression(AstRef ast);
 bool ast_is_postfix_increment_expression(AstRef ast);
 bool ast_is_postfix_decrement_expression(AstRef ast);
 bool ast_is_argument_expression_list(AstRef ast);
