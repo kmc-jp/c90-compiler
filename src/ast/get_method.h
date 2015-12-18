@@ -45,7 +45,7 @@ AstRelationalExpressionRef ast_get_relational_expression(AstRef ast);
 AstEqualityExpressionRef ast_get_equality_expression(AstRef ast);
 AstAndExpressionRef ast_get_and_expression(AstRef ast);
 AstExclusiveOrExpressionRef ast_get_exclusive_or_expression(AstRef ast);
-AstOrExpressionRef ast_get_or_expression(AstRef ast);
+AstBitwiseOrExpressionRef ast_get_bitwise_or_expression(AstRef ast);
 AstBinaryOrExpressionRef ast_get_binary_or_expression(AstRef ast);
 AstLogicalAndExpressionRef ast_get_logical_and_expression(AstRef ast);
 AstLogicalOrExpressionRef ast_get_logical_or_expression(AstRef ast);
