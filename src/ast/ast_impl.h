@@ -27,14 +27,14 @@ struct Ast {
     AstUnaryExpressionRef unary_expression;
     AstPrefixIncrementExpressionRef prefix_increment_expression;
     AstPrefixDecrementExpressionRef prefix_decrement_expression;
-    AstSizeofExpressionRef sizeof_expression;
-    AstSizeofTypeExpressionRef sizeof_type_expression;
     AstAddressOfExpressionRef address_of_expression;
     AstPointerDereferenceExpressionRef pointer_dereference_expression;
     AstUnaryPlusExpressionRef unary_plus_expression;
     AstUnaryMinusExpressionRef unary_minus_expression;
     AstBitwiseNotExpressionRef bitwise_not_expression;
     AstLogicalNotExpressionRef logical_not_expression;
+    AstSizeofExpressionRef sizeof_expression;
+    AstSizeofTypeExpressionRef sizeof_type_expression;
     AstCastExpressionRef cast_expression;
     AstTypeCastExpressionRef type_cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;

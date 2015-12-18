@@ -21,14 +21,14 @@ enum AstTag {
   AST_UNARY_EXPRESSION,
   AST_PREFIX_INCREMENT_EXPRESSION,
   AST_PREFIX_DECREMENT_EXPRESSION,
-  AST_SIZEOF_EXPRESSION,
-  AST_SIZEOF_TYPE_EXPRESSION,
   AST_ADDRESS_OF_EXPRESSION,
   AST_POINTER_DEREFERENCE_EXPRESSION,
   AST_UNARY_PLUS_EXPRESSION,
   AST_UNARY_MINUS_EXPRESSION,
   AST_BITWISE_NOT_EXPRESSION,
   AST_LOGICAL_NOT_EXPRESSION,
+  AST_SIZEOF_EXPRESSION,
+  AST_SIZEOF_TYPE_EXPRESSION,
   AST_CAST_EXPRESSION,
   AST_TYPE_CAST_EXPRESSION,
   AST_MULTIPLICATIVE_EXPRESSION,
@@ -127,14 +127,14 @@ typedef struct AstArgumentExpressionList* AstArgumentExpressionListRef;
 typedef struct AstUnaryExpression* AstUnaryExpressionRef;
 typedef struct AstPrefixIncrementExpression* AstPrefixIncrementExpressionRef;
 typedef struct AstPrefixDecrementExpression* AstPrefixDecrementExpressionRef;
-typedef struct AstSizeofExpression* AstSizeofExpressionRef;
-typedef struct AstSizeofTypeExpression* AstSizeofTypeExpressionRef;
 typedef struct AstAddressOfExpression* AstAddressOfExpressionRef;
 typedef struct AstPointerDereferenceExpression* AstPointerDereferenceExpressionRef;
 typedef struct AstUnaryPlusExpression* AstUnaryPlusExpressionRef;
 typedef struct AstUnaryMinusExpression* AstUnaryMinusExpressionRef;
 typedef struct AstBitwiseNotExpression* AstBitwiseNotExpressionRef;
 typedef struct AstLogicalNotExpression* AstLogicalNotExpressionRef;
+typedef struct AstSizeofExpression* AstSizeofExpressionRef;
+typedef struct AstSizeofTypeExpression* AstSizeofTypeExpressionRef;
 typedef struct AstCastExpression* AstCastExpressionRef;
 typedef struct AstTypeCastExpression* AstTypeCastExpressionRef;
 typedef struct AstMultiplicativeExpression* AstMultiplicativeExpressionRef;

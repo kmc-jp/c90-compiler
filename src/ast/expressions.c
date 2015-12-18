@@ -37,12 +37,6 @@ struct AstPrefixIncrementExpression {
 struct AstPrefixDecrementExpression {
 };
 
-struct AstSizeofExpression {
-};
-
-struct AstSizeofTypeExpression {
-};
-
 struct AstAddressOfExpression {
 };
 
@@ -59,6 +53,12 @@ struct AstBitwiseNotExpression {
 };
 
 struct AstLogicalNotExpression {
+};
+
+struct AstSizeofExpression {
+};
+
+struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {
