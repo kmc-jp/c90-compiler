@@ -34,6 +34,8 @@ AstRef ast_make_additive_expression();
 AstRef ast_make_add_expression();
 AstRef ast_make_subtract_expression();
 AstRef ast_make_shift_expression();
+AstRef ast_make_left_shift_expression();
+AstRef ast_make_right_shift_expression();
 AstRef ast_make_relational_expression();
 AstRef ast_make_less_than_expression();
 AstRef ast_make_greater_than_expression();

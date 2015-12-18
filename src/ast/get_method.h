@@ -41,6 +41,8 @@ AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);
 AstAddExpressionRef ast_get_add_expression(AstRef ast);
 AstSubtractExpressionRef ast_get_subtract_expression(AstRef ast);
 AstShiftExpressionRef ast_get_shift_expression(AstRef ast);
+AstLeftShiftExpressionRef ast_get_left_shift_expression(AstRef ast);
+AstRightShiftExpressionRef ast_get_right_shift_expression(AstRef ast);
 AstRelationalExpressionRef ast_get_relational_expression(AstRef ast);
 AstLessThanExpressionRef ast_get_less_than_expression(AstRef ast);
 AstGreaterThanExpressionRef ast_get_greater_than_expression(AstRef ast);
