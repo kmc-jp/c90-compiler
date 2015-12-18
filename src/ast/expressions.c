@@ -85,7 +85,7 @@ struct AstModuloExpression {
 struct AstAdditiveExpression {
 };
 
-struct AstAddExpression {
+struct AstAdditionExpression {
 };
 
 struct AstSubtractExpression {

@@ -31,7 +31,7 @@ AstRef ast_make_product_expression();
 AstRef ast_make_division_expression();
 AstRef ast_make_modulo_expression();
 AstRef ast_make_additive_expression();
-AstRef ast_make_add_expression();
+AstRef ast_make_addition_expression();
 AstRef ast_make_subtract_expression();
 AstRef ast_make_shift_expression();
 AstRef ast_make_left_shift_expression();

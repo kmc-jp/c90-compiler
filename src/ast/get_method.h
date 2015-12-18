@@ -38,7 +38,7 @@ AstProductExpressionRef ast_get_product_expression(AstRef ast);
 AstDivisionExpressionRef ast_get_division_expression(AstRef ast);
 AstModuloExpressionRef ast_get_modulo_expression(AstRef ast);
 AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);
-AstAddExpressionRef ast_get_add_expression(AstRef ast);
+AstAdditionExpressionRef ast_get_addition_expression(AstRef ast);
 AstSubtractExpressionRef ast_get_subtract_expression(AstRef ast);
 AstShiftExpressionRef ast_get_shift_expression(AstRef ast);
 AstLeftShiftExpressionRef ast_get_left_shift_expression(AstRef ast);

@@ -43,7 +43,7 @@ struct Ast {
     AstDivisionExpressionRef division_expression;
     AstModuloExpressionRef modulo_expression;
     AstAdditiveExpressionRef additive_expression;
-    AstAddExpressionRef add_expression;
+    AstAdditionExpressionRef addition_expression;
     AstSubtractExpressionRef subtract_expression;
     AstShiftExpressionRef shift_expression;
     AstLeftShiftExpressionRef left_shift_expression;
