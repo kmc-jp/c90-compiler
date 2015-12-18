@@ -151,7 +151,7 @@ struct AstBitwiseAndAssignmentExpression {
 struct AstBitwiseXorAssignmentExpression {
 };
 
-struct AstOrAssignmentExpression {
+struct AstBitwiseOrAssignmentExpression {
 };
 
 struct AstExpression {

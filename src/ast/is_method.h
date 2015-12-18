@@ -61,7 +61,7 @@ bool ast_is_left_shift_assignment_expression(AstRef ast);
 bool ast_is_right_shift_assignment_expression(AstRef ast);
 bool ast_is_bitwise_and_assignment_expression(AstRef ast);
 bool ast_is_bitwise_xor_assignment_expression(AstRef ast);
-bool ast_is_or_assignment_expression(AstRef ast);
+bool ast_is_bitwise_or_assignment_expression(AstRef ast);
 bool ast_is_expression(AstRef ast);
 bool ast_is_constant_expression(AstRef ast);
 bool ast_is_declaration(AstRef ast);

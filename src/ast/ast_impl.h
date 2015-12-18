@@ -65,7 +65,7 @@ struct Ast {
     AstRightShiftAssignmentExpressionRef right_shift_assignment_expression;
     AstBitwiseAndAssignmentExpressionRef bitwise_and_assignment_expression;
     AstBitwiseXorAssignmentExpressionRef bitwise_xor_assignment_expression;
-    AstOrAssignmentExpressionRef or_assignment_expression;
+    AstBitwiseOrAssignmentExpressionRef bitwise_or_assignment_expression;
     AstExpressionRef expression;
     AstConstantExpressionRef constant_expression;
     AstDeclarationRef declaration;
