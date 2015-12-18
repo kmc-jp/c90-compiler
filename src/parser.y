@@ -130,7 +130,7 @@ unary-operator-expression
 | pointer-dereference-expression
 | unary-plus-expression
 | unary-minus-expression
-| complement-expression
+| bitwise-NOT-expression
 | logical-negate-expression
 ;
 
@@ -158,7 +158,7 @@ unary-minus-expression
 : '-' cast-expression
 ;
 
-complement-expression
+bitwise-NOT-expression
 : '~' cast-expression
 ;
 

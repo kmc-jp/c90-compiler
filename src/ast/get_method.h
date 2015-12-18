@@ -29,7 +29,7 @@ AstAddressOfExpressionRef ast_get_address_of_expression(AstRef ast);
 AstPointerDereferenceExpressionRef ast_get_pointer_dereference_expression(AstRef ast);
 AstUnaryPlusExpressionRef ast_get_unary_plus_expression(AstRef ast);
 AstUnaryMinusExpressionRef ast_get_unary_minus_expression(AstRef ast);
-AstComplementExpressionRef ast_get_complement_expression(AstRef ast);
+AstBitwiseNotExpressionRef ast_get_bitwise_not_expression(AstRef ast);
 AstLogicalNegateExpressionRef ast_get_logical_negate_expression(AstRef ast);
 AstCastOrUnaryExpressionRef ast_get_cast_or_unary_expression(AstRef ast);
 AstCastExpressionRef ast_get_cast_expression(AstRef ast);

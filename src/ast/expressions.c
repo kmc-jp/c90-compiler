@@ -58,7 +58,7 @@ struct AstUnaryPlusExpression {
 struct AstUnaryMinusExpression {
 };
 
-struct AstComplementExpression {
+struct AstBitwiseNotExpression {
 };
 
 struct AstLogicalNegateExpression {

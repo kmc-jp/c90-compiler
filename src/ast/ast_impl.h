@@ -34,7 +34,7 @@ struct Ast {
     AstPointerDereferenceExpressionRef pointer_dereference_expression;
     AstUnaryPlusExpressionRef unary_plus_expression;
     AstUnaryMinusExpressionRef unary_minus_expression;
-    AstComplementExpressionRef complement_expression;
+    AstBitwiseNotExpressionRef bitwise_not_expression;
     AstLogicalNegateExpressionRef logical_negate_expression;
     AstCastOrUnaryExpressionRef cast_or_unary_expression;
     AstCastExpressionRef cast_expression;
