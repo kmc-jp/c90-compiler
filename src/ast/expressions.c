@@ -148,7 +148,7 @@ struct AstRightShiftAssignmentExpression {
 struct AstBitwiseAndAssignmentExpression {
 };
 
-struct AstXorAssignmentExpression {
+struct AstBitwiseXorAssignmentExpression {
 };
 
 struct AstOrAssignmentExpression {

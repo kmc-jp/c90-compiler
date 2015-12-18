@@ -269,7 +269,7 @@ assignment-expression
 | left-shift-assignment-expression
 | right-shift-assignment-expression
 | bitwise-AND-assignment-expression
-| XOR-assignment-expression
+| bitwise-XOR-assignment-expression
 | OR-assignment-expression
 ;
 
@@ -309,7 +309,7 @@ bitwise-AND-assignment-expression
 : unary-expression "&=" assignment-expression
 ;
 
-XOR-assignment-expression
+bitwise-XOR-assignment-expression
 : unary-expression "^=" assignment-expression
 ;
 

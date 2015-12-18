@@ -58,7 +58,7 @@ enum AstTag {
   AST_LEFT_SHIFT_ASSIGNMENT_EXPRESSION,
   AST_RIGHT_SHIFT_ASSIGNMENT_EXPRESSION,
   AST_BITWISE_AND_ASSIGNMENT_EXPRESSION,
-  AST_XOR_ASSIGNMENT_EXPRESSION,
+  AST_BITWISE_XOR_ASSIGNMENT_EXPRESSION,
   AST_OR_ASSIGNMENT_EXPRESSION,
   AST_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
@@ -169,7 +169,7 @@ typedef struct AstSubtractionAssignmentExpression* AstSubtractionAssignmentExpre
 typedef struct AstLeftShiftAssignmentExpression* AstLeftShiftAssignmentExpressionRef;
 typedef struct AstRightShiftAssignmentExpression* AstRightShiftAssignmentExpressionRef;
 typedef struct AstBitwiseAndAssignmentExpression* AstBitwiseAndAssignmentExpressionRef;
-typedef struct AstXorAssignmentExpression* AstXorAssignmentExpressionRef;
+typedef struct AstBitwiseXorAssignmentExpression* AstBitwiseXorAssignmentExpressionRef;
 typedef struct AstOrAssignmentExpression* AstOrAssignmentExpressionRef;
 typedef struct AstExpression* AstExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;
