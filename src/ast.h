@@ -29,7 +29,7 @@ enum AstTag {
   AST_UNARY_PLUS_EXPRESSION,
   AST_UNARY_MINUS_EXPRESSION,
   AST_BITWISE_NOT_EXPRESSION,
-  AST_LOGICAL_NEGATE_EXPRESSION,
+  AST_LOGICAL_NOT_EXPRESSION,
   AST_CAST_OR_UNARY_EXPRESSION,
   AST_CAST_EXPRESSION,
   AST_MULTIPLICATIVE_EXPRESSION,
@@ -136,7 +136,7 @@ typedef struct AstPointerDereferenceExpression* AstPointerDereferenceExpressionR
 typedef struct AstUnaryPlusExpression* AstUnaryPlusExpressionRef;
 typedef struct AstUnaryMinusExpression* AstUnaryMinusExpressionRef;
 typedef struct AstBitwiseNotExpression* AstBitwiseNotExpressionRef;
-typedef struct AstLogicalNegateExpression* AstLogicalNegateExpressionRef;
+typedef struct AstLogicalNotExpression* AstLogicalNotExpressionRef;
 typedef struct AstCastOrUnaryExpression* AstCastOrUnaryExpressionRef;
 typedef struct AstCastExpression* AstCastExpressionRef;
 typedef struct AstMultiplicativeExpression* AstMultiplicativeExpressionRef;

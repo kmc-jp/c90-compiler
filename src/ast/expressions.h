@@ -23,7 +23,7 @@ AstRef ast_make_pointer_dereference_expression();
 AstRef ast_make_unary_plus_expression();
 AstRef ast_make_unary_minus_expression();
 AstRef ast_make_bitwise_not_expression();
-AstRef ast_make_logical_negate_expression();
+AstRef ast_make_logical_not_expression();
 AstRef ast_make_cast_or_unary_expression();
 AstRef ast_make_cast_expression();
 AstRef ast_make_multiplicative_expression();

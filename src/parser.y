@@ -131,7 +131,7 @@ unary-operator-expression
 | unary-plus-expression
 | unary-minus-expression
 | bitwise-NOT-expression
-| logical-negate-expression
+| logical-NOT-expression
 ;
 
 sizeof-expression
@@ -162,7 +162,7 @@ bitwise-NOT-expression
 : '~' cast-expression
 ;
 
-logical-negate-expression
+logical-NOT-expression
 : '!' cast-expression
 ;
 
