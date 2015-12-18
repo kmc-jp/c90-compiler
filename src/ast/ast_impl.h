@@ -40,7 +40,7 @@ struct Ast {
     AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
     AstProductExpressionRef product_expression;
-    AstDivideExpressionRef divide_expression;
+    AstDivisionExpressionRef division_expression;
     AstModuloExpressionRef modulo_expression;
     AstAdditiveExpressionRef additive_expression;
     AstAddExpressionRef add_expression;

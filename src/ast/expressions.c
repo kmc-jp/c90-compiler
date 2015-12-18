@@ -76,7 +76,7 @@ struct AstMultiplicativeExpression {
 struct AstProductExpression {
 };
 
-struct AstDivideExpression {
+struct AstDivisionExpression {
 };
 
 struct AstModuloExpression {

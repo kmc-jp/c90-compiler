@@ -36,7 +36,7 @@ bool ast_is_cast_or_unary_expression(AstRef ast);
 bool ast_is_cast_expression(AstRef ast);
 bool ast_is_multiplicative_expression(AstRef ast);
 bool ast_is_product_expression(AstRef ast);
-bool ast_is_divide_expression(AstRef ast);
+bool ast_is_division_expression(AstRef ast);
 bool ast_is_modulo_expression(AstRef ast);
 bool ast_is_additive_expression(AstRef ast);
 bool ast_is_add_expression(AstRef ast);

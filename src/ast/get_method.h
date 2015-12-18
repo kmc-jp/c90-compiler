@@ -35,7 +35,7 @@ AstCastOrUnaryExpressionRef ast_get_cast_or_unary_expression(AstRef ast);
 AstCastExpressionRef ast_get_cast_expression(AstRef ast);
 AstMultiplicativeExpressionRef ast_get_multiplicative_expression(AstRef ast);
 AstProductExpressionRef ast_get_product_expression(AstRef ast);
-AstDivideExpressionRef ast_get_divide_expression(AstRef ast);
+AstDivisionExpressionRef ast_get_division_expression(AstRef ast);
 AstModuloExpressionRef ast_get_modulo_expression(AstRef ast);
 AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);
 AstAddExpressionRef ast_get_add_expression(AstRef ast);

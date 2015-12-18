@@ -178,7 +178,7 @@ cast-expression
 multiplicative-expression
 : cast-or-unary-expression
 | product-expression
-| divide-expression
+| division-expression
 | modulo-expression
 ;
 
@@ -186,7 +186,7 @@ product-expression
 : multiplicative-expression '*' cast-or-unary-expression
 ;
 
-divide-expression
+division-expression
 : multiplicative-expression '/' cast-or-unary-expression
 ;
 
