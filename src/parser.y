@@ -68,7 +68,7 @@ postfix-expression
 : primary-expression
 | array-subscript-expression
 | function-call-expression
-| dot-access-expression
+| member-access-expression
 | arrow-access-expression
 | postfix-increment-expression
 | postfix-decrement-expression
@@ -82,7 +82,7 @@ function-call-expression
 : postfix-expression '(' argument-expression-list.opt ')'
 ;
 
-dot-access-expression
+member-access-expression
 : postfix-expression '.' identifier
 ;
 

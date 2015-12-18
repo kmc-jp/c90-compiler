@@ -13,7 +13,7 @@ enum AstTag {
   AST_POSTFIX_EXPRESSION,
   AST_ARRAY_SUBSCRIPT_EXPRESSION,
   AST_FUNCTION_CALL_EXPRESSION,
-  AST_DOT_ACCESS_EXPRESSION,
+  AST_MEMBER_ACCESS_EXPRESSION,
   AST_ARROW_ACCESS_EXPRESSION,
   AST_POSTFIX_INCREMENT_EXPRESSION,
   AST_POSTFIX_DECREMENT_EXPRESSION,
@@ -120,7 +120,7 @@ typedef struct AstPrimaryExpression* AstPrimaryExpressionRef;
 typedef struct AstPostfixExpression* AstPostfixExpressionRef;
 typedef struct AstArraySubscriptExpression* AstArraySubscriptExpressionRef;
 typedef struct AstFunctionCallExpression* AstFunctionCallExpressionRef;
-typedef struct AstDotAccessExpression* AstDotAccessExpressionRef;
+typedef struct AstMemberAccessExpression* AstMemberAccessExpressionRef;
 typedef struct AstArrowAccessExpression* AstArrowAccessExpressionRef;
 typedef struct AstPostfixIncrementExpression* AstPostfixIncrementExpressionRef;
 typedef struct AstPostfixDecrementExpression* AstPostfixDecrementExpressionRef;

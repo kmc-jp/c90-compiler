@@ -19,7 +19,7 @@ struct Ast {
     AstPostfixExpressionRef postfix_expression;
     AstArraySubscriptExpressionRef array_subscript_expression;
     AstFunctionCallExpressionRef function_call_expression;
-    AstDotAccessExpressionRef dot_access_expression;
+    AstMemberAccessExpressionRef member_access_expression;
     AstArrowAccessExpressionRef arrow_access_expression;
     AstPostfixIncrementExpressionRef postfix_increment_expression;
     AstPostfixDecrementExpressionRef postfix_decrement_expression;

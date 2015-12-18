@@ -13,7 +13,7 @@ struct AstArraySubscriptExpression {
 struct AstFunctionCallExpression {
 };
 
-struct AstDotAccessExpression {
+struct AstMemberAccessExpression {
 };
 
 struct AstArrowAccessExpression {
