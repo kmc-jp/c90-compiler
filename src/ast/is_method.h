@@ -42,6 +42,8 @@ bool ast_is_additive_expression(AstRef ast);
 bool ast_is_add_expression(AstRef ast);
 bool ast_is_subtract_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);
+bool ast_is_left_shift_expression(AstRef ast);
+bool ast_is_right_shift_expression(AstRef ast);
 bool ast_is_relational_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);
 bool ast_is_and_expression(AstRef ast);
