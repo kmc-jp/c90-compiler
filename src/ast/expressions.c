@@ -64,7 +64,7 @@ struct AstBitwiseNotExpression {
 struct AstLogicalNotExpression {
 };
 
-struct AstCastOrUnaryExpression {
+struct AstCastExpression {
 };
 
 struct AstTypeCastExpression {

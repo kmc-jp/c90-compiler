@@ -166,32 +166,32 @@ logical-NOT-expression
 : '!' cast-expression
 ;
 
-cast-or-unary-expression
+cast-expression
 : unary-expression
 | type-cast-expression
 ;
 
 type-cast-expression
-: '(' type-name ')' cast-or-unary-expression
+: '(' type-name ')' cast-expression
 ;
 
 multiplicative-expression
-: cast-or-unary-expression
+: cast-expression
 | product-expression
 | division-expression
 | modulo-expression
 ;
 
 product-expression
-: multiplicative-expression '*' cast-or-unary-expression
+: multiplicative-expression '*' cast-expression
 ;
 
 division-expression
-: multiplicative-expression '/' cast-or-unary-expression
+: multiplicative-expression '/' cast-expression
 ;
 
 modulo-expression
-: multiplicative-expression '%' cast-or-unary-expression
+: multiplicative-expression '%' cast-expression
 ;
 
 additive-expression

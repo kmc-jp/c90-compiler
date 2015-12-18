@@ -24,7 +24,7 @@ AstRef ast_make_unary_plus_expression();
 AstRef ast_make_unary_minus_expression();
 AstRef ast_make_bitwise_not_expression();
 AstRef ast_make_logical_not_expression();
-AstRef ast_make_cast_or_unary_expression();
+AstRef ast_make_cast_expression();
 AstRef ast_make_type_cast_expression();
 AstRef ast_make_multiplicative_expression();
 AstRef ast_make_product_expression();
