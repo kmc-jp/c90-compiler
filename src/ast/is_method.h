@@ -23,7 +23,6 @@ bool ast_is_argument_expression_list(AstRef ast);
 bool ast_is_unary_expression(AstRef ast);
 bool ast_is_prefix_increment_expression(AstRef ast);
 bool ast_is_prefix_decrement_expression(AstRef ast);
-bool ast_is_unary_operator_expression(AstRef ast);
 bool ast_is_sizeof_expression(AstRef ast);
 bool ast_is_sizeof_type_expression(AstRef ast);
 bool ast_is_address_of_expression(AstRef ast);

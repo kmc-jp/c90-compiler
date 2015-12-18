@@ -27,7 +27,6 @@ struct Ast {
     AstUnaryExpressionRef unary_expression;
     AstPrefixIncrementExpressionRef prefix_increment_expression;
     AstPrefixDecrementExpressionRef prefix_decrement_expression;
-    AstUnaryOperatorExpressionRef unary_operator_expression;
     AstSizeofExpressionRef sizeof_expression;
     AstSizeofTypeExpressionRef sizeof_type_expression;
     AstAddressOfExpressionRef address_of_expression;

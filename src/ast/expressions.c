@@ -37,9 +37,6 @@ struct AstPrefixIncrementExpression {
 struct AstPrefixDecrementExpression {
 };
 
-struct AstUnaryOperatorExpression {
-};
-
 struct AstSizeofExpression {
 };
 

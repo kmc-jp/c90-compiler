@@ -22,7 +22,6 @@ AstArgumentExpressionListRef ast_get_argument_expression_list(AstRef ast);
 AstUnaryExpressionRef ast_get_unary_expression(AstRef ast);
 AstPrefixIncrementExpressionRef ast_get_prefix_increment_expression(AstRef ast);
 AstPrefixDecrementExpressionRef ast_get_prefix_decrement_expression(AstRef ast);
-AstUnaryOperatorExpressionRef ast_get_unary_operator_expression(AstRef ast);
 AstSizeofExpressionRef ast_get_sizeof_expression(AstRef ast);
 AstSizeofTypeExpressionRef ast_get_sizeof_type_expression(AstRef ast);
 AstAddressOfExpressionRef ast_get_address_of_expression(AstRef ast);

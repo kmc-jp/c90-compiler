@@ -112,7 +112,12 @@ unary-expression
 : postfix-expression
 | prefix-increment-expression
 | prefix-decrement-expression
-| unary-operator-expression
+| address-of-expression
+| pointer-dereference-expression
+| unary-plus-expression
+| unary-minus-expression
+| bitwise-NOT-expression
+| logical-NOT-expression
 | sizeof-expression
 | sizeof-type-expression
 ;
@@ -123,23 +128,6 @@ prefix-increment-expression
 
 prefix-decrement-expression
 : "--" unary-expression
-;
-
-unary-operator-expression
-: address-of-expression
-| pointer-dereference-expression
-| unary-plus-expression
-| unary-minus-expression
-| bitwise-NOT-expression
-| logical-NOT-expression
-;
-
-sizeof-expression
-: "sizeof" unary-expression
-;
-
-sizeof-type-expression
-: "sizeof" '(' type-name ')'
 ;
 
 address-of-expression
@@ -164,6 +152,14 @@ bitwise-NOT-expression
 
 logical-NOT-expression
 : '!' cast-expression
+;
+
+sizeof-expression
+: "sizeof" unary-expression
+;
+
+sizeof-type-expression
+: "sizeof" '(' type-name ')'
 ;
 
 cast-expression
