@@ -235,10 +235,10 @@ AND-expression
 
 bitwise-XOR-expression
 : AND-expression
-| binary-XOR-expression
+| bitwise-XOR-operator-expression
 ;
 
-binary-XOR-expression
+bitwise-XOR-operator-expression
 : bitwise-XOR-expression '^' AND-expression
 ;
 

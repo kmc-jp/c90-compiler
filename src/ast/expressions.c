@@ -106,7 +106,7 @@ struct AstAndExpression {
 struct AstBitwiseXorExpression {
 };
 
-struct AstBinaryXorExpression {
+struct AstBitwiseXorOperatorExpression {
 };
 
 struct AstInclusiveOrExpression {

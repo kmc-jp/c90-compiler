@@ -50,7 +50,7 @@ struct Ast {
     AstEqualityExpressionRef equality_expression;
     AstAndExpressionRef and_expression;
     AstBitwiseXorExpressionRef bitwise_xor_expression;
-    AstBinaryXorExpressionRef binary_xor_expression;
+    AstBitwiseXorOperatorExpressionRef bitwise_xor_operator_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;
