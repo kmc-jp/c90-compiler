@@ -39,7 +39,7 @@ struct Ast {
     AstCastOrUnaryExpressionRef cast_or_unary_expression;
     AstCastExpressionRef cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
-    AstMultiplyExpressionRef multiply_expression;
+    AstProductExpressionRef product_expression;
     AstDivideExpressionRef divide_expression;
     AstModuloExpressionRef modulo_expression;
     AstAdditiveExpressionRef additive_expression;

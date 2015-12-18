@@ -33,7 +33,7 @@ enum AstTag {
   AST_CAST_OR_UNARY_EXPRESSION,
   AST_CAST_EXPRESSION,
   AST_MULTIPLICATIVE_EXPRESSION,
-  AST_MULTIPLY_EXPRESSION,
+  AST_PRODUCT_EXPRESSION,
   AST_DIVIDE_EXPRESSION,
   AST_MODULO_EXPRESSION,
   AST_ADDITIVE_EXPRESSION,
@@ -140,7 +140,7 @@ typedef struct AstLogicalNotExpression* AstLogicalNotExpressionRef;
 typedef struct AstCastOrUnaryExpression* AstCastOrUnaryExpressionRef;
 typedef struct AstCastExpression* AstCastExpressionRef;
 typedef struct AstMultiplicativeExpression* AstMultiplicativeExpressionRef;
-typedef struct AstMultiplyExpression* AstMultiplyExpressionRef;
+typedef struct AstProductExpression* AstProductExpressionRef;
 typedef struct AstDivideExpression* AstDivideExpressionRef;
 typedef struct AstModuloExpression* AstModuloExpressionRef;
 typedef struct AstAdditiveExpression* AstAdditiveExpressionRef;

@@ -34,7 +34,7 @@ AstLogicalNotExpressionRef ast_get_logical_not_expression(AstRef ast);
 AstCastOrUnaryExpressionRef ast_get_cast_or_unary_expression(AstRef ast);
 AstCastExpressionRef ast_get_cast_expression(AstRef ast);
 AstMultiplicativeExpressionRef ast_get_multiplicative_expression(AstRef ast);
-AstMultiplyExpressionRef ast_get_multiply_expression(AstRef ast);
+AstProductExpressionRef ast_get_product_expression(AstRef ast);
 AstDivideExpressionRef ast_get_divide_expression(AstRef ast);
 AstModuloExpressionRef ast_get_modulo_expression(AstRef ast);
 AstAdditiveExpressionRef ast_get_additive_expression(AstRef ast);

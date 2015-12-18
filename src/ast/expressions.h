@@ -27,7 +27,7 @@ AstRef ast_make_logical_not_expression();
 AstRef ast_make_cast_or_unary_expression();
 AstRef ast_make_cast_expression();
 AstRef ast_make_multiplicative_expression();
-AstRef ast_make_multiply_expression();
+AstRef ast_make_product_expression();
 AstRef ast_make_divide_expression();
 AstRef ast_make_modulo_expression();
 AstRef ast_make_additive_expression();
