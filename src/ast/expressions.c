@@ -46,7 +46,7 @@ struct AstSizeofExpression {
 struct AstSizeofTypeExpression {
 };
 
-struct AstAddressExpression {
+struct AstAddressOfExpression {
 };
 
 struct AstDereferenceExpression {

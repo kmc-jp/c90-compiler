@@ -126,7 +126,7 @@ prefix-decrement-expression
 ;
 
 unary-operator-expression
-: address-expression
+: address-of-expression
 | dereference-expression
 | unary-plus-expression
 | unary-minus-expression
@@ -142,7 +142,7 @@ sizeof-type-expression
 : "sizeof" '(' type-name ')'
 ;
 
-address-expression
+address-of-expression
 : '&' cast-expression
 ;
 

@@ -18,7 +18,7 @@ AstRef ast_make_prefix_decrement_expression();
 AstRef ast_make_unary_operator_expression();
 AstRef ast_make_sizeof_expression();
 AstRef ast_make_sizeof_type_expression();
-AstRef ast_make_address_expression();
+AstRef ast_make_address_of_expression();
 AstRef ast_make_dereference_expression();
 AstRef ast_make_unary_plus_expression();
 AstRef ast_make_unary_minus_expression();

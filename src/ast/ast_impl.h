@@ -30,7 +30,7 @@ struct Ast {
     AstUnaryOperatorExpressionRef unary_operator_expression;
     AstSizeofExpressionRef sizeof_expression;
     AstSizeofTypeExpressionRef sizeof_type_expression;
-    AstAddressExpressionRef address_expression;
+    AstAddressOfExpressionRef address_of_expression;
     AstDereferenceExpressionRef dereference_expression;
     AstUnaryPlusExpressionRef unary_plus_expression;
     AstUnaryMinusExpressionRef unary_minus_expression;
