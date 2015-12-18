@@ -59,7 +59,7 @@ bool ast_is_addition_assignment_expression(AstRef ast);
 bool ast_is_subtraction_assignment_expression(AstRef ast);
 bool ast_is_left_shift_assignment_expression(AstRef ast);
 bool ast_is_right_shift_assignment_expression(AstRef ast);
-bool ast_is_and_assignment_expression(AstRef ast);
+bool ast_is_bitwise_and_assignment_expression(AstRef ast);
 bool ast_is_xor_assignment_expression(AstRef ast);
 bool ast_is_or_assignment_expression(AstRef ast);
 bool ast_is_expression(AstRef ast);

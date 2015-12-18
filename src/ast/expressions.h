@@ -51,7 +51,7 @@ AstRef ast_make_addition_assignment_expression();
 AstRef ast_make_subtraction_assignment_expression();
 AstRef ast_make_left_shift_assignment_expression();
 AstRef ast_make_right_shift_assignment_expression();
-AstRef ast_make_and_assignment_expression();
+AstRef ast_make_bitwise_and_assignment_expression();
 AstRef ast_make_xor_assignment_expression();
 AstRef ast_make_or_assignment_expression();
 AstRef ast_make_expression();
