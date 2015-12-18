@@ -127,7 +127,7 @@ prefix-decrement-expression
 
 unary-operator-expression
 : address-of-expression
-| dereference-expression
+| pointer-dereference-expression
 | unary-plus-expression
 | unary-minus-expression
 | complement-expression
@@ -146,7 +146,7 @@ address-of-expression
 : '&' cast-expression
 ;
 
-dereference-expression
+pointer-dereference-expression
 : '*' cast-expression
 ;
 

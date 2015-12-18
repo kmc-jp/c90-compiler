@@ -49,7 +49,7 @@ struct AstSizeofTypeExpression {
 struct AstAddressOfExpression {
 };
 
-struct AstDereferenceExpression {
+struct AstPointerDereferenceExpression {
 };
 
 struct AstUnaryPlusExpression {

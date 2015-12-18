@@ -31,7 +31,7 @@ struct Ast {
     AstSizeofExpressionRef sizeof_expression;
     AstSizeofTypeExpressionRef sizeof_type_expression;
     AstAddressOfExpressionRef address_of_expression;
-    AstDereferenceExpressionRef dereference_expression;
+    AstPointerDereferenceExpressionRef pointer_dereference_expression;
     AstUnaryPlusExpressionRef unary_plus_expression;
     AstUnaryMinusExpressionRef unary_minus_expression;
     AstComplementExpressionRef complement_expression;

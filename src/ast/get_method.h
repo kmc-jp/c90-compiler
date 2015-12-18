@@ -26,7 +26,7 @@ AstUnaryOperatorExpressionRef ast_get_unary_operator_expression(AstRef ast);
 AstSizeofExpressionRef ast_get_sizeof_expression(AstRef ast);
 AstSizeofTypeExpressionRef ast_get_sizeof_type_expression(AstRef ast);
 AstAddressOfExpressionRef ast_get_address_of_expression(AstRef ast);
-AstDereferenceExpressionRef ast_get_dereference_expression(AstRef ast);
+AstPointerDereferenceExpressionRef ast_get_pointer_dereference_expression(AstRef ast);
 AstUnaryPlusExpressionRef ast_get_unary_plus_expression(AstRef ast);
 AstUnaryMinusExpressionRef ast_get_unary_minus_expression(AstRef ast);
 AstComplementExpressionRef ast_get_complement_expression(AstRef ast);

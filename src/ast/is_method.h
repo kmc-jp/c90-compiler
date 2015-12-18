@@ -27,7 +27,7 @@ bool ast_is_unary_operator_expression(AstRef ast);
 bool ast_is_sizeof_expression(AstRef ast);
 bool ast_is_sizeof_type_expression(AstRef ast);
 bool ast_is_address_of_expression(AstRef ast);
-bool ast_is_dereference_expression(AstRef ast);
+bool ast_is_pointer_dereference_expression(AstRef ast);
 bool ast_is_unary_plus_expression(AstRef ast);
 bool ast_is_unary_minus_expression(AstRef ast);
 bool ast_is_complement_expression(AstRef ast);

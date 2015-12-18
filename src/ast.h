@@ -25,7 +25,7 @@ enum AstTag {
   AST_SIZEOF_EXPRESSION,
   AST_SIZEOF_TYPE_EXPRESSION,
   AST_ADDRESS_OF_EXPRESSION,
-  AST_DEREFERENCE_EXPRESSION,
+  AST_POINTER_DEREFERENCE_EXPRESSION,
   AST_UNARY_PLUS_EXPRESSION,
   AST_UNARY_MINUS_EXPRESSION,
   AST_COMPLEMENT_EXPRESSION,
@@ -132,7 +132,7 @@ typedef struct AstUnaryOperatorExpression* AstUnaryOperatorExpressionRef;
 typedef struct AstSizeofExpression* AstSizeofExpressionRef;
 typedef struct AstSizeofTypeExpression* AstSizeofTypeExpressionRef;
 typedef struct AstAddressOfExpression* AstAddressOfExpressionRef;
-typedef struct AstDereferenceExpression* AstDereferenceExpressionRef;
+typedef struct AstPointerDereferenceExpression* AstPointerDereferenceExpressionRef;
 typedef struct AstUnaryPlusExpression* AstUnaryPlusExpressionRef;
 typedef struct AstUnaryMinusExpression* AstUnaryMinusExpressionRef;
 typedef struct AstComplementExpression* AstComplementExpressionRef;
