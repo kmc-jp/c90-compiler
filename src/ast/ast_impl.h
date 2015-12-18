@@ -17,7 +17,7 @@ struct Ast {
     AstStringLiteralRef string_literal;
     AstPrimaryExpressionRef primary_expression;
     AstPostfixExpressionRef postfix_expression;
-    AstIndexAccessExpressionRef index_access_expression;
+    AstArraySubscriptExpressionRef array_subscript_expression;
     AstFunctionCallExpressionRef function_call_expression;
     AstDotAccessExpressionRef dot_access_expression;
     AstArrowAccessExpressionRef arrow_access_expression;

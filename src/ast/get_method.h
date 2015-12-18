@@ -12,7 +12,7 @@ AstCharacterConstantRef ast_get_character_constant(AstRef ast);
 AstStringLiteralRef ast_get_string_literal(AstRef ast);
 AstPrimaryExpressionRef ast_get_primary_expression(AstRef ast);
 AstPostfixExpressionRef ast_get_postfix_expression(AstRef ast);
-AstIndexAccessExpressionRef ast_get_index_access_expression(AstRef ast);
+AstArraySubscriptExpressionRef ast_get_array_subscript_expression(AstRef ast);
 AstFunctionCallExpressionRef ast_get_function_call_expression(AstRef ast);
 AstDotAccessExpressionRef ast_get_dot_access_expression(AstRef ast);
 AstArrowAccessExpressionRef ast_get_arrow_access_expression(AstRef ast);

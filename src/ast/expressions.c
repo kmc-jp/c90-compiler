@@ -7,7 +7,7 @@ struct AstPrimaryExpression {
 struct AstPostfixExpression {
 };
 
-struct AstIndexAccessExpression {
+struct AstArraySubscriptExpression {
 };
 
 struct AstFunctionCallExpression {

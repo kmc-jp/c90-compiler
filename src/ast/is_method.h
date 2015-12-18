@@ -13,7 +13,7 @@ bool ast_is_character_constant(AstRef ast);
 bool ast_is_string_literal(AstRef ast);
 bool ast_is_primary_expression(AstRef ast);
 bool ast_is_postfix_expression(AstRef ast);
-bool ast_is_index_access_expression(AstRef ast);
+bool ast_is_array_subscript_expression(AstRef ast);
 bool ast_is_function_call_expression(AstRef ast);
 bool ast_is_dot_access_expression(AstRef ast);
 bool ast_is_arrow_access_expression(AstRef ast);

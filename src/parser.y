@@ -66,7 +66,7 @@ primary-expression
 
 postfix-expression
 : primary-expression
-| index-access-expression
+| array-subscript-expression
 | function-call-expression
 | dot-access-expression
 | arrow-access-expression
@@ -74,7 +74,7 @@ postfix-expression
 | postfix-decrement-expression
 ;
 
-index-access-expression
+array-subscript-expression
 : postfix-expression '[' expression ']'
 ;
 
