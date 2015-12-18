@@ -260,7 +260,7 @@ conditional-expression
 
 assignment-expression
 : conditional-expression
-| simple-assignment-expression
+| basic-assignment-expression
 | multiplication-assignment-expression
 | division-assignment-expression
 | modulo-assignment-expression
@@ -273,7 +273,7 @@ assignment-expression
 | OR-assignment-expression
 ;
 
-simple-assignment-expression
+basic-assignment-expression
 : unary-expression '=' assignment-expression
 ;
 

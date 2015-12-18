@@ -55,7 +55,7 @@ struct Ast {
     AstLogicalOrExpressionRef logical_or_expression;
     AstConditionalExpressionRef conditional_expression;
     AstAssignmentExpressionRef assignment_expression;
-    AstSimpleAssignmentExpressionRef simple_assignment_expression;
+    AstBasicAssignmentExpressionRef basic_assignment_expression;
     AstMultiplicationAssignmentExpressionRef multiplication_assignment_expression;
     AstDivisionAssignmentExpressionRef division_assignment_expression;
     AstModuloAssignmentExpressionRef modulo_assignment_expression;
