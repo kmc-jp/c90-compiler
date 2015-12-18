@@ -103,7 +103,7 @@ struct AstEqualityExpression {
 struct AstBitwiseAndExpression {
 };
 
-struct AstBinaryAndExpression {
+struct AstBitwiseAndOperatorExpression {
 };
 
 struct AstExclusiveOrExpression {

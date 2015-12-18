@@ -230,10 +230,10 @@ equality-expression
 
 bitwise-AND-expression
 : equality-expression
-| binary-AND-expression
+| bitwise-AND-operator-expression
 ;
 
-binary-AND-expression
+bitwise-AND-operator-expression
 : bitwise-AND-expression '&' equality-expression
 ;
 

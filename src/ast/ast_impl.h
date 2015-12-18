@@ -49,7 +49,7 @@ struct Ast {
     AstRelationalExpressionRef relational_expression;
     AstEqualityExpressionRef equality_expression;
     AstBitwiseAndExpressionRef bitwise_and_expression;
-    AstBinaryAndExpressionRef binary_and_expression;
+    AstBitwiseAndOperatorExpressionRef bitwise_and_operator_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;
     AstLogicalAndExpressionRef logical_and_expression;
