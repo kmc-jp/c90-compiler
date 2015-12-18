@@ -41,7 +41,7 @@ AstRef ast_make_exclusive_or_expression();
 AstRef ast_make_inclusive_or_expression();
 AstRef ast_make_logical_and_expression();
 AstRef ast_make_logical_or_expression();
-AstRef ast_make_binary_logical_or_expression();
+AstRef ast_make_logical_or_operator_expression();
 AstRef ast_make_conditional_expression();
 AstRef ast_make_assignment_expression();
 AstRef ast_make_assignment_operator();
