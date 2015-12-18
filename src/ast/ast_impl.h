@@ -51,7 +51,7 @@ struct Ast {
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstBitwiseOrExpressionRef bitwise_or_expression;
-    AstBinaryOrExpressionRef binary_or_expression;
+    AstBitwiseOrOperatorExpressionRef bitwise_or_operator_expression;
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;
     AstConditionalExpressionRef conditional_expression;

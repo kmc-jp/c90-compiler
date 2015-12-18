@@ -240,10 +240,10 @@ exclusive-OR-expression
 
 bitwise-OR-expression
 : exclusive-OR-expression
-| binary-OR-expression
+| bitwise-OR-operator-expression
 ;
 
-binary-OR-expression
+bitwise-OR-operator-expression
 : bitwise-OR-expression '|' exclusive-OR-expression
 ;
 

@@ -109,7 +109,7 @@ struct AstExclusiveOrExpression {
 struct AstBitwiseOrExpression {
 };
 
-struct AstBinaryOrExpression {
+struct AstBitwiseOrOperatorExpression {
 };
 
 struct AstLogicalAndExpression {
