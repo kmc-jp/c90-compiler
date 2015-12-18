@@ -40,7 +40,7 @@ bool ast_is_division_expression(AstRef ast);
 bool ast_is_modulo_expression(AstRef ast);
 bool ast_is_additive_expression(AstRef ast);
 bool ast_is_addition_expression(AstRef ast);
-bool ast_is_subtract_expression(AstRef ast);
+bool ast_is_subtraction_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);
 bool ast_is_left_shift_expression(AstRef ast);
 bool ast_is_right_shift_expression(AstRef ast);

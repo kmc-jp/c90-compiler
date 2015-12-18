@@ -38,7 +38,7 @@ enum AstTag {
   AST_MODULO_EXPRESSION,
   AST_ADDITIVE_EXPRESSION,
   AST_ADDITION_EXPRESSION,
-  AST_SUBTRACT_EXPRESSION,
+  AST_SUBTRACTION_EXPRESSION,
   AST_SHIFT_EXPRESSION,
   AST_LEFT_SHIFT_EXPRESSION,
   AST_RIGHT_SHIFT_EXPRESSION,
@@ -145,7 +145,7 @@ typedef struct AstDivisionExpression* AstDivisionExpressionRef;
 typedef struct AstModuloExpression* AstModuloExpressionRef;
 typedef struct AstAdditiveExpression* AstAdditiveExpressionRef;
 typedef struct AstAdditionExpression* AstAdditionExpressionRef;
-typedef struct AstSubtractExpression* AstSubtractExpressionRef;
+typedef struct AstSubtractionExpression* AstSubtractionExpressionRef;
 typedef struct AstShiftExpression* AstShiftExpressionRef;
 typedef struct AstLeftShiftExpression* AstLeftShiftExpressionRef;
 typedef struct AstRightShiftExpression* AstRightShiftExpressionRef;

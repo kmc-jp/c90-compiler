@@ -32,7 +32,7 @@ AstRef ast_make_division_expression();
 AstRef ast_make_modulo_expression();
 AstRef ast_make_additive_expression();
 AstRef ast_make_addition_expression();
-AstRef ast_make_subtract_expression();
+AstRef ast_make_subtraction_expression();
 AstRef ast_make_shift_expression();
 AstRef ast_make_left_shift_expression();
 AstRef ast_make_right_shift_expression();

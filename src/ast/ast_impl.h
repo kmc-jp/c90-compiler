@@ -44,7 +44,7 @@ struct Ast {
     AstModuloExpressionRef modulo_expression;
     AstAdditiveExpressionRef additive_expression;
     AstAdditionExpressionRef addition_expression;
-    AstSubtractExpressionRef subtract_expression;
+    AstSubtractionExpressionRef subtraction_expression;
     AstShiftExpressionRef shift_expression;
     AstLeftShiftExpressionRef left_shift_expression;
     AstRightShiftExpressionRef right_shift_expression;

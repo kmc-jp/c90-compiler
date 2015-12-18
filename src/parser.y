@@ -197,14 +197,14 @@ modulo-expression
 additive-expression
 : multiplicative-expression
 | addition-expression
-| subtract-expression
+| subtraction-expression
 ;
 
 addition-expression
 : additive-expression '+' multiplicative-expression
 ;
 
-subtract-expression
+subtraction-expression
 : additive-expression '-' multiplicative-expression
 ;
 

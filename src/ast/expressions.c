@@ -88,7 +88,7 @@ struct AstAdditiveExpression {
 struct AstAdditionExpression {
 };
 
-struct AstSubtractExpression {
+struct AstSubtractionExpression {
 };
 
 struct AstShiftExpression {
