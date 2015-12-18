@@ -255,10 +255,10 @@ logical-OR-expression
 
 conditional-expression
 : logical-OR-expression
-| ternary-expression
+| conditional-operator-expression
 ;
 
-ternary-expression
+conditional-operator-expression
 : logical-OR-expression '?' expression ':' conditional-expression
 ;
 

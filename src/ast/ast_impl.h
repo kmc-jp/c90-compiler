@@ -54,7 +54,7 @@ struct Ast {
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;
     AstConditionalExpressionRef conditional_expression;
-    AstTernaryExpressionRef ternary_expression;
+    AstConditionalOperatorExpressionRef conditional_operator_expression;
     AstAssignmentExpressionRef assignment_expression;
     AstAssignmentOperatorRef assignment_operator;
     AstExpressionRef expression;
