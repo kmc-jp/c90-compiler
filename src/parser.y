@@ -168,10 +168,10 @@ logical-NOT-expression
 
 cast-or-unary-expression
 : unary-expression
-| cast-expression
+| type-cast-expression
 ;
 
-cast-expression
+type-cast-expression
 : '(' type-name ')' cast-or-unary-expression
 ;
 

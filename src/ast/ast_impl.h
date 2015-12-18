@@ -37,7 +37,7 @@ struct Ast {
     AstBitwiseNotExpressionRef bitwise_not_expression;
     AstLogicalNotExpressionRef logical_not_expression;
     AstCastOrUnaryExpressionRef cast_or_unary_expression;
-    AstCastExpressionRef cast_expression;
+    AstTypeCastExpressionRef type_cast_expression;
     AstMultiplicativeExpressionRef multiplicative_expression;
     AstProductExpressionRef product_expression;
     AstDivisionExpressionRef division_expression;
