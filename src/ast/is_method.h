@@ -44,7 +44,7 @@ bool ast_is_subtract_expression(AstRef ast);
 bool ast_is_shift_expression(AstRef ast);
 bool ast_is_relational_expression(AstRef ast);
 bool ast_is_equality_expression(AstRef ast);
-bool ast_is_and_expression(AstRef ast);
+bool ast_is_bitwise_and_expression(AstRef ast);
 bool ast_is_binary_and_expression(AstRef ast);
 bool ast_is_exclusive_or_expression(AstRef ast);
 bool ast_is_inclusive_or_expression(AstRef ast);

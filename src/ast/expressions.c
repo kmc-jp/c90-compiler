@@ -100,7 +100,7 @@ struct AstRelationalExpression {
 struct AstEqualityExpression {
 };
 
-struct AstAndExpression {
+struct AstBitwiseAndExpression {
 };
 
 struct AstBinaryAndExpression {

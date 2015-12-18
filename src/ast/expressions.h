@@ -36,7 +36,7 @@ AstRef ast_make_subtract_expression();
 AstRef ast_make_shift_expression();
 AstRef ast_make_relational_expression();
 AstRef ast_make_equality_expression();
-AstRef ast_make_and_expression();
+AstRef ast_make_bitwise_and_expression();
 AstRef ast_make_binary_and_expression();
 AstRef ast_make_exclusive_or_expression();
 AstRef ast_make_inclusive_or_expression();

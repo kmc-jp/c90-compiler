@@ -228,18 +228,18 @@ equality-expression
 | equality-expression "!=" relational-expression
 ;
 
-AND-expression
+bitwise-AND-expression
 : equality-expression
 | binary-AND-expression
 ;
 
 binary-AND-expression
-: AND-expression '&' equality-expression
+: bitwise-AND-expression '&' equality-expression
 ;
 
 exclusive-OR-expression
-: AND-expression
-| exclusive-OR-expression '^' AND-expression
+: bitwise-AND-expression
+| exclusive-OR-expression '^' bitwise-AND-expression
 ;
 
 inclusive-OR-expression
