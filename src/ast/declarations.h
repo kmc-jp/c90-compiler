@@ -25,7 +25,7 @@ AstRef ast_make_direct_declarator(AstRef direct_declarator);
 AstRef ast_make_array_declarator(AstRef direct_declarator, AstRef constant_expression);
 AstRef ast_make_function_declarator(AstRef direct_declarator, AstRef parameter_type_list);
 AstRef ast_make_old_style_function_declarator(AstRef direct_declarator, AstRef identifier_list);
-AstRef ast_make_pointer();
+AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer);
 AstRef ast_make_type_qualifier_list();
 AstRef ast_make_parameter_type_list();
 AstRef ast_make_variadic_parameter_list();

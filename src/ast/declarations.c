@@ -80,6 +80,8 @@ struct AstOldStyleFunctionDeclarator {
 };
 
 struct AstPointer {
+  AstRef type_qualifier_list; /* NULLABLE */
+  AstRef pointer; /* NULLABLE */
 };
 
 struct AstTypeQualifierList {
@@ -194,6 +196,22 @@ AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
     self = ast_palloc(struct Ast);
     self->tag = AST_OLD_STYLE_FUNCTION_DECLARATOR;
     self->data.old_style_function_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer) {
+  AstRef self = NULL;
+  if ((type_qualifier_list == NULL ||
+       ast_is_type_qualifier_list(type_qualifier_list)) &&
+      (pointer == NULL ||
+       ast_is_pointer(pointer))) {
+    AstPointerRef data = ast_palloc(struct AstPointer);
+    data->type_qualifier_list = type_qualifier_list;
+    data->pointer = pointer;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POINTER;
+    self->data.pointer = data;
   }
   return self;
 }
