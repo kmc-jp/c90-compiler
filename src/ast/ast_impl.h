@@ -61,6 +61,7 @@ struct Ast {
     AstPointerRef pointer;
     AstTypeQualifierListRef type_qualifier_list;
     AstParameterTypeListRef parameter_type_list;
+    AstVariadicParameterListRef variadic_parameter_list;
     AstParameterListRef parameter_list;
     AstParameterDeclarationRef parameter_declaration;
     AstIdentifierListRef identifier_list;

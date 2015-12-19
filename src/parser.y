@@ -370,7 +370,11 @@ type-qualifier-list
 
 parameter-type-list
 : parameter-list
-| parameter-list ',' "..."
+| variadic-parameter-list
+;
+
+variadic-parameter-list
+: parameter-list ',' "..."
 ;
 
 parameter-list

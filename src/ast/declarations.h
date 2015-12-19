@@ -28,6 +28,7 @@ AstRef ast_make_old_style_function_declarator();
 AstRef ast_make_pointer();
 AstRef ast_make_type_qualifier_list();
 AstRef ast_make_parameter_type_list();
+AstRef ast_make_variadic_parameter_list();
 AstRef ast_make_parameter_list();
 AstRef ast_make_parameter_declaration();
 AstRef ast_make_identifier_list();

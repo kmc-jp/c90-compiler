@@ -79,6 +79,9 @@ struct AstTypeQualifierList {
 struct AstParameterTypeList {
 };
 
+struct AstVariadicParameterList {
+};
+
 struct AstParameterList {
 };
 

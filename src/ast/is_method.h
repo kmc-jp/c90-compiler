@@ -57,6 +57,7 @@ bool ast_is_old_style_function_declarator(AstRef ast);
 bool ast_is_pointer(AstRef ast);
 bool ast_is_type_qualifier_list(AstRef ast);
 bool ast_is_parameter_type_list(AstRef ast);
+bool ast_is_variadic_parameter_list(AstRef ast);
 bool ast_is_parameter_list(AstRef ast);
 bool ast_is_parameter_declaration(AstRef ast);
 bool ast_is_identifier_list(AstRef ast);
