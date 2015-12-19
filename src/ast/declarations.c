@@ -85,6 +85,8 @@ struct AstPointer {
 };
 
 struct AstTypeQualifierList {
+  AstRef type_qualifier_list; /* NULLABLE */
+  AstRef type_qualifier;
 };
 
 struct AstParameterTypeList {
@@ -212,6 +214,22 @@ AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer) {
     self = ast_palloc(struct Ast);
     self->tag = AST_POINTER;
     self->data.pointer = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_qualifier_list(AstRef type_qualifier_list,
+    AstRef type_qualifier) {
+  AstRef self = NULL;
+  if ((type_qualifier_list == NULL ||
+       ast_is_type_qualifier_list(type_qualifier_list)) &&
+      ast_is_type_qualifier(type_qualifier)) {
+    AstTypeQualifierListRef data = ast_palloc(struct AstTypeQualifierList);
+    data->type_qualifier_list = type_qualifier_list;
+    data->type_qualifier = type_qualifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_QUALIFIER_LIST;
+    self->data.type_qualifier_list = data;
   }
   return self;
 }
