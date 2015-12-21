@@ -102,6 +102,8 @@ struct AstParameterList {
 };
 
 struct AstParameterDeclaration {
+  AstRef declaration_specifier_list;
+  AstRef declarator;
 };
 
 struct AstParameterAbstractDeclaration {
@@ -280,6 +282,21 @@ AstRef ast_make_parameter_list(AstRef parameter_list,
     AstParameterListRef data = ast_get_parameter_list(parameter_list);
     ast_push_vector(data->parameter_declaration_vector, parameter_declaration);
     self = parameter_list;
+  }
+  return self;
+}
+
+AstRef ast_make_parameter_declaration(AstRef declaration_specifier_list,
+    AstRef declarator) {
+  AstRef self = NULL;
+  if (ast_is_declaration_specifiers(declaration_specifier_list) &&
+      ast_is_declarator(declarator)) {
+    AstParameterDeclarationRef data = ast_palloc(struct AstParameterDeclaration);
+    data->declaration_specifier_list = declaration_specifier_list;
+    data->declarator = declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PARAMETER_DECLARATION;
+    self->data.parameter_declaration = data;
   }
   return self;
 }
