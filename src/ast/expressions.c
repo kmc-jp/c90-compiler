@@ -7,16 +7,16 @@ struct AstPrimaryExpression {
 struct AstPostfixExpression {
 };
 
-struct AstIndexAccessExpression {
+struct AstArraySubscriptExpression {
 };
 
 struct AstFunctionCallExpression {
 };
 
-struct AstDotAccessExpression {
+struct AstMemberAccessExpression {
 };
 
-struct AstArrowAccessExpression {
+struct AstMemberAccessThroughPointerExpression {
 };
 
 struct AstPostfixIncrementExpression {
@@ -37,19 +37,10 @@ struct AstPrefixIncrementExpression {
 struct AstPrefixDecrementExpression {
 };
 
-struct AstUnaryOperatorExpression {
+struct AstAddressOfExpression {
 };
 
-struct AstSizeofExpression {
-};
-
-struct AstSizeofTypeExpression {
-};
-
-struct AstAddressExpression {
-};
-
-struct AstDereferenceExpression {
+struct AstPointerDereferenceExpression {
 };
 
 struct AstUnaryPlusExpression {
@@ -58,25 +49,31 @@ struct AstUnaryPlusExpression {
 struct AstUnaryMinusExpression {
 };
 
-struct AstComplementExpression {
+struct AstBitwiseNotExpression {
 };
 
-struct AstLogicalNegateExpression {
+struct AstLogicalNotExpression {
 };
 
-struct AstCastOrUnaryExpression {
+struct AstSizeofExpression {
+};
+
+struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {
 };
 
+struct AstTypeCastExpression {
+};
+
 struct AstMultiplicativeExpression {
 };
 
-struct AstMultiplyExpression {
+struct AstProductExpression {
 };
 
-struct AstDivideExpression {
+struct AstDivisionExpression {
 };
 
 struct AstModuloExpression {
@@ -85,25 +82,52 @@ struct AstModuloExpression {
 struct AstAdditiveExpression {
 };
 
-struct AstAddExpression {
+struct AstAdditionExpression {
 };
 
-struct AstSubtractExpression {
+struct AstSubtractionExpression {
 };
 
 struct AstShiftExpression {
 };
 
+struct AstLeftShiftExpression {
+};
+
+struct AstRightShiftExpression {
+};
+
 struct AstRelationalExpression {
+};
+
+struct AstLessThanExpression {
+};
+
+struct AstGreaterThanExpression {
+};
+
+struct AstLessThanOrEqualToExpression {
+};
+
+struct AstGreaterThanOrEqualToExpression {
 };
 
 struct AstEqualityExpression {
 };
 
+struct AstEqualToExpression {
+};
+
+struct AstNotEqualToExpression {
+};
+
 struct AstAndExpression {
 };
 
-struct AstExclusiveOrExpression {
+struct AstBitwiseXorExpression {
+};
+
+struct AstBitwiseXorOperatorExpression {
 };
 
 struct AstInclusiveOrExpression {
@@ -155,6 +179,9 @@ struct AstBitwiseOrAssignmentExpression {
 };
 
 struct AstExpression {
+};
+
+struct AstCommaExpression {
 };
 
 struct AstConstantExpression {
