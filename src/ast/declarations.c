@@ -94,6 +94,7 @@ struct AstParameterTypeList {
 };
 
 struct AstVariadicParameterList {
+  AstRef parameter_list;
 };
 
 struct AstParameterList {
@@ -244,6 +245,20 @@ AstRef ast_make_parameter_type_list(AstRef parameter_type_list) {
     self = ast_palloc(struct Ast);
     self->tag = AST_PARAMETER_TYPE_LIST;
     self->data.parameter_type_list = data;
+  }
+  return self;
+}
+
+AstRef ast_make_variadic_parameter_list(
+    AstRef parameter_list) {
+  AstRef self = NULL;
+  if (ast_is_parameter_list(parameter_list)) {
+    AstVariadicParameterListRef data =
+      ast_palloc(struct AstVariadicParameterList);
+    data->parameter_list = parameter_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_VARIADIC_PARAMETER_LIST;
+    self->data.variadic_parameter_list = data;
   }
   return self;
 }
