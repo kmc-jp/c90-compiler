@@ -81,6 +81,8 @@ struct AstIdentifierList {
 };
 
 struct AstTypeName {
+  AstRef specifier_qualifier_list;
+  AstNullableRef abstract_declarator;
 };
 
 struct AstAbstractDeclarator {
@@ -115,6 +117,21 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
     self = ast_palloc(struct Ast);
     self->tag = AST_STORAGE_CLASS_SPECIFIER;
     self->data.storage_class_specifier = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_name(AstRef specifier_qualifier_list,
+    AstNullableRef abstract_declarator) {
+  AstRef self = NULL;
+  if (ast_is_specifier_qualifier_list(specifier_qualifier_list) &&
+      ast_is_abstract_declarator(abstract_declarator)) {
+    AstTypeNameRef data = ast_palloc(struct AstTypeName);
+    data->specifier_qualifier_list = specifier_qualifier_list;
+    data->abstract_declarator = abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_NAME;
+    self->data.type_name = data;
   }
   return self;
 }

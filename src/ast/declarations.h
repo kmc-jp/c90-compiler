@@ -28,7 +28,7 @@ AstRef ast_make_parameter_type_list();
 AstRef ast_make_parameter_list();
 AstRef ast_make_parameter_declaration();
 AstRef ast_make_identifier_list();
-AstRef ast_make_type_name();
+AstRef ast_make_type_name(AstRef specifier_qualifier_list, AstNullableRef abstract_declarator);
 AstRef ast_make_abstract_declarator();
 AstRef ast_make_not_pure_pointer_abstract_declarator();
 AstRef ast_make_direct_abstract_declarator();
