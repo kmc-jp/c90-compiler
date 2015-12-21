@@ -287,7 +287,11 @@ logical-OR-expression
 
 conditional-expression
 : logical-OR-expression
-| logical-OR-expression '?' expression ':' conditional-expression
+| conditional-operator-expression
+;
+
+conditional-operator-expression
+: logical-OR-expression '?' expression ':' conditional-expression
 ;
 
 assignment-expression

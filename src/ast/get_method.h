@@ -57,6 +57,7 @@ AstInclusiveOrExpressionRef ast_get_inclusive_or_expression(AstRef ast);
 AstLogicalAndExpressionRef ast_get_logical_and_expression(AstRef ast);
 AstLogicalOrExpressionRef ast_get_logical_or_expression(AstRef ast);
 AstConditionalExpressionRef ast_get_conditional_expression(AstRef ast);
+AstConditionalOperatorExpressionRef ast_get_conditional_operator_expression(AstRef ast);
 AstAssignmentExpressionRef ast_get_assignment_expression(AstRef ast);
 AstBasicAssignmentExpressionRef ast_get_basic_assignment_expression(AstRef ast);
 AstMultiplicationAssignmentExpressionRef ast_get_multiplication_assignment_expression(AstRef ast);

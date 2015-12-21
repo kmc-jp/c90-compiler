@@ -62,6 +62,7 @@ struct Ast {
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;
     AstConditionalExpressionRef conditional_expression;
+    AstConditionalOperatorExpressionRef conditional_operator_expression;
     AstAssignmentExpressionRef assignment_expression;
     AstBasicAssignmentExpressionRef basic_assignment_expression;
     AstMultiplicationAssignmentExpressionRef multiplication_assignment_expression;
