@@ -86,6 +86,7 @@ struct AstTypeName {
 };
 
 struct AstAbstractDeclarator {
+  AstRef abstract_declarator;
 };
 
 struct AstNotPurePointerAbstractDeclarator {
@@ -132,6 +133,19 @@ AstRef ast_make_type_name(AstRef specifier_qualifier_list,
     self = ast_palloc(struct Ast);
     self->tag = AST_TYPE_NAME;
     self->data.type_name = data;
+  }
+  return self;
+}
+
+AstRef ast_make_abstract_declarator(AstRef abstract_declarator) {
+  AstRef self = NULL;
+  if (ast_is_pointer(abstract_declarator) ||
+      ast_is_not_pure_pointer_abstract_declarator(abstract_declarator)) {
+    AstAbstractDeclaratorRef data = ast_palloc(struct AstAbstractDeclarator);
+    data->abstract_declarator = abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ABSTRACT_DECLARATOR;
+    self->data.abstract_declarator = data;
   }
   return self;
 }
