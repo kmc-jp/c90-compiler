@@ -66,15 +66,15 @@ primary-expression
 
 postfix-expression
 : primary-expression
-| index-access-expression
+| array-subscript-expression
 | function-call-expression
-| dot-access-expression
-| arrow-access-expression
+| member-access-expression
+| member-access-through-pointer-expression
 | postfix-increment-expression
 | postfix-decrement-expression
 ;
 
-index-access-expression
+array-subscript-expression
 : postfix-expression '[' expression ']'
 ;
 
@@ -82,11 +82,11 @@ function-call-expression
 : postfix-expression '(' argument-expression-list.opt ')'
 ;
 
-dot-access-expression
+member-access-expression
 : postfix-expression '.' identifier
 ;
 
-arrow-access-expression
+member-access-through-pointer-expression
 : postfix-expression "->" identifier
 ;
 
@@ -112,7 +112,12 @@ unary-expression
 : postfix-expression
 | prefix-increment-expression
 | prefix-decrement-expression
-| unary-operator-expression
+| address-of-expression
+| pointer-dereference-expression
+| unary-plus-expression
+| unary-minus-expression
+| bitwise-NOT-expression
+| logical-NOT-expression
 | sizeof-expression
 | sizeof-type-expression
 ;
@@ -125,28 +130,11 @@ prefix-decrement-expression
 : "--" unary-expression
 ;
 
-unary-operator-expression
-: address-expression
-| dereference-expression
-| unary-plus-expression
-| unary-minus-expression
-| complement-expression
-| logical-negate-expression
-;
-
-sizeof-expression
-: "sizeof" unary-expression
-;
-
-sizeof-type-expression
-: "sizeof" '(' type-name ')'
-;
-
-address-expression
+address-of-expression
 : '&' cast-expression
 ;
 
-dereference-expression
+pointer-dereference-expression
 : '*' cast-expression
 ;
 
@@ -158,74 +146,114 @@ unary-minus-expression
 : '-' cast-expression
 ;
 
-complement-expression
+bitwise-NOT-expression
 : '~' cast-expression
 ;
 
-logical-negate-expression
+logical-NOT-expression
 : '!' cast-expression
 ;
 
-cast-or-unary-expression
-: unary-expression
-| cast-expression
+sizeof-expression
+: "sizeof" unary-expression
+;
+
+sizeof-type-expression
+: "sizeof" '(' type-name ')'
 ;
 
 cast-expression
-: '(' type-name ')' cast-or-unary-expression
+: unary-expression
+| type-cast-expression
+;
+
+type-cast-expression
+: '(' type-name ')' cast-expression
 ;
 
 multiplicative-expression
-: cast-or-unary-expression
-| multiply-expression
-| divide-expression
+: cast-expression
+| product-expression
+| division-expression
 | modulo-expression
 ;
 
-multiply-expression
-: multiplicative-expression '*' cast-or-unary-expression
+product-expression
+: multiplicative-expression '*' cast-expression
 ;
 
-divide-expression
-: multiplicative-expression '/' cast-or-unary-expression
+division-expression
+: multiplicative-expression '/' cast-expression
 ;
 
 modulo-expression
-: multiplicative-expression '%' cast-or-unary-expression
+: multiplicative-expression '%' cast-expression
 ;
 
 additive-expression
 : multiplicative-expression
-| add-expression
-| subtract-expression
+| addition-expression
+| subtraction-expression
 ;
 
-add-expression
+addition-expression
 : additive-expression '+' multiplicative-expression
 ;
 
-subtract-expression
+subtraction-expression
 : additive-expression '-' multiplicative-expression
 ;
 
 shift-expression
 : additive-expression
-| shift-expression "<<" additive-expression
-| shift-expression ">>" additive-expression
+| left-shift-expression
+| right-shift-expression
+;
+
+left-shift-expression
+: shift-expression "<<" additive-expression
+;
+
+right-shift-expression
+: shift-expression ">>" additive-expression
 ;
 
 relational-expression
 : shift-expression
-| relational-expression '<' shift-expression
-| relational-expression '>' shift-expression
-| relational-expression "<=" shift-expression
-| relational-expression ">=" shift-expression
+| less-than-expression
+| greater-than-expression
+| less-than-or-equal-to-expression
+| greater-than-or-equal-to-expression
+;
+
+less-than-expression
+: relational-expression '<' shift-expression
+;
+
+greater-than-expression
+: relational-expression '>' shift-expression
+;
+
+less-than-or-equal-to-expression
+: relational-expression "<=" shift-expression
+;
+
+greater-than-or-equal-to-expression
+: relational-expression ">=" shift-expression
 ;
 
 equality-expression
 : relational-expression
-| equality-expression "==" relational-expression
-| equality-expression "!=" relational-expression
+| equal-to-expression
+| not-equal-to-expression
+;
+
+equal-to-expression
+: equality-expression "==" relational-expression
+;
+
+not-equal-to-expression
+: equality-expression "!=" relational-expression
 ;
 
 AND-expression
@@ -233,14 +261,18 @@ AND-expression
 | AND-expression '&' equality-expression
 ;
 
-exclusive-OR-expression
+bitwise-XOR-expression
 : AND-expression
-| exclusive-OR-expression '^' AND-expression
+| bitwise-XOR-operator-expression
+;
+
+bitwise-XOR-operator-expression
+: bitwise-XOR-expression '^' AND-expression
 ;
 
 inclusive-OR-expression
-: exclusive-OR-expression
-| inclusive-OR-expression '|' exclusive-OR-expression
+: bitwise-XOR-expression
+| inclusive-OR-expression '|' bitwise-XOR-expression
 ;
 
 logical-AND-expression
@@ -259,26 +291,70 @@ logical-OR-operator-expression
 
 conditional-expression
 : logical-OR-expression
-| logical-OR-expression '?' expression ':' conditional-expression
+| conditional-operator-expression
+;
+
+conditional-operator-expression
+: logical-OR-expression '?' expression ':' conditional-expression
 ;
 
 assignment-expression
 : conditional-expression
-| unary-expression assignment-operator assignment-expression
+| basic-assignment-expression
+| multiplication-assignment-expression
+| division-assignment-expression
+| modulo-assignment-expression
+| addition-assignment-expression
+| subtraction-assignment-expression
+| left-shift-assignment-expression
+| right-shift-assignment-expression
+| bitwise-AND-assignment-expression
+| bitwise-XOR-assignment-expression
+| bitwise-OR-assignment-expression
 ;
 
-assignment-operator
-: '='
-| "*="
-| "/="
-| "%="
-| "+="
-| "-="
-| "<<="
-| ">>="
-| "&="
-| "^="
-| "|="
+basic-assignment-expression
+: unary-expression '=' assignment-expression
+;
+
+multiplication-assignment-expression
+: unary-expression "*=" assignment-expression
+;
+
+division-assignment-expression
+: unary-expression "/=" assignment-expression
+;
+
+modulo-assignment-expression
+: unary-expression "%=" assignment-expression
+;
+
+addition-assignment-expression
+: unary-expression "+=" assignment-expression
+;
+
+subtraction-assignment-expression
+: unary-expression "-=" assignment-expression
+;
+
+left-shift-assignment-expression
+: unary-expression "<<=" assignment-expression
+;
+
+right-shift-assignment-expression
+: unary-expression ">>=" assignment-expression
+;
+
+bitwise-AND-assignment-expression
+: unary-expression "&=" assignment-expression
+;
+
+bitwise-XOR-assignment-expression
+: unary-expression "^=" assignment-expression
+;
+
+bitwise-OR-assignment-expression
+: unary-expression "|=" assignment-expression
 ;
 
 expression.opt
@@ -288,7 +364,11 @@ expression.opt
 
 expression
 : assignment-expression
-| expression ',' assignment-expression
+| comma-expression
+;
+
+comma-expression
+: expression ',' assignment-expression
 ;
 
 constant-expression.opt
