@@ -112,6 +112,7 @@ struct AstParameterAbstractDeclaration {
 };
 
 struct AstIdentifierList {
+  AstVectorRef identifier_vector;
 };
 
 struct AstTypeName {
@@ -314,6 +315,24 @@ AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list
     self = ast_palloc(struct Ast);
     self->tag = AST_PARAMETER_ABSTRACT_DECLARATION;
     self->data.parameter_abstract_declaration = data;
+  }
+  return self;
+}
+
+AstRef ast_make_identifier_list(AstRef identifier_list, AstRef identifier) {
+  AstRef self = NULL;
+  if (identifier_list == NULL) {
+    AstIdentifierListRef data = ast_palloc(struct AstIdentifierList);
+    data->identifier_vector = ast_make_vector();
+    identifier_list = ast_palloc(struct Ast);
+    identifier_list->tag = AST_IDENTIFIER_LIST;
+    identifier_list->data.identifier_list = data;
+  }
+  if (ast_is_identifier_list(identifier_list) &&
+      ast_is_identifier(identifier)) {
+    AstIdentifierListRef data = ast_get_identifier_list(identifier_list);
+    ast_push_vector(data->identifier_vector, identifier);
+    self = identifier_list;
   }
   return self;
 }
