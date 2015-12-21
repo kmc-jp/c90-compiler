@@ -32,6 +32,8 @@ AstRef ast_make_type_name();
 AstRef ast_make_abstract_declarator();
 AstRef ast_make_not_pure_pointer_abstract_declarator();
 AstRef ast_make_direct_abstract_declarator();
+AstRef ast_make_array_abstract_declarator();
+AstRef ast_make_function_abstract_declarator();
 AstRef ast_make_typedef_name();
 AstRef ast_make_initializer();
 AstRef ast_make_initializer_list();

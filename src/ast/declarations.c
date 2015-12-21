@@ -92,6 +92,12 @@ struct AstNotPurePointerAbstractDeclarator {
 struct AstDirectAbstractDeclarator {
 };
 
+struct AstArrayAbstractDeclarator {
+};
+
+struct AstFunctionAbstractDeclarator {
+};
+
 struct AstTypedefName {
 };
 

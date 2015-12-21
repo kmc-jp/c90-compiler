@@ -107,6 +107,8 @@ bool ast_is_type_name(AstRef ast);
 bool ast_is_abstract_declarator(AstRef ast);
 bool ast_is_not_pure_pointer_abstract_declarator(AstRef ast);
 bool ast_is_direct_abstract_declarator(AstRef ast);
+bool ast_is_array_abstract_declarator(AstRef ast);
+bool ast_is_function_abstract_declarator(AstRef ast);
 bool ast_is_typedef_name(AstRef ast);
 bool ast_is_initializer(AstRef ast);
 bool ast_is_initializer_list(AstRef ast);
