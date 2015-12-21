@@ -244,8 +244,16 @@ greater-than-or-equal-to-expression
 
 equality-expression
 : relational-expression
-| equality-expression "==" relational-expression
-| equality-expression "!=" relational-expression
+| equal-to-expression
+| not-equal-to-expression
+;
+
+equal-to-expression
+: equality-expression "==" relational-expression
+;
+
+not-equal-to-expression
+: equality-expression "!=" relational-expression
 ;
 
 AND-expression

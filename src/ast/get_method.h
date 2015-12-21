@@ -48,6 +48,8 @@ AstGreaterThanExpressionRef ast_get_greater_than_expression(AstRef ast);
 AstLessThanOrEqualToExpressionRef ast_get_less_than_or_equal_to_expression(AstRef ast);
 AstGreaterThanOrEqualToExpressionRef ast_get_greater_than_or_equal_to_expression(AstRef ast);
 AstEqualityExpressionRef ast_get_equality_expression(AstRef ast);
+AstEqualToExpressionRef ast_get_equal_to_expression(AstRef ast);
+AstNotEqualToExpressionRef ast_get_not_equal_to_expression(AstRef ast);
 AstAndExpressionRef ast_get_and_expression(AstRef ast);
 AstExclusiveOrExpressionRef ast_get_exclusive_or_expression(AstRef ast);
 AstInclusiveOrExpressionRef ast_get_inclusive_or_expression(AstRef ast);

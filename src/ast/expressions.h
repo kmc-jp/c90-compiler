@@ -41,6 +41,8 @@ AstRef ast_make_greater_than_expression();
 AstRef ast_make_less_than_or_equal_to_expression();
 AstRef ast_make_greater_than_or_equal_to_expression();
 AstRef ast_make_equality_expression();
+AstRef ast_make_equal_to_expression();
+AstRef ast_make_not_equal_to_expression();
 AstRef ast_make_and_expression();
 AstRef ast_make_exclusive_or_expression();
 AstRef ast_make_inclusive_or_expression();
