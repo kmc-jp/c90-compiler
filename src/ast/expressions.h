@@ -53,6 +53,7 @@ AstRef ast_make_conditional_expression();
 AstRef ast_make_assignment_expression();
 AstRef ast_make_assignment_operator();
 AstRef ast_make_expression();
+AstRef ast_make_comma_expression();
 AstRef ast_make_constant_expression();
 
 #endif  /* KMC_C89_COMPILER_AST_EXPRESSION_H */

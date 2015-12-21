@@ -151,5 +151,8 @@ struct AstAssignmentOperator {
 struct AstExpression {
 };
 
+struct AstCommaExpression {
+};
+
 struct AstConstantExpression {
 };

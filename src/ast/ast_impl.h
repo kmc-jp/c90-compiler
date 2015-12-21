@@ -65,6 +65,7 @@ struct Ast {
     AstAssignmentExpressionRef assignment_expression;
     AstAssignmentOperatorRef assignment_operator;
     AstExpressionRef expression;
+    AstCommaExpressionRef comma_expression;
     AstConstantExpressionRef constant_expression;
     AstDeclarationRef declaration;
     AstDeclarationSpecifiersRef declaration_specifiers;
