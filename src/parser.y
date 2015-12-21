@@ -292,21 +292,61 @@ conditional-expression
 
 assignment-expression
 : conditional-expression
-| unary-expression assignment-operator assignment-expression
+| basic-assignment-expression
+| multiplication-assignment-expression
+| division-assignment-expression
+| modulo-assignment-expression
+| addition-assignment-expression
+| subtraction-assignment-expression
+| left-shift-assignment-expression
+| right-shift-assignment-expression
+| bitwise-AND-assignment-expression
+| bitwise-XOR-assignment-expression
+| bitwise-OR-assignment-expression
 ;
 
-assignment-operator
-: '='
-| "*="
-| "/="
-| "%="
-| "+="
-| "-="
-| "<<="
-| ">>="
-| "&="
-| "^="
-| "|="
+basic-assignment-expression
+: unary-expression '=' assignment-expression
+;
+
+multiplication-assignment-expression
+: unary-expression "*=" assignment-expression
+;
+
+division-assignment-expression
+: unary-expression "/=" assignment-expression
+;
+
+modulo-assignment-expression
+: unary-expression "%=" assignment-expression
+;
+
+addition-assignment-expression
+: unary-expression "+=" assignment-expression
+;
+
+subtraction-assignment-expression
+: unary-expression "-=" assignment-expression
+;
+
+left-shift-assignment-expression
+: unary-expression "<<=" assignment-expression
+;
+
+right-shift-assignment-expression
+: unary-expression ">>=" assignment-expression
+;
+
+bitwise-AND-assignment-expression
+: unary-expression "&=" assignment-expression
+;
+
+bitwise-XOR-assignment-expression
+: unary-expression "^=" assignment-expression
+;
+
+bitwise-OR-assignment-expression
+: unary-expression "|=" assignment-expression
 ;
 
 expression.opt

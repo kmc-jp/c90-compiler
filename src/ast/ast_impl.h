@@ -63,7 +63,17 @@ struct Ast {
     AstLogicalOrExpressionRef logical_or_expression;
     AstConditionalExpressionRef conditional_expression;
     AstAssignmentExpressionRef assignment_expression;
-    AstAssignmentOperatorRef assignment_operator;
+    AstBasicAssignmentExpressionRef basic_assignment_expression;
+    AstMultiplicationAssignmentExpressionRef multiplication_assignment_expression;
+    AstDivisionAssignmentExpressionRef division_assignment_expression;
+    AstModuloAssignmentExpressionRef modulo_assignment_expression;
+    AstAdditionAssignmentExpressionRef addition_assignment_expression;
+    AstSubtractionAssignmentExpressionRef subtraction_assignment_expression;
+    AstLeftShiftAssignmentExpressionRef left_shift_assignment_expression;
+    AstRightShiftAssignmentExpressionRef right_shift_assignment_expression;
+    AstBitwiseAndAssignmentExpressionRef bitwise_and_assignment_expression;
+    AstBitwiseXorAssignmentExpressionRef bitwise_xor_assignment_expression;
+    AstBitwiseOrAssignmentExpressionRef bitwise_or_assignment_expression;
     AstExpressionRef expression;
     AstCommaExpressionRef comma_expression;
     AstConstantExpressionRef constant_expression;

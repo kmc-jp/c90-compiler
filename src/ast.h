@@ -57,7 +57,17 @@ enum AstTag {
   AST_LOGICAL_OR_EXPRESSION,
   AST_CONDITIONAL_EXPRESSION,
   AST_ASSIGNMENT_EXPRESSION,
-  AST_ASSIGNMENT_OPERATOR,
+  AST_BASIC_ASSIGNMENT_EXPRESSION,
+  AST_MULTIPLICATION_ASSIGNMENT_EXPRESSION,
+  AST_DIVISION_ASSIGNMENT_EXPRESSION,
+  AST_MODULO_ASSIGNMENT_EXPRESSION,
+  AST_ADDITION_ASSIGNMENT_EXPRESSION,
+  AST_SUBTRACTION_ASSIGNMENT_EXPRESSION,
+  AST_LEFT_SHIFT_ASSIGNMENT_EXPRESSION,
+  AST_RIGHT_SHIFT_ASSIGNMENT_EXPRESSION,
+  AST_BITWISE_AND_ASSIGNMENT_EXPRESSION,
+  AST_BITWISE_XOR_ASSIGNMENT_EXPRESSION,
+  AST_BITWISE_OR_ASSIGNMENT_EXPRESSION,
   AST_EXPRESSION,
   AST_COMMA_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
@@ -167,7 +177,17 @@ typedef struct AstLogicalAndExpression* AstLogicalAndExpressionRef;
 typedef struct AstLogicalOrExpression* AstLogicalOrExpressionRef;
 typedef struct AstConditionalExpression* AstConditionalExpressionRef;
 typedef struct AstAssignmentExpression* AstAssignmentExpressionRef;
-typedef struct AstAssignmentOperator* AstAssignmentOperatorRef;
+typedef struct AstBasicAssignmentExpression* AstBasicAssignmentExpressionRef;
+typedef struct AstMultiplicationAssignmentExpression* AstMultiplicationAssignmentExpressionRef;
+typedef struct AstDivisionAssignmentExpression* AstDivisionAssignmentExpressionRef;
+typedef struct AstModuloAssignmentExpression* AstModuloAssignmentExpressionRef;
+typedef struct AstAdditionAssignmentExpression* AstAdditionAssignmentExpressionRef;
+typedef struct AstSubtractionAssignmentExpression* AstSubtractionAssignmentExpressionRef;
+typedef struct AstLeftShiftAssignmentExpression* AstLeftShiftAssignmentExpressionRef;
+typedef struct AstRightShiftAssignmentExpression* AstRightShiftAssignmentExpressionRef;
+typedef struct AstBitwiseAndAssignmentExpression* AstBitwiseAndAssignmentExpressionRef;
+typedef struct AstBitwiseXorAssignmentExpression* AstBitwiseXorAssignmentExpressionRef;
+typedef struct AstBitwiseOrAssignmentExpression* AstBitwiseOrAssignmentExpressionRef;
 typedef struct AstExpression* AstExpressionRef;
 typedef struct AstCommaExpression* AstCommaExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;

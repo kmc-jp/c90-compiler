@@ -145,7 +145,37 @@ struct AstConditionalExpression {
 struct AstAssignmentExpression {
 };
 
-struct AstAssignmentOperator {
+struct AstBasicAssignmentExpression {
+};
+
+struct AstMultiplicationAssignmentExpression {
+};
+
+struct AstDivisionAssignmentExpression {
+};
+
+struct AstModuloAssignmentExpression {
+};
+
+struct AstAdditionAssignmentExpression {
+};
+
+struct AstSubtractionAssignmentExpression {
+};
+
+struct AstLeftShiftAssignmentExpression {
+};
+
+struct AstRightShiftAssignmentExpression {
+};
+
+struct AstBitwiseAndAssignmentExpression {
+};
+
+struct AstBitwiseXorAssignmentExpression {
+};
+
+struct AstBitwiseOrAssignmentExpression {
 };
 
 struct AstExpression {
