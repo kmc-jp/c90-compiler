@@ -583,7 +583,11 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-abstract-declarator
+| not-pure-pointer-abstract-declarator
+;
+
+not-pure-pointer-abstract-declarator
+: pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt

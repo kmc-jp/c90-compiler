@@ -109,6 +109,7 @@ struct Ast {
     AstIdentifierListRef identifier_list;
     AstTypeNameRef type_name;
     AstAbstractDeclaratorRef abstract_declarator;
+    AstNotPurePointerAbstractDeclaratorRef not_pure_pointer_abstract_declarator;
     AstDirectAbstractDeclaratorRef direct_abstract_declarator;
     AstTypedefNameRef typedef_name;
     AstInitializerRef initializer;

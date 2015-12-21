@@ -86,6 +86,9 @@ struct AstTypeName {
 struct AstAbstractDeclarator {
 };
 
+struct AstNotPurePointerAbstractDeclarator {
+};
+
 struct AstDirectAbstractDeclarator {
 };
 

@@ -104,6 +104,7 @@ AstParameterDeclarationRef ast_get_parameter_declaration(AstRef ast);
 AstIdentifierListRef ast_get_identifier_list(AstRef ast);
 AstTypeNameRef ast_get_type_name(AstRef ast);
 AstAbstractDeclaratorRef ast_get_abstract_declarator(AstRef ast);
+AstNotPurePointerAbstractDeclaratorRef ast_get_not_pure_pointer_abstract_declarator(AstRef ast);
 AstDirectAbstractDeclaratorRef ast_get_direct_abstract_declarator(AstRef ast);
 AstTypedefNameRef ast_get_typedef_name(AstRef ast);
 AstInitializerRef ast_get_initializer(AstRef ast);
