@@ -98,6 +98,7 @@ struct AstVariadicParameterList {
 };
 
 struct AstParameterList {
+  AstVectorRef parameter_declaration_vector;
 };
 
 struct AstParameterDeclaration {
@@ -259,6 +260,26 @@ AstRef ast_make_variadic_parameter_list(
     self = ast_palloc(struct Ast);
     self->tag = AST_VARIADIC_PARAMETER_LIST;
     self->data.variadic_parameter_list = data;
+  }
+  return self;
+}
+
+AstRef ast_make_parameter_list(AstRef parameter_list,
+    AstRef parameter_declaration) {
+  AstRef self = NULL;
+  if (parameter_list == NULL) {
+    AstParameterListRef data = ast_palloc(struct AstParameterList);
+    data->parameter_declaration_vector = ast_make_vector();
+    parameter_list = ast_palloc(struct Ast);
+    parameter_list->tag = AST_PARAMETER_LIST;
+    parameter_list->data.parameter_list = data;
+  }
+  if (ast_is_parameter_list(parameter_list) &&
+      (ast_is_parameter_declaration(parameter_declaration) ||
+       ast_is_parameter_abstract_declaration(parameter_declaration))) {
+    AstParameterListRef data = ast_get_parameter_list(parameter_list);
+    ast_push_vector(data->parameter_declaration_vector, parameter_declaration);
+    self = parameter_list;
   }
   return self;
 }

@@ -29,7 +29,7 @@ AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer);
 AstRef ast_make_type_qualifier_list(AstRef type_qualifier_list, AstRef type_qualifier);
 AstRef ast_make_parameter_type_list(AstRef parameter_type_list);
 AstRef ast_make_variadic_parameter_list(AstRef parameter_list);
-AstRef ast_make_parameter_list();
+AstRef ast_make_parameter_list(AstRef parameter_list, AstRef parameter_declaration);
 AstRef ast_make_parameter_declaration();
 AstRef ast_make_parameter_abstract_declaration();
 AstRef ast_make_identifier_list();
