@@ -94,10 +94,34 @@ struct AstSubtractExpression {
 struct AstShiftExpression {
 };
 
+struct AstLeftShiftExpression {
+};
+
+struct AstRightShiftExpression {
+};
+
 struct AstRelationalExpression {
 };
 
+struct AstLessThanExpression {
+};
+
+struct AstGreaterThanExpression {
+};
+
+struct AstLessThanOrEqualToExpression {
+};
+
+struct AstGreaterThanOrEqualToExpression {
+};
+
 struct AstEqualityExpression {
+};
+
+struct AstEqualToExpression {
+};
+
+struct AstNotEqualToExpression {
 };
 
 struct AstAndExpression {

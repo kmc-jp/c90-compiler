@@ -46,8 +46,16 @@ struct Ast {
     AstAddExpressionRef add_expression;
     AstSubtractExpressionRef subtract_expression;
     AstShiftExpressionRef shift_expression;
+    AstLeftShiftExpressionRef left_shift_expression;
+    AstRightShiftExpressionRef right_shift_expression;
     AstRelationalExpressionRef relational_expression;
+    AstLessThanExpressionRef less_than_expression;
+    AstGreaterThanExpressionRef greater_than_expression;
+    AstLessThanOrEqualToExpressionRef less_than_or_equal_to_expression;
+    AstGreaterThanOrEqualToExpressionRef greater_than_or_equal_to_expression;
     AstEqualityExpressionRef equality_expression;
+    AstEqualToExpressionRef equal_to_expression;
+    AstNotEqualToExpressionRef not_equal_to_expression;
     AstAndExpressionRef and_expression;
     AstExclusiveOrExpressionRef exclusive_or_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;

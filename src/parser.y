@@ -210,22 +210,54 @@ subtract-expression
 
 shift-expression
 : additive-expression
-| shift-expression "<<" additive-expression
-| shift-expression ">>" additive-expression
+| left-shift-expression
+| right-shift-expression
+;
+
+left-shift-expression
+: shift-expression "<<" additive-expression
+;
+
+right-shift-expression
+: shift-expression ">>" additive-expression
 ;
 
 relational-expression
 : shift-expression
-| relational-expression '<' shift-expression
-| relational-expression '>' shift-expression
-| relational-expression "<=" shift-expression
-| relational-expression ">=" shift-expression
+| less-than-expression
+| greater-than-expression
+| less-than-or-equal-to-expression
+| greater-than-or-equal-to-expression
+;
+
+less-than-expression
+: relational-expression '<' shift-expression
+;
+
+greater-than-expression
+: relational-expression '>' shift-expression
+;
+
+less-than-or-equal-to-expression
+: relational-expression "<=" shift-expression
+;
+
+greater-than-or-equal-to-expression
+: relational-expression ">=" shift-expression
 ;
 
 equality-expression
 : relational-expression
-| equality-expression "==" relational-expression
-| equality-expression "!=" relational-expression
+| equal-to-expression
+| not-equal-to-expression
+;
+
+equal-to-expression
+: equality-expression "==" relational-expression
+;
+
+not-equal-to-expression
+: equality-expression "!=" relational-expression
 ;
 
 AND-expression
