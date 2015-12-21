@@ -56,6 +56,7 @@ AstBitwiseXorOperatorExpressionRef ast_get_bitwise_xor_operator_expression(AstRe
 AstInclusiveOrExpressionRef ast_get_inclusive_or_expression(AstRef ast);
 AstLogicalAndExpressionRef ast_get_logical_and_expression(AstRef ast);
 AstLogicalOrExpressionRef ast_get_logical_or_expression(AstRef ast);
+AstLogicalOrOperatorExpressionRef ast_get_logical_or_operator_expression(AstRef ast);
 AstConditionalExpressionRef ast_get_conditional_expression(AstRef ast);
 AstConditionalOperatorExpressionRef ast_get_conditional_operator_expression(AstRef ast);
 AstAssignmentExpressionRef ast_get_assignment_expression(AstRef ast);

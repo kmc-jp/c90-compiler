@@ -282,7 +282,11 @@ logical-AND-expression
 
 logical-OR-expression
 : logical-AND-expression
-| logical-OR-expression "||" logical-AND-expression
+| logical-OR-operator-expression
+;
+
+logical-OR-operator-expression
+: logical-OR-expression "||" logical-AND-expression
 ;
 
 conditional-expression

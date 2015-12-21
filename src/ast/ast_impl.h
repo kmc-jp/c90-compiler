@@ -61,6 +61,7 @@ struct Ast {
     AstInclusiveOrExpressionRef inclusive_or_expression;
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalOrExpressionRef logical_or_expression;
+    AstLogicalOrOperatorExpressionRef logical_or_operator_expression;
     AstConditionalExpressionRef conditional_expression;
     AstConditionalOperatorExpressionRef conditional_operator_expression;
     AstAssignmentExpressionRef assignment_expression;
