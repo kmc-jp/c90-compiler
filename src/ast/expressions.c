@@ -136,6 +136,9 @@ struct AstInclusiveOrExpression {
 struct AstLogicalAndExpression {
 };
 
+struct AstLogicalAndOperatorExpression {
+};
+
 struct AstLogicalOrExpression {
 };
 

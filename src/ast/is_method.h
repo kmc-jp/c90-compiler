@@ -56,6 +56,7 @@ bool ast_is_bitwise_xor_expression(AstRef ast);
 bool ast_is_bitwise_xor_operator_expression(AstRef ast);
 bool ast_is_inclusive_or_expression(AstRef ast);
 bool ast_is_logical_and_expression(AstRef ast);
+bool ast_is_logical_and_operator_expression(AstRef ast);
 bool ast_is_logical_or_expression(AstRef ast);
 bool ast_is_logical_or_operator_expression(AstRef ast);
 bool ast_is_conditional_expression(AstRef ast);

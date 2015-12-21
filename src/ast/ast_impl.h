@@ -60,6 +60,7 @@ struct Ast {
     AstBitwiseXorOperatorExpressionRef bitwise_xor_operator_expression;
     AstInclusiveOrExpressionRef inclusive_or_expression;
     AstLogicalAndExpressionRef logical_and_expression;
+    AstLogicalAndOperatorExpressionRef logical_and_operator_expression;
     AstLogicalOrExpressionRef logical_or_expression;
     AstLogicalOrOperatorExpressionRef logical_or_operator_expression;
     AstConditionalExpressionRef conditional_expression;
