@@ -58,6 +58,7 @@ enum AstTag {
   AST_VARIADIC_PARAMETER_LIST,
   AST_PARAMETER_LIST,
   AST_PARAMETER_DECLARATION,
+  AST_PARAMETER_ABSTRACT_DECLARATION,
   AST_IDENTIFIER_LIST,
   AST_TYPE_NAME,
   AST_ABSTRACT_DECLARATOR,
@@ -141,6 +142,7 @@ typedef struct AstParameterTypeList* AstParameterTypeListRef;
 typedef struct AstVariadicParameterList* AstVariadicParameterListRef;
 typedef struct AstParameterList* AstParameterListRef;
 typedef struct AstParameterDeclaration* AstParameterDeclarationRef;
+typedef struct AstParameterAbstractDeclaration* AstParameterAbstractDeclarationRef;
 typedef struct AstIdentifierList* AstIdentifierListRef;
 typedef struct AstTypeName* AstTypeNameRef;
 typedef struct AstAbstractDeclarator* AstAbstractDeclaratorRef;

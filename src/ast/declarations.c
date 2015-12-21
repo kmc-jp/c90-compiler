@@ -88,6 +88,9 @@ struct AstParameterList {
 struct AstParameterDeclaration {
 };
 
+struct AstParameterAbstractDeclaration {
+};
+
 struct AstIdentifierList {
 };
 

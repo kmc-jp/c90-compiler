@@ -31,6 +31,7 @@ AstRef ast_make_parameter_type_list();
 AstRef ast_make_variadic_parameter_list();
 AstRef ast_make_parameter_list();
 AstRef ast_make_parameter_declaration();
+AstRef ast_make_parameter_abstract_declaration();
 AstRef ast_make_identifier_list();
 AstRef ast_make_type_name();
 AstRef ast_make_abstract_declarator();
