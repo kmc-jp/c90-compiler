@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lex.yy.h"
-#include "yacc_mock.h"
 #include "lexer_adapter.h"
 
 void yyin_from_file(const char *filename) {
