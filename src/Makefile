@@ -15,6 +15,7 @@ LEX_INTERMEDIATE := lex.yy.c lex.yy.h
 LEX_TARGET := lex.yy.o
 YACC_SRC := parser.y
 YACC_INTERMEDIATE := parser.tab.c parser.tab.h
+YACC_TARGET := parser.tab.o
 
 LEX := flex
 LEX_OPTION := --header-file=lex.yy.h
@@ -22,7 +23,7 @@ YACC := bison
 YACC_OPTION := -d
 TARGET := kmc89
 OBJS += $(AST_OBJS)
-OBJS += $(LEX_TARGET) parser.tab.o
+OBJS += $(LEX_TARGET) $(YACC_TARGET)
 CLEAN_OBJS += $(LEX_INTERMEDIATE)
 
 build: $(TARGET)
