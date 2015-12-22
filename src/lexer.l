@@ -64,16 +64,16 @@ WHITESPACE ;
 
 [+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
+  return FLOATING_CONSTANT;
 }
 
 [+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
   copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
+  return INTEGER_CONSTANT;
 }
 
 {SINGLE_CHARACTER_TOKEN} {
-  return *yytext;
+  return CHARACTER_CONSTANT;
 }
 
 "->" return ARROW;
@@ -140,7 +140,7 @@ WHITESPACE ;
 
 "'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
   copy_to_yylval(yytext, yyleng);
-  return CHAR_LITERAL;
+  return CHARACTER_CONSTANT;
 }
 
 . {
