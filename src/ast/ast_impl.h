@@ -41,6 +41,7 @@ struct Ast {
     AstDeclarationSpecifierRef declaration_specifier;
     AstInitDeclaratorListRef init_declarator_list;
     AstInitDeclaratorRef init_declarator;
+    AstDeclaratorWithInitializerRef declarator_with_initializer;
     AstStorageClassSpecifierRef storage_class_specifier;
     AstTypeSpecifierRef type_specifier;
     AstStructOrUnionSpecifierRef struct_or_union_specifier;

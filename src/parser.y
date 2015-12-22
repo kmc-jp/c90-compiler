@@ -238,7 +238,11 @@ init-declarator-list
 
 init-declarator
 : declarator
-| declarator '=' initializer
+| declarator-with-initializer
+;
+
+declarator-with-initializer
+: declarator '=' initializer
 ;
 
 storage-class-specifier

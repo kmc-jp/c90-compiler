@@ -37,6 +37,7 @@ bool ast_is_declaration_specifier_list(AstRef ast);
 bool ast_is_declaration_specifier(AstRef ast);
 bool ast_is_init_declarator_list(AstRef ast);
 bool ast_is_init_declarator(AstRef ast);
+bool ast_is_declarator_with_initializer(AstRef ast);
 bool ast_is_storage_class_specifier(AstRef ast);
 bool ast_is_type_specifier(AstRef ast);
 bool ast_is_struct_or_union_specifier(AstRef ast);

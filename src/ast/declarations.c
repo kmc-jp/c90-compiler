@@ -19,6 +19,9 @@ struct AstInitDeclaratorList {
 struct AstInitDeclarator {
 };
 
+struct AstDeclaratorWithInitializer {
+};
+
 struct AstStorageClassSpecifier {
 };
 
