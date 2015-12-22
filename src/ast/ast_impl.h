@@ -59,7 +59,8 @@ struct Ast {
     AstBitwiseAndOperatorExpressionRef bitwise_and_operator_expression;
     AstBitwiseXorExpressionRef bitwise_xor_expression;
     AstBitwiseXorOperatorExpressionRef bitwise_xor_operator_expression;
-    AstInclusiveOrExpressionRef inclusive_or_expression;
+    AstBitwiseOrExpressionRef bitwise_or_expression;
+    AstBitwiseOrOperatorExpressionRef bitwise_or_operator_expression;
     AstLogicalAndExpressionRef logical_and_expression;
     AstLogicalAndOperatorExpressionRef logical_and_operator_expression;
     AstLogicalOrExpressionRef logical_or_expression;

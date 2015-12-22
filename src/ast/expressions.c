@@ -133,7 +133,10 @@ struct AstBitwiseXorExpression {
 struct AstBitwiseXorOperatorExpression {
 };
 
-struct AstInclusiveOrExpression {
+struct AstBitwiseOrExpression {
+};
+
+struct AstBitwiseOrOperatorExpression {
 };
 
 struct AstLogicalAndExpression {
