@@ -126,6 +126,7 @@ enum AstTag {
 };
 
 typedef struct Ast* AstRef;
+typedef AstRef AstPointer;
 
 typedef struct AstIdentifier* AstIdentifierRef;
 typedef struct AstConstant* AstConstantRef;
