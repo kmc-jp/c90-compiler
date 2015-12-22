@@ -23,6 +23,7 @@ struct AstInitDeclaratorList {
 };
 
 struct AstInitDeclarator {
+  AstRef init_declarator;
 };
 
 struct AstDeclaratorWithInitializer {
@@ -168,6 +169,19 @@ AstRef ast_make_init_declarator_list(AstRef init_declarator_list, AstRef init_de
     AstInitDeclaratorListRef data = ast_get_init_declarator_list(init_declarator_list);
     ast_push_vector(data->init_declarator_vector, init_declarator);
     self = init_declarator_list;
+  }
+  return self;
+}
+
+AstRef ast_make_init_declarator(AstRef init_declarator) {
+  AstRef self = NULL;
+  if (ast_is_declarator(init_declarator) ||
+      ast_is_declarator_with_initializer(init_declarator)) {
+    AstInitDeclaratorRef data = ast_palloc(struct AstInitDeclarator);
+    data->init_declarator = init_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_INIT_DECLARATOR;
+    self->data.init_declarator = data;
   }
   return self;
 }
