@@ -42,6 +42,7 @@ struct AstStructOrUnion {
 };
 
 struct AstStructDeclarationList {
+  AstVectorRef struct_declaration_vector;
 };
 
 struct AstStructDeclaration {
@@ -191,6 +192,25 @@ AstRef ast_make_struct_or_union(AstRef struct_or_union) {
     self = ast_palloc(struct Ast);
     self->tag = AST_STRUCT_OR_UNION;
     self->data.struct_or_union = data;
+  }
+  return self;
+}
+
+AstRef ast_make_struct_declaration_list(AstRef struct_declaration_list,
+    AstRef struct_declaration) {
+  AstRef self = NULL;
+  if (struct_declaration_list == NULL) {
+    AstStructDeclarationListRef data = ast_palloc(struct AstStructDeclarationList);
+    data->struct_declaration_vector = ast_make_vector();
+    struct_declaration_list = ast_palloc(struct Ast);
+    struct_declaration_list->tag = AST_STRUCT_DECLARATION_LIST;
+    struct_declaration_list->data.struct_declaration_list = data;
+  }
+  if (ast_is_struct_declaration_list(struct_declaration_list) &&
+      ast_is_struct_declaration(struct_declaration)) {
+    AstStructDeclarationListRef data = ast_get_struct_declaration_list(struct_declaration_list);
+    ast_push_vector(data->struct_declaration_vector, struct_declaration);
+    self = struct_declaration_list;
   }
   return self;
 }
