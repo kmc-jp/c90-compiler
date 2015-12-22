@@ -33,6 +33,8 @@ struct AstStructOrUnionDefinition {
 };
 
 struct AstStructOrUnionDeclaration {
+  AstRef struct_or_union;
+  AstRef identifier;
 };
 
 struct AstStructOrUnion {
@@ -161,6 +163,21 @@ AstRef ast_make_struct_or_union_definition(AstRef struct_or_union,
     self = ast_palloc(struct Ast);
     self->tag = AST_STRUCT_OR_UNION_DEFINITION;
     self->data.struct_or_union_definition = data;
+  }
+  return self;
+}
+
+AstRef ast_make_struct_or_union_declaration(AstRef struct_or_union,
+    AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_struct_or_union(struct_or_union) &&
+      ast_is_identifier(identifier)) {
+    AstStructOrUnionDeclarationRef data = ast_palloc(struct AstStructOrUnionDeclaration);
+    data->struct_or_union = struct_or_union;
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STRUCT_OR_UNION_DECLARATION;
+    self->data.struct_or_union_declaration = data;
   }
   return self;
 }
