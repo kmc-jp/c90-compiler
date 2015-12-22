@@ -39,6 +39,8 @@ bool ast_is_init_declarator(AstRef ast);
 bool ast_is_storage_class_specifier(AstRef ast);
 bool ast_is_type_specifier(AstRef ast);
 bool ast_is_struct_or_union_specifier(AstRef ast);
+bool ast_is_struct_or_union_definition(AstRef ast);
+bool ast_is_struct_or_union_declaration(AstRef ast);
 bool ast_is_struct_or_union(AstRef ast);
 bool ast_is_struct_declaration_list(AstRef ast);
 bool ast_is_struct_declaration(AstRef ast);

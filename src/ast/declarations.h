@@ -10,6 +10,8 @@ AstRef ast_make_init_declarator();
 AstRef ast_make_storage_class_specifier();
 AstRef ast_make_type_specifier();
 AstRef ast_make_struct_or_union_specifier();
+AstRef ast_make_struct_or_union_definition();
+AstRef ast_make_struct_or_union_declaration();
 AstRef ast_make_struct_or_union();
 AstRef ast_make_struct_declaration_list();
 AstRef ast_make_struct_declaration();

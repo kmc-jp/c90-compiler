@@ -261,8 +261,16 @@ type-specifier
 ;
 
 struct-or-union-specifier
+: struct-or-union-definition
+| struct-or-union-declaration
+;
+
+struct-or-union-definition
 : struct-or-union identifier.opt '{' struct-declaration-list '}'
-| struct-or-union identifier
+;
+
+struct-or-union-declaration
+: struct-or-union identifier
 ;
 
 struct-or-union

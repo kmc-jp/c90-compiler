@@ -37,6 +37,8 @@ enum AstTag {
   AST_STORAGE_CLASS_SPECIFIER,
   AST_TYPE_SPECIFIER,
   AST_STRUCT_OR_UNION_SPECIFIER,
+  AST_STRUCT_OR_UNION_DEFINITION,
+  AST_STRUCT_OR_UNION_DECLARATION,
   AST_STRUCT_OR_UNION,
   AST_STRUCT_DECLARATION_LIST,
   AST_STRUCT_DECLARATION,
@@ -117,6 +119,8 @@ typedef struct AstInitDeclarator* AstInitDeclaratorRef;
 typedef struct AstStorageClassSpecifier* AstStorageClassSpecifierRef;
 typedef struct AstTypeSpecifier* AstTypeSpecifierRef;
 typedef struct AstStructOrUnionSpecifier* AstStructOrUnionSpecifierRef;
+typedef struct AstStructOrUnionDefinition* AstStructOrUnionDefinitionRef;
+typedef struct AstStructOrUnionDeclaration* AstStructOrUnionDeclarationRef;
 typedef struct AstStructOrUnion* AstStructOrUnionRef;
 typedef struct AstStructDeclarationList* AstStructDeclarationListRef;
 typedef struct AstStructDeclaration* AstStructDeclarationRef;

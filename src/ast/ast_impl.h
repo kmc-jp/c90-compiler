@@ -43,6 +43,8 @@ struct Ast {
     AstStorageClassSpecifierRef storage_class_specifier;
     AstTypeSpecifierRef type_specifier;
     AstStructOrUnionSpecifierRef struct_or_union_specifier;
+    AstStructOrUnionDefinitionRef struct_or_union_definition;
+    AstStructOrUnionDeclarationRef struct_or_union_declaration;
     AstStructOrUnionRef struct_or_union;
     AstStructDeclarationListRef struct_declaration_list;
     AstStructDeclarationRef struct_declaration;

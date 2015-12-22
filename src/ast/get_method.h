@@ -38,6 +38,8 @@ AstInitDeclaratorRef ast_get_init_declarator(AstRef ast);
 AstStorageClassSpecifierRef ast_get_storage_class_specifier(AstRef ast);
 AstTypeSpecifierRef ast_get_type_specifier(AstRef ast);
 AstStructOrUnionSpecifierRef ast_get_struct_or_union_specifier(AstRef ast);
+AstStructOrUnionDefinitionRef ast_get_struct_or_union_definition(AstRef ast);
+AstStructOrUnionDeclarationRef ast_get_struct_or_union_declaration(AstRef ast);
 AstStructOrUnionRef ast_get_struct_or_union(AstRef ast);
 AstStructDeclarationListRef ast_get_struct_declaration_list(AstRef ast);
 AstStructDeclarationRef ast_get_struct_declaration(AstRef ast);

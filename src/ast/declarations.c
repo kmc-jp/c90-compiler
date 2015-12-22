@@ -25,6 +25,12 @@ struct AstTypeSpecifier {
 struct AstStructOrUnionSpecifier {
 };
 
+struct AstStructOrUnionDefinition {
+};
+
+struct AstStructOrUnionDeclaration {
+};
+
 struct AstStructOrUnion {
 };
 
