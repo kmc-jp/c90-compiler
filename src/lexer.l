@@ -3,17 +3,16 @@
 #define YY_USER_INIT initialize_lexer()
 #include "utility.h"
 #include "use_vector.h"
+#include "ast/ast_string.h"
 #include "parser.tab.h"
 
 int yywrap(void) {
   return 1;
 }
 
-void copy_to_yylval(char *src, int size) {
-  char *literal = safe_array_malloc(char, size + 1);
-  strncpy(literal, src, size);
-  literal[size] = '\0';
-  yylval = literal;
+void copy_to_yylval(const char *src, const size_t length) {
+  AstRef astRef = ast_make_token(src, length);
+  yylval = astRef;
 }
 
 VECTORREF(char) lexer_string_literal;
