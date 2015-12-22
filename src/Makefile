@@ -18,6 +18,7 @@ YACC_SRC := parser.y
 LEX := flex
 LEX_OPTION := --header-file=lex.yy.h
 YACC := bison
+YACC_OPTION := -d
 TARGET := kmc89
 OBJS += $(AST_OBJS)
 OBJS += $(LEX_TARGET) parser.tab.o
@@ -29,7 +30,7 @@ $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 parser.tab.c parser.tab.h: $(YACC_SRC)
-	$(YACC) -d $<
+	$(YACC) $(YACC_OPTION) $<
 
 $(LEX_INTERMEDIATE): $(LEX_SRC)
 	$(LEX) $(LEX_OPTION) $<
