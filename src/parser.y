@@ -256,18 +256,22 @@ not-equal-to-expression
 : equality-expression "!=" relational-expression
 ;
 
-AND-expression
+bitwise-AND-expression
 : equality-expression
-| AND-expression '&' equality-expression
+| bitwise-AND-operator-expression
+;
+
+bitwise-AND-operator-expression
+: bitwise-AND-expression '&' equality-expression
 ;
 
 bitwise-XOR-expression
-: AND-expression
+: bitwise-AND-expression
 | bitwise-XOR-operator-expression
 ;
 
 bitwise-XOR-operator-expression
-: bitwise-XOR-expression '^' AND-expression
+: bitwise-XOR-expression '^' bitwise-AND-expression
 ;
 
 bitwise-OR-expression

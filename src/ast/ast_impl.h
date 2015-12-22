@@ -55,7 +55,8 @@ struct Ast {
     AstEqualityExpressionRef equality_expression;
     AstEqualToExpressionRef equal_to_expression;
     AstNotEqualToExpressionRef not_equal_to_expression;
-    AstAndExpressionRef and_expression;
+    AstBitwiseAndExpressionRef bitwise_and_expression;
+    AstBitwiseAndOperatorExpressionRef bitwise_and_operator_expression;
     AstBitwiseXorExpressionRef bitwise_xor_expression;
     AstBitwiseXorOperatorExpressionRef bitwise_xor_operator_expression;
     AstBitwiseOrExpressionRef bitwise_or_expression;
