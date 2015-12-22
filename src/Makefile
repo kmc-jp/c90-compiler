@@ -13,6 +13,7 @@ AST_OBJS := $(AST_SRCS:.c=.o)
 LEX_SRC := lexer.l
 
 LEX := flex
+LEX_OPTION := --header-file=lex.yy.h -o lex.yy.c
 YACC := bison
 TARGET := kmc89
 OBJS += $(AST_OBJS)
@@ -28,7 +29,7 @@ parser.tab.c parser.tab.h: parser.y
 	$(YACC) -d $<
 
 lex.yy.c lex.yy.h: $(LEX_SRC)
-	$(LEX) --header-file=lex.yy.h -o lex.yy.c $<
+	$(LEX) $(LEX_OPTION) $<
 
 lex.yy.o: CFLAGS += -Wno-unused-function
 
