@@ -31,7 +31,8 @@ enum AstTag {
   AST_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
   AST_DECLARATION,
-  AST_DECLARATION_SPECIFIERS,
+  AST_DECLARATION_SPECIFIER_LIST,
+  AST_DECLARATION_SPECIFIER,
   AST_INIT_DECLARATOR_LIST,
   AST_INIT_DECLARATOR,
   AST_STORAGE_CLASS_SPECIFIER,
@@ -110,7 +111,8 @@ typedef struct AstAssignmentOperator* AstAssignmentOperatorRef;
 typedef struct AstExpression* AstExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;
 typedef struct AstDeclaration* AstDeclarationRef;
-typedef struct AstDeclarationSpecifiers* AstDeclarationSpecifiersRef;
+typedef struct AstDeclarationSpecifierList* AstDeclarationSpecifierListRef;
+typedef struct AstDeclarationSpecifier* AstDeclarationSpecifierRef;
 typedef struct AstInitDeclaratorList* AstInitDeclaratorListRef;
 typedef struct AstInitDeclarator* AstInitDeclaratorRef;
 typedef struct AstStorageClassSpecifier* AstStorageClassSpecifierRef;

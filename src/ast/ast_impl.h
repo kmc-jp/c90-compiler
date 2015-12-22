@@ -37,7 +37,8 @@ struct Ast {
     AstExpressionRef expression;
     AstConstantExpressionRef constant_expression;
     AstDeclarationRef declaration;
-    AstDeclarationSpecifiersRef declaration_specifiers;
+    AstDeclarationSpecifierListRef declaration_specifier_list;
+    AstDeclarationSpecifierRef declaration_specifier;
     AstInitDeclaratorListRef init_declarator_list;
     AstInitDeclaratorRef init_declarator;
     AstStorageClassSpecifierRef storage_class_specifier;

@@ -7,7 +7,10 @@
 struct AstDeclaration {
 };
 
-struct AstDeclarationSpecifiers {
+struct AstDeclarationSpecifierList {
+};
+
+struct AstDeclarationSpecifier {
 };
 
 struct AstInitDeclaratorList {
