@@ -46,6 +46,8 @@ struct AstStructDeclarationList {
 };
 
 struct AstStructDeclaration {
+  AstRef specifier_qualifier_list;
+  AstRef struct_declarator_list;
 };
 
 struct AstSpecifierQualifierList {
@@ -211,6 +213,21 @@ AstRef ast_make_struct_declaration_list(AstRef struct_declaration_list,
     AstStructDeclarationListRef data = ast_get_struct_declaration_list(struct_declaration_list);
     ast_push_vector(data->struct_declaration_vector, struct_declaration);
     self = struct_declaration_list;
+  }
+  return self;
+}
+
+AstRef ast_make_struct_declaration(AstRef specifier_qualifier_list,
+    AstRef struct_declarator_list) {
+  AstRef self = NULL;
+  if (ast_is_specifier_qualifier_list(specifier_qualifier_list) &&
+      ast_is_struct_declarator_list(struct_declarator_list)) {
+    AstStructDeclarationRef data = ast_palloc(struct AstStructDeclaration);
+    data->specifier_qualifier_list = specifier_qualifier_list;
+    data->struct_declarator_list = struct_declarator_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STRUCT_DECLARATION;
+    self->data.struct_declaration = data;
   }
   return self;
 }
