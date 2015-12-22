@@ -15,7 +15,7 @@ LEX_INTERMEDIATE := lex.yy.c lex.yy.h
 LEX_TARGET := lex.yy.o
 
 LEX := flex
-LEX_OPTION := --header-file=lex.yy.h -o lex.yy.c
+LEX_OPTION := --header-file=lex.yy.h
 YACC := bison
 TARGET := kmc89
 OBJS += $(AST_OBJS)
