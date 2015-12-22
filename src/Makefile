@@ -13,6 +13,7 @@ AST_OBJS := $(AST_SRCS:.c=.o)
 LEX_SRC := lexer.l
 LEX_INTERMEDIATE := lex.yy.c lex.yy.h
 LEX_TARGET := lex.yy.o
+YACC_SRC := parser.y
 
 LEX := flex
 LEX_OPTION := --header-file=lex.yy.h
@@ -27,7 +28,7 @@ build: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-parser.tab.c parser.tab.h: parser.y
+parser.tab.c parser.tab.h: $(YACC_SRC)
 	$(YACC) -d $<
 
 $(LEX_INTERMEDIATE): $(LEX_SRC)
