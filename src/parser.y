@@ -285,7 +285,7 @@ logical-AND-expression
 ;
 
 logical-AND-operator-expression
-| logical-AND-expression "&&" bitwise-OR-expression
+: logical-AND-expression "&&" bitwise-OR-expression
 ;
 
 logical-OR-expression
