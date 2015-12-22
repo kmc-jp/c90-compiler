@@ -14,6 +14,7 @@ LEX_SRC := lexer.l
 LEX_INTERMEDIATE := lex.yy.c lex.yy.h
 LEX_TARGET := lex.yy.o
 YACC_SRC := parser.y
+YACC_INTERMEDIATE := parser.tab.c parser.tab.h
 
 LEX := flex
 LEX_OPTION := --header-file=lex.yy.h
@@ -29,7 +30,7 @@ build: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-parser.tab.c parser.tab.h: $(YACC_SRC)
+$(YACC_INTERMEDIATE): $(YACC_SRC)
 	$(YACC) $(YACC_OPTION) $<
 
 $(LEX_INTERMEDIATE): $(LEX_SRC)
