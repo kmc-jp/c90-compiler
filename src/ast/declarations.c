@@ -146,3 +146,21 @@ AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier) {
   }
   return self;
 }
+
+AstRef ast_make_struct_or_union_definition(AstRef struct_or_union,
+    AstRef identifier, AstRef struct_declaration_list) {
+  AstRef self = NULL;
+  if (ast_is_struct_or_union(struct_or_union) &&
+      (identifier == NULL ||
+       ast_is_identifier(identifier)) &&
+      ast_is_struct_declaration_list(struct_declaration_list)) {
+    AstStructOrUnionDefinitionRef data = ast_palloc(struct AstStructOrUnionDefinition);
+    data->struct_or_union = struct_or_union;
+    data->identifier = identifier;
+    data->struct_declaration_list = struct_declaration_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STRUCT_OR_UNION_DEFINITION;
+    self->data.struct_or_union_definition = data;
+  }
+  return self;
+}
