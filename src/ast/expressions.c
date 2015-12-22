@@ -121,7 +121,10 @@ struct AstEqualToExpression {
 struct AstNotEqualToExpression {
 };
 
-struct AstAndExpression {
+struct AstBitwiseAndExpression {
+};
+
+struct AstBitwiseAndOperatorExpression {
 };
 
 struct AstBitwiseXorExpression {
