@@ -1,11 +1,9 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "token.h"
-#include "yacc_mock.h"
 #include "utility.h"
 #include "use_vector.h"
-/* #include "y.tab.h" */
+#include "parser.tab.h"
 
 int yywrap(void) {
   return 1;
