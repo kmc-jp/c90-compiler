@@ -27,6 +27,8 @@ struct AstInitDeclarator {
 };
 
 struct AstDeclaratorWithInitializer {
+  AstRef declarator;
+  AstRef initializer; /* NULLABLE */
 };
 
 struct AstStorageClassSpecifier {
@@ -182,6 +184,20 @@ AstRef ast_make_init_declarator(AstRef init_declarator) {
     self = ast_palloc(struct Ast);
     self->tag = AST_INIT_DECLARATOR;
     self->data.init_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_declarator_with_initializer(AstRef declarator,
+    AstRef initializer) {
+  AstRef self = NULL;
+  if (ast_is_declarator(declarator) && ast_is_initializer(initializer)) {
+    AstDeclaratorWithInitializerRef data = ast_palloc(struct AstDeclaratorWithInitializer);
+    data->declarator = declarator;
+    data->initializer = initializer;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DECLARATOR_WITH_INITIALIZER;
+    self->data.declarator_with_initializer = data;
   }
   return self;
 }
