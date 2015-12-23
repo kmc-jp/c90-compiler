@@ -86,6 +86,7 @@ struct AstEnumDeclaration {
 };
 
 struct AstEnumeratorList {
+  AstRef enumerator_list;
 };
 
 struct AstEnumerator {
@@ -356,6 +357,18 @@ AstRef ast_make_enum_declaration(AstRef identifier) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUM_DECLARATION;
     self->data.enum_declaration = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enumerator_list(AstRef enumerator_list) {
+  AstRef self = NULL;
+  if (ast_is_vector(enumerator_list)) {
+    AstEnumeratorListRef data = ast_palloc(struct AstEnumeratorList);
+    data->enumerator_list = enumerator_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUMERATOR_LIST;
+    self->data.enumerator_list = data;
   }
   return self;
 }
