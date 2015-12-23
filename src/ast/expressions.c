@@ -21,6 +21,8 @@ struct AstFunctionCallExpression {
 };
 
 struct AstMemberAccessExpression {
+  AstRef object;
+  AstRef member;
 };
 
 struct AstMemberAccessThroughPointerExpression {
@@ -254,6 +256,21 @@ AstRef ast_make_function_call_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_FUNCTION_CALL_EXPRESSION;
     self->data.function_call_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_member_access_expression(AstRef object, AstRef member) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(object) ||
+      ast_is_identifier(member)) {
+    AstMemberAccessExpressionRef data =
+        ast_palloc(struct AstMemberAccessExpression);
+    data->object = object;
+    data->member = member;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MEMBER_ACCESS_EXPRESSION;
+    self->data.member_access_expression = data;
   }
   return self;
 }
