@@ -28,7 +28,7 @@ struct AstInitDeclarator {
 
 struct AstDeclaratorWithInitializer {
   AstRef declarator;
-  AstRef initializer; /* NULLABLE */
+  AstRef initializer;
 };
 
 struct AstStorageClassSpecifier {
