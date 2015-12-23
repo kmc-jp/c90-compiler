@@ -7,6 +7,7 @@ struct AstPrimaryExpression {
 };
 
 struct AstPostfixExpression {
+  AstRef postfix;
 };
 
 struct AstArraySubscriptExpression {
@@ -203,3 +204,21 @@ struct AstCommaExpression {
 
 struct AstConstantExpression {
 };
+
+AstRef ast_make_postfix_expression(AstRef postfix) {
+  AstRef self = NULL;
+  if (ast_is_primary_expression(postfix) ||
+      ast_is_array_subscript_expression(postfix) ||
+      ast_is_function_call_expression(postfix) ||
+      ast_is_member_access_expression(postfix) ||
+      ast_is_member_access_through_pointer_expression(postfix) ||
+      ast_is_postfix_increment_expression(postfix) ||
+      ast_is_postfix_decrement_expression(postfix)) {
+    AstPostfixExpressionRef data = ast_palloc(struct AstPostfixExpression);
+    data->postfix = postfix;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POSTFIX_EXPRESSION;
+    self->data.postfix_expression = data;
+  }
+  return self;
+}
