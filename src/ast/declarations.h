@@ -21,6 +21,8 @@ AstRef ast_make_struct_declarator_list();
 AstRef ast_make_struct_declarator();
 AstRef ast_make_bit_field_declarator();
 AstRef ast_make_enum_specifier();
+AstRef ast_make_enum_definition();
+AstRef ast_make_enum_declaration();
 AstRef ast_make_enumerator_list();
 AstRef ast_make_enumerator();
 AstRef ast_make_type_qualifier();

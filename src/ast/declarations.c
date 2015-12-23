@@ -58,6 +58,12 @@ struct AstBitFieldDeclarator {
 struct AstEnumSpecifier {
 };
 
+struct AstEnumDefinition {
+};
+
+struct AstEnumDeclaration {
+};
+
 struct AstEnumeratorList {
 };
 

@@ -50,6 +50,8 @@ bool ast_is_struct_declarator_list(AstRef ast);
 bool ast_is_struct_declarator(AstRef ast);
 bool ast_is_bit_field_declarator(AstRef ast);
 bool ast_is_enum_specifier(AstRef ast);
+bool ast_is_enum_definition(AstRef ast);
+bool ast_is_enum_declaration(AstRef ast);
 bool ast_is_enumerator_list(AstRef ast);
 bool ast_is_enumerator(AstRef ast);
 bool ast_is_type_qualifier(AstRef ast);
