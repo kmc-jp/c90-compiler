@@ -11,6 +11,8 @@ struct AstPostfixExpression {
 };
 
 struct AstArraySubscriptExpression {
+  AstRef array;
+  AstRef subscript;
 };
 
 struct AstFunctionCallExpression {
@@ -219,6 +221,21 @@ AstRef ast_make_postfix_expression(AstRef postfix) {
     self = ast_palloc(struct Ast);
     self->tag = AST_POSTFIX_EXPRESSION;
     self->data.postfix_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_array_subscript_expression(AstRef array, AstRef subscript) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(array) ||
+      ast_is_expression(subscript)) {
+    AstArraySubscriptExpressionRef data =
+        ast_palloc(struct AstArraySubscriptExpression);
+    data->array = array;
+    data->subscript = subscript;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ARRAY_SUBSCRIPT_EXPRESSION;
+    self->data.array_subscript_expression = data;
   }
   return self;
 }
