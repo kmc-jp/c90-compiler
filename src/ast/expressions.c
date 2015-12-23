@@ -26,6 +26,8 @@ struct AstMemberAccessExpression {
 };
 
 struct AstMemberAccessThroughPointerExpression {
+  AstRef object;
+  AstRef member;
 };
 
 struct AstPostfixIncrementExpression {
@@ -271,6 +273,22 @@ AstRef ast_make_member_access_expression(AstRef object, AstRef member) {
     self = ast_palloc(struct Ast);
     self->tag = AST_MEMBER_ACCESS_EXPRESSION;
     self->data.member_access_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_member_access_through_pointer_expression(
+    AstRef object, AstRef member) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(object) ||
+      ast_is_identifier(member)) {
+    AstMemberAccessThroughPointerExpressionRef data =
+        ast_palloc(struct AstMemberAccessThroughPointerExpression);
+    data->object = object;
+    data->member = member;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MEMBER_ACCESS_THROUGH_POINTER_EXPRESSION;
+    self->data.member_access_through_pointer_expression = data;
   }
   return self;
 }
