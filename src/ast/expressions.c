@@ -35,6 +35,7 @@ struct AstPostfixIncrementExpression {
 };
 
 struct AstPostfixDecrementExpression {
+  AstRef postfix;
 };
 
 struct AstArgumentExpressionList {
@@ -303,6 +304,19 @@ AstRef ast_make_postfix_increment_expression(AstRef postfix) {
     self = ast_palloc(struct Ast);
     self->tag = AST_POSTFIX_INCREMENT_EXPRESSION;
     self->data.postfix_increment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_postfix_decrement_expression(AstRef postfix) {
+  AstRef self = NULL;
+  if (ast_is_postfix_decrement_expression(postfix)) {
+    AstPostfixDecrementExpressionRef data =
+        ast_palloc(struct AstPostfixDecrementExpression);
+    data->postfix = postfix;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POSTFIX_DECREMENT_EXPRESSION;
+    self->data.postfix_decrement_expression = data;
   }
   return self;
 }
