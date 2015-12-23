@@ -1,6 +1,7 @@
 #include "expressions.h"
 #include "ast_impl.h"
 #include "is_method.h"
+#include "get_method.h"
 #include "pool.h"
 
 struct AstPrimaryExpression {
@@ -330,5 +331,18 @@ AstRef ast_make_argument_expression_list(void) {
   self = ast_palloc(struct Ast);
   self->tag = AST_ARGUMENT_EXPRESSION_LIST;
   self->data.argument_expression_list = data;
+  return self;
+}
+
+AstRef ast_push_argument_expression_list(
+    AstRef argument_list, AstRef argument) {
+  AstRef self = NULL;
+  if (ast_is_argument_expression_list(argument_list) ||
+      ast_is_assignment_expression(argument)) {
+    AstArgumentExpressionListRef list =
+        ast_get_argument_expression_list(argument_list);
+    ast_push_vector(list->argument_list, argument);
+    self = argument_list;
+  }
   return self;
 }
