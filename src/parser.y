@@ -308,7 +308,11 @@ struct-declarator-list
 
 struct-declarator
 : declarator
-| declarator.opt ':' constant-expression
+| bit-field-declarator
+;
+
+bit-field-declarator
+: declarator.opt ':' constant-expression
 ;
 
 enum-specifier

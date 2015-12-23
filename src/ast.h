@@ -46,6 +46,7 @@ enum AstTag {
   AST_SPECIFIER_QUALIFIER,
   AST_STRUCT_DECLARATOR_LIST,
   AST_STRUCT_DECLARATOR,
+  AST_BIT_FIELD_DECLARATOR,
   AST_ENUM_SPECIFIER,
   AST_ENUMERATOR_LIST,
   AST_ENUMERATOR,
@@ -128,6 +129,7 @@ typedef struct AstSpecifierQualifierList* AstSpecifierQualifierListRef;
 typedef struct AstSpecifierQualifier* AstSpecifierQualifierRef;
 typedef struct AstStructDeclaratorList* AstStructDeclaratorListRef;
 typedef struct AstStructDeclarator* AstStructDeclaratorRef;
+typedef struct AstBitFieldDeclarator* AstBitFieldDeclaratorRef;
 typedef struct AstEnumSpecifier* AstEnumSpecifierRef;
 typedef struct AstEnumeratorList* AstEnumeratorListRef;
 typedef struct AstEnumerator* AstEnumeratorRef;

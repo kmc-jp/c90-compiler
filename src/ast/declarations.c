@@ -52,6 +52,9 @@ struct AstStructDeclaratorList {
 struct AstStructDeclarator {
 };
 
+struct AstBitFieldDeclarator {
+};
+
 struct AstEnumSpecifier {
 };
 

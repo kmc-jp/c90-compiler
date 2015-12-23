@@ -47,6 +47,7 @@ AstSpecifierQualifierListRef ast_get_specifier_qualifier_list(AstRef ast);
 AstSpecifierQualifierRef ast_get_specifier_qualifier(AstRef ast);
 AstStructDeclaratorListRef ast_get_struct_declarator_list(AstRef ast);
 AstStructDeclaratorRef ast_get_struct_declarator(AstRef ast);
+AstBitFieldDeclaratorRef ast_get_bit_field_declarator(AstRef ast);
 AstEnumSpecifierRef ast_get_enum_specifier(AstRef ast);
 AstEnumeratorListRef ast_get_enumerator_list(AstRef ast);
 AstEnumeratorRef ast_get_enumerator(AstRef ast);

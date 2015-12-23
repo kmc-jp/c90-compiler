@@ -52,6 +52,7 @@ struct Ast {
     AstSpecifierQualifierRef specifier_qualifier;
     AstStructDeclaratorListRef struct_declarator_list;
     AstStructDeclaratorRef struct_declarator;
+    AstBitFieldDeclaratorRef bit_field_declarator;
     AstEnumSpecifierRef enum_specifier;
     AstEnumeratorListRef enumerator_list;
     AstEnumeratorRef enumerator;
