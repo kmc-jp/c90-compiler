@@ -10,7 +10,7 @@ AstRef ast_make_function_call_expression(AstRef function, AstRef argument_list);
 AstRef ast_make_member_access_expression(AstRef object, AstRef member);
 AstRef ast_make_member_access_through_pointer_expression(
     AstRef object, AstRef member);
-AstRef ast_make_postfix_increment_expression();
+AstRef ast_make_postfix_increment_expression(AstRef postfix);
 AstRef ast_make_postfix_decrement_expression();
 AstRef ast_make_argument_expression_list();
 AstRef ast_make_unary_expression();

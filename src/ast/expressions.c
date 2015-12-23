@@ -31,6 +31,7 @@ struct AstMemberAccessThroughPointerExpression {
 };
 
 struct AstPostfixIncrementExpression {
+  AstRef postfix;
 };
 
 struct AstPostfixDecrementExpression {
@@ -289,6 +290,19 @@ AstRef ast_make_member_access_through_pointer_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_MEMBER_ACCESS_THROUGH_POINTER_EXPRESSION;
     self->data.member_access_through_pointer_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_postfix_increment_expression(AstRef postfix) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(postfix)) {
+    AstPostfixIncrementExpressionRef data =
+        ast_palloc(struct AstPostfixIncrementExpression);
+    data->postfix = postfix;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POSTFIX_INCREMENT_EXPRESSION;
+    self->data.postfix_increment_expression = data;
   }
   return self;
 }
