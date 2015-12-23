@@ -77,6 +77,8 @@ struct AstEnumSpecifier {
 };
 
 struct AstEnumDefinition {
+  AstRef identifier; /* NULLABLE */
+  AstRef enumerator_list;
 };
 
 struct AstEnumDeclaration {
@@ -326,6 +328,21 @@ AstRef ast_make_enum_specifier(AstRef enum_specifier) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUM_SPECIFIER;
     self->data.enum_specifier = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enum_definition(AstRef identifier, AstRef enumerator_list) {
+  AstRef self = NULL;
+  if ((identifier == NULL ||
+        ast_is_identifier(identifier)) &&
+       ast_is_enumerator_list(enumerator_list)) {
+    AstEnumDefinitionRef data = ast_palloc(struct AstEnumDefinition);
+    data->identifier = identifier;
+    data->enumerator_list = enumerator_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUM_DEFINITION;
+    self->data.enum_definition = data;
   }
   return self;
 }
