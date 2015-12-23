@@ -39,6 +39,7 @@ struct AstPostfixDecrementExpression {
 };
 
 struct AstArgumentExpressionList {
+  AstVectorRef argument_list;
 };
 
 struct AstUnaryExpression {
@@ -318,5 +319,16 @@ AstRef ast_make_postfix_decrement_expression(AstRef postfix) {
     self->tag = AST_POSTFIX_DECREMENT_EXPRESSION;
     self->data.postfix_decrement_expression = data;
   }
+  return self;
+}
+
+AstRef ast_make_argument_expression_list(void) {
+  AstRef self = NULL;
+  AstArgumentExpressionListRef data =
+      ast_palloc(struct AstArgumentExpressionList);
+  data->argument_list = ast_make_vector();
+  self = ast_palloc(struct Ast);
+  self->tag = AST_ARGUMENT_EXPRESSION_LIST;
+  self->data.argument_expression_list = data;
   return self;
 }
