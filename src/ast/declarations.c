@@ -70,6 +70,8 @@ struct AstArrayDeclarator {
 };
 
 struct AstFunctionDeclarator {
+  AstRef direct_declarator;
+  AstRef parameter_type_list;
 };
 
 struct AstOldStyleFunctionDeclarator {
@@ -159,6 +161,21 @@ AstRef ast_make_array_declarator(AstRef direct_declarator,
     self = ast_palloc(struct Ast);
     self->tag = AST_ARRAY_DECLARATOR;
     self->data.array_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_function_declarator(AstRef direct_declarator,
+    AstRef parameter_type_list) {
+  AstRef self = NULL;
+  if (ast_is_direct_declarator(direct_declarator) &&
+      ast_is_parameter_type_list(parameter_type_list)) {
+    AstFunctionDeclaratorRef data = ast_palloc(struct AstFunctionDeclarator);
+    data->direct_declarator = direct_declarator;
+    data->parameter_type_list = parameter_type_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_FUNCTION_DECLARATOR;
+    self->data.function_declarator = data;
   }
   return self;
 }

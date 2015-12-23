@@ -23,7 +23,7 @@ AstRef ast_make_type_qualifier();
 AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator);
 AstRef ast_make_direct_declarator(AstRef direct_declarator);
 AstRef ast_make_array_declarator(AstRef direct_declarator, AstRef constant_expression);
-AstRef ast_make_function_declarator();
+AstRef ast_make_function_declarator(AstRef direct_declarator, AstRef parameter_type_list);
 AstRef ast_make_old_style_function_declarator();
 AstRef ast_make_pointer();
 AstRef ast_make_type_qualifier_list();
