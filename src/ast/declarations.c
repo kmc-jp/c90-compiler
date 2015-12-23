@@ -75,6 +75,8 @@ struct AstFunctionDeclarator {
 };
 
 struct AstOldStyleFunctionDeclarator {
+  AstRef direct_declarator;
+  AstRef identifier_list; /* NULLABLE */
 };
 
 struct AstPointer {
@@ -176,6 +178,22 @@ AstRef ast_make_function_declarator(AstRef direct_declarator,
     self = ast_palloc(struct Ast);
     self->tag = AST_FUNCTION_DECLARATOR;
     self->data.function_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
+    AstRef identifier_list) {
+  AstRef self = NULL;
+  if (ast_is_direct_declarator(direct_declarator) &&
+      (identifier_list == NULL ||
+       ast_is_identifier_list(identifier_list))) {
+    AstOldStyleFunctionDeclaratorRef data = ast_palloc(struct AstOldStyleFunctionDeclarator);
+    data->direct_declarator = direct_declarator;
+    data->identifier_list = identifier_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_OLD_STYLE_FUNCTION_DECLARATOR;
+    self->data.old_style_function_declarator = data;
   }
   return self;
 }
