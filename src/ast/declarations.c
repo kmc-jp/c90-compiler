@@ -24,12 +24,13 @@ struct AstTypeSpecifier {
 };
 
 struct AstStructOrUnionSpecifier {
-  AstRef struct_or_union;
-  AstRef identifier;
-  AstRef struct_declaration_list;
+  AstRef struct_or_union_specifier;
 };
 
 struct AstStructOrUnionDefinition {
+  AstRef struct_or_union;
+  AstRef identifier;
+  AstRef struct_declaration_list;
 };
 
 struct AstStructOrUnionDeclaration {
