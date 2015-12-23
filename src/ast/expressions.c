@@ -16,6 +16,8 @@ struct AstArraySubscriptExpression {
 };
 
 struct AstFunctionCallExpression {
+  AstRef function;
+  AstRef argument_list;
 };
 
 struct AstMemberAccessExpression {
@@ -236,6 +238,22 @@ AstRef ast_make_array_subscript_expression(AstRef array, AstRef subscript) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ARRAY_SUBSCRIPT_EXPRESSION;
     self->data.array_subscript_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_function_call_expression(
+    AstRef function, AstRef argument_list) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(function) ||
+      ast_is_argument_expression_list(argument_list)) {
+    AstFunctionCallExpressionRef data =
+        ast_palloc(struct AstFunctionCallExpression);
+    data->function = function;
+    data->argument_list = argument_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_FUNCTION_CALL_EXPRESSION;
+    self->data.function_call_expression = data;
   }
   return self;
 }
