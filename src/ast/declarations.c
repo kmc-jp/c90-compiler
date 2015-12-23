@@ -68,6 +68,8 @@ struct AstStructDeclarator {
 };
 
 struct AstBitFieldDeclarator {
+  AstRef declarator; /* NULLABLE */
+  AstRef constant_expression;
 };
 
 struct AstEnumSpecifier {
@@ -294,6 +296,22 @@ AstRef ast_make_struct_declarator(AstRef struct_declarator) {
     self = ast_palloc(struct Ast);
     self->tag = AST_STRUCT_DECLARATOR;
     self->data.struct_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bit_field_declarator(AstRef declarator,
+    AstRef constant_expression) {
+  AstRef self = NULL;
+  if ((declarator == NULL ||
+        ast_is_declarator(declarator)) &&
+       ast_is_constant_expression(constant_expression)) {
+    AstBitFieldDeclaratorRef data = ast_palloc(struct AstBitFieldDeclarator);
+    data->declarator = declarator;
+    data->constant_expression = constant_expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BIT_FIELD_DECLARATOR;
+    self->data.bit_field_declarator = data;
   }
   return self;
 }
