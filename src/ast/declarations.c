@@ -82,6 +82,7 @@ struct AstEnumDefinition {
 };
 
 struct AstEnumDeclaration {
+  AstRef identifier;
 };
 
 struct AstEnumeratorList {
@@ -343,6 +344,18 @@ AstRef ast_make_enum_definition(AstRef identifier, AstRef enumerator_list) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUM_DEFINITION;
     self->data.enum_definition = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enum_declaration(AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier)) {
+    AstEnumDeclarationRef data = ast_palloc(struct AstEnumDeclaration);
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUM_DECLARATION;
+    self->data.enum_declaration = data;
   }
   return self;
 }
