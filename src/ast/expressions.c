@@ -84,6 +84,8 @@ struct AstDivisionExpression {
 };
 
 struct AstModuloExpression {
+  AstRef multiplicative;
+  AstRef cast;
 };
 
 struct AstAdditiveExpression {
@@ -249,6 +251,20 @@ AstRef ast_make_division_expression(AstRef multiplicative, AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_DIVISION_EXPRESSION;
     self->data.division_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_modulo_expression(AstRef multiplicative, AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(multiplicative) &&
+      ast_is_cast_expression(cast)) {
+    AstModuloExpressionRef data = ast_palloc(struct AstModuloExpression);
+    data->multiplicative = multiplicative;
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MODULO_EXPRESSION;
+    self->data.modulo_expression = data;
   }
   return self;
 }
