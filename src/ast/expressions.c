@@ -91,6 +91,8 @@ struct AstAdditionExpression {
 };
 
 struct AstSubtractionExpression {
+  AstRef additive;
+  AstRef multiplicative;
 };
 
 struct AstShiftExpression {
@@ -231,6 +233,21 @@ AstRef ast_make_addition_expression(AstRef additive, AstRef multiplicative) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ADDITION_EXPRESSION;
     self->data.addition_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(additive) &&
+      ast_is_multiplicative_expression(multiplicative)) {
+    AstSubtractionExpressionRef data =
+        ast_palloc(struct AstSubtractionExpression);
+    data->additive = additive;
+    data->multiplicative = multiplicative;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SUBTRACTION_EXPRESSION;
+    self->data.subtraction_expression = data;
   }
   return self;
 }
