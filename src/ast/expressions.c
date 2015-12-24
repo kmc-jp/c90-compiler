@@ -59,6 +59,7 @@ struct AstUnaryMinusExpression {
 };
 
 struct AstBitwiseNotExpression {
+  AstRef cast;
 };
 
 struct AstLogicalNotExpression {
@@ -305,6 +306,19 @@ AstRef ast_make_unary_minus_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_UNARY_MINUS_EXPRESSION;
     self->data.unary_minus_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_not_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstBitwiseNotExpressionRef data =
+        ast_palloc(struct AstBitwiseNotExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_NOT_EXPRESSION;
+    self->data.bitwise_not_expression = data;
   }
   return self;
 }
