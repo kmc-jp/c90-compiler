@@ -102,6 +102,7 @@ struct AstParameterList {
 };
 
 struct AstParameterDeclaration {
+  AstRef parameter_declaration;
 };
 
 struct AstParameterConcreteDeclaration {
@@ -293,17 +294,30 @@ AstRef ast_make_parameter_list(AstRef parameter_list,
   return self;
 }
 
-AstRef ast_make_parameter_declaration(AstRef declaration_specifier_list,
+AstRef ast_make_parameter_declaration(AstRef parameter_declaration) {
+  AstRef self = NULL;
+  if (ast_is_parameter_concrete_declaration(parameter_declaration) ||
+      ast_is_parameter_abstract_declaration(parameter_declaration)) {
+    AstParameterDeclarationRef data = ast_palloc(struct AstParameterDeclaration);
+    data->parameter_declaration = parameter_declaration;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PARAMETER_DECLARATION;
+    self->data.parameter_declaration = data;
+  }
+  return self;
+}
+
+AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list,
     AstRef declarator) {
   AstRef self = NULL;
   if (ast_is_declaration_specifiers(declaration_specifier_list) &&
       ast_is_declarator(declarator)) {
-    AstParameterDeclarationRef data = ast_palloc(struct AstParameterDeclaration);
+    AstParameterConcreteDeclarationRef data = ast_palloc(struct AstParameterConcreteDeclaration);
     data->declaration_specifier_list = declaration_specifier_list;
     data->declarator = declarator;
     self = ast_palloc(struct Ast);
-    self->tag = AST_PARAMETER_DECLARATION;
-    self->data.parameter_declaration = data;
+    self->tag = AST_PARAMETER_CONCRETE_DECLARATION;
+    self->data.parameter_concrete_declaration = data;
   }
   return self;
 }
