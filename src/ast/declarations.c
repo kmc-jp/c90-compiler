@@ -87,7 +87,7 @@ struct AstEnumDeclaration {
 };
 
 struct AstEnumeratorList {
-  AstRef enumerator_list;
+  AstRef enumerator_vector;
 };
 
 struct AstEnumerator {
@@ -364,14 +364,20 @@ AstRef ast_make_enum_declaration(AstRef identifier) {
   return self;
 }
 
-AstRef ast_make_enumerator_list(AstRef enumerator_list) {
+AstRef ast_make_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
   AstRef self = NULL;
-  if (ast_is_vector(enumerator_list)) {
+  if (enumerator_list == NULL) {
     AstEnumeratorListRef data = ast_palloc(struct AstEnumeratorList);
-    data->enumerator_list = enumerator_list;
-    self = ast_palloc(struct Ast);
-    self->tag = AST_ENUMERATOR_LIST;
-    self->data.enumerator_list = data;
+    data->enumerator_vector = ast_make_vector();
+    enumerator_list = ast_palloc(struct Ast);
+    enumerator_list->tag = AST_ENUMERATOR_LIST;
+    enumerator_list->data.enumerator_list = data;
+  }
+  if (ast_is_enumerator_list(enumerator_list) &&
+      ast_is_enumerator(enumerator)) {
+    AstEnumeratorListRef data = ast_get_enumerator_list(enumerator_list);
+    ast_push_vector(data->enumerator_vector, enumerator);
+    self = enumerator_list;
   }
   return self;
 }
