@@ -1,5 +1,7 @@
 #include "expressions.h"
 #include "ast_impl.h"
+#include "is_method.h"
+#include "pool.h"
 
 struct AstPrimaryExpression {
 };
