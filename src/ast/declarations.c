@@ -261,16 +261,18 @@ AstRef ast_make_struct_declaration(AstRef specifier_qualifier_list,
   return self;
 }
 
-AstRef ast_make_specifier_qualifier_list(AstRef specifier_qualifier,
+AstRef ast_make_specifier_qualifier_list() {
+  AstRef self = ast_palloc(struct Ast);
+  AstSpecifierQualifierListRef data = ast_palloc(struct AstSpecifierQualifierList);
+  data->specifier_qualifier_vector = ast_make_vector();
+  self->tag = AST_SPECIFIER_QUALIFIER_LIST;
+  self->data.specifier_qualifier_list = data;
+  return self;
+}
+
+AstRef ast_push_specifier_qualifier_list(AstRef specifier_qualifier,
     AstRef specifier_qualifier_list) {
   AstRef self = NULL;
-  if (specifier_qualifier_list == NULL) {
-    AstSpecifierQualifierListRef data = ast_palloc(struct AstSpecifierQualifierList);
-    data->specifier_qualifier_vector = ast_make_vector();
-    specifier_qualifier_list = ast_palloc(struct Ast);
-    specifier_qualifier_list->tag = AST_SPECIFIER_QUALIFIER_LIST;
-    specifier_qualifier_list->data.specifier_qualifier_list = data;
-  }
   if (ast_is_specifier_qualifier(specifier_qualifier) &&
       ast_is_specifier_qualifier_list(specifier_qualifier_list)) {
     AstSpecifierQualifierListRef data = ast_get_specifier_qualifier_list(specifier_qualifier_list);
