@@ -308,11 +308,10 @@ AstRef ast_make_struct_declarator(AstRef struct_declarator) {
   return self;
 }
 
-AstRef ast_make_bit_field_declarator(AstRef declarator,
-    AstRef constant_expression) {
+AstRef ast_make_bit_field_declarator(
+    AstRef declarator, AstRef constant_expression) {
   AstRef self = NULL;
-  if ((declarator == NULL ||
-        ast_is_declarator(declarator)) &&
+  if ((declarator == NULL || ast_is_declarator(declarator)) &&
        ast_is_constant_expression(constant_expression)) {
     AstBitFieldDeclaratorRef data = ast_palloc(struct AstBitFieldDeclarator);
     data->declarator = declarator;
