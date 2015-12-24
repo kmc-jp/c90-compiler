@@ -62,16 +62,41 @@ primary-expression
 : identifier
 | constant
 | string-literal
+| '(' expression ')'
 ;
 
 postfix-expression
 : primary-expression
-| postfix-expression '[' expression ']'
-| postfix-expression '(' argument-expression-list.opt ')'
-| postfix-expression '.' identifier
-| postfix-expression "->" identifier
-| postfix-expression "++"
-| postfix-expression "--"
+| array-subscript-expression
+| function-call-expression
+| member-access-expression
+| member-access-through-pointer-expression
+| postfix-increment-expression
+| postfix-decrement-expression
+;
+
+array-subscript-expression
+: postfix-expression '[' expression ']'
+;
+
+function-call-expression
+: postfix-expression '(' argument-expression-list.opt ')'
+;
+
+member-access-expression
+: postfix-expression '.' identifier
+;
+
+member-access-through-pointer-expression
+: postfix-expression "->" identifier
+;
+
+postfix-increment-expression
+: postfix-expression "++"
+;
+
+postfix-decrement-expression
+: postfix-expression "--"
 ;
 
 argument-expression-list.opt
@@ -86,106 +111,263 @@ argument-expression-list
 
 unary-expression
 : postfix-expression
-| "++" unary-expression
-| "--" unary-expression
-| unary-operator cast-expression
-| "sizeof" unary-expression
-| "sizeof" '(' type-name ')'
+| prefix-increment-expression
+| prefix-decrement-expression
+| address-of-expression
+| pointer-dereference-expression
+| unary-plus-expression
+| unary-minus-expression
+| bitwise-NOT-expression
+| logical-NOT-expression
+| sizeof-expression
+| sizeof-type-expression
 ;
 
-unary-operator
-: '&'
-| '*'
-| '+'
-| '~'
-| '!'
+prefix-increment-expression
+: "++" unary-expression
+;
+
+prefix-decrement-expression
+: "--" unary-expression
+;
+
+address-of-expression
+: '&' cast-expression
+;
+
+pointer-dereference-expression
+: '*' cast-expression
+;
+
+unary-plus-expression
+: '+' cast-expression
+;
+
+unary-minus-expression
+: '-' cast-expression
+;
+
+bitwise-NOT-expression
+: '~' cast-expression
+;
+
+logical-NOT-expression
+: '!' cast-expression
+;
+
+sizeof-expression
+: "sizeof" unary-expression
+;
+
+sizeof-type-expression
+: "sizeof" '(' type-name ')'
 ;
 
 cast-expression
 : unary-expression
-| '(' type-name ')' cast-expression
+| type-cast-expression
+;
+
+type-cast-expression
+: '(' type-name ')' cast-expression
 ;
 
 multiplicative-expression
 : cast-expression
-| multiplicative-expression '*' cast-expression
-| multiplicative-expression '/' cast-expression
-| multiplicative-expression '%' cast-expression
+| product-expression
+| division-expression
+| modulo-expression
+;
+
+product-expression
+: multiplicative-expression '*' cast-expression
+;
+
+division-expression
+: multiplicative-expression '/' cast-expression
+;
+
+modulo-expression
+: multiplicative-expression '%' cast-expression
 ;
 
 additive-expression
 : multiplicative-expression
-| additive-expression '+' multiplicative-expression
-| additive-expression '-' multiplicative-expression
+| addition-expression
+| subtraction-expression
+;
+
+addition-expression
+: additive-expression '+' multiplicative-expression
+;
+
+subtraction-expression
+: additive-expression '-' multiplicative-expression
 ;
 
 shift-expression
 : additive-expression
-| shift-expression "<<" additive-expression
-| shift-expression ">>" additive-expression
+| left-shift-expression
+| right-shift-expression
+;
+
+left-shift-expression
+: shift-expression "<<" additive-expression
+;
+
+right-shift-expression
+: shift-expression ">>" additive-expression
 ;
 
 relational-expression
 : shift-expression
-| relational-expression '<' shift-expression
-| relational-expression '>' shift-expression
-| relational-expression "<=" shift-expression
-| relational-expression ">=" shift-expression
+| less-than-expression
+| greater-than-expression
+| less-than-or-equal-to-expression
+| greater-than-or-equal-to-expression
+;
+
+less-than-expression
+: relational-expression '<' shift-expression
+;
+
+greater-than-expression
+: relational-expression '>' shift-expression
+;
+
+less-than-or-equal-to-expression
+: relational-expression "<=" shift-expression
+;
+
+greater-than-or-equal-to-expression
+: relational-expression ">=" shift-expression
 ;
 
 equality-expression
 : relational-expression
-| equality-expression "==" relational-expression
-| equality-expression "!=" relational-expression
+| equal-to-expression
+| not-equal-to-expression
 ;
 
-AND-expression
+equal-to-expression
+: equality-expression "==" relational-expression
+;
+
+not-equal-to-expression
+: equality-expression "!=" relational-expression
+;
+
+bitwise-AND-expression
 : equality-expression
-| AND-expression '&' equality-expression
+| bitwise-AND-operator-expression
 ;
 
-exclusive-OR-expression
-: AND-expression
-| exclusive-OR-expression '^' AND-expression
+bitwise-AND-operator-expression
+: bitwise-AND-expression '&' equality-expression
 ;
 
-inclusive-OR-expression
-: exclusive-OR-expression
-| inclusive-OR-expression '|' exclusive-OR-expression
+bitwise-XOR-expression
+: bitwise-AND-expression
+| bitwise-XOR-operator-expression
+;
+
+bitwise-XOR-operator-expression
+: bitwise-XOR-expression '^' bitwise-AND-expression
+;
+
+bitwise-OR-expression
+: bitwise-XOR-expression
+| bitwise-OR-operator-expression
+;
+
+bitwise-OR-operator-expression
+: bitwise-OR-expression '|' bitwise-XOR-expression
 ;
 
 logical-AND-expression
-: inclusive-OR-expression
-| logical-AND-expression "&&" inclusive-OR-expression
+: bitwise-OR-expression
+| logical-AND-operator-expression
+;
+
+logical-AND-operator-expression
+: logical-AND-expression "&&" bitwise-OR-expression
 ;
 
 logical-OR-expression
 : logical-AND-expression
-| logical-OR-expression "||" logical-AND-expression
+| logical-OR-operator-expression
+;
+
+logical-OR-operator-expression
+: logical-OR-expression "||" logical-AND-expression
 ;
 
 conditional-expression
 : logical-OR-expression
-| logical-OR-expression '?' expression ':' conditional-expression
+| conditional-operator-expression
+;
+
+conditional-operator-expression
+: logical-OR-expression '?' expression ':' conditional-expression
 ;
 
 assignment-expression
 : conditional-expression
-| unary-expression assignment-operator assignment-expression
+| basic-assignment-expression
+| multiplication-assignment-expression
+| division-assignment-expression
+| modulo-assignment-expression
+| addition-assignment-expression
+| subtraction-assignment-expression
+| left-shift-assignment-expression
+| right-shift-assignment-expression
+| bitwise-AND-assignment-expression
+| bitwise-XOR-assignment-expression
+| bitwise-OR-assignment-expression
 ;
 
-assignment-operator
-: '='
-| "*="
-| "/="
-| "%="
-| "+="
-| "-="
-| "<<="
-| ">>="
-| "&="
-| "^="
-| "|="
+basic-assignment-expression
+: unary-expression '=' assignment-expression
+;
+
+multiplication-assignment-expression
+: unary-expression "*=" assignment-expression
+;
+
+division-assignment-expression
+: unary-expression "/=" assignment-expression
+;
+
+modulo-assignment-expression
+: unary-expression "%=" assignment-expression
+;
+
+addition-assignment-expression
+: unary-expression "+=" assignment-expression
+;
+
+subtraction-assignment-expression
+: unary-expression "-=" assignment-expression
+;
+
+left-shift-assignment-expression
+: unary-expression "<<=" assignment-expression
+;
+
+right-shift-assignment-expression
+: unary-expression ">>=" assignment-expression
+;
+
+bitwise-AND-assignment-expression
+: unary-expression "&=" assignment-expression
+;
+
+bitwise-XOR-assignment-expression
+: unary-expression "^=" assignment-expression
+;
+
+bitwise-OR-assignment-expression
+: unary-expression "|=" assignment-expression
 ;
 
 expression.opt
@@ -195,7 +377,11 @@ expression.opt
 
 expression
 : assignment-expression
-| expression ',' assignment-expression
+| comma-expression
+;
+
+comma-expression
+: expression ',' assignment-expression
 ;
 
 constant-expression.opt
@@ -368,6 +554,11 @@ type-qualifier-list
 | type-qualifier-list type-qualifier
 ;
 
+parameter-type-list.opt
+: /* empty */
+| parameter-type-list
+;
+
 parameter-type-list
 : parameter-list
 | variadic-parameter-list
@@ -426,8 +617,8 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression ']'
-| direct-abstract-declarator.opt '[' parameter-type-list ']'
+| direct-abstract-declarator.opt '[' constant-expression.opt ']'
+| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name

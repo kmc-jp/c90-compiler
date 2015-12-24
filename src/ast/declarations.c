@@ -17,6 +17,7 @@ struct AstInitDeclarator {
 };
 
 struct AstStorageClassSpecifier {
+  AstRef storage_class_specifier;
 };
 
 struct AstTypeSpecifier {
@@ -135,6 +136,18 @@ struct AstInitializer {
 
 struct AstInitializerList {
 };
+
+AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
+  AstRef self = NULL;
+  if (ast_is_token(storage_class_specifier)) {
+    AstStorageClassSpecifierRef data = ast_palloc(struct AstStorageClassSpecifier);
+    data->storage_class_specifier = storage_class_specifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_STORAGE_CLASS_SPECIFIER;
+    self->data.storage_class_specifier = data;
+  }
+  return self;
+}
 
 AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator) {
   AstRef self = NULL;
