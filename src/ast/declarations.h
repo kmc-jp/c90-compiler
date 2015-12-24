@@ -3,7 +3,7 @@
 
 #include "../ast.h"
 
-AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_declarator_list);
+AstRef ast_make_declaration(AstRef declaration_specifier_list, AstNullableRef init_declarator_list);
 AstRef ast_make_declaration_specifier_list(AstRef declaration_specifier_list, AstRef declaration_specifier);
 AstRef ast_make_declaration_specifier(AstRef declaration_specifier);
 AstRef ast_make_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator);

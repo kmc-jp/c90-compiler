@@ -6,7 +6,7 @@
 
 struct AstDeclaration {
   AstRef declaration_specifier_list;
-  AstRef init_declarator_list; /* NULLABLE */
+  AstNullableRef init_declarator_list;
 };
 
 struct AstDeclarationSpecifierList {
@@ -112,7 +112,7 @@ struct AstInitializer {
 struct AstInitializerList {
 };
 
-AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_declarator_list) {
+AstRef ast_make_declaration(AstRef declaration_specifier_list, AstNullableRef init_declarator_list) {
   AstRef self = NULL;
   if ((ast_is_declaration_specifier_list(declaration_specifier_list)) &&
       (init_declarator_list == NULL ||
