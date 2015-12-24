@@ -39,6 +39,7 @@ struct AstPrefixIncrementExpression {
 };
 
 struct AstPrefixDecrementExpression {
+  AstRef unary;
 };
 
 struct AstAddressOfExpression {
@@ -237,6 +238,19 @@ AstRef ast_make_prefix_increment_expression(AstRef unary) {
     self = ast_palloc(struct Ast);
     self->tag = AST_PREFIX_INCREMENT_EXPRESSION;
     self->data.prefix_increment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_prefix_decrement_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary)) {
+    AstPrefixDecrementExpressionRef data =
+        ast_palloc(struct AstPrefixDecrementExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PREFIX_DECREMENT_EXPRESSION;
+    self->data.prefix_decrement_expression = data;
   }
   return self;
 }
