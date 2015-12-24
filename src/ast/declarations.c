@@ -225,16 +225,18 @@ AstRef ast_make_struct_or_union(AstRef struct_or_union) {
   return self;
 }
 
-AstRef ast_make_struct_declaration_list(AstRef struct_declaration_list,
+AstRef ast_make_struct_declaration_list() {
+  AstRef self = ast_palloc(struct Ast);
+  AstStructDeclarationListRef data = ast_palloc(struct AstStructDeclarationList);
+  data->struct_declaration_vector = ast_make_vector();
+  self->tag = AST_STRUCT_DECLARATION_LIST;
+  self->data.struct_declaration_list = data;
+  return self;
+}
+
+AstRef ast_push_struct_declaration_list(AstRef struct_declaration_list,
     AstRef struct_declaration) {
   AstRef self = NULL;
-  if (struct_declaration_list == NULL) {
-    AstStructDeclarationListRef data = ast_palloc(struct AstStructDeclarationList);
-    data->struct_declaration_vector = ast_make_vector();
-    struct_declaration_list = ast_palloc(struct Ast);
-    struct_declaration_list->tag = AST_STRUCT_DECLARATION_LIST;
-    struct_declaration_list->data.struct_declaration_list = data;
-  }
   if (ast_is_struct_declaration_list(struct_declaration_list) &&
       ast_is_struct_declaration(struct_declaration)) {
     AstStructDeclarationListRef data = ast_get_struct_declaration_list(struct_declaration_list);
