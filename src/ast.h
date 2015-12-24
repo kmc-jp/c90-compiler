@@ -126,7 +126,7 @@ enum AstTag {
 };
 
 typedef struct Ast* AstRef;  /* NOT NULLABLE */
-typedef AstRef AstPointer;  /* NULLABLE */
+typedef AstRef AstNullableRef;  /* NULLABLE */
 
 typedef struct AstIdentifier* AstIdentifierRef;
 typedef struct AstConstant* AstConstantRef;
