@@ -69,7 +69,7 @@ struct AstStructDeclarator {
 };
 
 struct AstBitFieldDeclarator {
-  AstRef declarator; /* NULLABLE */
+  AstNullableRef declarator;
   AstRef constant_expression;
 };
 
@@ -78,7 +78,7 @@ struct AstEnumSpecifier {
 };
 
 struct AstEnumDefinition {
-  AstRef identifier; /* NULLABLE */
+  AstNullableRef identifier;
   AstRef enumerator_list;
 };
 
@@ -92,7 +92,7 @@ struct AstEnumeratorList {
 
 struct AstEnumerator {
   AstRef enumeration_constant;
-  AstRef constant_expression; /* NULLABLE */
+  AstNullableRef constant_expression;
 };
 
 struct AstTypeQualifier {
