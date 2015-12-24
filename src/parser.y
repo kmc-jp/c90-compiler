@@ -62,6 +62,7 @@ primary-expression
 : identifier
 | constant
 | string-literal
+| '(' expression ')'
 ;
 
 postfix-expression
