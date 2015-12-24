@@ -70,6 +70,7 @@ struct AstTypeCastExpression {
 };
 
 struct AstMultiplicativeExpression {
+  AstRef expression;
 };
 
 struct AstProductExpression {
@@ -203,3 +204,19 @@ struct AstCommaExpression {
 
 struct AstConstantExpression {
 };
+
+AstRef ast_make_multiplicative_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(expression) ||
+      ast_is_product_expression(expression) ||
+      ast_is_division_expression(expression) ||
+      ast_is_modulo_expression(expression)) {
+    AstMultiplicativeExpressionRef data =
+        ast_palloc(struct AstMultiplicativeExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MULTIPLICATIVE_EXPRESSION;
+    self->data.multiplicative_expression = data;
+  }
+  return self;
+}
