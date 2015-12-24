@@ -5,6 +5,7 @@
 #include "use_vector.h"
 #include "ast/ast_string.h"
 #include "parser.tab.h"
+#include "ast_method.h"
 
 int yywrap(void) {
   return 1;
@@ -18,7 +19,9 @@ void copy_to_yylval(const char *src, const size_t length) {
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
+  size_t initial_pool_size = 1;
   lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
+  ast_initialize_pool(initial_pool_size);
 }
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
