@@ -25,7 +25,8 @@ AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef bit_field
 AstRef ast_make_enum_specifier(AstRef enum_specifier);
 AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_list);
 AstRef ast_make_enum_declaration(AstRef identifier);
-AstRef ast_make_enumerator_list(AstRef enumerator_list, AstRef enumerator);
+AstRef ast_make_enumerator_list();
+AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator);
 AstRef ast_make_enumerator(AstRef enumeration_constant, AstNullableRef constant_expression);
 AstRef ast_make_type_qualifier();
 AstRef ast_make_declarator();

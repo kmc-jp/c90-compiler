@@ -381,15 +381,17 @@ AstRef ast_make_enum_declaration(AstRef identifier) {
   return self;
 }
 
-AstRef ast_make_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
+AstRef ast_make_enumerator_list() {
+  AstRef self = ast_palloc(struct Ast);
+  AstEnumeratorListRef data = ast_palloc(struct AstEnumeratorList);
+  data->enumerator_vector = ast_make_vector();
+  self->tag = AST_ENUMERATOR_LIST;
+  self->data.enumerator_list = data;
+  return self;
+}
+
+AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
   AstRef self = NULL;
-  if (enumerator_list == NULL) {
-    AstEnumeratorListRef data = ast_palloc(struct AstEnumeratorList);
-    data->enumerator_vector = ast_make_vector();
-    enumerator_list = ast_palloc(struct Ast);
-    enumerator_list->tag = AST_ENUMERATOR_LIST;
-    enumerator_list->data.enumerator_list = data;
-  }
   if (ast_is_enumerator_list(enumerator_list) &&
       ast_is_enumerator(enumerator)) {
     AstEnumeratorListRef data = ast_get_enumerator_list(enumerator_list);
