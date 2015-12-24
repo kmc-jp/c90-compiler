@@ -51,6 +51,7 @@ struct AstPointerDereferenceExpression {
 };
 
 struct AstUnaryPlusExpression {
+  AstRef cast;
 };
 
 struct AstUnaryMinusExpression {
@@ -278,6 +279,18 @@ AstRef ast_make_pointer_dereference_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_POINTER_DEREFERENCE_EXPRESSION;
     self->data.pointer_dereference_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_unary_plus_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstUnaryPlusExpressionRef data = ast_palloc(struct AstUnaryPlusExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_UNARY_PLUS_EXPRESSION;
+    self->data.unary_plus_expression = data;
   }
   return self;
 }
