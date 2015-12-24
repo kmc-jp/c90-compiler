@@ -3,7 +3,7 @@
 
 #include "../ast.h"
 
-AstRef ast_make_primary_expression();
+AstRef ast_make_primary_expression(AstRef primary_expression);
 AstRef ast_make_postfix_expression();
 AstRef ast_make_array_subscript_expression();
 AstRef ast_make_function_call_expression();
