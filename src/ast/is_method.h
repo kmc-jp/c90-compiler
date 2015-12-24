@@ -60,6 +60,7 @@ bool ast_is_parameter_type_list(AstRef ast);
 bool ast_is_variadic_parameter_list(AstRef ast);
 bool ast_is_parameter_list(AstRef ast);
 bool ast_is_parameter_declaration(AstRef ast);
+bool ast_is_parameter_concrete_declaration(AstRef ast);
 bool ast_is_parameter_abstract_declaration(AstRef ast);
 bool ast_is_identifier_list(AstRef ast);
 bool ast_is_type_name(AstRef ast);

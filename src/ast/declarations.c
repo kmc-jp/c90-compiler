@@ -102,6 +102,9 @@ struct AstParameterList {
 };
 
 struct AstParameterDeclaration {
+};
+
+struct AstParameterConcreteDeclaration {
   AstRef declaration_specifier_list;
   AstRef declarator;
 };

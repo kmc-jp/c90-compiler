@@ -59,6 +59,7 @@ AstParameterTypeListRef ast_get_parameter_type_list(AstRef ast);
 AstVariadicParameterListRef ast_get_variadic_parameter_list(AstRef ast);
 AstParameterListRef ast_get_parameter_list(AstRef ast);
 AstParameterDeclarationRef ast_get_parameter_declaration(AstRef ast);
+AstParameterConcreteDeclarationRef ast_get_parameter_concrete_declaration(AstRef ast);
 AstParameterAbstractDeclarationRef ast_get_parameter_abstract_declaration(AstRef ast);
 AstIdentifierListRef ast_get_identifier_list(AstRef ast);
 AstTypeNameRef ast_get_type_name(AstRef ast);

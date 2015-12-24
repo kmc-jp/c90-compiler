@@ -380,10 +380,14 @@ variadic-parameter-list
 parameter-list
 : parameter-declaration
 | parameter-list ',' parameter-declaration
-| parameter-list ',' parameter-abstract-declaration
 ;
 
 parameter-declaration
+: parameter-concrete-declaration
+| parameter-abstract-declaration
+;
+
+parameter-concrete-declaration
 : declaration-specifiers declarator
 ;
 
