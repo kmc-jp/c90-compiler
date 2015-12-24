@@ -82,6 +82,7 @@ struct AstModuloExpression {
 };
 
 struct AstAdditiveExpression {
+  AstRef expression;
 };
 
 struct AstAdditionExpression {
@@ -203,3 +204,17 @@ struct AstCommaExpression {
 
 struct AstConstantExpression {
 };
+
+AstRef ast_make_additive_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(expression) ||
+      ast_is_addition_expression(expression) ||
+      ast_is_subtraction_expression(expression)) {
+    AstAdditiveExpressionRef data = ast_palloc(struct AstAdditiveExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITIVE_EXPRESSION;
+    self->data.additive_expression = data;
+  }
+  return self;
+}

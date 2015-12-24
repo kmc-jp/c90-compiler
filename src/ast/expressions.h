@@ -29,7 +29,7 @@ AstRef ast_make_multiplicative_expression();
 AstRef ast_make_product_expression();
 AstRef ast_make_division_expression();
 AstRef ast_make_modulo_expression();
-AstRef ast_make_additive_expression();
+AstRef ast_make_additive_expression(AstRef expression);
 AstRef ast_make_addition_expression();
 AstRef ast_make_subtraction_expression();
 AstRef ast_make_shift_expression();
