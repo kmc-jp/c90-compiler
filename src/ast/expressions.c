@@ -64,6 +64,7 @@ struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {
+  AstRef cast;
 };
 
 struct AstTypeCastExpression {
@@ -203,3 +204,16 @@ struct AstCommaExpression {
 
 struct AstConstantExpression {
 };
+
+AstRef ast_make_cast_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(cast) ||
+      ast_is_type_cast_expression(cast)) {
+    AstCastExpressionRef data = ast_palloc(struct AstCastExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CAST_EXPRESSION;
+    self->data.cast_expression = data;
+  }
+  return self;
+}
