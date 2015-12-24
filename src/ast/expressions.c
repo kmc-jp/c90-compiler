@@ -74,6 +74,8 @@ struct AstMultiplicativeExpression {
 };
 
 struct AstProductExpression {
+  AstRef multiplicative;
+  AstRef cast;
 };
 
 struct AstDivisionExpression {
@@ -217,6 +219,20 @@ AstRef ast_make_multiplicative_expression(AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_MULTIPLICATIVE_EXPRESSION;
     self->data.multiplicative_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_product_expression(AstRef multiplicative, AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(multiplicative) &&
+      ast_is_cast_expression(cast)) {
+    AstProductExpressionRef data = ast_palloc(struct AstProductExpression);
+    data->multiplicative = multiplicative;
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PRODUCT_EXPRESSION;
+    self->data.product_expression = data;
   }
   return self;
 }
