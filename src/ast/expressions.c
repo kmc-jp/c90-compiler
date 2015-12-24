@@ -47,6 +47,7 @@ struct AstAddressOfExpression {
 };
 
 struct AstPointerDereferenceExpression {
+  AstRef cast;
 };
 
 struct AstUnaryPlusExpression {
@@ -264,6 +265,19 @@ AstRef ast_make_address_of_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ADDRESS_OF_EXPRESSION;
     self->data.address_of_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_pointer_dereference_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstPointerDereferenceExpressionRef data =
+        ast_palloc(struct AstPointerDereferenceExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POINTER_DEREFERENCE_EXPRESSION;
+    self->data.pointer_dereference_expression = data;
   }
   return self;
 }
