@@ -68,6 +68,8 @@ struct AstCastExpression {
 };
 
 struct AstTypeCastExpression {
+  AstRef type_name;
+  AstRef expression;
 };
 
 struct AstMultiplicativeExpression {
@@ -214,6 +216,20 @@ AstRef ast_make_cast_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_CAST_EXPRESSION;
     self->data.cast_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_cast_expression(AstRef type_name, AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_type_name(type_name) &&
+      ast_is_cast_expression(expression)) {
+    AstTypeCastExpressionRef data = ast_palloc(struct AstTypeCastExpression);
+    data->type_name = type_name;
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_CAST_EXPRESSION;
+    self->data.type_cast_expression = data;
   }
   return self;
 }

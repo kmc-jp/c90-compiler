@@ -24,7 +24,7 @@ AstRef ast_make_logical_not_expression();
 AstRef ast_make_sizeof_expression();
 AstRef ast_make_sizeof_type_expression();
 AstRef ast_make_cast_expression(AstRef cast);
-AstRef ast_make_type_cast_expression();
+AstRef ast_make_type_cast_expression(AstRef type_name, AstRef expression);
 AstRef ast_make_multiplicative_expression();
 AstRef ast_make_product_expression();
 AstRef ast_make_division_expression();
