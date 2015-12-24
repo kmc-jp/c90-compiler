@@ -43,6 +43,7 @@ struct AstPrefixDecrementExpression {
 };
 
 struct AstAddressOfExpression {
+  AstRef cast;
 };
 
 struct AstPointerDereferenceExpression {
@@ -251,6 +252,18 @@ AstRef ast_make_prefix_decrement_expression(AstRef unary) {
     self = ast_palloc(struct Ast);
     self->tag = AST_PREFIX_DECREMENT_EXPRESSION;
     self->data.prefix_decrement_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_address_of_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstAddressOfExpressionRef data = ast_palloc(struct AstAddressOfExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDRESS_OF_EXPRESSION;
+    self->data.address_of_expression = data;
   }
   return self;
 }

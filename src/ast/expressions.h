@@ -15,7 +15,7 @@ AstRef ast_make_argument_expression_list();
 AstRef ast_make_unary_expression(AstRef unary);
 AstRef ast_make_prefix_increment_expression(AstRef unary);
 AstRef ast_make_prefix_decrement_expression(AstRef unary);
-AstRef ast_make_address_of_expression();
+AstRef ast_make_address_of_expression(AstRef cast);
 AstRef ast_make_pointer_dereference_expression();
 AstRef ast_make_unary_plus_expression();
 AstRef ast_make_unary_minus_expression();
