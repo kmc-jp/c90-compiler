@@ -35,7 +35,8 @@ AstRef ast_push_parameter_list(AstRef parameter_list, AstRef parameter_declarati
 AstRef ast_make_parameter_declaration(AstRef parameter_declaration);
 AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list, AstRef declarator);
 AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list, AstRef abstract_declarator);
-AstRef ast_make_identifier_list(AstRef identifier_list, AstRef identifier);
+AstRef ast_make_identifier_list();
+AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier);
 AstRef ast_make_type_name();
 AstRef ast_make_abstract_declarator();
 AstRef ast_make_direct_abstract_declarator();
