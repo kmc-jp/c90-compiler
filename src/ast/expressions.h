@@ -22,7 +22,7 @@ AstRef ast_make_unary_minus_expression(AstRef cast);
 AstRef ast_make_bitwise_not_expression(AstRef cast);
 AstRef ast_make_logical_not_expression(AstRef cast);
 AstRef ast_make_sizeof_expression(AstRef unary);
-AstRef ast_make_sizeof_type_expression();
+AstRef ast_make_sizeof_type_expression(AstRef type_name);
 AstRef ast_make_cast_expression();
 AstRef ast_make_type_cast_expression();
 AstRef ast_make_multiplicative_expression();

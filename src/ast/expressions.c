@@ -71,6 +71,7 @@ struct AstSizeofExpression {
 };
 
 struct AstSizeofTypeExpression {
+  AstRef type_name;
 };
 
 struct AstCastExpression {
@@ -346,6 +347,19 @@ AstRef ast_make_sizeof_expression(AstRef unary) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SIZEOF_EXPRESSION;
     self->data.sizeof_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_sizeof_type_expression(AstRef type_name) {
+  AstRef self = NULL;
+  if (ast_is_type_name(type_name)) {
+    AstSizeofTypeExpressionRef data =
+        ast_palloc(struct AstSizeofTypeExpression);
+    data->type_name = type_name;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SIZEOF_TYPE_EXPRESSION;
+    self->data.sizeof_type_expression = data;
   }
   return self;
 }
