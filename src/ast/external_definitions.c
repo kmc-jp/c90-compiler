@@ -22,3 +22,15 @@ AstRef ast_make_translation_unit() {
   self->data.translation_unit = data;
   return self;
 }
+
+AstRef ast_push_translation_unit(
+    AstRef translation_unit, AstRef external_declaration) {
+  AstRef self = NULL;
+  if (ast_is_translation_unit(translation_unit) &&
+      ast_is_external_declaration(external_declaration)) {
+    AstTranslationUnitRef data = ast_get_translation_unit(translation_unit);
+    ast_push_vector(data->external_declaration_vector, external_declaration);
+    self = translation_unit;
+  }
+  return self;
+}
