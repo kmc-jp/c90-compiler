@@ -67,6 +67,7 @@ struct AstLogicalNotExpression {
 };
 
 struct AstSizeofExpression {
+  AstRef unary;
 };
 
 struct AstSizeofTypeExpression {
@@ -333,6 +334,18 @@ AstRef ast_make_logical_not_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_LOGICAL_NOT_EXPRESSION;
     self->data.logical_not_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_sizeof_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary)) {
+    AstSizeofExpressionRef data = ast_palloc(struct AstSizeofExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SIZEOF_EXPRESSION;
+    self->data.sizeof_expression = data;
   }
   return self;
 }
