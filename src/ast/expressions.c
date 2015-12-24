@@ -63,6 +63,7 @@ struct AstBitwiseNotExpression {
 };
 
 struct AstLogicalNotExpression {
+  AstRef cast;
 };
 
 struct AstSizeofExpression {
@@ -319,6 +320,19 @@ AstRef ast_make_bitwise_not_expression(AstRef cast) {
     self = ast_palloc(struct Ast);
     self->tag = AST_BITWISE_NOT_EXPRESSION;
     self->data.bitwise_not_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_logical_not_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstLogicalNotExpressionRef data =
+        ast_palloc(struct AstLogicalNotExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LOGICAL_NOT_EXPRESSION;
+    self->data.logical_not_expression = data;
   }
   return self;
 }
