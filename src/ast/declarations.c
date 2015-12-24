@@ -87,7 +87,7 @@ struct AstEnumDeclaration {
 };
 
 struct AstEnumeratorList {
-  AstRef enumerator_vector;
+  AstVectorRef enumerator_vector;
 };
 
 struct AstEnumerator {
