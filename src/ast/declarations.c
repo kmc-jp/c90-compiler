@@ -338,9 +338,8 @@ AstRef ast_make_enum_specifier(AstRef enum_specifier) {
 
 AstRef ast_make_enum_definition(AstRef identifier, AstRef enumerator_list) {
   AstRef self = NULL;
-  if ((identifier == NULL ||
-        ast_is_identifier(identifier)) &&
-       ast_is_enumerator_list(enumerator_list)) {
+  if ((identifier == NULL || ast_is_identifier(identifier)) &&
+      ast_is_enumerator_list(enumerator_list)) {
     AstEnumDefinitionRef data = ast_palloc(struct AstEnumDefinition);
     data->identifier = identifier;
     data->enumerator_list = enumerator_list;
