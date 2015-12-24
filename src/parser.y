@@ -332,7 +332,7 @@ direct-declarator
 : identifier
 | '(' declarator ')'
 | array-declarator
-| function-type-declarator
+| function-declarator
 | old-style-function-declarator
 ;
 
@@ -340,7 +340,7 @@ array-declarator
 : direct-declarator '[' constant-expression.opt ']'
 ;
 
-function-type-declarator
+function-declarator
 : direct-declarator '(' parameter-type-list ')'
 ;
 
