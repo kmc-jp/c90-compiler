@@ -73,7 +73,7 @@ WHITESPACE ;
 }
 
 {SINGLE_CHARACTER_TOKEN} {
-  return CHARACTER_CONSTANT;
+  return *yytext;
 }
 
 "->" return ARROW;
