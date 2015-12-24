@@ -278,16 +278,18 @@ AstRef ast_make_variadic_parameter_list(
   return self;
 }
 
-AstRef ast_make_parameter_list(AstRef parameter_list,
+AstRef ast_make_parameter_list() {
+  AstRef self = ast_palloc(struct Ast);
+  AstParameterListRef data = ast_palloc(struct AstParameterList);
+  data->parameter_declaration_vector = ast_make_vector();
+  self->tag = AST_PARAMETER_LIST;
+  self->data.parameter_list = data;
+  return self;
+}
+
+AstRef ast_push_parameter_list(AstRef parameter_list,
     AstRef parameter_declaration) {
   AstRef self = NULL;
-  if (parameter_list == NULL) {
-    AstParameterListRef data = ast_palloc(struct AstParameterList);
-    data->parameter_declaration_vector = ast_make_vector();
-    parameter_list = ast_palloc(struct Ast);
-    parameter_list->tag = AST_PARAMETER_LIST;
-    parameter_list->data.parameter_list = data;
-  }
   if (ast_is_parameter_list(parameter_list) &&
       ast_is_parameter_declaration(parameter_declaration)) {
     AstParameterListRef data = ast_get_parameter_list(parameter_list);
