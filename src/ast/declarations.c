@@ -10,8 +10,7 @@ struct AstDeclaration {
 };
 
 struct AstDeclarationSpecifierList {
-  AstRef declaration_specifier;
-  AstRef declaration_specifier_list; /* NULLABLE */
+  AstVectorRef declaration_specifier_vector;
 };
 
 struct AstDeclarationSpecifier {
@@ -127,18 +126,22 @@ AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_decla
   return self;
 }
 
-AstRef ast_make_declaration_specifier_list(AstRef declaration_specifier,
-    AstRef declaration_specifier_list) {
+AstRef ast_make_declaration_specifier_list(AstRef declaration_specifier_list,
+    AstRef declaration_specifier) {
   AstRef self = NULL;
-  if (ast_is_declaration_specifier(declaration_specifier) &&
-      (declaration_specifier_list == NULL ||
-       ast_is_declaration_specifier_list(declaration_specifier_list))) {
+  if (declaration_specifier_list == NULL) {
     AstDeclarationSpecifierListRef data = ast_palloc(struct AstDeclarationSpecifierList);
-    data->declaration_specifier = declaration_specifier;
-    data->declaration_specifier_list = declaration_specifier_list;
-    self = ast_palloc(struct Ast);
-    self->tag = AST_DECLARATION_SPECIFIER_LIST;
-    self->data.declaration_specifier_list = data;
+    data->declaration_specifier_vector = ast_make_vector();
+    declaration_specifier_list = ast_palloc(struct Ast);
+    declaration_specifier_list->tag = AST_DECLARATION_SPECIFIER_LIST;
+    declaration_specifier_list->data.declaration_specifier_list = data;
+  }
+  if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
+      ast_is_declaration_specifier(declaration_specifier)) {
+    AstDeclarationSpecifierListRef data =
+        ast_get_declaration_specifier_list(declaration_specifier_list);
+    ast_push_vector(data->declaration_specifier_vector, declaration_specifier);
+    self = declaration_specifier_list;
   }
   return self;
 }
