@@ -7,7 +7,8 @@ AstRef ast_make_declaration(AstRef declaration_specifier_list, AstNullableRef in
 AstRef ast_make_declaration_specifier_list();
 AstRef ast_push_declaration_specifier_list(AstRef declaration_specifier_list, AstRef declaration_specifier);
 AstRef ast_make_declaration_specifier(AstRef declaration_specifier);
-AstRef ast_make_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator);
+AstRef ast_make_init_declarator_list();
+AstRef ast_push_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator);
 AstRef ast_make_init_declarator(AstRef init_declarator);
 AstRef ast_make_declarator_with_initializer(AstRef declarator, AstRef initializer);
 AstRef ast_make_storage_class_specifier();
