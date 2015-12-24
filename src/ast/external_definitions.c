@@ -5,6 +5,7 @@
 #include "pool.h"
 
 struct AstTranslationUnit {
+  AstVectorRef external_declaration_vector;
 };
 
 struct AstExternalDeclaration {
