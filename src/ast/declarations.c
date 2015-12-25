@@ -243,7 +243,7 @@ AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer) {
   return self;
 }
 
-AstRef ast_make_type_qualifier_list() {
+AstRef ast_make_type_qualifier_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstTypeQualifierListRef data = ast_palloc(struct AstTypeQualifierList);
   data->type_qualifier_vector = ast_make_vector();
@@ -291,7 +291,7 @@ AstRef ast_make_variadic_parameter_list(
   return self;
 }
 
-AstRef ast_make_parameter_list() {
+AstRef ast_make_parameter_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstParameterListRef data = ast_palloc(struct AstParameterList);
   data->parameter_declaration_vector = ast_make_vector();
@@ -356,7 +356,7 @@ AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list
   return self;
 }
 
-AstRef ast_make_identifier_list() {
+AstRef ast_make_identifier_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstIdentifierListRef data = ast_palloc(struct AstIdentifierList);
   data->identifier_vector = ast_make_vector();
