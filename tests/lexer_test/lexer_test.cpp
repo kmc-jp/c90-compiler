@@ -142,6 +142,7 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(IDENTIFIER, lex_first_token("_while_"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("forty_two_million"));
 
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0x2A"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("052"));
@@ -155,10 +156,17 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3."));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14e+4"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14E-4"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14e10"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14F"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14l"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token(".14E-10L"));
 
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'*'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'&'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'ab'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'x'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"(L'R')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"(L'-%&-\?\x01a\0')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\a')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\b')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\f')"));
@@ -167,11 +175,14 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\v')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\0')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\10')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\076')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\x8')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\xAaF0')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\\')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\"')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\'')"));
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\?')"));
 
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
+  EXPECT_EQ(STRING_LITERAL, lex_first_token(R"(L"abcdefgABCDEF\"G\t\'\n\\____;;;")"));
 }
