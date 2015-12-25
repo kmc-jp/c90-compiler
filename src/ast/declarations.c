@@ -57,7 +57,7 @@ struct AstTypeQualifier {
 };
 
 struct AstDeclarator {
-  AstRef pointer; /* NULLABLE */
+  AstNullableRef pointer;
   AstRef direct_declarator;
 };
 
@@ -67,7 +67,7 @@ struct AstDirectDeclarator {
 
 struct AstArrayDeclarator {
   AstRef direct_declarator;
-  AstRef constant_expression; /* NULLABLE */
+  AstNullableRef constant_expression;
 };
 
 struct AstFunctionDeclarator {
@@ -77,12 +77,12 @@ struct AstFunctionDeclarator {
 
 struct AstOldStyleFunctionDeclarator {
   AstRef direct_declarator;
-  AstRef identifier_list; /* NULLABLE */
+  AstNullableRef identifier_list;
 };
 
 struct AstPointer {
-  AstRef type_qualifier_list; /* NULLABLE */
-  AstRef pointer; /* NULLABLE */
+  AstNullableRef type_qualifier_list;
+  AstNullableRef pointer;
 };
 
 struct AstTypeQualifierList {
@@ -112,7 +112,7 @@ struct AstParameterConcreteDeclaration {
 
 struct AstParameterAbstractDeclaration {
   AstRef declaration_specifier_list;
-  AstRef abstract_declarator; /* NULLABLE */
+  AstNullableRef abstract_declarator;
 };
 
 struct AstIdentifierList {
@@ -149,7 +149,7 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
   return self;
 }
 
-AstRef ast_make_declarator(AstRef pointer, AstRef direct_declarator) {
+AstRef ast_make_declarator(AstNullableRef pointer, AstRef direct_declarator) {
   AstRef self = NULL;
   if ((pointer == NULL ||
        ast_is_pointer(pointer)) &&
@@ -181,7 +181,7 @@ AstRef ast_make_direct_declarator(AstRef direct_declarator) {
 }
 
 AstRef ast_make_array_declarator(AstRef direct_declarator,
-    AstRef constant_expression) {
+    AstNullableRef constant_expression) {
   AstRef self = NULL;
   if (ast_is_direct_declarator(direct_declarator) &&
       (constant_expression == NULL ||
@@ -212,7 +212,7 @@ AstRef ast_make_function_declarator(AstRef direct_declarator,
 }
 
 AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
-    AstRef identifier_list) {
+    AstNullableRef identifier_list) {
   AstRef self = NULL;
   if (ast_is_direct_declarator(direct_declarator) &&
       (identifier_list == NULL ||
@@ -227,7 +227,7 @@ AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
   return self;
 }
 
-AstRef ast_make_pointer(AstRef type_qualifier_list, AstRef pointer) {
+AstRef ast_make_pointer(AstNullableRef type_qualifier_list, AstNullableRef pointer) {
   AstRef self = NULL;
   if ((type_qualifier_list == NULL ||
        ast_is_type_qualifier_list(type_qualifier_list)) &&
@@ -341,7 +341,7 @@ AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list
 }
 
 AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list,
-    AstRef abstract_declarator) {
+    AstNullableRef abstract_declarator) {
   AstRef self = NULL;
   if (ast_is_declaration_specifiers(declaration_specifier_list) &&
       (abstract_declarator == NULL ||
