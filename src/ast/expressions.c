@@ -107,12 +107,17 @@ struct AstModuloExpression {
 };
 
 struct AstAdditiveExpression {
+  AstRef expression;
 };
 
 struct AstAdditionExpression {
+  AstRef additive;
+  AstRef multiplicative;
 };
 
 struct AstSubtractionExpression {
+  AstRef additive;
+  AstRef multiplicative;
 };
 
 struct AstShiftExpression {
@@ -519,6 +524,49 @@ AstRef ast_make_sizeof_type_expression(AstRef type_name) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SIZEOF_TYPE_EXPRESSION;
     self->data.sizeof_type_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_additive_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(expression) ||
+      ast_is_addition_expression(expression) ||
+      ast_is_subtraction_expression(expression)) {
+    AstAdditiveExpressionRef data = ast_palloc(struct AstAdditiveExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITIVE_EXPRESSION;
+    self->data.additive_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_addition_expression(AstRef additive, AstRef multiplicative) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(additive) &&
+      ast_is_multiplicative_expression(multiplicative)) {
+    AstAdditionExpressionRef data = ast_palloc(struct AstAdditionExpression);
+    data->additive = additive;
+    data->multiplicative = multiplicative;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITION_EXPRESSION;
+    self->data.addition_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(additive) &&
+      ast_is_multiplicative_expression(multiplicative)) {
+    AstSubtractionExpressionRef data =
+        ast_palloc(struct AstSubtractionExpression);
+    data->additive = additive;
+    data->multiplicative = multiplicative;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SUBTRACTION_EXPRESSION;
+    self->data.subtraction_expression = data;
   }
   return self;
 }
