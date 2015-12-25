@@ -146,11 +146,21 @@ member-access-through-pointer-expression
 ;
 
 postfix-increment-expression
-: postfix-expression "++"
+: postfix-expression "++" {
+  $$ = ast_make_postfix_increment_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-increment-expression", "postfix-expression \"++\"");
+  }
+}
 ;
 
 postfix-decrement-expression
-: postfix-expression "--"
+: postfix-expression "--" {
+  $$ = ast_make_postfix_decrement_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-decrement-expression", "postfix-expression \"--\"");
+  }
+}
 ;
 
 argument-expression-list.opt
