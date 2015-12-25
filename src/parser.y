@@ -99,13 +99,27 @@ postfix-decrement-expression
 ;
 
 argument-expression-list.opt
-: /* empty */
-| argument-expression-list
+: /* empty */ {
+  $$ = NULL;
+}
+| argument-expression-list {
+  $$ = $[argument-expression-list];
+}
 ;
 
-argument-expression-list
-: assignment-expression
-| argument-expression-list ',' assignment-expression
+argument-expression-list[lhs]
+: assignment-expression {
+  $$ = ast_make_argument_expression_list($[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("argument-expression-list", "assignment-expression");
+  }
+}
+| argument-expression-list[rhs] ',' assignment-expression {
+  $$ = ast_make_argument_expression_list($[lhs], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("argument-expression-list", "argument-expression-list ',' assignment-expression");
+  }
+}
 ;
 
 unary-expression
