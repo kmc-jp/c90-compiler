@@ -45,36 +45,47 @@ struct AstArgumentExpressionList {
 };
 
 struct AstUnaryExpression {
+  AstRef unary;
 };
 
 struct AstPrefixIncrementExpression {
+  AstRef unary;
 };
 
 struct AstPrefixDecrementExpression {
+  AstRef unary;
 };
 
 struct AstAddressOfExpression {
+  AstRef cast;
 };
 
 struct AstPointerDereferenceExpression {
+  AstRef cast;
 };
 
 struct AstUnaryPlusExpression {
+  AstRef cast;
 };
 
 struct AstUnaryMinusExpression {
+  AstRef cast;
 };
 
 struct AstBitwiseNotExpression {
+  AstRef cast;
 };
 
 struct AstLogicalNotExpression {
+  AstRef cast;
 };
 
 struct AstSizeofExpression {
+  AstRef unary;
 };
 
 struct AstSizeofTypeExpression {
+  AstRef type_name;
 };
 
 struct AstCastExpression {
@@ -96,12 +107,17 @@ struct AstModuloExpression {
 };
 
 struct AstAdditiveExpression {
+  AstRef expression;
 };
 
 struct AstAdditionExpression {
+  AstRef additive;
+  AstRef multiplicative;
 };
 
 struct AstSubtractionExpression {
+  AstRef additive;
+  AstRef multiplicative;
 };
 
 struct AstShiftExpression {
@@ -359,6 +375,198 @@ AstRef ast_push_argument_expression_list(
         ast_get_argument_expression_list(argument_list);
     ast_push_vector(list->argument_list, argument);
     self = argument_list;
+  }
+  return self;
+}
+
+AstRef ast_make_unary_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_postfix_expression(unary) ||
+      ast_is_prefix_increment_expression(unary) ||
+      ast_is_prefix_decrement_expression(unary) ||
+      ast_is_address_of_expression(unary) ||
+      ast_is_pointer_dereference_expression(unary) ||
+      ast_is_unary_plus_expression(unary) ||
+      ast_is_unary_minus_expression(unary) ||
+      ast_is_bitwise_not_expression(unary) ||
+      ast_is_logical_not_expression(unary) ||
+      ast_is_sizeof_expression(unary) ||
+      ast_is_sizeof_type_expression(unary)) {
+    AstUnaryExpressionRef data = ast_palloc(struct AstUnaryExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_UNARY_EXPRESSION;
+    self->data.unary_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_prefix_increment_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary)) {
+    AstPrefixIncrementExpressionRef data =
+        ast_palloc(struct AstPrefixIncrementExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PREFIX_INCREMENT_EXPRESSION;
+    self->data.prefix_increment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_prefix_decrement_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary)) {
+    AstPrefixDecrementExpressionRef data =
+        ast_palloc(struct AstPrefixDecrementExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PREFIX_DECREMENT_EXPRESSION;
+    self->data.prefix_decrement_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_address_of_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstAddressOfExpressionRef data = ast_palloc(struct AstAddressOfExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDRESS_OF_EXPRESSION;
+    self->data.address_of_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_pointer_dereference_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstPointerDereferenceExpressionRef data =
+        ast_palloc(struct AstPointerDereferenceExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POINTER_DEREFERENCE_EXPRESSION;
+    self->data.pointer_dereference_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_unary_plus_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstUnaryPlusExpressionRef data = ast_palloc(struct AstUnaryPlusExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_UNARY_PLUS_EXPRESSION;
+    self->data.unary_plus_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_unary_minus_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstUnaryMinusExpressionRef data =
+        ast_palloc(struct AstUnaryMinusExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_UNARY_MINUS_EXPRESSION;
+    self->data.unary_minus_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_not_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstBitwiseNotExpressionRef data =
+        ast_palloc(struct AstBitwiseNotExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_NOT_EXPRESSION;
+    self->data.bitwise_not_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_logical_not_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(cast)) {
+    AstLogicalNotExpressionRef data =
+        ast_palloc(struct AstLogicalNotExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LOGICAL_NOT_EXPRESSION;
+    self->data.logical_not_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_sizeof_expression(AstRef unary) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary)) {
+    AstSizeofExpressionRef data = ast_palloc(struct AstSizeofExpression);
+    data->unary = unary;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SIZEOF_EXPRESSION;
+    self->data.sizeof_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_sizeof_type_expression(AstRef type_name) {
+  AstRef self = NULL;
+  if (ast_is_type_name(type_name)) {
+    AstSizeofTypeExpressionRef data =
+        ast_palloc(struct AstSizeofTypeExpression);
+    data->type_name = type_name;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SIZEOF_TYPE_EXPRESSION;
+    self->data.sizeof_type_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_additive_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(expression) ||
+      ast_is_addition_expression(expression) ||
+      ast_is_subtraction_expression(expression)) {
+    AstAdditiveExpressionRef data = ast_palloc(struct AstAdditiveExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITIVE_EXPRESSION;
+    self->data.additive_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_addition_expression(AstRef additive, AstRef multiplicative) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(additive) &&
+      ast_is_multiplicative_expression(multiplicative)) {
+    AstAdditionExpressionRef data = ast_palloc(struct AstAdditionExpression);
+    data->additive = additive;
+    data->multiplicative = multiplicative;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITION_EXPRESSION;
+    self->data.addition_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(additive) &&
+      ast_is_multiplicative_expression(multiplicative)) {
+    AstSubtractionExpressionRef data =
+        ast_palloc(struct AstSubtractionExpression);
+    data->additive = additive;
+    data->multiplicative = multiplicative;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SUBTRACTION_EXPRESSION;
+    self->data.subtraction_expression = data;
   }
   return self;
 }

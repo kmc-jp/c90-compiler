@@ -109,11 +109,17 @@ struct Ast {
     AstTypeQualifierRef type_qualifier;
     AstDeclaratorRef declarator;
     AstDirectDeclaratorRef direct_declarator;
+    AstArrayDeclaratorRef array_declarator;
+    AstFunctionDeclaratorRef function_declarator;
+    AstOldStyleFunctionDeclaratorRef old_style_function_declarator;
     AstPointerRef pointer;
     AstTypeQualifierListRef type_qualifier_list;
     AstParameterTypeListRef parameter_type_list;
+    AstVariadicParameterListRef variadic_parameter_list;
     AstParameterListRef parameter_list;
     AstParameterDeclarationRef parameter_declaration;
+    AstParameterConcreteDeclarationRef parameter_concrete_declaration;
+    AstParameterAbstractDeclarationRef parameter_abstract_declaration;
     AstIdentifierListRef identifier_list;
     AstTypeNameRef type_name;
     AstAbstractDeclaratorRef abstract_declarator;
