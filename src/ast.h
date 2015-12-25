@@ -100,6 +100,7 @@ enum AstTag {
   AST_ENUM_DECLARATION,
   AST_ENUMERATOR_LIST,
   AST_ENUMERATOR,
+  AST_ENUMERATOR_WITH_INITIALIZER,
   AST_TYPE_QUALIFIER,
   AST_DECLARATOR,
   AST_DIRECT_DECLARATOR,
@@ -240,6 +241,7 @@ typedef struct AstEnumDefinition* AstEnumDefinitionRef;
 typedef struct AstEnumDeclaration* AstEnumDeclarationRef;
 typedef struct AstEnumeratorList* AstEnumeratorListRef;
 typedef struct AstEnumerator* AstEnumeratorRef;
+typedef struct AstEnumeratorWithInitializer* AstEnumeratorWithInitializerRef;
 typedef struct AstTypeQualifier* AstTypeQualifierRef;
 typedef struct AstDeclarator* AstDeclaratorRef;
 typedef struct AstDirectDeclarator* AstDirectDeclaratorRef;

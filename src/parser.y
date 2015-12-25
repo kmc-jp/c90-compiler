@@ -529,7 +529,11 @@ enumerator-list
 
 enumerator
 : enumeration-constant
-| enumeration-constant '=' constant-expression
+| enumerator-with-initializer
+;
+
+enumerator-with-initializer
+: enumeration-constant '=' constant-expression
 ;
 
 type-qualifier

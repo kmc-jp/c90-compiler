@@ -105,8 +105,12 @@ struct AstEnumeratorList {
 };
 
 struct AstEnumerator {
+  AstRef enumerator;
+};
+
+struct AstEnumeratorWithInitializer {
   AstRef enumeration_constant;
-  AstNullableRef constant_expression;
+  AstRef constant_expression;
 };
 
 struct AstTypeQualifier {
