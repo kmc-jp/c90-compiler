@@ -225,7 +225,7 @@ AstRef ast_make_struct_or_union(AstRef struct_or_union) {
   return self;
 }
 
-AstRef ast_make_struct_declaration_list() {
+AstRef ast_make_struct_declaration_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstStructDeclarationListRef data = ast_palloc(struct AstStructDeclarationList);
   data->struct_declaration_vector = ast_make_vector();
@@ -261,7 +261,7 @@ AstRef ast_make_struct_declaration(
   return self;
 }
 
-AstRef ast_make_specifier_qualifier_list() {
+AstRef ast_make_specifier_qualifier_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstSpecifierQualifierListRef data = ast_palloc(struct AstSpecifierQualifierList);
   data->specifier_qualifier_vector = ast_make_vector();
@@ -381,7 +381,7 @@ AstRef ast_make_enum_declaration(AstRef identifier) {
   return self;
 }
 
-AstRef ast_make_enumerator_list() {
+AstRef ast_make_enumerator_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstEnumeratorListRef data = ast_palloc(struct AstEnumeratorList);
   data->enumerator_vector = ast_make_vector();
