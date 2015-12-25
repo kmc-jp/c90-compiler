@@ -1,6 +1,5 @@
 %code {
 #include <stdio.h>
-#include <stdlib.h>
 void yyerror(const char *);
 }
 
@@ -806,19 +805,4 @@ function-definition
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
-}
-
-extern FILE *yyin;
-
-void set_yyin_file(const char *filename) {
-  FILE* fp = fopen(filename, "r");
-  if (fp == NULL) {
-    printf("fatal error: failed to open %s\n", filename);
-    exit(EXIT_FAILURE);
-  }
-  yyin = fp;
-}
-
-void set_yyin_string(const char *code) {
-  yy_scan_string(code);
 }
