@@ -135,8 +135,8 @@ AstRef ast_make_declaration_specifier_list(void) {
   return self;
 }
 
-AstRef ast_push_declaration_specifier_list(AstRef declaration_specifier_list,
-    AstRef declaration_specifier) {
+AstRef ast_push_declaration_specifier_list(
+    AstRef declaration_specifier_list, AstRef declaration_specifier) {
   AstRef self = NULL;
   if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
       ast_is_declaration_specifier(declaration_specifier)) {
@@ -171,7 +171,8 @@ AstRef ast_make_init_declarator_list(void) {
   return self;
 }
 
-AstRef ast_push_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator) {
+AstRef ast_push_init_declarator_list(
+    AstRef init_declarator_list, AstRef init_declarator) {
   AstRef self = NULL;
   if (ast_is_init_declarator_list(init_declarator_list) &&
       ast_is_init_declarator(init_declarator)) {
