@@ -662,7 +662,7 @@ array-abstract-declarator
 ;
 
 function-abstract-declarator
-: direct-abstract-declarator.opt '(' parameter-type-list ')'
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
