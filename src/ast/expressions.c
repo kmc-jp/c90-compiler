@@ -89,9 +89,12 @@ struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {
+  AstRef cast;
 };
 
 struct AstTypeCastExpression {
+  AstRef type_name;
+  AstRef expression;
 };
 
 struct AstMultiplicativeExpression {
@@ -524,6 +527,33 @@ AstRef ast_make_sizeof_type_expression(AstRef type_name) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SIZEOF_TYPE_EXPRESSION;
     self->data.sizeof_type_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_cast_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(cast) ||
+      ast_is_type_cast_expression(cast)) {
+    AstCastExpressionRef data = ast_palloc(struct AstCastExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CAST_EXPRESSION;
+    self->data.cast_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_cast_expression(AstRef type_name, AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_type_name(type_name) &&
+      ast_is_cast_expression(expression)) {
+    AstTypeCastExpressionRef data = ast_palloc(struct AstTypeCastExpression);
+    data->type_name = type_name;
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_CAST_EXPRESSION;
+    self->data.type_cast_expression = data;
   }
   return self;
 }

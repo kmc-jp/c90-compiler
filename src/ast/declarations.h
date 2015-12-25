@@ -26,7 +26,7 @@ AstRef ast_make_specifier_qualifier(AstRef specifier_qualifier);
 AstRef ast_make_struct_declarator_list(void);
 AstRef ast_push_struct_declarator_list(AstRef struct_declarator_list, AstRef struct_declarator);
 AstRef ast_make_struct_declarator(AstRef struct_declarator);
-AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef bit_field_declarator);
+AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef constant_expression);
 AstRef ast_make_enum_specifier(AstRef enum_specifier);
 AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_list);
 AstRef ast_make_enum_declaration(AstRef identifier);
