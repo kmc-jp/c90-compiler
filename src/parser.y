@@ -818,7 +818,3 @@ void set_yyin_file(const char *filename) {
   }
   yyin = fp;
 }
-
-void set_yyin_string(const char *code) {
-  yy_scan_string(code);
-}

@@ -145,3 +145,7 @@ WHITESPACE ;
   exit(EXIT_FAILURE);
 }
 %%
+
+void set_yyin_string(const char *code) {
+  yy_scan_string(code);
+}
