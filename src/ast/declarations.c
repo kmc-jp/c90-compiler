@@ -136,7 +136,7 @@ AstRef ast_make_declaration_specifier_list(void) {
   return self;
 }
 
-AstRef ast_declaration_specifier_list(AstRef declaration_specifier_list,
+AstRef ast_push_declaration_specifier_list(AstRef declaration_specifier_list,
     AstRef declaration_specifier) {
   AstRef self = NULL;
   if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
