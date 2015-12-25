@@ -122,7 +122,7 @@ function-call-expression
 : postfix-expression '(' argument-expression-list.opt ')' {
   $$ = ast_make_function_call_expression($[postfix-expression], $[argument-expression-list.opt]);
   if (!$$) {
-    AST_ERROR("function-call-expression", "");
+    AST_ERROR("function-call-expression", "postfix-expression '(' argument-expression-list.opt ')'");
   }
 }
 ;
