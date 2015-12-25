@@ -14,7 +14,7 @@ AstRef ast_make_declarator_with_initializer(AstRef declarator, AstRef initialize
 AstRef ast_make_storage_class_specifier();
 AstRef ast_make_type_specifier(AstRef type_specifier);
 AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier);
-AstRef ast_make_struct_or_union_definition(AstRef struct_or_union, AstRef identifier, AstRef struct_declaration_list);
+AstRef ast_make_struct_or_union_definition(AstRef struct_or_union, AstNullableRef identifier, AstRef struct_declaration_list);
 AstRef ast_make_struct_or_union_declaration(AstRef struct_or_union, AstRef identifier);
 AstRef ast_make_struct_or_union(AstRef struct_or_union);
 AstRef ast_make_struct_declaration_list(void);
@@ -23,9 +23,10 @@ AstRef ast_make_struct_declaration(AstRef specifier_qualifier_list, AstRef struc
 AstRef ast_make_specifier_qualifier_list(void);
 AstRef ast_push_specifier_qualifier_list(AstRef specifier_qualifier, AstRef specifier_qualifier_list);
 AstRef ast_make_specifier_qualifier(AstRef specifier_qualifier);
-AstRef ast_make_struct_declarator_list(AstRef struct_declarator_list, AstRef struct_declarator);
+AstRef ast_make_struct_declarator_list(void);
+AstRef ast_push_struct_declarator_list(AstRef struct_declarator_list, AstRef struct_declarator);
 AstRef ast_make_struct_declarator(AstRef struct_declarator);
-AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef bit_field_declarator);
+AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef constant_expression);
 AstRef ast_make_enum_specifier(AstRef enum_specifier);
 AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_list);
 AstRef ast_make_enum_declaration(AstRef identifier);

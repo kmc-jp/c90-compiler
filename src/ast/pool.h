@@ -6,7 +6,9 @@
 #define ast_palloc(type) \
   palloc(type, ast_pool(), 1)
 
-void ast_pool_ctor(size_t size);
+static const size_t AST_POOL_CHUNK_SIZE = 1024;
+
+void ast_pool_ctor(void);
 void ast_pool_dtor(void);
 MemoryPoolRef ast_pool(void);
 
