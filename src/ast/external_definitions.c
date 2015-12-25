@@ -57,12 +57,12 @@ AstRef ast_make_function_definition(
     AstRef declaration_specifier_list, AstRef declarator,
     AstRef declaration_list, AstRef compound_statement) {
   AstRef self = NULL;
-  if (ast_is_declaration_specifier_list(declaration_specifiers) &&
+  if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
       ast_is_declarator(declarator) &&
       ast_is_declaration_list(declaration_list) &&
       ast_is_compound_statement(compound_statement)) {
     AstFunctionDefinitionRef data = ast_palloc(struct AstFunctionDefinition);
-    data->declaration_specifiers = declaration_specifiers;
+    data->declaration_specifier_list = declaration_specifier_list;
     data->declarator = declarator;
     data->declaration_list = declaration_list;
     data->compound_statement = compound_statement;
