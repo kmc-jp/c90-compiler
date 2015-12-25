@@ -143,28 +143,19 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(IDENTIFIER, lex_first_token("forty_two_million"));
 
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42"));
-  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("+42"));
-  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("-42"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0x2A"));
-  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("-0x2A"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("052"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0q222"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0b1001"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42U"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42u"));
-  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("-42L"));
-  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("+42l"));
   EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0x42ul"));
 
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14"));
-  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("+3.14"));
-  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("-.14"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3."));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14e+4"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14E-4"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14F"));
-  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("-3.14f"));
-  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("-3.14L"));
   EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14l"));
 
   EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'*'"));
