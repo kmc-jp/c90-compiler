@@ -178,35 +178,75 @@ unary-expression
 ;
 
 prefix-increment-expression
-: "++" unary-expression
+: "++" unary-expression {
+  $$ = ast_make_prefix_increment_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-increment-expression", "\"++\" unary-expression");
+  }
+}
 ;
 
 prefix-decrement-expression
-: "--" unary-expression
+: "--" unary-expression {
+  $$ = ast_make_prefix_decrement_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-decrement-expression", "\"--\" unary-expression");
+  }
+}
 ;
 
 address-of-expression
-: '&' cast-expression
+: '&' cast-expression {
+  $$ = ast_make_address_of_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("address-of-expression", "'&' cast-expression");
+  }
+}
 ;
 
 pointer-dereference-expression
-: '*' cast-expression
+: '*' cast-expression {
+  $$ = ast_make_pointer_dereference_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("pointer-dereference-expression", "'*' cast-expression");
+  }
+}
 ;
 
 unary-plus-expression
-: '+' cast-expression
+: '+' cast-expression {
+  $$ = ast_make_unary_plus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-plus-expression", "'+' cast-expression");
+  }
+}
 ;
 
 unary-minus-expression
-: '-' cast-expression
+: '-' cast-expression {
+  $$ = ast_make_unary_minus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-minus-expression", "'-' cast-expression");
+  }
+}
 ;
 
 bitwise-NOT-expression
-: '~' cast-expression
+: '~' cast-expression {
+  $$ = ast_make_bitwise_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-NOT-expression", "'~' cast-expression");
+  }
+}
 ;
 
 logical-NOT-expression
-: '!' cast-expression
+: '!' cast-expression {
+  $$ = ast_make_logical_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("logical-NOT-expression", "'!' cast-expression");
+  }
+}
 ;
 
 sizeof-expression
