@@ -13,6 +13,8 @@ struct AstLabeledStatement {
 };
 
 struct AstIdentifierLabeledStatement {
+  AstRef identifier;
+  AstRef statement;
 };
 
 struct AstCaseLabeledStatement {
@@ -69,6 +71,20 @@ AstRef ast_make_labeled_statement(AstRef labeled_statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_LABELED_STATEMENT;
     self->data.labeled_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_identifier_labeled_statement(
+    AstRef identifier, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier) && ast_is_statement(statement)) {
+    AstIdentifierLabeledStatementRef data = ast_palloc(struct AstIdentifierLabeledStatement);
+    data->identifier = identifier;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_IDENTIFIER_LABELED_STATEMENT;
+    self->data.identifier_labeled_statement = data;
   }
   return self;
 }

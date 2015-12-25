@@ -5,7 +5,7 @@
 
 AstRef ast_make_statement(AstRef statement);
 AstRef ast_make_labeled_statement(AstRef labeled_statement);
-AstRef ast_make_identifier_labeled_statement();
+AstRef ast_make_identifier_labeled_statement(AstRef identifier, AstRef statement);
 AstRef ast_make_case_labeled_statement();
 AstRef ast_make_default_labeled_statement();
 AstRef ast_make_compound_statement();
