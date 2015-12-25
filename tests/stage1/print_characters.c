@@ -30,7 +30,7 @@ void print_chars(void) {
   array[0] = 'a\n\\'; /* implementation defined */
 }
 
-int main() {
+int main(void) {
   print("abfnrtvABFNRTV\n");
   print("\"WHAT \nDO\r YOU GET IF\tYOU MULTIPLY\vSIX BY\\ NINE\?\'\n");
   print("\x0068\x65\154\154o\n");

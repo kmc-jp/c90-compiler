@@ -15,7 +15,7 @@ INT f(INT n) {
   return count;
 }
 
-INT main() {
+INT main(void) {
   int i = 1;
   for (i = 1; i <= 20; ++i) {
     print_num(f(i));

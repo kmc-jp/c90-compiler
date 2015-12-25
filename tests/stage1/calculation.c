@@ -1,7 +1,7 @@
 void print_num(int);
 void print(const char *);
 
-int main() {
+int main(void) {
   int a;
   a = 1 + 5 * 8 + 1;
   print_num(a);

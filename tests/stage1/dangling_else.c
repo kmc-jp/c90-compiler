@@ -16,7 +16,7 @@ void f(int n) {
     print("54");
 }
 
-int main() {
+int main(void) {
   int i;
   for (i = 0; i < 4; ++i) f(i);
   print("\n");
