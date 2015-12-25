@@ -127,7 +127,7 @@ AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_decla
   return self;
 }
 
-AstRef ast_make_declaration_specifier_list() {
+AstRef ast_make_declaration_specifier_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstDeclarationSpecifierListRef data = ast_palloc(struct AstDeclarationSpecifierList);
   data->declaration_specifier_vector = ast_make_vector();
@@ -163,7 +163,7 @@ AstRef ast_make_declaration_specifier(AstRef declaration_specifier) {
   return self;
 }
 
-AstRef ast_make_init_declarator_list() {
+AstRef ast_make_init_declarator_list(void) {
   AstRef self = ast_palloc(struct Ast);
   AstInitDeclaratorListRef data = ast_palloc(struct AstInitDeclaratorList);
   data->init_declarator_vector = ast_make_vector();
