@@ -103,11 +103,17 @@ enum AstTag {
   AST_TYPE_QUALIFIER,
   AST_DECLARATOR,
   AST_DIRECT_DECLARATOR,
+  AST_ARRAY_DECLARATOR,
+  AST_FUNCTION_DECLARATOR,
+  AST_OLD_STYLE_FUNCTION_DECLARATOR,
   AST_POINTER,
   AST_TYPE_QUALIFIER_LIST,
   AST_PARAMETER_TYPE_LIST,
+  AST_VARIADIC_PARAMETER_LIST,
   AST_PARAMETER_LIST,
   AST_PARAMETER_DECLARATION,
+  AST_PARAMETER_CONCRETE_DECLARATION,
+  AST_PARAMETER_ABSTRACT_DECLARATION,
   AST_IDENTIFIER_LIST,
   AST_TYPE_NAME,
   AST_ABSTRACT_DECLARATOR,
@@ -237,11 +243,17 @@ typedef struct AstEnumerator* AstEnumeratorRef;
 typedef struct AstTypeQualifier* AstTypeQualifierRef;
 typedef struct AstDeclarator* AstDeclaratorRef;
 typedef struct AstDirectDeclarator* AstDirectDeclaratorRef;
+typedef struct AstArrayDeclarator* AstArrayDeclaratorRef;
+typedef struct AstFunctionDeclarator* AstFunctionDeclaratorRef;
+typedef struct AstOldStyleFunctionDeclarator* AstOldStyleFunctionDeclaratorRef;
 typedef struct AstPointer* AstPointerRef;
 typedef struct AstTypeQualifierList* AstTypeQualifierListRef;
 typedef struct AstParameterTypeList* AstParameterTypeListRef;
+typedef struct AstVariadicParameterList* AstVariadicParameterListRef;
 typedef struct AstParameterList* AstParameterListRef;
 typedef struct AstParameterDeclaration* AstParameterDeclarationRef;
+typedef struct AstParameterConcreteDeclaration* AstParameterConcreteDeclarationRef;
+typedef struct AstParameterAbstractDeclaration* AstParameterAbstractDeclarationRef;
 typedef struct AstIdentifierList* AstIdentifierListRef;
 typedef struct AstTypeName* AstTypeNameRef;
 typedef struct AstAbstractDeclarator* AstAbstractDeclaratorRef;
