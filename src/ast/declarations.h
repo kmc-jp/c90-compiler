@@ -23,7 +23,8 @@ AstRef ast_make_struct_declaration(AstRef specifier_qualifier_list, AstRef struc
 AstRef ast_make_specifier_qualifier_list(void);
 AstRef ast_push_specifier_qualifier_list(AstRef specifier_qualifier, AstRef specifier_qualifier_list);
 AstRef ast_make_specifier_qualifier(AstRef specifier_qualifier);
-AstRef ast_make_struct_declarator_list(AstRef struct_declarator_list, AstRef struct_declarator);
+AstRef ast_make_struct_declarator_list(void);
+AstRef ast_push_struct_declarator_list(AstRef struct_declarator_list, AstRef struct_declarator);
 AstRef ast_make_struct_declarator(AstRef struct_declarator);
 AstRef ast_make_bit_field_declarator(AstNullableRef declarator, AstRef bit_field_declarator);
 AstRef ast_make_enum_specifier(AstRef enum_specifier);
