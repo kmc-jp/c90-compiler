@@ -128,11 +128,21 @@ function-call-expression
 ;
 
 member-access-expression
-: postfix-expression '.' identifier
+: postfix-expression '.' identifier {
+  $$ = ast_make_member_access_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-expression", "postfix-expression '.' identifier");
+  }
+}
 ;
 
 member-access-through-pointer-expression
-: postfix-expression "->" identifier
+: postfix-expression "->" identifier {
+  $$ = ast_make_member_access_through_pointer_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-through-pointer-expression", "postfix-expression \"->\" identifier");
+  }
+}
 ;
 
 postfix-increment-expression
