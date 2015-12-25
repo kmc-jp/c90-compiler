@@ -14,9 +14,8 @@ int yywrap(void) {
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
-  size_t initial_pool_size = 1;
   lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
-  ast_initialize_pool(initial_pool_size);
+  ast_initialize_pool();
 }
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
