@@ -268,12 +268,27 @@ sizeof-type-expression
 ;
 
 cast-expression
-: unary-expression
-| type-cast-expression
+: unary-expression {
+  $$ = ast_make_cast_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "unary-expression");
+  }
+}
+| type-cast-expression {
+  $$ = ast_make_cast_expression($[type-cast-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "type-cast-expression");
+  }
+}
 ;
 
 type-cast-expression
-: '(' type-name ')' cast-expression
+: '(' type-name ')' cast-expression {
+  $$ = ast_make_type_cast_expression($[type-name], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("type-cast-expression", "'(' type-name ')' cast-expression");
+  }
+}
 ;
 
 multiplicative-expression
