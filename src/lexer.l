@@ -1,8 +1,6 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "utility.h"
-#include "ast/ast_string.h"
 #include "parser.tab.h"
 #include "ast_method.h"
 #include "stdstring.h"
