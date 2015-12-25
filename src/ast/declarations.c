@@ -180,8 +180,8 @@ AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier) {
   return self;
 }
 
-AstRef ast_make_struct_or_union_definition(AstRef struct_or_union,
-    AstRef identifier, AstRef struct_declaration_list) {
+AstRef ast_make_struct_or_union_definition(
+    AstRef struct_or_union, AstRef identifier, AstRef struct_declaration_list) {
   AstRef self = NULL;
   if (ast_is_struct_or_union(struct_or_union) &&
       (identifier == NULL ||
@@ -198,8 +198,8 @@ AstRef ast_make_struct_or_union_definition(AstRef struct_or_union,
   return self;
 }
 
-AstRef ast_make_struct_or_union_declaration(AstRef struct_or_union,
-    AstRef identifier) {
+AstRef ast_make_struct_or_union_declaration(
+    AstRef struct_or_union, AstRef identifier) {
   AstRef self = NULL;
   if (ast_is_struct_or_union(struct_or_union) &&
       ast_is_identifier(identifier)) {
@@ -234,8 +234,8 @@ AstRef ast_make_struct_declaration_list() {
   return self;
 }
 
-AstRef ast_push_struct_declaration_list(AstRef struct_declaration_list,
-    AstRef struct_declaration) {
+AstRef ast_push_struct_declaration_list(
+    AstRef struct_declaration_list, AstRef struct_declaration) {
   AstRef self = NULL;
   if (ast_is_struct_declaration_list(struct_declaration_list) &&
       ast_is_struct_declaration(struct_declaration)) {
@@ -246,8 +246,8 @@ AstRef ast_push_struct_declaration_list(AstRef struct_declaration_list,
   return self;
 }
 
-AstRef ast_make_struct_declaration(AstRef specifier_qualifier_list,
-    AstRef struct_declarator_list) {
+AstRef ast_make_struct_declaration(
+    AstRef specifier_qualifier_list, AstRef struct_declarator_list) {
   AstRef self = NULL;
   if (ast_is_specifier_qualifier_list(specifier_qualifier_list) &&
       ast_is_struct_declarator_list(struct_declarator_list)) {
@@ -270,8 +270,8 @@ AstRef ast_make_specifier_qualifier_list() {
   return self;
 }
 
-AstRef ast_push_specifier_qualifier_list(AstRef specifier_qualifier,
-    AstRef specifier_qualifier_list) {
+AstRef ast_push_specifier_qualifier_list(
+    AstRef specifier_qualifier, AstRef specifier_qualifier_list) {
   AstRef self = NULL;
   if (ast_is_specifier_qualifier(specifier_qualifier) &&
       ast_is_specifier_qualifier_list(specifier_qualifier_list)) {
@@ -295,8 +295,8 @@ AstRef ast_make_specifier_qualifier(AstRef specifier_qualifier) {
   return self;
 }
 
-AstRef ast_make_struct_declarator_list(AstRef struct_declarator_list,
-    AstRef struct_declarator) {
+AstRef ast_make_struct_declarator_list(
+    AstRef struct_declarator_list, AstRef struct_declarator) {
   AstRef self = NULL;
   if (struct_declarator_list == NULL) {
     AstStructDeclaratorListRef data = ast_palloc(struct AstStructDeclaratorList);
@@ -401,8 +401,8 @@ AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
   return self;
 }
 
-AstRef ast_make_enumerator(AstRef enumeration_constant,
-    AstRef constant_expression) {
+AstRef ast_make_enumerator(
+    AstRef enumeration_constant, AstRef constant_expression) {
   AstRef self = NULL;
   if (ast_is_identifier(enumeration_constant) &&
       (constant_expression == NULL ||
