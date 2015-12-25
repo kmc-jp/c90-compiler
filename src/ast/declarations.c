@@ -440,7 +440,7 @@ AstRef ast_make_struct_declarator(AstRef struct_declarator) {
 }
 
 AstRef ast_make_bit_field_declarator(
-    AstRef declarator, AstRef constant_expression) {
+    AstNullableRef declarator, AstRef constant_expression) {
   AstRef self = NULL;
   if ((declarator == NULL || ast_is_declarator(declarator)) &&
        ast_is_constant_expression(constant_expression)) {
