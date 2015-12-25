@@ -11,14 +11,14 @@ AST_SRCS := $(wildcard $(AST_DIR)/*.c)
 AST_OBJS := $(AST_SRCS:.c=.o)
 
 LEX_SRC := lexer.l
-LEX_INTERMEDIATE := lex.yy.c lex.yy.h
+LEX_INTERMEDIATE := lex.yy.c
 LEX_TARGET := lex.yy.o
 YACC_SRC := parser.y
 YACC_INTERMEDIATE := parser.tab.c parser.tab.h
 YACC_TARGET := parser.tab.o
 
 LEX := flex
-LEX_OPTION := --header-file=lex.yy.h
+LEX_OPTION :=
 YACC := bison
 YACC_OPTION := -d
 TARGET := kmc89
