@@ -32,7 +32,8 @@ AstRef ast_make_type_name();
 AstRef ast_make_abstract_declarator();
 AstRef ast_make_direct_abstract_declarator();
 AstRef ast_make_typedef_name();
-AstRef ast_make_initializer();
-AstRef ast_make_initializer_list();
+AstRef ast_make_initializer(AstRef initializer);
+AstRef ast_make_initializer_list(void);
+AstRef ast_push_initializer_list(AstRef initializer_list, AstRef initializer);
 
 #endif  /* KMC_C89_COMPILER_AST_DECLARATIONS_H */
