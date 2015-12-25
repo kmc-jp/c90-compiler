@@ -467,7 +467,7 @@ AstRef ast_make_enum_specifier(AstRef enum_specifier) {
   return self;
 }
 
-AstRef ast_make_enum_definition(AstRef identifier, AstRef enumerator_list) {
+AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_list) {
   AstRef self = NULL;
   if ((identifier == NULL || ast_is_identifier(identifier)) &&
       ast_is_enumerator_list(enumerator_list)) {
