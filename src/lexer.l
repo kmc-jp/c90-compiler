@@ -18,17 +18,17 @@ void initialize_lexer(void) {
   ast_initialize_pool();
 }
 %}
-ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
-NOT_ESCAPE_SEQUENCE [^\\]
-CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
+SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
+OCT_ESCAPE_SEQUENCE "\\"[0-7]{1,3}
+HEX_ESCAPE_SEQUANCE "\\x"[0-9a-fA-F]+
+ESCAPE_SEQUENCE {SIMPLE_ESCAPE_SEQUENCE}|{OCT_ESCAPE_SEQUENCE}|{HEX_ESCAPE_SEQUANCE}
+C_CHAR ([^\'\\\n]|{ESCAPE_SEQUENCE})
 IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
 DIGIT2 "0b"("0"|1[01]*)
 DIGIT4 "0q"("0"|[1-3][0-3]*)
 DIGIT8 "0"[0-7]*
 DIGIT10 [1-9][0-9]*
 DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
-CHAR8 "\\"[0-7]+
-CHAR16 "\\x"[0-9A-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 WHITESPACE [ \t\n]
@@ -40,7 +40,7 @@ WHITESPACE [ \t\n]
 <COMMENT>"*/" BEGIN(INITIAL);
 <COMMENT>.    ;
 
-"\"" BEGIN(STRING);
+("L"?)"\"" BEGIN(STRING);
 
 <STRING>"\"" {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
@@ -136,7 +136,7 @@ WHITESPACE ;
   return IDENTIFIER;
 }
 
-"'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
+("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
   yylval = ast_make_token(yytext, yyleng);
   return CHARACTER_CONSTANT;
 }
