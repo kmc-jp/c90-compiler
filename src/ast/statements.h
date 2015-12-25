@@ -3,7 +3,7 @@
 
 #include "../ast.h"
 
-AstRef ast_make_statement();
+AstRef ast_make_statement(AstRef statement);
 AstRef ast_make_labeled_statement();
 AstRef ast_make_compound_statement();
 AstRef ast_make_declaration_list();
