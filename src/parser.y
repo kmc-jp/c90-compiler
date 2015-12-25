@@ -606,10 +606,22 @@ declarator
 
 direct-declarator
 : identifier
-| '{' declarator '}'
-| direct-declarator '[' constant-expression.opt ']'
-| direct-declarator '(' parameter-type-list ')'
-| direct-declarator '(' identifier-list.opt ')'
+| '(' declarator ')'
+| array-declarator
+| function-declarator
+| old-style-function-declarator
+;
+
+array-declarator
+: direct-declarator '[' constant-expression.opt ']'
+;
+
+function-declarator
+: direct-declarator '(' parameter-type-list ')'
+;
+
+old-style-function-declarator
+: direct-declarator '(' identifier-list.opt ')'
 ;
 
 pointer.opt
@@ -639,7 +651,11 @@ parameter-type-list.opt
 
 parameter-type-list
 : parameter-list
-| parameter-list ',' "..."
+| variadic-parameter-list
+;
+
+variadic-parameter-list
+: parameter-list ',' "..."
 ;
 
 parameter-list
@@ -648,8 +664,16 @@ parameter-list
 ;
 
 parameter-declaration
+: parameter-concrete-declaration
+| parameter-abstract-declaration
+;
+
+parameter-concrete-declaration
 : declaration-specifier-list declarator
-| declaration-specifier-list abstract-declarator.opt
+;
+
+parameter-abstract-declaration
+: declaration-specifier-list abstract-declarator.opt
 ;
 
 identifier-list.opt
