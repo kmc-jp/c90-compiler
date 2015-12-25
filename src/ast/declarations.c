@@ -196,8 +196,8 @@ AstRef ast_make_init_declarator(AstRef init_declarator) {
   return self;
 }
 
-AstRef ast_make_declarator_with_initializer(AstRef declarator,
-    AstRef initializer) {
+AstRef ast_make_declarator_with_initializer(
+    AstRef declarator, AstRef initializer) {
   AstRef self = NULL;
   if (ast_is_declarator(declarator) && ast_is_initializer(initializer)) {
     AstDeclaratorWithInitializerRef data = ast_palloc(struct AstDeclaratorWithInitializer);
