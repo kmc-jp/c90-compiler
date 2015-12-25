@@ -123,6 +123,9 @@ struct Ast {
     AstInitializerListRef initializer_list;
     AstStatementRef statement;
     AstLabeledStatementRef labeled_statement;
+    AstIdentifierLabeledStatementRef identifier_labeled_statement;
+    AstCaseLabeledStatementRef case_labeled_statement;
+    AstDefaultLabeledStatementRef default_labeled_statement;
     AstCompoundStatementRef compound_statement;
     AstDeclarationListRef declaration_list;
     AstStatementListRef statement_list;

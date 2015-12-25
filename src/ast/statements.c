@@ -11,6 +11,15 @@ struct AstStatement {
 struct AstLabeledStatement {
 };
 
+struct IdentifierLabeledStatement {
+};
+
+struct CaseLabeledStatement {
+};
+
+struct DefaultLabeledStatement {
+};
+
 struct AstCompoundStatement {
 };
 
