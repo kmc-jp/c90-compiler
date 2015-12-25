@@ -455,8 +455,16 @@ type-specifier
 ;
 
 struct-or-union-specifier
+: struct-or-union-definition
+| struct-or-union-declaration
+;
+
+struct-or-union-definition
 : struct-or-union identifier.opt '{' struct-declaration-list '}'
-| struct-or-union identifier
+;
+
+struct-or-union-declaration
+: struct-or-union identifier
 ;
 
 struct-or-union
@@ -479,8 +487,12 @@ specifier-qualifier-list.opt
 ;
 
 specifier-qualifier-list
-: type-specifier specifier-qualifier-list.opt
-| type-qualifier specifier-qualifier-list.opt
+: specifier-qualifier specifier-qualifier-list.opt
+;
+
+specifier-qualifier
+: type-specifier
+| type-qualifier
 ;
 
 struct-declarator-list
@@ -490,12 +502,24 @@ struct-declarator-list
 
 struct-declarator
 : declarator
-| declarator.opt ':' constant-expression
+| bit-field-declarator
+;
+
+bit-field-declarator
+: declarator.opt ':' constant-expression
 ;
 
 enum-specifier
+: enum-definition
+| enum-declaration
+;
+
+enum-definition
 : "enum" identifier.opt '{' enumerator-list '}'
-| "enum" identifier
+;
+
+enum-declaration
+: "enum" identifier
 ;
 
 enumerator-list
