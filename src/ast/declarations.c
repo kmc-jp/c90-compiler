@@ -142,7 +142,7 @@ struct AstPointer {
 };
 
 struct AstTypeQualifierList {
-  AstRef type_qualifier_vector;
+  AstVectorRef type_qualifier_vector;
 };
 
 struct AstParameterTypeList {
