@@ -321,6 +321,7 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
   }
   return self;
 }
+
 AstRef ast_make_type_specifier(AstRef type_specifier) {
   AstRef self = NULL;
   if (ast_is_token(type_specifier) ||
