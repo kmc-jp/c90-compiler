@@ -110,11 +110,21 @@ postfix-expression
 ;
 
 array-subscript-expression
-: postfix-expression '[' expression ']'
+: postfix-expression '[' expression ']' {
+  $$ = ast_make_array_subscript_expression($[postfix-expression], $[expression]);
+  if (!$$) {
+    AST_ERROR("array-subscript-expression", "postfix-expression '[' expression ']'");
+  }
+}
 ;
 
 function-call-expression
-: postfix-expression '(' argument-expression-list.opt ')'
+: postfix-expression '(' argument-expression-list.opt ')' {
+  $$ = ast_make_function_call_expression($[postfix-expression], $[argument-expression-list.opt]);
+  if (!$$) {
+    AST_ERROR("function-call-expression", "");
+  }
+}
 ;
 
 member-access-expression
