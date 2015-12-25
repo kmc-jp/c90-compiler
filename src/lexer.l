@@ -1,27 +1,22 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "token.h"
-#include "yacc_mock.h"
 #include "utility.h"
 #include "use_vector.h"
-/* #include "y.tab.h" */
+#include "ast/ast_string.h"
+#include "parser.tab.h"
+#include "ast_method.h"
+#include <stdlib.h>
 
 int yywrap(void) {
   return 1;
-}
-
-void copy_to_yylval(char *src, int size) {
-  char *literal = safe_array_malloc(char, size + 1);
-  strncpy(literal, src, size);
-  literal[size] = '\0';
-  yylval = literal;
 }
 
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
   lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
+  ast_initialize_pool();
 }
 %}
 ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
@@ -50,7 +45,7 @@ WHITESPACE [ \t\n]
 <STRING>"\"" {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
   char *str = VECTORFUNC(char, data)(lexer_string_literal);
-  copy_to_yylval(str, len);
+  yylval = ast_make_token(str, len);
   VECTORFUNC(char, clear)(lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
@@ -66,13 +61,13 @@ WHITESPACE [ \t\n]
 WHITESPACE ;
 
 [+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
+  yylval = ast_make_token(yytext, yyleng);
+  return FLOATING_CONSTANT;
 }
 
 [+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
+  yylval = ast_make_token(yytext, yyleng);
+  return INTEGER_CONSTANT;
 }
 
 {SINGLE_CHARACTER_TOKEN} {
@@ -137,13 +132,13 @@ WHITESPACE ;
 "while"    return WHILE;
 
 {IDENTIFIER} {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return IDENTIFIER;
 }
 
 "'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
-  copy_to_yylval(yytext, yyleng);
-  return CHAR_LITERAL;
+  yylval = ast_make_token(yytext, yyleng);
+  return CHARACTER_CONSTANT;
 }
 
 . {
@@ -151,3 +146,16 @@ WHITESPACE ;
   exit(EXIT_FAILURE);
 }
 %%
+
+void set_yyin_string(const char *code) {
+  yy_scan_string(code);
+}
+
+void set_yyin_file(const char *filename) {
+  FILE* fp = fopen(filename, "r");
+  if (fp == NULL) {
+    printf("fatal error: failed to open %s\n", filename);
+    exit(EXIT_FAILURE);
+  }
+  yyin = fp;
+}
