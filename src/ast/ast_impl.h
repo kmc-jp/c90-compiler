@@ -83,9 +83,11 @@ struct Ast {
     AstCommaExpressionRef comma_expression;
     AstConstantExpressionRef constant_expression;
     AstDeclarationRef declaration;
-    AstDeclarationSpecifiersRef declaration_specifiers;
+    AstDeclarationSpecifierListRef declaration_specifier_list;
+    AstDeclarationSpecifierRef declaration_specifier;
     AstInitDeclaratorListRef init_declarator_list;
     AstInitDeclaratorRef init_declarator;
+    AstDeclaratorWithInitializerRef declarator_with_initializer;
     AstStorageClassSpecifierRef storage_class_specifier;
     AstTypeSpecifierRef type_specifier;
     AstStructOrUnionSpecifierRef struct_or_union_specifier;
