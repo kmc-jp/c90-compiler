@@ -747,7 +747,7 @@ AstRef ast_make_parameter_declaration(AstRef parameter_declaration) {
 AstRef ast_make_parameter_concrete_declaration(
     AstRef declaration_specifier_list, AstRef declarator) {
   AstRef self = NULL;
-  if (ast_is_declaration_specifiers(declaration_specifier_list) &&
+  if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
       ast_is_declarator(declarator)) {
     AstParameterConcreteDeclarationRef data = ast_palloc(struct AstParameterConcreteDeclaration);
     data->declaration_specifier_list = declaration_specifier_list;
@@ -762,7 +762,7 @@ AstRef ast_make_parameter_concrete_declaration(
 AstRef ast_make_parameter_abstract_declaration(
     AstRef declaration_specifier_list, AstNullableRef abstract_declarator) {
   AstRef self = NULL;
-  if (ast_is_declaration_specifiers(declaration_specifier_list) &&
+  if (ast_is_declaration_specifier_list(declaration_specifier_list) &&
       (abstract_declarator == NULL ||
        ast_is_abstract_declarator(abstract_declarator))) {
     AstParameterAbstractDeclarationRef data = ast_palloc(struct AstParameterAbstractDeclaration);
