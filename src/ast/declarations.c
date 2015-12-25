@@ -891,7 +891,7 @@ AstRef ast_make_array_abstract_declarator(
 }
 
 AstRef ast_make_function_abstract_declarator(
-    AstRef direct_abstract_declarator, AstRef parameter_type_list) {
+    AstNullableRef direct_abstract_declarator, AstNullableRef parameter_type_list) {
   AstRef self = NULL;
   if ((direct_abstract_declarator == NULL ||
        ast_is_direct_abstract_declarator(direct_abstract_declarator)) &&
