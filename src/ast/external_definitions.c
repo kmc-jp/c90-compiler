@@ -19,7 +19,7 @@ struct AstFunctionDefinition {
   AstRef compound_statement;
 };
 
-AstRef ast_make_translation_unit() {
+AstRef ast_make_translation_unit(void) {
   AstRef self = ast_palloc(struct Ast);
   AstTranslationUnitRef data = ast_palloc(struct AstTranslationUnit);
   data->external_declaration_vector = ast_make_vector();
