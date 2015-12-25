@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
-#include "lexer_adapter.h"
-#include "parser.tab.h"
 #include "use_vector.h"
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
+extern "C" {
+#include "parser.tab.h"
+#include "ast_method.h"
+}
 
 typedef int Token;
 
