@@ -129,8 +129,8 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
   return self;
 }
 
-AstRef ast_make_type_name(AstRef specifier_qualifier_list,
-    AstNullableRef abstract_declarator) {
+AstRef ast_make_type_name(
+    AstRef specifier_qualifier_list, AstNullableRef abstract_declarator) {
   AstRef self = NULL;
   if (ast_is_specifier_qualifier_list(specifier_qualifier_list) &&
       ast_is_abstract_declarator(abstract_declarator)) {
@@ -186,7 +186,8 @@ AstRef ast_make_direct_abstract_declarator(AstRef direct_abstract_declarator) {
   return self;
 }
 
-AstRef ast_make_array_abstract_declarator(AstNullableRef direct_abstract_declarator,
+AstRef ast_make_array_abstract_declarator(
+    AstNullableRef direct_abstract_declarator,
     AstNullableRef constant_expression) {
   AstRef self = NULL;
   if ((direct_abstract_declarator == NULL ||
@@ -203,8 +204,8 @@ AstRef ast_make_array_abstract_declarator(AstNullableRef direct_abstract_declara
   return self;
 }
 
-AstRef ast_make_function_abstract_declarator(AstRef direct_abstract_declarator,
-    AstRef parameter_type_list) {
+AstRef ast_make_function_abstract_declarator(
+    AstRef direct_abstract_declarator, AstRef parameter_type_list) {
   AstRef self = NULL;
   if ((direct_abstract_declarator == NULL ||
        ast_is_direct_abstract_declarator(direct_abstract_declarator)) &&
