@@ -84,9 +84,24 @@ string-literal
 ;
 
 primary-expression
-: identifier
-| constant
-| string-literal
+: identifier {
+  $$ = ast_make_primary_expression($[identifier]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "identifier");
+  }
+}
+| constant {
+  $$ = ast_make_primary_expression($[constant]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "constant");
+  }
+}
+| string-literal {
+  $$ = ast_make_primary_expression($[string-literal]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "string-literal");
+  }
+}
 ;
 
 postfix-expression
