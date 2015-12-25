@@ -44,7 +44,7 @@ struct AstStructOrUnionSpecifier {
 
 struct AstStructOrUnionDefinition {
   AstRef struct_or_union;
-  AstRef identifier;
+  AstNullableRef identifier;
   AstRef struct_declaration_list;
 };
 
@@ -293,7 +293,7 @@ AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier) {
 }
 
 AstRef ast_make_struct_or_union_definition(
-    AstRef struct_or_union, AstRef identifier, AstRef struct_declaration_list) {
+    AstRef struct_or_union, AstNullableRef identifier, AstRef struct_declaration_list) {
   AstRef self = NULL;
   if (ast_is_struct_or_union(struct_or_union) &&
       (identifier == NULL ||
