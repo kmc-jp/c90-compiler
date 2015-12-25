@@ -12,5 +12,11 @@ int main(void) {
   a = 1 - 20 / 10 * 4 + 10;
   print_num(a);
   print("\n");
+  a = 1 - 10 - 100;
+  print_num(a);
+  print("\n");
+  a = 1024 / 512 / 2;
+  print_num(a);
+  print("\n");
   return 0;
 }
