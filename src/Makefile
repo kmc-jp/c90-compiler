@@ -10,25 +10,34 @@ AST_DIR := ast
 AST_SRCS := $(wildcard $(AST_DIR)/*.c)
 AST_OBJS := $(AST_SRCS:.c=.o)
 
+LEX_SRC := lexer.l
+LEX_INTERMEDIATE := lex.yy.c lex.yy.h
+LEX_TARGET := lex.yy.o
+YACC_SRC := parser.y
+YACC_INTERMEDIATE := parser.tab.c parser.tab.h
+YACC_TARGET := parser.tab.o
+
 LEX := flex
+LEX_OPTION := --header-file=lex.yy.h
 YACC := bison
+YACC_OPTION := -d
 TARGET := kmc89
 OBJS += $(AST_OBJS)
-OBJS += lex.yy.o parser.tab.o
-CLEAN_OBJS += lex.yy.c lex.yy.h
+OBJS += $(LEX_TARGET) $(YACC_TARGET)
+CLEAN_OBJS += $(LEX_INTERMEDIATE) $(YACC_INTERMEDIATE)
 
 build: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-parser.tab.c parser.tab.h: parser.y
-	$(YACC) -d $<
+$(YACC_INTERMEDIATE): $(YACC_SRC)
+	$(YACC) $(YACC_OPTION) $<
 
-lex.yy.c lex.yy.h: lexer.l
-	$(LEX) --header-file=lex.yy.h -o lex.yy.c lexer.l
+$(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
+	$(LEX) $(LEX_OPTION) $<
 
-lex.yy.o: CFLAGS += -Wno-unused-function
+$(LEX_TARGET): CFLAGS += -Wno-unused-function
 
 main.o: CFLAGS += -Wno-long-long
 

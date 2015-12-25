@@ -5,6 +5,7 @@
 #include "pool.h"
 
 struct AstPrimaryExpression {
+  AstRef primary_expression;
 };
 
 struct AstPostfixExpression {
@@ -216,6 +217,21 @@ struct AstCommaExpression {
 
 struct AstConstantExpression {
 };
+
+AstRef ast_make_primary_expression(AstRef primary_expression) {
+  AstRef self = NULL;
+  if (ast_is_identifier(primary_expression) ||
+      ast_is_constant(primary_expression) ||
+      ast_is_string_literal(primary_expression) ||
+      ast_is_expression(primary_expression)) {
+    AstPrimaryExpressionRef data = ast_palloc(struct AstPrimaryExpression);
+    data->primary_expression = primary_expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PRIMARY_EXPRESSION;
+    self->data.primary_expression = data;
+  }
+  return self;
+}
 
 AstRef ast_make_postfix_expression(AstRef postfix) {
   AstRef self = NULL;
