@@ -23,6 +23,7 @@ OCT_ESCAPE_SEQUENCE "\\"[0-7]{1,3}
 HEX_ESCAPE_SEQUANCE "\\x"[0-9a-fA-F]+
 ESCAPE_SEQUENCE {SIMPLE_ESCAPE_SEQUENCE}|{OCT_ESCAPE_SEQUENCE}|{HEX_ESCAPE_SEQUANCE}
 C_CHAR ([^\'\\\n]|{ESCAPE_SEQUENCE})
+S_CHAR ([^\"\\\n]|{ESCAPE_SEQUENCE})
 IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
 DIGIT2 "0b"("0"|1[01]*)
 DIGIT4 "0q"("0"|[1-3][0-3]*)
@@ -51,7 +52,7 @@ WHITESPACE [ \t\n]
   return STRING_LITERAL;
 }
 
-<STRING>{CHARACTER} {
+<STRING>{S_CHAR} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
     VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
