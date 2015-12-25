@@ -59,6 +59,11 @@ WHITESPACE [ \t\n]
   }
 }
 
+("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
+  yylval = ast_make_token(yytext, yyleng);
+  return CHARACTER_CONSTANT;
+}
+
 WHITESPACE ;
 
 [0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
@@ -135,11 +140,6 @@ WHITESPACE ;
 {IDENTIFIER} {
   yylval = ast_make_token(yytext, yyleng);
   return IDENTIFIER;
-}
-
-("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
-  yylval = ast_make_token(yytext, yyleng);
-  return CHARACTER_CONSTANT;
 }
 
 . {
