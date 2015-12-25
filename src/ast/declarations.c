@@ -185,7 +185,7 @@ struct AstAbstractDeclarator {
 };
 
 struct AstNotPurePointerAbstractDeclarator {
-  AstRef pointer;
+  AstNullableRef pointer;
   AstRef direct_abstract_declarator;
 };
 
@@ -842,7 +842,7 @@ AstRef ast_make_abstract_declarator(AstRef abstract_declarator) {
 }
 
 AstRef ast_make_not_pure_pointer_abstract_declarator(
-    AstRef pointer, AstRef direct_abstract_declarator) {
+    AstNullableRef pointer, AstRef direct_abstract_declarator) {
   AstRef self = NULL;
   if ((pointer == NULL || ast_is_pointer(pointer)) &&
       ast_is_direct_abstract_declarator(direct_abstract_declarator)) {
