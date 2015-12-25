@@ -180,8 +180,8 @@ AstRef ast_make_direct_declarator(AstRef direct_declarator) {
   return self;
 }
 
-AstRef ast_make_array_declarator(AstRef direct_declarator,
-    AstNullableRef constant_expression) {
+AstRef ast_make_array_declarator(
+    AstRef direct_declarator, AstNullableRef constant_expression) {
   AstRef self = NULL;
   if (ast_is_direct_declarator(direct_declarator) &&
       (constant_expression == NULL ||
@@ -196,8 +196,8 @@ AstRef ast_make_array_declarator(AstRef direct_declarator,
   return self;
 }
 
-AstRef ast_make_function_declarator(AstRef direct_declarator,
-    AstRef parameter_type_list) {
+AstRef ast_make_function_declarator(
+    AstRef direct_declarator, AstRef parameter_type_list) {
   AstRef self = NULL;
   if (ast_is_direct_declarator(direct_declarator) &&
       ast_is_parameter_type_list(parameter_type_list)) {
@@ -211,8 +211,8 @@ AstRef ast_make_function_declarator(AstRef direct_declarator,
   return self;
 }
 
-AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
-    AstNullableRef identifier_list) {
+AstRef ast_make_old_style_function_declarator(
+    AstRef direct_declarator, AstNullableRef identifier_list) {
   AstRef self = NULL;
   if (ast_is_direct_declarator(direct_declarator) &&
       (identifier_list == NULL ||
@@ -227,7 +227,8 @@ AstRef ast_make_old_style_function_declarator(AstRef direct_declarator,
   return self;
 }
 
-AstRef ast_make_pointer(AstNullableRef type_qualifier_list, AstNullableRef pointer) {
+AstRef ast_make_pointer(
+    AstNullableRef type_qualifier_list, AstNullableRef pointer) {
   AstRef self = NULL;
   if ((type_qualifier_list == NULL ||
        ast_is_type_qualifier_list(type_qualifier_list)) &&
@@ -252,8 +253,8 @@ AstRef ast_make_type_qualifier_list(void) {
   return self;
 }
 
-AstRef ast_push_type_qualifier_list(AstRef type_qualifier_list,
-    AstRef type_qualifier) {
+AstRef ast_push_type_qualifier_list(
+    AstRef type_qualifier_list, AstRef type_qualifier) {
   AstRef self = NULL;
   if (ast_is_type_qualifier_list(type_qualifier_list) &&
       ast_is_type_qualifier(type_qualifier)) {
@@ -277,8 +278,7 @@ AstRef ast_make_parameter_type_list(AstRef parameter_type_list) {
   return self;
 }
 
-AstRef ast_make_variadic_parameter_list(
-    AstRef parameter_list) {
+AstRef ast_make_variadic_parameter_list(AstRef parameter_list) {
   AstRef self = NULL;
   if (ast_is_parameter_list(parameter_list)) {
     AstVariadicParameterListRef data =
@@ -300,8 +300,8 @@ AstRef ast_make_parameter_list(void) {
   return self;
 }
 
-AstRef ast_push_parameter_list(AstRef parameter_list,
-    AstRef parameter_declaration) {
+AstRef ast_push_parameter_list(
+    AstRef parameter_list, AstRef parameter_declaration) {
   AstRef self = NULL;
   if (ast_is_parameter_list(parameter_list) &&
       ast_is_parameter_declaration(parameter_declaration)) {
@@ -325,8 +325,8 @@ AstRef ast_make_parameter_declaration(AstRef parameter_declaration) {
   return self;
 }
 
-AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list,
-    AstRef declarator) {
+AstRef ast_make_parameter_concrete_declaration(
+    AstRef declaration_specifier_list, AstRef declarator) {
   AstRef self = NULL;
   if (ast_is_declaration_specifiers(declaration_specifier_list) &&
       ast_is_declarator(declarator)) {
@@ -340,8 +340,8 @@ AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list
   return self;
 }
 
-AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list,
-    AstNullableRef abstract_declarator) {
+AstRef ast_make_parameter_abstract_declaration(
+    AstRef declaration_specifier_list, AstNullableRef abstract_declarator) {
   AstRef self = NULL;
   if (ast_is_declaration_specifiers(declaration_specifier_list) &&
       (abstract_declarator == NULL ||
