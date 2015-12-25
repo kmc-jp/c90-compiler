@@ -11,13 +11,13 @@ struct AstStatement {
 struct AstLabeledStatement {
 };
 
-struct IdentifierLabeledStatement {
+struct AstIdentifierLabeledStatement {
 };
 
-struct CaseLabeledStatement {
+struct AstCaseLabeledStatement {
 };
 
-struct DefaultLabeledStatement {
+struct AstDefaultLabeledStatement {
 };
 
 struct AstCompoundStatement {
