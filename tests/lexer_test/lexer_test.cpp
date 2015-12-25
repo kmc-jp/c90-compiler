@@ -6,7 +6,6 @@
 #include <string>
 extern "C" {
 #include "parser.tab.h"
-#include "ast_method.h"
 }
 
 typedef int Token;
