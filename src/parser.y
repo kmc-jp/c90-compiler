@@ -250,11 +250,21 @@ logical-NOT-expression
 ;
 
 sizeof-expression
-: "sizeof" unary-expression
+: "sizeof" unary-expression {
+  $$ = ast_make_sizeof_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("sizeof-expression", "\"sizeof\" unary-expression");
+  }
+}
 ;
 
 sizeof-type-expression
-: "sizeof" '(' type-name ')'
+: "sizeof" '(' type-name ')' {
+  $$ = ast_make_sizeof_type_expression($[type-name]);
+  if (!$$) {
+    AST_ERROR("sizeof-type-expression", "\"sizeof\" '(' type-name ')'");
+  }
+}
 ;
 
 cast-expression
