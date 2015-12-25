@@ -44,7 +44,7 @@ struct AstStructOrUnionSpecifier {
 
 struct AstStructOrUnionDefinition {
   AstRef struct_or_union;
-  AstRef identifier;
+  AstNullableRef identifier;
   AstRef struct_declaration_list;
 };
 
@@ -345,7 +345,7 @@ AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier) {
 }
 
 AstRef ast_make_struct_or_union_definition(
-    AstRef struct_or_union, AstRef identifier, AstRef struct_declaration_list) {
+    AstRef struct_or_union, AstNullableRef identifier, AstRef struct_declaration_list) {
   AstRef self = NULL;
   if (ast_is_struct_or_union(struct_or_union) &&
       (identifier == NULL ||
@@ -459,16 +459,17 @@ AstRef ast_make_specifier_qualifier(AstRef specifier_qualifier) {
   return self;
 }
 
-AstRef ast_make_struct_declarator_list(
+AstRef ast_make_struct_declarator_list(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstStructDeclaratorListRef data = ast_palloc(struct AstStructDeclaratorList);
+  data->struct_declarator_vector = ast_make_vector();
+  self->tag = AST_STRUCT_DECLARATOR_LIST;
+  self->data.struct_declarator_list = data;
+  return self;
+}
+AstRef ast_push_struct_declarator_list(
     AstRef struct_declarator_list, AstRef struct_declarator) {
   AstRef self = NULL;
-  if (struct_declarator_list == NULL) {
-    AstStructDeclaratorListRef data = ast_palloc(struct AstStructDeclaratorList);
-    data->struct_declarator_vector = ast_make_vector();
-    struct_declarator_list = ast_palloc(struct Ast);
-    struct_declarator_list->tag = AST_STRUCT_DECLARATOR_LIST;
-    struct_declarator_list->data.struct_declarator_list = data;
-  }
   if (ast_is_struct_declarator_list(struct_declarator_list) &&
       ast_is_struct_declarator(struct_declarator)) {
     AstStructDeclaratorListRef data = ast_get_struct_declarator_list(struct_declarator_list);
@@ -492,7 +493,7 @@ AstRef ast_make_struct_declarator(AstRef struct_declarator) {
 }
 
 AstRef ast_make_bit_field_declarator(
-    AstRef declarator, AstRef constant_expression) {
+    AstNullableRef declarator, AstRef constant_expression) {
   AstRef self = NULL;
   if ((declarator == NULL || ast_is_declarator(declarator)) &&
        ast_is_constant_expression(constant_expression)) {
@@ -519,7 +520,7 @@ AstRef ast_make_enum_specifier(AstRef enum_specifier) {
   return self;
 }
 
-AstRef ast_make_enum_definition(AstRef identifier, AstRef enumerator_list) {
+AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_list) {
   AstRef self = NULL;
   if ((identifier == NULL || ast_is_identifier(identifier)) &&
       ast_is_enumerator_list(enumerator_list)) {
