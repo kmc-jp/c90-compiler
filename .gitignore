@@ -33,7 +33,6 @@
 
 kmc89
 *.yy.c
-*.yy.h
 *.tab.c
 *.tab.h
 *.d
