@@ -24,12 +24,13 @@ CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
 IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
 DIGIT2 "0b"("0"|1[01]*)
 DIGIT4 "0q"("0"|[1-3][0-3]*)
-DIGIT8 "0"("0"|[1-7][0-7]*)
-DIGIT10 "0"|[1-9][0-9]*
-DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
+DIGIT8 "0"[0-7]*
+DIGIT10 [1-9][0-9]*
+DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
 CHAR8 "\\"[0-7]+
 CHAR16 "\\x"[0-9A-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
+INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 WHITESPACE [ \t\n]
 %x COMMENT
 %x STRING
@@ -59,12 +60,12 @@ WHITESPACE [ \t\n]
 
 WHITESPACE ;
 
-[+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
+[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   yylval = ast_make_token(yytext, yyleng);
   return FLOATING_CONSTANT;
 }
 
-[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
+({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})({INTEGER_SUFFIX})? {
   yylval = ast_make_token(yytext, yyleng);
   return INTEGER_CONSTANT;
 }
