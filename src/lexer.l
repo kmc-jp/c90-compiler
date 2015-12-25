@@ -11,11 +11,6 @@ int yywrap(void) {
   return 1;
 }
 
-void copy_to_yylval(const char *src, const size_t length) {
-  AstRef astRef = ast_make_token(src, length);
-  yylval = astRef;
-}
-
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
@@ -50,7 +45,7 @@ WHITESPACE [ \t\n]
 <STRING>"\"" {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
   char *str = VECTORFUNC(char, data)(lexer_string_literal);
-  copy_to_yylval(str, len);
+  yylval = ast_make_token(str, len);
   VECTORFUNC(char, clear)(lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
@@ -66,12 +61,12 @@ WHITESPACE [ \t\n]
 WHITESPACE ;
 
 [+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return FLOATING_CONSTANT;
 }
 
 [+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return INTEGER_CONSTANT;
 }
 
@@ -137,12 +132,12 @@ WHITESPACE ;
 "while"    return WHILE;
 
 {IDENTIFIER} {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return IDENTIFIER;
 }
 
 "'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return CHARACTER_CONSTANT;
 }
 
