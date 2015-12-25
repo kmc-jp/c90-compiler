@@ -109,17 +109,72 @@ argument-expression-list
 ;
 
 unary-expression
-: postfix-expression
-| prefix-increment-expression
-| prefix-decrement-expression
-| address-of-expression
-| pointer-dereference-expression
-| unary-plus-expression
-| unary-minus-expression
-| bitwise-NOT-expression
-| logical-NOT-expression
-| sizeof-expression
-| sizeof-type-expression
+: postfix-expression {
+  $$ = ast_make_unary_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "postfix-expression");
+  }
+}
+| prefix-increment-expression {
+  $$ = ast_make_unary_expression($[prefix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-increment-expression");
+  }
+}
+| prefix-decrement-expression {
+  $$ = ast_make_unary_expression($[prefix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-decrement-expression");
+  }
+}
+| address-of-expression {
+  $$ = ast_make_unary_expression($[address-of-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "address-of-expression");
+  }
+}
+| pointer-dereference-expression {
+  $$ = ast_make_unary_expression($[pointer-dereference-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "pointer-dereference-expression");
+  }
+}
+| unary-plus-expression {
+  $$ = ast_make_unary_expression($[unary-plus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-plus-expression");
+  }
+}
+| unary-minus-expression {
+  $$ = ast_make_unary_expression($[unary-minus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-minus-expression");
+  }
+}
+| bitwise-NOT-expression {
+  $$ = ast_make_unary_expression($[bitwise-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "bitwise-NOT-expression");
+  }
+}
+| logical-NOT-expression {
+  $$ = ast_make_unary_expression($[logical-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "logical-NOT-expression");
+  }
+}
+| sizeof-expression {
+  $$ = ast_make_unary_expression($[sizeof-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-expression");
+  }
+}
+| sizeof-type-expression {
+  $$ = ast_make_unary_expression($[sizeof-type-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-type-expression");
+  }
+}
 ;
 
 prefix-increment-expression
