@@ -77,19 +77,27 @@ enum AstTag {
   AST_COMMA_EXPRESSION,
   AST_CONSTANT_EXPRESSION,
   AST_DECLARATION,
-  AST_DECLARATION_SPECIFIERS,
+  AST_DECLARATION_SPECIFIER_LIST,
+  AST_DECLARATION_SPECIFIER,
   AST_INIT_DECLARATOR_LIST,
   AST_INIT_DECLARATOR,
+  AST_DECLARATOR_WITH_INITIALIZER,
   AST_STORAGE_CLASS_SPECIFIER,
   AST_TYPE_SPECIFIER,
   AST_STRUCT_OR_UNION_SPECIFIER,
+  AST_STRUCT_OR_UNION_DEFINITION,
+  AST_STRUCT_OR_UNION_DECLARATION,
   AST_STRUCT_OR_UNION,
   AST_STRUCT_DECLARATION_LIST,
   AST_STRUCT_DECLARATION,
   AST_SPECIFIER_QUALIFIER_LIST,
+  AST_SPECIFIER_QUALIFIER,
   AST_STRUCT_DECLARATOR_LIST,
   AST_STRUCT_DECLARATOR,
+  AST_BIT_FIELD_DECLARATOR,
   AST_ENUM_SPECIFIER,
+  AST_ENUM_DEFINITION,
+  AST_ENUM_DECLARATION,
   AST_ENUMERATOR_LIST,
   AST_ENUMERATOR,
   AST_TYPE_QUALIFIER,
@@ -209,19 +217,27 @@ typedef struct AstExpression* AstExpressionRef;
 typedef struct AstCommaExpression* AstCommaExpressionRef;
 typedef struct AstConstantExpression* AstConstantExpressionRef;
 typedef struct AstDeclaration* AstDeclarationRef;
-typedef struct AstDeclarationSpecifiers* AstDeclarationSpecifiersRef;
+typedef struct AstDeclarationSpecifierList* AstDeclarationSpecifierListRef;
+typedef struct AstDeclarationSpecifier* AstDeclarationSpecifierRef;
 typedef struct AstInitDeclaratorList* AstInitDeclaratorListRef;
 typedef struct AstInitDeclarator* AstInitDeclaratorRef;
+typedef struct AstDeclaratorWithInitializer* AstDeclaratorWithInitializerRef;
 typedef struct AstStorageClassSpecifier* AstStorageClassSpecifierRef;
 typedef struct AstTypeSpecifier* AstTypeSpecifierRef;
 typedef struct AstStructOrUnionSpecifier* AstStructOrUnionSpecifierRef;
+typedef struct AstStructOrUnionDefinition* AstStructOrUnionDefinitionRef;
+typedef struct AstStructOrUnionDeclaration* AstStructOrUnionDeclarationRef;
 typedef struct AstStructOrUnion* AstStructOrUnionRef;
 typedef struct AstStructDeclarationList* AstStructDeclarationListRef;
 typedef struct AstStructDeclaration* AstStructDeclarationRef;
 typedef struct AstSpecifierQualifierList* AstSpecifierQualifierListRef;
+typedef struct AstSpecifierQualifier* AstSpecifierQualifierRef;
 typedef struct AstStructDeclaratorList* AstStructDeclaratorListRef;
 typedef struct AstStructDeclarator* AstStructDeclaratorRef;
+typedef struct AstBitFieldDeclarator* AstBitFieldDeclaratorRef;
 typedef struct AstEnumSpecifier* AstEnumSpecifierRef;
+typedef struct AstEnumDefinition* AstEnumDefinitionRef;
+typedef struct AstEnumDeclaration* AstEnumDeclarationRef;
 typedef struct AstEnumeratorList* AstEnumeratorListRef;
 typedef struct AstEnumerator* AstEnumeratorRef;
 typedef struct AstTypeQualifier* AstTypeQualifierRef;
