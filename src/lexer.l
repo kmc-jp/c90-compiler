@@ -6,6 +6,7 @@
 #include "ast/ast_string.h"
 #include "parser.tab.h"
 #include "ast_method.h"
+#include <stdlib.h>
 
 int yywrap(void) {
   return 1;
