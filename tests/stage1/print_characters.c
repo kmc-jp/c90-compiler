@@ -2,9 +2,8 @@ void print_num(int);
 void print(const char *);
 
 void print_chars(void) {
-  char array[3];
-  array[1] = '\n';
-  array[2] = '\0';
+  char array[] = "@\n";
+  print(array);
   
   array[0] = L'a';
   print(array);
@@ -27,7 +26,7 @@ void print_chars(void) {
   print(array);
 
   array[0] = 'ab';    /* implementation defined */
-  array[0] = 'a\n\\'; /* implementation defined */
+  array[0] = '\\a'; /* implementation defined */
 }
 
 int main(void) {
