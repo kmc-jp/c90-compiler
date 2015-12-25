@@ -15,7 +15,7 @@ struct AstExternalDeclaration {
 struct AstFunctionDefinition {
   AstNullableRef declaration_specifiers;
   AstRef declarator;
-  AstNullableRef declaration_list;
+  AstRef declaration_list;
   AstRef compound_statement;
 };
 
@@ -55,12 +55,12 @@ AstRef ast_make_external_declaration(AstRef external_declaration) {
 
 AstRef ast_make_function_definition(
     AstNullableRef declaration_specifiers, AstRef declarator,
-    AstNullableRef declaration_list, AstRef compound_statement) {
+    AstRef declaration_list, AstRef compound_statement) {
   AstRef self = NULL;
   if ((declaration_specifiers == NULL ||
         ast_is_declaration_specifiers(declaration_specifiers)) &&
       ast_is_declarator(declarator) &&
-      (declaration_list == NULL || ast_is_declaration_list(declaration_list)) &&
+      ast_is_declaration_list(declaration_list) &&
       ast_is_compound_statement(compound_statement)) {
     AstFunctionDefinitionRef data = ast_palloc(struct AstFunctionDefinition);
     data->declaration_specifiers = declaration_specifiers;
