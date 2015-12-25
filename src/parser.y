@@ -6,8 +6,8 @@ void yyerror(const char *);
 
 %code provides {
 int yylex(void);
-void yyin_from_file(const char *filename);
-void yyin_from_string(const char *code);
+void set_yyin_file(const char *filename);
+void set_yyin_string(const char *code);
 }
 
 %code requires {
@@ -786,7 +786,7 @@ void yyerror(const char* s) {
 
 extern FILE *yyin;
 
-void yyin_from_file(const char *filename) {
+void set_yyin_file(const char *filename) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
     printf("fatal error: failed to open %s\n", filename);
@@ -795,6 +795,6 @@ void yyin_from_file(const char *filename) {
   yyin = fp;
 }
 
-void yyin_from_string(const char *code) {
+void set_yyin_string(const char *code) {
   yy_scan_string(code);
 }
