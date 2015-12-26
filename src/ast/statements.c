@@ -27,6 +27,8 @@ struct AstDefaultLabeledStatement {
 };
 
 struct AstCompoundStatement {
+  AstRef declaration_list;
+  AstRef statement_list;
 };
 
 struct AstDeclarationList {
@@ -115,6 +117,21 @@ AstRef ast_make_default_labeled_statement(AstRef statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_DEFAULT_LABELED_STATEMENT;
     self->data.default_labeled_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_compound_statement(
+    AstRef declaration_list, AstRef statement_list) {
+  AstRef self = NULL;
+  if (ast_is_declaration_list(declaration_list) &&
+      ast_is_statement_list(statement_list)) {
+    AstCompoundStatementRef data = ast_palloc(struct AstCompoundStatement);
+    data->declaration_list = declaration_list;
+    data->statement_list = statement_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_COMPOUND_STATEMENT;
+    self->data.compound_statement = data;
   }
   return self;
 }
