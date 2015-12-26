@@ -78,6 +78,10 @@ struct AstDoWhileStatement {
 };
 
 struct AstForStatement {
+  AstRef expression_1;
+  AstRef expression_2;
+  AstRef expression_3;
+  AstRef statement;
 };
 
 struct AstJumpStatement {
@@ -315,6 +319,26 @@ AstRef ast_make_do_while_statement(AstRef statement, AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_DO_WHILE_STATEMENT;
     self->data.do_while_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_for_statement(
+    AstRef expression_1, AstRef expression_2, AstRef expression_3,
+    AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression_1) &&
+      ast_is_expression(expression_2) &&
+      ast_is_expression(expression_3) &&
+      ast_is_statement(statement)) {
+    AstForStatementRef data = ast_palloc(struct AstForStatement);
+    data->expression_1 = expression_1;
+    data->expression_2 = expression_2;
+    data->expression_3 = expression_3;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_FOR_STATEMENT;
+    self->data.for_statement = data;
   }
   return self;
 }
