@@ -19,18 +19,18 @@ void initialize_lexer(void) {
   ast_initialize_pool();
 }
 %}
-ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
-NOT_ESCAPE_SEQUENCE [^\\]
-CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
+SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
+OCT_ESCAPE_SEQUENCE "\\"[0-7]{1,3}
+HEX_ESCAPE_SEQUANCE "\\x"[0-9a-fA-F]+
+ESCAPE_SEQUENCE {SIMPLE_ESCAPE_SEQUENCE}|{OCT_ESCAPE_SEQUENCE}|{HEX_ESCAPE_SEQUANCE}
+C_CHAR ([^\'\\\n]|{ESCAPE_SEQUENCE})
+S_CHAR ([^\"\\\n]|{ESCAPE_SEQUENCE})
 IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
-DIGIT2 "0b"("0"|1[01]*)
-DIGIT4 "0q"("0"|[1-3][0-3]*)
-DIGIT8 "0"("0"|[1-7][0-7]*)
-DIGIT10 "0"|[1-9][0-9]*
-DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
-CHAR8 "\\"[0-7]+
-CHAR16 "\\x"[0-9A-F]+
+DIGIT8 "0"[0-7]*
+DIGIT10 [1-9][0-9]*
+DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
+INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 WHITESPACE [ \t\n]
 %x COMMENT
 %x STRING
@@ -40,7 +40,7 @@ WHITESPACE [ \t\n]
 <COMMENT>"*/" BEGIN(INITIAL);
 <COMMENT>.    ;
 
-"\"" BEGIN(STRING);
+("L"?)"\"" BEGIN(STRING);
 
 <STRING>"\"" {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
@@ -51,21 +51,26 @@ WHITESPACE [ \t\n]
   return STRING_LITERAL;
 }
 
-<STRING>{CHARACTER} {
+<STRING>{S_CHAR} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
     VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
   }
 }
 
+("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
+  yylval = ast_make_token(yytext, yyleng);
+  return CHARACTER_CONSTANT;
+}
+
 WHITESPACE ;
 
-[+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
+[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   yylval = ast_make_token(yytext, yyleng);
   return FLOATING_CONSTANT;
 }
 
-[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
+({DIGIT8}|{DIGIT10}|{DIGIT16})({INTEGER_SUFFIX})? {
   yylval = ast_make_token(yytext, yyleng);
   return INTEGER_CONSTANT;
 }
@@ -134,11 +139,6 @@ WHITESPACE ;
 {IDENTIFIER} {
   yylval = ast_make_token(yytext, yyleng);
   return IDENTIFIER;
-}
-
-"'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
-  yylval = ast_make_token(yytext, yyleng);
-  return CHARACTER_CONSTANT;
 }
 
 . {
