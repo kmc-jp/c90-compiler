@@ -101,6 +101,7 @@ AstEnumDefinitionRef ast_get_enum_definition(AstRef ast);
 AstEnumDeclarationRef ast_get_enum_declaration(AstRef ast);
 AstEnumeratorListRef ast_get_enumerator_list(AstRef ast);
 AstEnumeratorRef ast_get_enumerator(AstRef ast);
+AstEnumeratorWithInitializerRef ast_get_enumerator_with_initializer(AstRef ast);
 AstTypeQualifierRef ast_get_type_qualifier(AstRef ast);
 AstDeclaratorRef ast_get_declarator(AstRef ast);
 AstDirectDeclaratorRef ast_get_direct_declarator(AstRef ast);

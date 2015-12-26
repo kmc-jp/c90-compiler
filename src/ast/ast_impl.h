@@ -106,6 +106,7 @@ struct Ast {
     AstEnumDeclarationRef enum_declaration;
     AstEnumeratorListRef enumerator_list;
     AstEnumeratorRef enumerator;
+    AstEnumeratorWithInitializerRef enumerator_with_initializer;
     AstTypeQualifierRef type_qualifier;
     AstDeclaratorRef declarator;
     AstDirectDeclaratorRef direct_declarator;
