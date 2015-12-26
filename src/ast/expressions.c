@@ -247,6 +247,8 @@ struct AstBasicAssignmentExpression {
 };
 
 struct AstMultiplicationAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstDivisionAssignmentExpression {
@@ -1087,6 +1089,22 @@ AstRef ast_make_basic_assignment_expression(AstRef unary, AstRef assignment) {
     self = ast_palloc(struct Ast);
     self->tag = AST_BASIC_ASSIGNMENT_EXPRESSION;
     self->data.basic_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_multiplication_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstMultiplicationAssignmentExpressionRef data =
+        ast_palloc(struct AstMultiplicationAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MULTIPLICATION_ASSIGNMENT_EXPRESSION;
+    self->data.multiplication_assignment_expression = data;
   }
   return self;
 }
