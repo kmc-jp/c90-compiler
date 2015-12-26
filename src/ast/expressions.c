@@ -154,6 +154,8 @@ struct AstLessThanExpression {
 };
 
 struct AstGreaterThanExpression {
+  AstRef relational;
+  AstRef shift;
 };
 
 struct AstLessThanOrEqualToExpression {
@@ -744,6 +746,21 @@ AstRef ast_make_less_than_expression(AstRef relational, AstRef shift) {
     self = ast_palloc(struct Ast);
     self->tag = AST_LESS_THAN_EXPRESSION;
     self->data.less_than_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_greater_than_expression(AstRef relational, AstRef shift) {
+  AstRef self = NULL;
+  if (ast_is_relational_expression(relational) &&
+      ast_is_shift_expression(shift)) {
+    AstGreaterThanExpressionRef data =
+        ast_palloc(struct AstGreaterThanExpression);
+    data->relational = relational;
+    data->shift = shift;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_GREATER_THAN_EXPRESSION;
+    self->data.greater_than_expression = data;
   }
   return self;
 }
