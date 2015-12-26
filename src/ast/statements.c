@@ -40,6 +40,7 @@ struct AstStatementList {
 };
 
 struct AstExpressionStatement {
+  AstNullableRef expression;
 };
 
 struct AstSelectionStatement {
@@ -174,6 +175,18 @@ AstRef ast_push_statement_list(AstRef statement_list, AstRef statement) {
     AstStatementListRef data = ast_get_statement_list(statement_list);
     ast_push_vector(data->statement_vector, statement);
     self = statement_list;
+  }
+  return self;
+}
+
+AstRef ast_make_expression_statement(AstNullableRef expression) {
+  AstRef self = NULL;
+  if (expression == NULL || ast_is_expression(expression)) {
+    AstExpressionStatementRef data = ast_palloc(struct AstExpressionStatement);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EXPRESSION_STATEMENT;
+    self->data.expression_statement = data;
   }
   return self;
 }
