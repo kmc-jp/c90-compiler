@@ -78,9 +78,9 @@ struct AstDoWhileStatement {
 };
 
 struct AstForStatement {
-  AstRef expression_1;
-  AstRef expression_2;
-  AstRef expression_3;
+  AstNullableRef expression_1;
+  AstNullableRef expression_2;
+  AstNullableRef expression_3;
   AstRef statement;
 };
 
@@ -324,12 +324,12 @@ AstRef ast_make_do_while_statement(AstRef statement, AstRef expression) {
 }
 
 AstRef ast_make_for_statement(
-    AstRef expression_1, AstRef expression_2, AstRef expression_3,
-    AstRef statement) {
+    AstNullableRef expression_1, AstNullableRef expression_2,
+    AstNullableRef expression_3, AstRef statement) {
   AstRef self = NULL;
-  if (ast_is_expression(expression_1) &&
-      ast_is_expression(expression_2) &&
-      ast_is_expression(expression_3) &&
+  if ((expression_1 == NULL || ast_is_expression(expression_1)) &&
+      (expression_2 == NULL || ast_is_expression(expression_2)) &&
+      (expression_3 == NULL || ast_is_expression(expression_3)) &&
       ast_is_statement(statement)) {
     AstForStatementRef data = ast_palloc(struct AstForStatement);
     data->expression_1 = expression_1;
