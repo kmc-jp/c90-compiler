@@ -89,21 +89,31 @@ struct AstSizeofTypeExpression {
 };
 
 struct AstCastExpression {
+  AstRef cast;
 };
 
 struct AstTypeCastExpression {
+  AstRef type_name;
+  AstRef expression;
 };
 
 struct AstMultiplicativeExpression {
+  AstRef expression;
 };
 
 struct AstProductExpression {
+  AstRef multiplicative;
+  AstRef cast;
 };
 
 struct AstDivisionExpression {
+  AstRef multiplicative;
+  AstRef cast;
 };
 
 struct AstModuloExpression {
+  AstRef multiplicative;
+  AstRef cast;
 };
 
 struct AstAdditiveExpression {
@@ -524,6 +534,91 @@ AstRef ast_make_sizeof_type_expression(AstRef type_name) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SIZEOF_TYPE_EXPRESSION;
     self->data.sizeof_type_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_cast_expression(AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(cast) ||
+      ast_is_type_cast_expression(cast)) {
+    AstCastExpressionRef data = ast_palloc(struct AstCastExpression);
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CAST_EXPRESSION;
+    self->data.cast_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_cast_expression(AstRef type_name, AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_type_name(type_name) &&
+      ast_is_cast_expression(expression)) {
+    AstTypeCastExpressionRef data = ast_palloc(struct AstTypeCastExpression);
+    data->type_name = type_name;
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_CAST_EXPRESSION;
+    self->data.type_cast_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_multiplicative_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_cast_expression(expression) ||
+      ast_is_product_expression(expression) ||
+      ast_is_division_expression(expression) ||
+      ast_is_modulo_expression(expression)) {
+    AstMultiplicativeExpressionRef data =
+        ast_palloc(struct AstMultiplicativeExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MULTIPLICATIVE_EXPRESSION;
+    self->data.multiplicative_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_product_expression(AstRef multiplicative, AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(multiplicative) &&
+      ast_is_cast_expression(cast)) {
+    AstProductExpressionRef data = ast_palloc(struct AstProductExpression);
+    data->multiplicative = multiplicative;
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_PRODUCT_EXPRESSION;
+    self->data.product_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_division_expression(AstRef multiplicative, AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(multiplicative) &&
+      ast_is_cast_expression(cast)) {
+    AstDivisionExpressionRef data = ast_palloc(struct AstDivisionExpression);
+    data->multiplicative = multiplicative;
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DIVISION_EXPRESSION;
+    self->data.division_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_modulo_expression(AstRef multiplicative, AstRef cast) {
+  AstRef self = NULL;
+  if (ast_is_multiplicative_expression(multiplicative) &&
+      ast_is_cast_expression(cast)) {
+    AstModuloExpressionRef data = ast_palloc(struct AstModuloExpression);
+    data->multiplicative = multiplicative;
+    data->cast = cast;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MODULO_EXPRESSION;
+    self->data.modulo_expression = data;
   }
   return self;
 }
