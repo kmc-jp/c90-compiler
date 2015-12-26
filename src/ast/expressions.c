@@ -173,6 +173,8 @@ struct AstEqualityExpression {
 };
 
 struct AstEqualToExpression {
+  AstRef equality;
+  AstRef relational;
 };
 
 struct AstNotEqualToExpression {
@@ -813,6 +815,20 @@ AstRef ast_make_equality_expression(AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_EQUALITY_EXPRESSION;
     self->data.equality_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_equal_to_expression(AstRef equality, AstRef relational) {
+  AstRef self = NULL;
+  if (ast_is_equality_expression(equality) &&
+      ast_is_relational_expression(relational)) {
+    AstEqualToExpressionRef data = ast_palloc(struct AstEqualToExpression);
+    data->equality = equality;
+    data->relational = relational;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EQUAL_TO_EXPRESSION;
+    self->data.equal_to_expression = data;
   }
   return self;
 }
