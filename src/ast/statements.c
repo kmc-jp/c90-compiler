@@ -64,6 +64,7 @@ struct AstSwitchStatement {
 };
 
 struct AstIterationStatement {
+  AstRef iteration_statement;
 };
 
 struct AstWhileStatement {
@@ -270,6 +271,20 @@ AstRef ast_make_switch_statement(AstRef expression, AstRef statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SWITCH_STATEMENT;
     self->data.switch_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_iteration_statement(AstRef iteration_statement) {
+  AstRef self = NULL;
+  if (ast_is_while_statement(iteration_statement) ||
+      ast_is_do_while_statement(iteration_statement) ||
+      ast_is_for_statement(iteration_statement)) {
+    AstIterationStatementRef data = ast_palloc(struct AstIterationStatement);
+    data->iteration_statement = iteration_statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ITERATION_STATEMENT;
+    self->data.iteration_statement = data;
   }
   return self;
 }
