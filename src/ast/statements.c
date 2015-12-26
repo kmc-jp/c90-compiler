@@ -66,6 +66,15 @@ struct AstSwitchStatement {
 struct AstIterationStatement {
 };
 
+struct AstWhileStatement {
+};
+
+struct AstDoWhileStatement {
+};
+
+struct AstForStatement {
+};
+
 struct AstJumpStatement {
 };
 
