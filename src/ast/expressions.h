@@ -37,11 +37,13 @@ AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative);
 AstRef ast_make_shift_expression(AstRef expression);
 AstRef ast_make_left_shift_expression(AstRef shift, AstRef additive);
 AstRef ast_make_right_shift_expression(AstRef shift, AstRef additive);
-AstRef ast_make_relational_expression();
-AstRef ast_make_less_than_expression();
-AstRef ast_make_greater_than_expression();
-AstRef ast_make_less_than_or_equal_to_expression();
-AstRef ast_make_greater_than_or_equal_to_expression();
+AstRef ast_make_relational_expression(AstRef expression);
+AstRef ast_make_less_than_expression(AstRef relational, AstRef shift);
+AstRef ast_make_greater_than_expression(AstRef relational, AstRef shift);
+AstRef ast_make_less_than_or_equal_to_expression(
+    AstRef relational, AstRef shift);
+AstRef ast_make_greater_than_or_equal_to_expression(
+    AstRef relational, AstRef shift);
 AstRef ast_make_equality_expression();
 AstRef ast_make_equal_to_expression();
 AstRef ast_make_not_equal_to_expression();
