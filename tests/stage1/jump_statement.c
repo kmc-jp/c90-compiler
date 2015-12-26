@@ -70,6 +70,17 @@ first_time:
       break;
     }
   }
+
+  for (i = 1; i < 100; ++i)
+    for (j = 1; j < 100; ++j)
+      for (count = 1; count < 100; ++count)
+        if (i * i + j * j == count * count) do {
+          put_num(i);
+          put_num(j);
+          put_num(count);
+          goto end_of_3_nested_for;
+        } while (0);
+end_of_3_nested_for:
   
   return 0;
 }
