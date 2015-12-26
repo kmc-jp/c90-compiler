@@ -59,7 +59,7 @@ AstRef ast_make_bitwise_or_operator_expression(
 AstRef ast_make_logical_and_expression(AstRef expression);
 AstRef ast_make_logical_and_operator_expression(
     AstRef logical_and, AstRef bitwise_or);
-AstRef ast_make_logical_or_expression();
+AstRef ast_make_logical_or_expression(AstRef expression);
 AstRef ast_make_logical_or_operator_expression();
 AstRef ast_make_conditional_expression();
 AstRef ast_make_conditional_operator_expression();

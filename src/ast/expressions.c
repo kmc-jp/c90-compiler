@@ -219,6 +219,7 @@ struct AstLogicalAndOperatorExpression {
 };
 
 struct AstLogicalOrExpression {
+  AstRef expression;
 };
 
 struct AstLogicalOrOperatorExpression {
@@ -977,6 +978,19 @@ AstRef ast_make_logical_and_operator_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_LOGICAL_AND_OPERATOR_EXPRESSION;
     self->data.logical_and_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_logical_or_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_logical_and_expression(expression) ||
+      ast_is_logical_or_operator_expression(expression)) {
+    AstLogicalOrExpressionRef data = ast_palloc(struct AstLogicalOrExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LOGICAL_OR_EXPRESSION;
+    self->data.logical_or_expression = data;
   }
   return self;
 }
