@@ -183,21 +183,30 @@ struct AstNotEqualToExpression {
 };
 
 struct AstBitwiseAndExpression {
+  AstRef expression;
 };
 
 struct AstBitwiseAndOperatorExpression {
+  AstRef bitwise_and;
+  AstRef equality;
 };
 
 struct AstBitwiseXorExpression {
+  AstRef expression;
 };
 
 struct AstBitwiseXorOperatorExpression {
+  AstRef bitwise_xor;
+  AstRef bitwise_and;
 };
 
 struct AstBitwiseOrExpression {
+  AstRef expression;
 };
 
 struct AstBitwiseOrOperatorExpression {
+  AstRef bitwise_or;
+  AstRef bitwise_xor;
 };
 
 struct AstLogicalAndExpression {
@@ -846,6 +855,95 @@ AstRef ast_make_not_equal_to_expression(AstRef equality, AstRef relational) {
     self = ast_palloc(struct Ast);
     self->tag = AST_NOT_EQUAL_TO_EXPRESSION;
     self->data.not_equal_to_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_and_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_equality_expression(expression) ||
+      ast_is_bitwise_and_operator_expression(expression)) {
+    AstBitwiseAndExpressionRef data =
+        ast_palloc(struct AstBitwiseAndExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_AND_EXPRESSION;
+    self->data.bitwise_and_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_and_operator_expression(
+    AstRef bitwise_and, AstRef equality) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_and_expression(bitwise_and) &&
+      ast_is_equality_expression(equality)) {
+    AstBitwiseAndOperatorExpressionRef data =
+        ast_palloc(struct AstBitwiseAndOperatorExpression);
+    data->bitwise_and = bitwise_and;
+    data->equality = equality;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_AND_OPERATOR_EXPRESSION;
+    self->data.bitwise_and_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_xor_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_and_expression(expression) ||
+      ast_is_bitwise_xor_operator_expression(expression)) {
+    AstBitwiseXorExpressionRef data =
+        ast_palloc(struct AstBitwiseXorExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_XOR_EXPRESSION;
+    self->data.bitwise_xor_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_xor_operator_expression(
+    AstRef bitwise_xor, AstRef bitwise_and) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_xor_expression(bitwise_xor) &&
+      ast_is_bitwise_and_expression(bitwise_and)) {
+    AstBitwiseXorOperatorExpressionRef data =
+        ast_palloc(struct AstBitwiseXorOperatorExpression);
+    data->bitwise_xor = bitwise_xor;
+    data->bitwise_and = bitwise_and;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_XOR_OPERATOR_EXPRESSION;
+    self->data.bitwise_xor_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_or_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_xor_expression(expression) ||
+      ast_is_bitwise_or_operator_expression(expression)) {
+    AstBitwiseOrExpressionRef data = ast_palloc(struct AstBitwiseOrExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_OR_EXPRESSION;
+    self->data.bitwise_or_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_or_operator_expression(
+    AstRef bitwise_or, AstRef bitwise_xor) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_or_expression(bitwise_or) &&
+      ast_is_bitwise_xor_expression(bitwise_xor)) {
+    AstBitwiseOrOperatorExpressionRef data =
+        ast_palloc(struct AstBitwiseOrOperatorExpression);
+    data->bitwise_or = bitwise_or;
+    data->bitwise_xor = bitwise_xor;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_OR_OPERATOR_EXPRESSION;
+    self->data.bitwise_or_operator_expression = data;
   }
   return self;
 }
