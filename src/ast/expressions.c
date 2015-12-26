@@ -267,6 +267,8 @@ struct AstAdditionAssignmentExpression {
 };
 
 struct AstSubtractionAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstLeftShiftAssignmentExpression {
@@ -1158,6 +1160,22 @@ AstRef ast_make_addition_assignment_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_ADDITION_ASSIGNMENT_EXPRESSION;
     self->data.addition_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_subtraction_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstSubtractionAssignmentExpressionRef data =
+        ast_palloc(struct AstSubtractionAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SUBTRACTION_ASSIGNMENT_EXPRESSION;
+    self->data.subtraction_assignment_expression = data;
   }
   return self;
 }
