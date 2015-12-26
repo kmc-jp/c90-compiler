@@ -732,7 +732,7 @@ typedef-name
 
 initializer
 : assignment-expression
-| '{' initializer '}'
+| '{' initializer-list '}'
 | '{' initializer-list ',' '}'
 ;
 
