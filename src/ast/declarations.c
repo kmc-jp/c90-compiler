@@ -212,9 +212,11 @@ struct AstTypedefName {
 };
 
 struct AstInitializer {
+  AstRef initializer;
 };
 
 struct AstInitializerList {
+  AstVectorRef initializer_vector;
 };
 
 AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_declarator_list) {
@@ -934,6 +936,39 @@ AstRef ast_make_function_abstract_declarator(
     self = ast_palloc(struct Ast);
     self->tag = AST_FUNCTION_ABSTRACT_DECLARATOR;
     self->data.function_abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_initializer(AstRef initializer) {
+  AstRef self = NULL;
+  if (ast_is_assignment_expression(initializer) ||
+      ast_is_initializer_list(initializer)) {
+    AstInitializerRef data = ast_palloc(struct AstInitializer);
+    data->initializer = initializer;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_INITIALIZER;
+    self->data.initializer = data;
+  }
+  return self;
+}
+
+AstRef ast_make_initializer_list(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstInitializerListRef data = ast_palloc(struct AstInitializerList);
+  data->initializer_vector = ast_make_vector();
+  self->tag = AST_INITIALIZER_LIST;
+  self->data.initializer_list = data;
+  return self;
+}
+
+AstRef ast_push_initializer_list(AstRef initializer_list, AstRef initializer) {
+  AstRef self = NULL;
+  if (ast_is_initializer_list(initializer_list) &&
+      ast_is_initializer(initializer)) {
+    AstInitializerListRef data = ast_get_initializer_list(initializer_list);
+    ast_push_vector(data->initializer_vector, initializer);
+    self = initializer_list;
   }
   return self;
 }
