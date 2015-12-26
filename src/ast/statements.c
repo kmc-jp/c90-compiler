@@ -44,6 +44,7 @@ struct AstExpressionStatement {
 };
 
 struct AstSelectionStatement {
+  AstRef selection_statement;
 };
 
 struct AstIfStatement {
@@ -196,6 +197,20 @@ AstRef ast_make_expression_statement(AstNullableRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_EXPRESSION_STATEMENT;
     self->data.expression_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_selection_statement(AstRef selection_statement) {
+  AstRef self = NULL;
+  if (ast_is_if_statement(selection_statement) ||
+      ast_is_if_else_statement(selection_statement) ||
+      ast_is_switch_statement(selection_statement)) {
+    AstSelectionStatementRef data = ast_palloc(struct AstSelectionStatement);
+    data->selection_statement = selection_statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SELECTION_STATEMENT;
+    self->data.selection_statement = data;
   }
   return self;
 }
