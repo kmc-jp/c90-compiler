@@ -50,7 +50,7 @@ AstRef ast_make_not_equal_to_expression(AstRef equality, AstRef relational);
 AstRef ast_make_bitwise_and_expression(AstRef expression);
 AstRef ast_make_bitwise_and_operator_expression(
     AstRef bitwise_and, AstRef equality);
-AstRef ast_make_bitwise_xor_expression();
+AstRef ast_make_bitwise_xor_expression(AstRef expression);
 AstRef ast_make_bitwise_xor_operator_expression();
 AstRef ast_make_bitwise_or_expression();
 AstRef ast_make_bitwise_or_operator_expression();
