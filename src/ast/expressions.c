@@ -297,12 +297,16 @@ struct AstBitwiseOrAssignmentExpression {
 };
 
 struct AstExpression {
+  AstRef expression;
 };
 
 struct AstCommaExpression {
+  AstRef expression;
+  AstRef assignment;
 };
 
 struct AstConstantExpression {
+  AstRef conditional;
 };
 
 AstRef ast_make_primary_expression(AstRef primary_expression) {
@@ -1266,6 +1270,45 @@ AstRef ast_make_bitwise_or_assignment_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_BITWISE_OR_ASSIGNMENT_EXPRESSION;
     self->data.bitwise_or_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_assignment_expression(expression) ||
+      ast_is_comma_expression(expression)) {
+    AstExpressionRef data = ast_palloc(struct AstExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EXPRESSION;
+    self->data.expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_comma_expression(AstRef expression, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression) &&
+      ast_is_assignment_expression(expression)) {
+    AstCommaExpressionRef data = ast_palloc(struct AstCommaExpression);
+    data->expression = expression;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_COMMA_EXPRESSION;
+    self->data.comma_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_constant_expression(AstRef conditional) {
+  AstRef self = NULL;
+  if (ast_is_conditional_expression(conditional)) {
+    AstConstantExpressionRef data = ast_palloc(struct AstConstantExpression);
+    data->conditional = conditional;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CONSTANT_EXPRESSION;
+    self->data.constant_expression = data;
   }
   return self;
 }
