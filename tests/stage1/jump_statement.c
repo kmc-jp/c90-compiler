@@ -25,6 +25,13 @@ int collatz() {
   return -1;
 }
 
+void return_nothing() {
+  print(":)\n");
+  return;
+  print("X(\n");
+  return;
+}
+
 int main(void) {
   int i, j, count;
 
@@ -81,6 +88,8 @@ first_time:
           goto end_of_3_nested_for;
         } while (0);
 end_of_3_nested_for:
+
+  return_nothing();
   
   return 0;
 }
