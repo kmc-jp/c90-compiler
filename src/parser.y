@@ -654,9 +654,21 @@ statement
 ;
 
 labeled-statement
+: identifier-labeled-statement
+| case-labeled-statement
+| default-labeled-statement
+;
+
+identifier-labeled-statement
 : identifier ':' statement
-| "case" constant-expression ':' statement
-| "default" ':' statement
+;
+
+case-labeled-statement
+: "case" constant-expression ':' statement
+;
+
+default-labeled-statement
+: "default" ':' statement
 ;
 
 compound-statement

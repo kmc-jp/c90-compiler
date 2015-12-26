@@ -117,6 +117,9 @@ enum AstTag {
   AST_INITIALIZER_LIST,
   AST_STATEMENT,
   AST_LABELED_STATEMENT,
+  AST_IDENTIFIER_LABELED_STATEMENT,
+  AST_CASE_LABELED_STATEMENT,
+  AST_DEFAULT_LABELED_STATEMENT,
   AST_COMPOUND_STATEMENT,
   AST_DECLARATION_LIST,
   AST_STATEMENT_LIST,
@@ -251,6 +254,9 @@ typedef struct AstInitializer* AstInitializerRef;
 typedef struct AstInitializerList* AstInitializerListRef;
 typedef struct AstStatement* AstStatementRef;
 typedef struct AstLabeledStatement* AstLabeledStatementRef;
+typedef struct AstIdentifierLabeledStatement* AstIdentifierLabeledStatementRef;
+typedef struct AstCaseLabeledStatement* AstCaseLabeledStatementRef;
+typedef struct AstDefaultLabeledStatement* AstDefaultLabeledStatementRef;
 typedef struct AstCompoundStatement* AstCompoundStatementRef;
 typedef struct AstDeclarationList* AstDeclarationListRef;
 typedef struct AstStatementList* AstStatementListRef;
