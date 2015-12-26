@@ -59,6 +59,8 @@ struct AstIfElseStatement {
 };
 
 struct AstSwitchStatement {
+  AstRef expression;
+  AstRef statement;
 };
 
 struct AstIterationStatement {
@@ -246,6 +248,19 @@ AstRef ast_make_if_else_statement(
     self = ast_palloc(struct Ast);
     self->tag = AST_IF_ELSE_STATEMENT;
     self->data.if_else_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_switch_statement(AstRef expression, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression) && ast_is_statement(statement)) {
+    AstSwitchStatementRef data = ast_palloc(struct AstSwitchStatement);
+    data->expression = expression;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SWITCH_STATEMENT;
+    self->data.switch_statement = data;
   }
   return self;
 }
