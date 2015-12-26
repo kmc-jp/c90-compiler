@@ -69,7 +69,7 @@ AstRef ast_make_assignment_expression(AstRef expression);
 AstRef ast_make_basic_assignment_expression(AstRef unary, AstRef assignment);
 AstRef ast_make_multiplication_assignment_expression(
     AstRef unary, AstRef assignment);
-AstRef ast_make_division_assignment_expression();
+AstRef ast_make_division_assignment_expression(AstRef unary, AstRef assignment);
 AstRef ast_make_modulo_assignment_expression();
 AstRef ast_make_addition_assignment_expression();
 AstRef ast_make_subtraction_assignment_expression();
