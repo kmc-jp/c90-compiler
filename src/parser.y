@@ -700,15 +700,39 @@ expression-statement
 ;
 
 selection-statement
+: if-statement
+| if-else-statement
+| switch-statement
+;
+
+if-statement
 : "if" '(' expression ')' statement
-| "if" '(' expression ')' statement "else" statement
-| "switch" '(' expression ')' statement
+;
+
+if-else-statement
+: "if" '(' expression ')' statement "else" statement
+;
+
+switch-statement
+: "switch" '(' expression ')' statement
 ;
 
 iteration-statement
+: while-statement
+| do-while-statement
+| for-statement
+;
+
+while-statement
 : "while" '(' expression ')' statement
-| "do" statement "while" '(' expression ')' ';'
-| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+;
+
+do-while-statement
+: "do" statement "while" '(' expression ')' ';'
+;
+
+for-statement
+: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement
