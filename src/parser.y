@@ -1,6 +1,7 @@
 %code {
 #include <stdio.h>
 void yyerror(const char *);
+void AST_ERROR(const char *, const char *);
 }
 
 %code provides {
@@ -723,6 +724,10 @@ function-definition
 ;
 
 %%
+
+void AST_ERROR(const char* label, const char* rule) {
+  fprintf(stderr, "cannot parse `%s` as `%s`\n", label, rule);
+}
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
