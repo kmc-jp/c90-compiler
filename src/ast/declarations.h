@@ -32,7 +32,8 @@ AstRef ast_make_enum_definition(AstNullableRef identifier, AstRef enumerator_lis
 AstRef ast_make_enum_declaration(AstRef identifier);
 AstRef ast_make_enumerator_list(void);
 AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator);
-AstRef ast_make_enumerator(AstRef enumeration_constant, AstNullableRef constant_expression);
+AstRef ast_make_enumerator(AstRef enumerator);
+AstRef ast_make_enumerator_with_initializer(AstRef enumeration_constant, AstRef constant_expression);
 AstRef ast_make_type_qualifier();
 AstRef ast_make_declarator(AstNullableRef pointer, AstRef direct_declarator);
 AstRef ast_make_direct_declarator(AstRef direct_declarator);
@@ -51,10 +52,13 @@ AstRef ast_make_parameter_concrete_declaration(AstRef declaration_specifier_list
 AstRef ast_make_parameter_abstract_declaration(AstRef declaration_specifier_list, AstNullableRef abstract_declarator);
 AstRef ast_make_identifier_list(void);
 AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier);
-AstRef ast_make_type_name();
-AstRef ast_make_abstract_declarator();
-AstRef ast_make_direct_abstract_declarator();
-AstRef ast_make_typedef_name();
+AstRef ast_make_type_name(AstRef specifier_qualifier_list, AstNullableRef abstract_declarator);
+AstRef ast_make_abstract_declarator(AstRef abstract_declarator);
+AstRef ast_make_pointer_abstract_declarator(AstNullableRef pointer, AstRef direct_abstract_declarator);
+AstRef ast_make_direct_abstract_declarator(AstRef direct_abstract_declarator);
+AstRef ast_make_array_abstract_declarator(AstNullableRef direct_abstract_declarator, AstNullableRef constant_expression);
+AstRef ast_make_function_abstract_declarator(AstNullableRef direct_abstract_declarator, AstNullableRef parameter_type_list);
+AstRef ast_make_typedef_name(AstRef identifier);
 AstRef ast_make_initializer(AstRef initializer);
 AstRef ast_make_initializer_list(void);
 AstRef ast_push_initializer_list(AstRef initializer_list, AstRef initializer);

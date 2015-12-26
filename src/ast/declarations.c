@@ -105,8 +105,12 @@ struct AstEnumeratorList {
 };
 
 struct AstEnumerator {
+  AstRef enumerator;
+};
+
+struct AstEnumeratorWithInitializer {
   AstRef enumeration_constant;
-  AstNullableRef constant_expression;
+  AstRef constant_expression;
 };
 
 struct AstTypeQualifier {
@@ -176,15 +180,35 @@ struct AstIdentifierList {
 };
 
 struct AstTypeName {
+  AstRef specifier_qualifier_list;
+  AstNullableRef abstract_declarator;
 };
 
 struct AstAbstractDeclarator {
+  AstRef abstract_declarator;
+};
+
+struct AstPointerAbstractDeclarator {
+  AstNullableRef pointer;
+  AstRef direct_abstract_declarator;
 };
 
 struct AstDirectAbstractDeclarator {
+  AstRef direct_abstract_declarator;
+};
+
+struct AstArrayAbstractDeclarator {
+  AstNullableRef direct_abstract_declarator;
+  AstNullableRef constant_expression;
+};
+
+struct AstFunctionAbstractDeclarator {
+  AstNullableRef direct_abstract_declarator;
+  AstNullableRef parameter_type_list;
 };
 
 struct AstTypedefName {
+  AstRef identifier;
 };
 
 struct AstInitializer {
@@ -304,6 +328,19 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
   }
   return self;
 }
+
+AstRef ast_make_typedef_name(AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier)) {
+    AstTypedefNameRef data = ast_palloc(struct AstTypedefName);
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPEDEF_NAME;
+    self->data.typedef_name = data;
+  }
+  return self;
+}
+
 AstRef ast_make_type_specifier(AstRef type_specifier) {
   AstRef self = NULL;
   if (ast_is_token(type_specifier) ||
@@ -455,6 +492,7 @@ AstRef ast_make_struct_declarator_list(void) {
   self->data.struct_declarator_list = data;
   return self;
 }
+
 AstRef ast_push_struct_declarator_list(
     AstRef struct_declarator_list, AstRef struct_declarator) {
   AstRef self = NULL;
@@ -554,18 +592,30 @@ AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
   return self;
 }
 
-AstRef ast_make_enumerator(
-    AstRef enumeration_constant, AstRef constant_expression) {
+AstRef ast_make_enumerator(AstRef enumerator) {
   AstRef self = NULL;
-  if (ast_is_identifier(enumeration_constant) &&
-      (constant_expression == NULL ||
-       ast_is_constant_expression(constant_expression))) {
+  if (ast_is_enumeration_constant(enumerator) ||
+      ast_is_enumerator_with_initializer(enumerator)) {
     AstEnumeratorRef data = ast_palloc(struct AstEnumerator);
-    data->enumeration_constant = enumeration_constant;
-    data->constant_expression = constant_expression;
+    data->enumerator = enumerator;
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUMERATOR;
     self->data.enumerator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enumerator_with_initializer(
+    AstRef enumeration_constant, AstRef constant_expression) {
+  AstRef self = NULL;
+  if (ast_is_identifier(enumeration_constant) &&
+      ast_is_constant_expression(constant_expression)) {
+    AstEnumeratorWithInitializerRef data = ast_palloc(struct AstEnumeratorWithInitializer);
+    data->enumeration_constant = enumeration_constant;
+    data->constant_expression = constant_expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUMERATOR_WITH_INITIALIZER;
+    self->data.enumerator_with_initializer = data;
   }
   return self;
 }
@@ -797,6 +847,99 @@ AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier) {
   return self;
 }
 
+AstRef ast_make_type_name(
+    AstRef specifier_qualifier_list, AstNullableRef abstract_declarator) {
+  AstRef self = NULL;
+  if (ast_is_specifier_qualifier_list(specifier_qualifier_list) &&
+      (abstract_declarator == NULL ||
+       ast_is_abstract_declarator(abstract_declarator))) {
+    AstTypeNameRef data = ast_palloc(struct AstTypeName);
+    data->specifier_qualifier_list = specifier_qualifier_list;
+    data->abstract_declarator = abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_NAME;
+    self->data.type_name = data;
+  }
+  return self;
+}
+
+AstRef ast_make_abstract_declarator(AstRef abstract_declarator) {
+  AstRef self = NULL;
+  if (ast_is_pointer(abstract_declarator) ||
+      ast_is_pointer_abstract_declarator(abstract_declarator)) {
+    AstAbstractDeclaratorRef data = ast_palloc(struct AstAbstractDeclarator);
+    data->abstract_declarator = abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ABSTRACT_DECLARATOR;
+    self->data.abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_pointer_abstract_declarator(
+    AstNullableRef pointer, AstRef direct_abstract_declarator) {
+  AstRef self = NULL;
+  if ((pointer == NULL || ast_is_pointer(pointer)) &&
+      ast_is_direct_abstract_declarator(direct_abstract_declarator)) {
+    AstPointerAbstractDeclaratorRef data = ast_palloc(struct AstPointerAbstractDeclarator);
+    data->pointer = pointer;
+    data->direct_abstract_declarator = direct_abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_POINTER_ABSTRACT_DECLARATOR;
+    self->data.pointer_abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_direct_abstract_declarator(AstRef direct_abstract_declarator) {
+  AstRef self = NULL;
+  if (ast_is_abstract_declarator(direct_abstract_declarator) ||
+      ast_is_array_abstract_declarator(direct_abstract_declarator) ||
+      ast_is_function_abstract_declarator(direct_abstract_declarator)) {
+    AstDirectAbstractDeclaratorRef data = ast_palloc(struct AstDirectAbstractDeclarator);
+    data->direct_abstract_declarator = direct_abstract_declarator;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DIRECT_ABSTRACT_DECLARATOR;
+    self->data.direct_abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_array_abstract_declarator(
+    AstNullableRef direct_abstract_declarator,
+    AstNullableRef constant_expression) {
+  AstRef self = NULL;
+  if ((direct_abstract_declarator == NULL ||
+       ast_is_direct_abstract_declarator(direct_abstract_declarator)) &&
+      (constant_expression == NULL ||
+       ast_is_constant_expression(constant_expression))) {
+    AstArrayAbstractDeclaratorRef data = ast_palloc(struct AstArrayAbstractDeclarator);
+    data->direct_abstract_declarator = direct_abstract_declarator;
+    data->constant_expression = constant_expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ARRAY_ABSTRACT_DECLARATOR;
+    self->data.array_abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_function_abstract_declarator(
+    AstNullableRef direct_abstract_declarator, AstNullableRef parameter_type_list) {
+  AstRef self = NULL;
+  if ((direct_abstract_declarator == NULL ||
+       ast_is_direct_abstract_declarator(direct_abstract_declarator)) &&
+      (parameter_type_list == NULL ||
+       ast_is_parameter_type_list(parameter_type_list))) {
+    AstFunctionAbstractDeclaratorRef data = ast_palloc(struct AstFunctionAbstractDeclarator);
+    data->direct_abstract_declarator = direct_abstract_declarator;
+    data->parameter_type_list = parameter_type_list;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_FUNCTION_ABSTRACT_DECLARATOR;
+    self->data.function_abstract_declarator = data;
+  }
+  return self;
+}
+
 AstRef ast_make_initializer(AstRef initializer) {
   AstRef self = NULL;
   if (ast_is_assignment_expression(initializer) ||
@@ -829,4 +972,3 @@ AstRef ast_push_initializer_list(AstRef initializer_list, AstRef initializer) {
   }
   return self;
 }
-
