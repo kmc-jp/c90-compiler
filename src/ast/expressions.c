@@ -238,6 +238,7 @@ struct AstConditionalOperatorExpression {
 };
 
 struct AstAssignmentExpression {
+  AstRef expression;
 };
 
 struct AstBasicAssignmentExpression {
@@ -1045,6 +1046,30 @@ AstRef ast_make_conditional_operator_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_CONDITIONAL_OPERATOR_EXPRESSION;
     self->data.conditional_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_assignment_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_conditional_expression(expression) ||
+      ast_is_basic_assignment_expression(expression) ||
+      ast_is_multiplication_assignment_expression(expression) ||
+      ast_is_division_assignment_expression(expression) ||
+      ast_is_modulo_assignment_expression(expression) ||
+      ast_is_addition_assignment_expression(expression) ||
+      ast_is_subtraction_assignment_expression(expression) ||
+      ast_is_left_shift_assignment_expression(expression) ||
+      ast_is_right_shift_assignment_expression(expression) ||
+      ast_is_bitwise_and_assignment_expression(expression) ||
+      ast_is_bitwise_xor_assignment_expression(expression) ||
+      ast_is_bitwise_or_assignment_expression(expression)) {
+    AstAssignmentExpressionRef data =
+        ast_palloc(struct AstAssignmentExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ASSIGNMENT_EXPRESSION;
+    self->data.assignment_expression = data;
   }
   return self;
 }
