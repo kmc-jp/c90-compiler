@@ -34,43 +34,58 @@ AstRef ast_make_modulo_expression(AstRef multiplicative, AstRef cast);
 AstRef ast_make_additive_expression(AstRef expression);
 AstRef ast_make_addition_expression(AstRef additive, AstRef multiplicative);
 AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative);
-AstRef ast_make_shift_expression();
-AstRef ast_make_left_shift_expression();
-AstRef ast_make_right_shift_expression();
-AstRef ast_make_relational_expression();
-AstRef ast_make_less_than_expression();
-AstRef ast_make_greater_than_expression();
-AstRef ast_make_less_than_or_equal_to_expression();
-AstRef ast_make_greater_than_or_equal_to_expression();
-AstRef ast_make_equality_expression();
-AstRef ast_make_equal_to_expression();
-AstRef ast_make_not_equal_to_expression();
-AstRef ast_make_bitwise_and_expression();
-AstRef ast_make_bitwise_and_operator_expression();
-AstRef ast_make_bitwise_xor_expression();
-AstRef ast_make_bitwise_xor_operator_expression();
-AstRef ast_make_bitwise_or_expression();
-AstRef ast_make_bitwise_or_operator_expression();
-AstRef ast_make_logical_and_expression();
-AstRef ast_make_logical_and_operator_expression();
-AstRef ast_make_logical_or_expression();
-AstRef ast_make_logical_or_operator_expression();
-AstRef ast_make_conditional_expression();
-AstRef ast_make_conditional_operator_expression();
-AstRef ast_make_assignment_expression();
-AstRef ast_make_basic_assignment_expression();
-AstRef ast_make_multiplication_assignment_expression();
-AstRef ast_make_division_assignment_expression();
-AstRef ast_make_modulo_assignment_expression();
-AstRef ast_make_addition_assignment_expression();
-AstRef ast_make_subtraction_assignment_expression();
-AstRef ast_make_left_shift_assignment_expression();
-AstRef ast_make_right_shift_assignment_expression();
-AstRef ast_make_bitwise_and_assignment_expression();
-AstRef ast_make_bitwise_xor_assignment_expression();
-AstRef ast_make_bitwise_or_assignment_expression();
-AstRef ast_make_expression();
-AstRef ast_make_comma_expression();
-AstRef ast_make_constant_expression();
+AstRef ast_make_shift_expression(AstRef expression);
+AstRef ast_make_left_shift_expression(AstRef shift, AstRef additive);
+AstRef ast_make_right_shift_expression(AstRef shift, AstRef additive);
+AstRef ast_make_relational_expression(AstRef expression);
+AstRef ast_make_less_than_expression(AstRef relational, AstRef shift);
+AstRef ast_make_greater_than_expression(AstRef relational, AstRef shift);
+AstRef ast_make_less_than_or_equal_to_expression(
+    AstRef relational, AstRef shift);
+AstRef ast_make_greater_than_or_equal_to_expression(
+    AstRef relational, AstRef shift);
+AstRef ast_make_equality_expression(AstRef expression);
+AstRef ast_make_equal_to_expression(AstRef equality, AstRef relational);
+AstRef ast_make_not_equal_to_expression(AstRef equality, AstRef relational);
+AstRef ast_make_bitwise_and_expression(AstRef expression);
+AstRef ast_make_bitwise_and_operator_expression(
+    AstRef bitwise_and, AstRef equality);
+AstRef ast_make_bitwise_xor_expression(AstRef expression);
+AstRef ast_make_bitwise_xor_operator_expression(
+    AstRef bitwise_xor, AstRef bitwise_and);
+AstRef ast_make_bitwise_or_expression(AstRef expression);
+AstRef ast_make_bitwise_or_operator_expression(
+    AstRef bitwise_or, AstRef bitwise_xor);
+AstRef ast_make_logical_and_expression(AstRef expression);
+AstRef ast_make_logical_and_operator_expression(
+    AstRef logical_and, AstRef bitwise_or);
+AstRef ast_make_logical_or_expression(AstRef expression);
+AstRef ast_make_logical_or_operator_expression(
+    AstRef logical_or, AstRef logical_and);
+AstRef ast_make_conditional_expression(AstRef expression);
+AstRef ast_make_conditional_operator_expression(
+    AstRef logical_or, AstRef expression, AstRef conditional);
+AstRef ast_make_assignment_expression(AstRef expression);
+AstRef ast_make_basic_assignment_expression(AstRef unary, AstRef assignment);
+AstRef ast_make_multiplication_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_division_assignment_expression(AstRef unary, AstRef assignment);
+AstRef ast_make_modulo_assignment_expression(AstRef unary, AstRef assignment);
+AstRef ast_make_addition_assignment_expression(AstRef unary, AstRef assignment);
+AstRef ast_make_subtraction_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_left_shift_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_right_shift_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_bitwise_and_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_bitwise_xor_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_bitwise_or_assignment_expression(
+    AstRef unary, AstRef assignment);
+AstRef ast_make_expression(AstRef expression);
+AstRef ast_make_comma_expression(AstRef expression, AstRef assignment);
+AstRef ast_make_constant_expression(AstRef conditional);
 
 #endif  /* KMC_C89_COMPILER_AST_EXPRESSION_H */
