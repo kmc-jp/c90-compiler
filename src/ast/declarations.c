@@ -185,6 +185,7 @@ struct AstDirectAbstractDeclarator {
 };
 
 struct AstTypedefName {
+  AstRef identifier;
 };
 
 struct AstInitializer {
@@ -299,6 +300,18 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
     self = ast_palloc(struct Ast);
     self->tag = AST_STORAGE_CLASS_SPECIFIER;
     self->data.storage_class_specifier = data;
+  }
+  return self;
+}
+
+AstRef ast_make_typedef_name(AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier)) {
+    AstTypedefNameRef data = ast_palloc(struct AstTypedefName);
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPEDEF_NAME;
+    self->data.typedef_name = data;
   }
   return self;
 }
@@ -795,4 +808,3 @@ AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier) {
   }
   return self;
 }
-
