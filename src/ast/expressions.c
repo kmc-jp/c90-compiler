@@ -145,6 +145,7 @@ struct AstRightShiftExpression {
 };
 
 struct AstRelationalExpression {
+  AstRef expression;
 };
 
 struct AstLessThanExpression {
@@ -710,6 +711,23 @@ AstRef ast_make_right_shift_expression(AstRef shift, AstRef additive) {
     self = ast_palloc(struct Ast);
     self->tag = AST_RIGHT_SHIFT_EXPRESSION;
     self->data.right_shift_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_relational_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_shift_expression(expression) ||
+      ast_is_less_than_expression(expression) ||
+      ast_is_greater_than_expression(expression) ||
+      ast_is_less_than_or_equal_to_expression(expression) ||
+      ast_is_greater_than_or_equal_to_expression(expression)) {
+    AstRelationalExpressionRef data =
+        ast_palloc(struct AstRelationalExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RELATIONAL_EXPRESSION;
+    self->data.relational_expression = data;
   }
   return self;
 }
