@@ -33,7 +33,7 @@ AstRef ast_make_enum_declaration(AstRef identifier);
 AstRef ast_make_enumerator_list(void);
 AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator);
 AstRef ast_make_enumerator(AstRef enumeration_constant, AstNullableRef constant_expression);
-AstRef ast_make_type_qualifier();
+AstRef ast_make_type_qualifier(AstRef type_qualifier);
 AstRef ast_make_declarator(AstNullableRef pointer, AstRef direct_declarator);
 AstRef ast_make_direct_declarator(AstRef direct_declarator);
 AstRef ast_make_array_declarator(AstRef direct_declarator, AstNullableRef constant_expression);

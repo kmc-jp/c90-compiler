@@ -110,6 +110,7 @@ struct AstEnumerator {
 };
 
 struct AstTypeQualifier {
+  AstRef type_qualifier;
 };
 
 struct AstDeclarator {
@@ -578,6 +579,18 @@ AstRef ast_make_enumerator(
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUMERATOR;
     self->data.enumerator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_type_qualifier(AstRef type_qualifier) {
+  AstRef self = NULL;
+  if (ast_is_token(type_qualifier)) {
+    AstTypeQualifierRef data = ast_palloc(struct AstTypeQualifier);
+    data->type_qualifier = type_qualifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPE_QUALIFIER;
+    self->data.type_qualifier = data;
   }
   return self;
 }
