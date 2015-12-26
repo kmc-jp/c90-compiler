@@ -140,6 +140,8 @@ struct AstLeftShiftExpression {
 };
 
 struct AstRightShiftExpression {
+  AstRef shift;
+  AstRef additive;
 };
 
 struct AstRelationalExpression {
@@ -693,6 +695,21 @@ AstRef ast_make_left_shift_expression(AstRef shift, AstRef additive) {
     self = ast_palloc(struct Ast);
     self->tag = AST_LEFT_SHIFT_EXPRESSION;
     self->data.left_shift_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_right_shift_expression(AstRef shift, AstRef additive) {
+  AstRef self = NULL;
+  if (ast_is_shift_expression(shift) &&
+      ast_is_additive_expression(additive)) {
+    AstRightShiftExpressionRef data =
+        ast_palloc(struct AstRightShiftExpression);
+    data->shift = shift;
+    data->additive = additive;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RIGHT_SHIFT_EXPRESSION;
+    self->data.right_shift_expression = data;
   }
   return self;
 }
