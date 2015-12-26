@@ -297,6 +297,7 @@ struct AstBitwiseOrAssignmentExpression {
 };
 
 struct AstExpression {
+  AstRef expression;
 };
 
 struct AstCommaExpression {
@@ -1266,6 +1267,19 @@ AstRef ast_make_bitwise_or_assignment_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_BITWISE_OR_ASSIGNMENT_EXPRESSION;
     self->data.bitwise_or_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_assignment_expression(expression) ||
+      ast_is_comma_expression(expression)) {
+    AstExpressionRef data = ast_palloc(struct AstExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EXPRESSION;
+    self->data.expression = data;
   }
   return self;
 }
