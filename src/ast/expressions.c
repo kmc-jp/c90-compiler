@@ -306,6 +306,7 @@ struct AstCommaExpression {
 };
 
 struct AstConstantExpression {
+  AstRef conditional;
 };
 
 AstRef ast_make_primary_expression(AstRef primary_expression) {
@@ -1296,6 +1297,18 @@ AstRef ast_make_comma_expression(AstRef expression, AstRef assignment) {
     self = ast_palloc(struct Ast);
     self->tag = AST_COMMA_EXPRESSION;
     self->data.comma_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_constant_expression(AstRef conditional) {
+  AstRef self = NULL;
+  if (ast_is_conditional_expression(conditional)) {
+    AstConstantExpressionRef data = ast_palloc(struct AstConstantExpression);
+    data->conditional = conditional;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CONSTANT_EXPRESSION;
+    self->data.constant_expression = data;
   }
   return self;
 }

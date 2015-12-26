@@ -86,6 +86,6 @@ AstRef ast_make_bitwise_or_assignment_expression(
     AstRef unary, AstRef assignment);
 AstRef ast_make_expression(AstRef expression);
 AstRef ast_make_comma_expression(AstRef expression, AstRef assignment);
-AstRef ast_make_constant_expression();
+AstRef ast_make_constant_expression(AstRef conditional);
 
 #endif  /* KMC_C89_COMPILER_AST_EXPRESSION_H */
