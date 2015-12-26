@@ -715,8 +715,8 @@ jump-statement
 : "goto" identifier ';'
 | "continue" ';'
 | "break" ';'
-| "return" ';'
 | "return" expression ';'
+| "return" ';'
 ;
 
 translation-unit
