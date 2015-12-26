@@ -238,39 +238,62 @@ struct AstConditionalOperatorExpression {
 };
 
 struct AstAssignmentExpression {
+  AstRef expression;
 };
 
 struct AstBasicAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstMultiplicationAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstDivisionAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstModuloAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstAdditionAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstSubtractionAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstLeftShiftAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstRightShiftAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstBitwiseAndAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstBitwiseXorAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstBitwiseOrAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstExpression {
@@ -1045,6 +1068,204 @@ AstRef ast_make_conditional_operator_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_CONDITIONAL_OPERATOR_EXPRESSION;
     self->data.conditional_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_assignment_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_conditional_expression(expression) ||
+      ast_is_basic_assignment_expression(expression) ||
+      ast_is_multiplication_assignment_expression(expression) ||
+      ast_is_division_assignment_expression(expression) ||
+      ast_is_modulo_assignment_expression(expression) ||
+      ast_is_addition_assignment_expression(expression) ||
+      ast_is_subtraction_assignment_expression(expression) ||
+      ast_is_left_shift_assignment_expression(expression) ||
+      ast_is_right_shift_assignment_expression(expression) ||
+      ast_is_bitwise_and_assignment_expression(expression) ||
+      ast_is_bitwise_xor_assignment_expression(expression) ||
+      ast_is_bitwise_or_assignment_expression(expression)) {
+    AstAssignmentExpressionRef data =
+        ast_palloc(struct AstAssignmentExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ASSIGNMENT_EXPRESSION;
+    self->data.assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_basic_assignment_expression(AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstBasicAssignmentExpressionRef data =
+        ast_palloc(struct AstBasicAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BASIC_ASSIGNMENT_EXPRESSION;
+    self->data.basic_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_multiplication_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstMultiplicationAssignmentExpressionRef data =
+        ast_palloc(struct AstMultiplicationAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MULTIPLICATION_ASSIGNMENT_EXPRESSION;
+    self->data.multiplication_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_division_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstDivisionAssignmentExpressionRef data =
+        ast_palloc(struct AstDivisionAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DIVISION_ASSIGNMENT_EXPRESSION;
+    self->data.division_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_modulo_assignment_expression(AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstModuloAssignmentExpressionRef data =
+        ast_palloc(struct AstModuloAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_MODULO_ASSIGNMENT_EXPRESSION;
+    self->data.modulo_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_addition_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstAdditionAssignmentExpressionRef data =
+        ast_palloc(struct AstAdditionAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITION_ASSIGNMENT_EXPRESSION;
+    self->data.addition_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_subtraction_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstSubtractionAssignmentExpressionRef data =
+        ast_palloc(struct AstSubtractionAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SUBTRACTION_ASSIGNMENT_EXPRESSION;
+    self->data.subtraction_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_left_shift_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstLeftShiftAssignmentExpressionRef data =
+        ast_palloc(struct AstLeftShiftAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LEFT_SHIFT_ASSIGNMENT_EXPRESSION;
+    self->data.left_shift_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_right_shift_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstRightShiftAssignmentExpressionRef data =
+        ast_palloc(struct AstRightShiftAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RIGHT_SHIFT_ASSIGNMENT_EXPRESSION;
+    self->data.right_shift_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_and_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstBitwiseAndAssignmentExpressionRef data =
+        ast_palloc(struct AstBitwiseAndAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_AND_ASSIGNMENT_EXPRESSION;
+    self->data.bitwise_and_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_xor_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstBitwiseXorAssignmentExpressionRef data =
+        ast_palloc(struct AstBitwiseXorAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_XOR_ASSIGNMENT_EXPRESSION;
+    self->data.bitwise_xor_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_or_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstBitwiseOrAssignmentExpressionRef data =
+        ast_palloc(struct AstBitwiseOrAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_OR_ASSIGNMENT_EXPRESSION;
+    self->data.bitwise_or_assignment_expression = data;
   }
   return self;
 }
