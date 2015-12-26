@@ -36,6 +36,7 @@ struct AstDeclarationList {
 };
 
 struct AstStatementList {
+  AstVectorRef statement_vector;
 };
 
 struct AstExpressionStatement {
@@ -153,6 +154,26 @@ AstRef ast_push_declaration_list(AstRef declaration_list, AstRef declaration) {
     AstDeclarationListRef data = ast_get_declaration_list(declaration_list);
     ast_push_vector(data->declaration_vector, declaration);
     self = declaration_list;
+  }
+  return self;
+}
+
+AstRef ast_make_statement_list(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstStatementListRef data = ast_palloc(struct AstStatementList);
+  data->statement_vector = ast_make_vector();
+  self->tag = AST_STATEMENT_LIST;
+  self->data.statement_list = data;
+  return self;
+}
+
+AstRef ast_push_statement_list(AstRef statement_list, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_statement_list(statement_list) &&
+      ast_is_statement(statement)) {
+    AstStatementListRef data = ast_get_statement_list(statement_list);
+    ast_push_vector(data->statement_vector, statement);
+    self = statement_list;
   }
   return self;
 }
