@@ -18,6 +18,8 @@ struct AstIdentifierLabeledStatement {
 };
 
 struct AstCaseLabeledStatement {
+  AstRef constant_expression;
+  AstRef statement;
 };
 
 struct AstDefaultLabeledStatement {
@@ -85,6 +87,21 @@ AstRef ast_make_identifier_labeled_statement(
     self = ast_palloc(struct Ast);
     self->tag = AST_IDENTIFIER_LABELED_STATEMENT;
     self->data.identifier_labeled_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_case_labeled_statement(
+    AstRef constant_expression, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_constant_expression(constant_expression) &&
+      ast_is_statement(statement)) {
+    AstCaseLabeledStatementRef data = ast_palloc(struct AstCaseLabeledStatement);
+    data->constant_expression = constant_expression;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CASE_LABELED_STATEMENT;
+    self->data.case_labeled_statement = data;
   }
   return self;
 }
