@@ -169,12 +169,17 @@ struct AstGreaterThanOrEqualToExpression {
 };
 
 struct AstEqualityExpression {
+  AstRef expression;
 };
 
 struct AstEqualToExpression {
+  AstRef equality;
+  AstRef relational;
 };
 
 struct AstNotEqualToExpression {
+  AstRef equality;
+  AstRef relational;
 };
 
 struct AstBitwiseAndExpression {
@@ -797,6 +802,50 @@ AstRef ast_make_greater_than_or_equal_to_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_GREATER_THAN_OR_EQUAL_TO_EXPRESSION;
     self->data.greater_than_or_equal_to_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_equality_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_relational_expression(expression) ||
+      ast_is_equal_to_expression(expression) ||
+      ast_is_not_equal_to_expression(expression)) {
+    AstEqualityExpressionRef data =
+        ast_palloc(struct AstEqualityExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EQUALITY_EXPRESSION;
+    self->data.equality_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_equal_to_expression(AstRef equality, AstRef relational) {
+  AstRef self = NULL;
+  if (ast_is_equality_expression(equality) &&
+      ast_is_relational_expression(relational)) {
+    AstEqualToExpressionRef data = ast_palloc(struct AstEqualToExpression);
+    data->equality = equality;
+    data->relational = relational;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EQUAL_TO_EXPRESSION;
+    self->data.equal_to_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_not_equal_to_expression(AstRef equality, AstRef relational) {
+  AstRef self = NULL;
+  if (ast_is_equality_expression(equality) &&
+      ast_is_relational_expression(relational)) {
+    AstNotEqualToExpressionRef data =
+        ast_palloc(struct AstNotEqualToExpression);
+    data->equality = equality;
+    data->relational = relational;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_NOT_EQUAL_TO_EXPRESSION;
+    self->data.not_equal_to_expression = data;
   }
   return self;
 }
