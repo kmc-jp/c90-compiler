@@ -301,6 +301,8 @@ struct AstExpression {
 };
 
 struct AstCommaExpression {
+  AstRef expression;
+  AstRef assignment;
 };
 
 struct AstConstantExpression {
@@ -1280,6 +1282,20 @@ AstRef ast_make_expression(AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_EXPRESSION;
     self->data.expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_comma_expression(AstRef expression, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression) &&
+      ast_is_assignment_expression(expression)) {
+    AstCommaExpressionRef data = ast_palloc(struct AstCommaExpression);
+    data->expression = expression;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_COMMA_EXPRESSION;
+    self->data.comma_expression = data;
   }
   return self;
 }
