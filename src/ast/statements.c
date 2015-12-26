@@ -66,6 +66,10 @@ struct AstReturnJumpStatement {
   AstRef statement;
 };
 
+struct AstVoidReturnJumpStatement {
+  AstRef statement;
+};
+
 AstRef ast_make_statement(AstRef statement) {
   AstRef self = NULL;
   if (ast_is_labeled_statement(statement) ||
@@ -199,6 +203,18 @@ AstRef ast_make_return_jump_statement(AstRef expression, AstRef statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_RETURN_JUMP_STATEMENT;
     self->data.return_jump_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_void_return_jump_statement(AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_statement(statement)) {
+    AstVoidReturnJumpStatementRef data = ast_palloc(struct AstVoidReturnJumpStatement);
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_VOID_RETURN_JUMP_STATEMENT;
+    self->data.void_return_jump_statement = data;
   }
   return self;
 }

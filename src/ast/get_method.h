@@ -132,6 +132,7 @@ AstGotoJumpStatementRef ast_get_goto_jump_statement(AstRef ast);
 AstContinueJumpStatementRef ast_get_continue_jump_statement(AstRef ast);
 AstBreakJumpStatementRef ast_get_break_jump_statement(AstRef ast);
 AstReturnJumpStatementRef ast_get_return_jump_statement(AstRef ast);
+AstVoidReturnJumpStatementRef ast_get_void_return_jump_statement(AstRef ast);
 AstTranslationUnitRef ast_get_translation_unit(AstRef ast);
 AstExternalDeclarationRef ast_get_external_declaration(AstRef ast);
 AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);

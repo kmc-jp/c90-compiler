@@ -136,6 +136,7 @@ struct Ast {
     AstGotoJumpStatementRef goto_jump_statement;
     AstContinueJumpStatementRef continue_jump_statement;
     AstReturnJumpStatementRef return_jump_statement;
+    AstVoidReturnJumpStatementRef void_return_jump_statement;
     AstBreakJumpStatementRef break_jump_statement;
     AstTranslationUnitRef translation_unit;
     AstExternalDeclarationRef external_declaration;

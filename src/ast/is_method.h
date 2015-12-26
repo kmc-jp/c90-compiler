@@ -133,6 +133,7 @@ bool ast_is_goto_jump_statement(AstRef ast);
 bool ast_is_continue_jump_statement(AstRef ast);
 bool ast_is_break_jump_statement(AstRef ast);
 bool ast_is_return_jump_statement(AstRef ast);
+bool ast_is_void_return_jump_statement(AstRef ast);
 bool ast_is_translation_unit(AstRef ast);
 bool ast_is_external_declaration(AstRef ast);
 bool ast_is_function_definition(AstRef ast);
