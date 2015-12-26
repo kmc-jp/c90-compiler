@@ -46,6 +46,15 @@ struct AstExpressionStatement {
 struct AstSelectionStatement {
 };
 
+struct AstIfStatement {
+};
+
+struct AstIfElseStatement {
+};
+
+struct AstSwitchStatement {
+};
+
 struct AstIterationStatement {
 };
 

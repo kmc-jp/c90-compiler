@@ -15,6 +15,9 @@ AstRef ast_make_statement_list(void);
 AstRef ast_push_statement_list(AstRef statement_list, AstRef statement);
 AstRef ast_make_expression_statement(AstNullableRef expression);
 AstRef ast_make_selection_statement();
+AstRef ast_make_if_statement();
+AstRef ast_make_if_else_statement();
+AstRef ast_make_switch_statement();
 AstRef ast_make_iteration_statement();
 AstRef ast_make_jump_statement();
 

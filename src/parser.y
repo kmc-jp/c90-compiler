@@ -700,9 +700,21 @@ expression-statement
 ;
 
 selection-statement
+: if-statement
+| if-else-statement
+| switch-statement
+;
+
+if-statement
 : "if" '(' expression ')' statement
-| "if" '(' expression ')' statement "else" statement
-| "switch" '(' expression ')' statement
+;
+
+if-else-statement
+: "if" '(' expression ')' statement "else" statement
+;
+
+switch-statement
+: "switch" '(' expression ')' statement
 ;
 
 iteration-statement

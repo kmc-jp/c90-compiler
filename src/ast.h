@@ -125,6 +125,9 @@ enum AstTag {
   AST_STATEMENT_LIST,
   AST_EXPRESSION_STATEMENT,
   AST_SELECTION_STATEMENT,
+  AST_IF_STATEMENT,
+  AST_IF_ELSE_STATEMENT,
+  AST_SWITCH_STATEMENT,
   AST_ITERATION_STATEMENT,
   AST_JUMP_STATEMENT,
   AST_TRANSLATION_UNIT,
@@ -262,6 +265,9 @@ typedef struct AstDeclarationList* AstDeclarationListRef;
 typedef struct AstStatementList* AstStatementListRef;
 typedef struct AstExpressionStatement* AstExpressionStatementRef;
 typedef struct AstSelectionStatement* AstSelectionStatementRef;
+typedef struct AstIfStatement* AstIfStatementRef;
+typedef struct AstIfElseStatement* AstIfElseStatementRef;
+typedef struct AstSwitchStatement* AstSwitchStatementRef;
 typedef struct AstIterationStatement* AstIterationStatementRef;
 typedef struct AstJumpStatement* AstJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;

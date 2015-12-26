@@ -131,6 +131,9 @@ struct Ast {
     AstStatementListRef statement_list;
     AstExpressionStatementRef expression_statement;
     AstSelectionStatementRef selection_statement;
+    AstIfStatementRef if_statement;
+    AstIfElseStatementRef if_else_statement;
+    AstSwitchStatementRef switch_statement;
     AstIterationStatementRef iteration_statement;
     AstJumpStatementRef jump_statement;
     AstTranslationUnitRef translation_unit;
