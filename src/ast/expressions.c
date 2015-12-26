@@ -131,12 +131,17 @@ struct AstSubtractionExpression {
 };
 
 struct AstShiftExpression {
+  AstRef expression;
 };
 
 struct AstLeftShiftExpression {
+  AstRef shift;
+  AstRef additive;
 };
 
 struct AstRightShiftExpression {
+  AstRef shift;
+  AstRef additive;
 };
 
 struct AstRelationalExpression {
@@ -662,6 +667,49 @@ AstRef ast_make_subtraction_expression(AstRef additive, AstRef multiplicative) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SUBTRACTION_EXPRESSION;
     self->data.subtraction_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_shift_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_additive_expression(expression) ||
+      ast_is_left_shift_expression(expression) ||
+      ast_is_right_shift_expression(expression)) {
+    AstShiftExpressionRef data = ast_palloc(struct AstShiftExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_SHIFT_EXPRESSION;
+    self->data.shift_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_left_shift_expression(AstRef shift, AstRef additive) {
+  AstRef self = NULL;
+  if (ast_is_shift_expression(shift) &&
+      ast_is_additive_expression(additive)) {
+    AstLeftShiftExpressionRef data = ast_palloc(struct AstLeftShiftExpression);
+    data->shift = shift;
+    data->additive = additive;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LEFT_SHIFT_EXPRESSION;
+    self->data.left_shift_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_right_shift_expression(AstRef shift, AstRef additive) {
+  AstRef self = NULL;
+  if (ast_is_shift_expression(shift) &&
+      ast_is_additive_expression(additive)) {
+    AstRightShiftExpressionRef data =
+        ast_palloc(struct AstRightShiftExpression);
+    data->shift = shift;
+    data->additive = additive;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RIGHT_SHIFT_EXPRESSION;
+    self->data.right_shift_expression = data;
   }
   return self;
 }
