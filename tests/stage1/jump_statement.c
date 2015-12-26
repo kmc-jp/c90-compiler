@@ -3,7 +3,7 @@ void print(const char *);
 
 void put_num(int n) {
   print_num(n);
-  print("\n");
+  print(" ");
 }
 
 int collatz() {
@@ -19,9 +19,11 @@ int collatz() {
     }
     
     if (n > 1000) {
+      print("\n");
       return n;
     }
   }
+  print("\n");
   return -1;
 }
 
@@ -40,14 +42,17 @@ int main(void) {
     put_num(i++);
     if (i > 5) { break; }
   }
+  print("\n");
 
   i = collatz();
-  put_num(i);
+  print_num(i);
+  print(" > 1000\n");
 
   for (i = 0; i < 10; ++i) {
     if (i & 1) { continue; }
     put_num(i);
   }
+  print("\n");
 
   i = 1;
 loop_head:
@@ -56,6 +61,7 @@ loop_head:
   if (i > 1000) goto loop_tail;
   goto loop_head;
 loop_tail:
+  print("\n");
 
   j = 1;
   goto first_time;
@@ -73,7 +79,7 @@ first_time:
     count++;
     print_num(i); print(",");
     if (i == 0 && count == j) {
-      print("\nsqrt of 121 = "); put_num(j);
+      print("\nsqrt of 121 = "); print_num(j); print("\n");
       break;
     }
   }
@@ -85,6 +91,7 @@ first_time:
           put_num(i);
           put_num(j);
           put_num(count);
+          print("\n");
           goto end_of_3_nested_for;
         } while (0);
 end_of_3_nested_for:
