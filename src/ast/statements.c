@@ -68,6 +68,8 @@ struct AstIterationStatement {
 };
 
 struct AstWhileStatement {
+  AstRef expression;
+  AstRef statement;
 };
 
 struct AstDoWhileStatement {
@@ -285,6 +287,19 @@ AstRef ast_make_iteration_statement(AstRef iteration_statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_ITERATION_STATEMENT;
     self->data.iteration_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_while_statement(AstRef expression, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression) && ast_is_statement(statement)) {
+    AstWhileStatementRef data = ast_palloc(struct AstWhileStatement);
+    data->expression = expression;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_WHILE_STATEMENT;
+    self->data.while_statement = data;
   }
   return self;
 }
