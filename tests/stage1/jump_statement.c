@@ -26,7 +26,7 @@ int collatz() {
 }
 
 int main(void) {
-  int i;
+  int i, j, count;
 
   i = 0;
   for (;;) {
@@ -49,6 +49,27 @@ loop_head:
   if (i > 1000) goto loop_tail;
   goto loop_head;
 loop_tail:
+
+  j = 1;
+  goto first_time;
+  for (;j < 100;) {
+    if (count > 30) {
+      print("\n");
+      j += 1;
+first_time:
+      i = j, count = 1;
+      print("j = "); print_num(j); print(": ");
+      continue;
+    }
+
+    i = (i + j) % 121;
+    count++;
+    print_num(i); print(",");
+    if (i == 0 && count == j) {
+      print("\nsqrt of 121 = "); put_num(j);
+      break;
+    }
+  }
   
   return 0;
 }
