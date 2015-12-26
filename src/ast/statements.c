@@ -147,7 +147,8 @@ AstRef ast_make_jump_statement(AstRef jump_statement) {
   if (ast_is_goto_jump_statement(jump_statement) ||
       ast_is_continue_jump_statement(jump_statement) ||
       ast_is_break_jump_statement(jump_statement) ||
-      ast_is_return_jump_statement(jump_statement)) {
+      ast_is_return_jump_statement(jump_statement) ||
+      ast_is_void_return_jump_statement(jump_statement)) {
     AstJumpStatementRef data = ast_palloc(struct AstJumpStatement);
     data->jump_statement = jump_statement;
     self = ast_palloc(struct Ast);
