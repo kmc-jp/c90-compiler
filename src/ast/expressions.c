@@ -228,6 +228,7 @@ struct AstLogicalOrOperatorExpression {
 };
 
 struct AstConditionalExpression {
+  AstRef expression;
 };
 
 struct AstConditionalOperatorExpression {
@@ -1009,6 +1010,20 @@ AstRef ast_make_logical_or_operator_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_LOGICAL_OR_OPERATOR_EXPRESSION;
     self->data.logical_or_operator_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_conditional_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_logical_or_expression(expression) ||
+      ast_is_conditional_operator_expression(expression)) {
+    AstConditionalExpressionRef data =
+        ast_palloc(struct AstConditionalExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_CONDITIONAL_EXPRESSION;
+    self->data.conditional_expression = data;
   }
   return self;
 }

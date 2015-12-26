@@ -62,7 +62,7 @@ AstRef ast_make_logical_and_operator_expression(
 AstRef ast_make_logical_or_expression(AstRef expression);
 AstRef ast_make_logical_or_operator_expression(
     AstRef logical_or, AstRef logical_and);
-AstRef ast_make_conditional_expression();
+AstRef ast_make_conditional_expression(AstRef expression);
 AstRef ast_make_conditional_operator_expression();
 AstRef ast_make_assignment_expression();
 AstRef ast_make_basic_assignment_expression();
