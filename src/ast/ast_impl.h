@@ -123,7 +123,7 @@ struct Ast {
     AstIdentifierListRef identifier_list;
     AstTypeNameRef type_name;
     AstAbstractDeclaratorRef abstract_declarator;
-    AstNotPurePointerAbstractDeclaratorRef not_pure_pointer_abstract_declarator;
+    AstPointerAbstractDeclaratorRef pointer_abstract_declarator;
     AstDirectAbstractDeclaratorRef direct_abstract_declarator;
     AstArrayAbstractDeclaratorRef array_abstract_declarator;
     AstFunctionAbstractDeclaratorRef function_abstract_declarator;

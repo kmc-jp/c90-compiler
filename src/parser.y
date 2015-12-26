@@ -639,10 +639,10 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| not-pure-pointer-abstract-declarator
+| pointer-abstract-declarator
 ;
 
-not-pure-pointer-abstract-declarator
+pointer-abstract-declarator
 : pointer.opt direct-abstract-declarator
 ;
 

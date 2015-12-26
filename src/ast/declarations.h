@@ -52,7 +52,7 @@ AstRef ast_make_identifier_list(void);
 AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier);
 AstRef ast_make_type_name(AstRef specifier_qualifier_list, AstNullableRef abstract_declarator);
 AstRef ast_make_abstract_declarator(AstRef abstract_declarator);
-AstRef ast_make_not_pure_pointer_abstract_declarator(AstNullableRef pointer, AstRef direct_abstract_declarator);
+AstRef ast_make_pointer_abstract_declarator(AstNullableRef pointer, AstRef direct_abstract_declarator);
 AstRef ast_make_direct_abstract_declarator(AstRef direct_abstract_declarator);
 AstRef ast_make_array_abstract_declarator(AstNullableRef direct_abstract_declarator, AstNullableRef constant_expression);
 AstRef ast_make_function_abstract_declarator(AstNullableRef direct_abstract_declarator, AstNullableRef parameter_type_list);

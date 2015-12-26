@@ -184,7 +184,7 @@ struct AstAbstractDeclarator {
   AstRef abstract_declarator;
 };
 
-struct AstNotPurePointerAbstractDeclarator {
+struct AstPointerAbstractDeclarator {
   AstNullableRef pointer;
   AstRef direct_abstract_declarator;
 };
@@ -833,7 +833,7 @@ AstRef ast_make_type_name(
 AstRef ast_make_abstract_declarator(AstRef abstract_declarator) {
   AstRef self = NULL;
   if (ast_is_pointer(abstract_declarator) ||
-      ast_is_not_pure_pointer_abstract_declarator(abstract_declarator)) {
+      ast_is_pointer_abstract_declarator(abstract_declarator)) {
     AstAbstractDeclaratorRef data = ast_palloc(struct AstAbstractDeclarator);
     data->abstract_declarator = abstract_declarator;
     self = ast_palloc(struct Ast);
@@ -843,17 +843,17 @@ AstRef ast_make_abstract_declarator(AstRef abstract_declarator) {
   return self;
 }
 
-AstRef ast_make_not_pure_pointer_abstract_declarator(
+AstRef ast_make_pointer_abstract_declarator(
     AstNullableRef pointer, AstRef direct_abstract_declarator) {
   AstRef self = NULL;
   if ((pointer == NULL || ast_is_pointer(pointer)) &&
       ast_is_direct_abstract_declarator(direct_abstract_declarator)) {
-    AstNotPurePointerAbstractDeclaratorRef data = ast_palloc(struct AstNotPurePointerAbstractDeclarator);
+    AstPointerAbstractDeclaratorRef data = ast_palloc(struct AstPointerAbstractDeclarator);
     data->pointer = pointer;
     data->direct_abstract_declarator = direct_abstract_declarator;
     self = ast_palloc(struct Ast);
-    self->tag = AST_NOT_PURE_POINTER_ABSTRACT_DECLARATOR;
-    self->data.not_pure_pointer_abstract_declarator = data;
+    self->tag = AST_POINTER_ABSTRACT_DECLARATOR;
+    self->data.pointer_abstract_declarator = data;
   }
   return self;
 }
