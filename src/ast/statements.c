@@ -32,6 +32,7 @@ struct AstCompoundStatement {
 };
 
 struct AstDeclarationList {
+  AstVectorRef declaration_vector;
 };
 
 struct AstStatementList {
@@ -132,6 +133,26 @@ AstRef ast_make_compound_statement(
     self = ast_palloc(struct Ast);
     self->tag = AST_COMPOUND_STATEMENT;
     self->data.compound_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_declaration_list(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstDeclarationListRef data = ast_palloc(struct AstDeclarationList);
+  data->declaration_vector = ast_make_vector();
+  self->tag = AST_DECLARATION_LIST;
+  self->data.declaration_list = data;
+  return self;
+}
+
+AstRef ast_push_declaration_list(AstRef declaration_list, AstRef declaration) {
+  AstRef self = NULL;
+  if (ast_is_declaration_list(declaration_list) &&
+      ast_is_declaration(declaration)) {
+    AstDeclarationListRef data = ast_get_declaration_list(declaration_list);
+    ast_push_vector(data->declaration_vector, declaration);
+    self = declaration_list;
   }
   return self;
 }

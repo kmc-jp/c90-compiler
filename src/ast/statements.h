@@ -9,7 +9,8 @@ AstRef ast_make_identifier_labeled_statement(AstRef identifier, AstRef statement
 AstRef ast_make_case_labeled_statement(AstRef constant_expression, AstRef statement);
 AstRef ast_make_default_labeled_statement(AstRef statement);
 AstRef ast_make_compound_statement(AstRef declaration_list, AstRef statement_list);
-AstRef ast_make_declaration_list();
+AstRef ast_make_declaration_list(void);
+AstRef ast_push_declaration_list(AstRef declaration_list, AstRef declaration);
 AstRef ast_make_statement_list();
 AstRef ast_make_expression_statement();
 AstRef ast_make_selection_statement();
