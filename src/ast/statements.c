@@ -64,6 +64,24 @@ struct AstSwitchStatement {
 };
 
 struct AstIterationStatement {
+  AstRef iteration_statement;
+};
+
+struct AstWhileStatement {
+  AstRef expression;
+  AstRef statement;
+};
+
+struct AstDoWhileStatement {
+  AstRef expression;
+  AstRef statement;
+};
+
+struct AstForStatement {
+  AstRef expression_1;
+  AstRef expression_2;
+  AstRef expression_3;
+  AstRef statement;
 };
 
 struct AstJumpStatement {
@@ -261,6 +279,66 @@ AstRef ast_make_switch_statement(AstRef expression, AstRef statement) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SWITCH_STATEMENT;
     self->data.switch_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_iteration_statement(AstRef iteration_statement) {
+  AstRef self = NULL;
+  if (ast_is_while_statement(iteration_statement) ||
+      ast_is_do_while_statement(iteration_statement) ||
+      ast_is_for_statement(iteration_statement)) {
+    AstIterationStatementRef data = ast_palloc(struct AstIterationStatement);
+    data->iteration_statement = iteration_statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ITERATION_STATEMENT;
+    self->data.iteration_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_while_statement(AstRef expression, AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression) && ast_is_statement(statement)) {
+    AstWhileStatementRef data = ast_palloc(struct AstWhileStatement);
+    data->expression = expression;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_WHILE_STATEMENT;
+    self->data.while_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_do_while_statement(AstRef statement, AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_statement(statement) && ast_is_expression(expression)) {
+    AstDoWhileStatementRef data = ast_palloc(struct AstDoWhileStatement);
+    data->statement = statement;
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DO_WHILE_STATEMENT;
+    self->data.do_while_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_for_statement(
+    AstRef expression_1, AstRef expression_2, AstRef expression_3,
+    AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression_1) &&
+      ast_is_expression(expression_2) &&
+      ast_is_expression(expression_3) &&
+      ast_is_statement(statement)) {
+    AstForStatementRef data = ast_palloc(struct AstForStatement);
+    data->expression_1 = expression_1;
+    data->expression_2 = expression_2;
+    data->expression_3 = expression_3;
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_FOR_STATEMENT;
+    self->data.for_statement = data;
   }
   return self;
 }

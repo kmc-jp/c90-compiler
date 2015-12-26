@@ -718,9 +718,21 @@ switch-statement
 ;
 
 iteration-statement
+: while-statement
+| do-while-statement
+| for-statement
+;
+
+while-statement
 : "while" '(' expression ')' statement
-| "do" statement "while" '(' expression ')' ';'
-| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+;
+
+do-while-statement
+: "do" statement "while" '(' expression ')' ';'
+;
+
+for-statement
+: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement

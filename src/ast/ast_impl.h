@@ -135,6 +135,9 @@ struct Ast {
     AstIfElseStatementRef if_else_statement;
     AstSwitchStatementRef switch_statement;
     AstIterationStatementRef iteration_statement;
+    AstWhileStatementRef while_statement;
+    AstDoWhileStatementRef do_while_statement;
+    AstForStatementRef for_statement;
     AstJumpStatementRef jump_statement;
     AstTranslationUnitRef translation_unit;
     AstExternalDeclarationRef external_declaration;

@@ -129,6 +129,9 @@ enum AstTag {
   AST_IF_ELSE_STATEMENT,
   AST_SWITCH_STATEMENT,
   AST_ITERATION_STATEMENT,
+  AST_WHILE_STATEMENT,
+  AST_DO_WHILE_STATEMENT,
+  AST_FOR_STATEMENT,
   AST_JUMP_STATEMENT,
   AST_TRANSLATION_UNIT,
   AST_EXTERNAL_DECLARATION,
@@ -269,6 +272,9 @@ typedef struct AstIfStatement* AstIfStatementRef;
 typedef struct AstIfElseStatement* AstIfElseStatementRef;
 typedef struct AstSwitchStatement* AstSwitchStatementRef;
 typedef struct AstIterationStatement* AstIterationStatementRef;
+typedef struct AstWhileStatement* AstWhileStatementRef;
+typedef struct AstDoWhileStatement* AstDoWhileStatementRef;
+typedef struct AstForStatement* AstForStatementRef;
 typedef struct AstJumpStatement* AstJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;

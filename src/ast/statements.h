@@ -18,7 +18,10 @@ AstRef ast_make_selection_statement(AstRef selection_statement);
 AstRef ast_make_if_statement(AstRef expression, AstRef statement);
 AstRef ast_make_if_else_statement(AstRef expression, AstRef statement_if, AstRef statement_else);
 AstRef ast_make_switch_statement(AstRef expression, AstRef statement);
-AstRef ast_make_iteration_statement();
+AstRef ast_make_iteration_statement(AstRef iteration_statement);
+AstRef ast_make_while_statement(AstRef expression, AstRef statement);
+AstRef ast_make_do_while_statement(AstRef expression, AstRef statement);
+AstRef ast_make_for_statement(AstRef expression_1, AstRef expression_2, AstRef expression_3, AstRef statement);
 AstRef ast_make_jump_statement();
 
 #endif  /* KMC_C89_COMPILER_AST_STATEMENTS_H */
