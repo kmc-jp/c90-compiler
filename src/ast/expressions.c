@@ -277,6 +277,8 @@ struct AstLeftShiftAssignmentExpression {
 };
 
 struct AstRightShiftAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstBitwiseAndAssignmentExpression {
@@ -1194,6 +1196,22 @@ AstRef ast_make_left_shift_assignment_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_LEFT_SHIFT_ASSIGNMENT_EXPRESSION;
     self->data.left_shift_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_right_shift_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstRightShiftAssignmentExpressionRef data =
+        ast_palloc(struct AstRightShiftAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RIGHT_SHIFT_ASSIGNMENT_EXPRESSION;
+    self->data.right_shift_assignment_expression = data;
   }
   return self;
 }
