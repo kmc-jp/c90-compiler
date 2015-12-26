@@ -23,6 +23,7 @@ struct AstCaseLabeledStatement {
 };
 
 struct AstDefaultLabeledStatement {
+  AstRef statement;
 };
 
 struct AstCompoundStatement {
@@ -102,6 +103,18 @@ AstRef ast_make_case_labeled_statement(
     self = ast_palloc(struct Ast);
     self->tag = AST_CASE_LABELED_STATEMENT;
     self->data.case_labeled_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_default_labeled_statement(AstRef statement) {
+  AstRef self = NULL;
+  if (ast_is_statement(statement)) {
+    AstDefaultLabeledStatementRef data = ast_palloc(struct AstDefaultLabeledStatement);
+    data->statement = statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_DEFAULT_LABELED_STATEMENT;
+    self->data.default_labeled_statement = data;
   }
   return self;
 }
