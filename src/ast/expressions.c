@@ -196,6 +196,8 @@ struct AstBitwiseXorExpression {
 };
 
 struct AstBitwiseXorOperatorExpression {
+  AstRef bitwise_xor;
+  AstRef bitwise_and;
 };
 
 struct AstBitwiseOrExpression {
@@ -894,6 +896,22 @@ AstRef ast_make_bitwise_xor_expression(AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_BITWISE_XOR_EXPRESSION;
     self->data.bitwise_xor_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_xor_operator_expression(
+    AstRef bitwise_xor, AstRef bitwise_and) {
+  AstRef self = NULL;
+  if (ast_is_bitwise_xor_expression(bitwise_xor) &&
+      ast_is_bitwise_and_expression(bitwise_and)) {
+    AstBitwiseXorOperatorExpressionRef data =
+        ast_palloc(struct AstBitwiseXorOperatorExpression);
+    data->bitwise_xor = bitwise_xor;
+    data->bitwise_and = bitwise_and;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_XOR_OPERATOR_EXPRESSION;
+    self->data.bitwise_xor_operator_expression = data;
   }
   return self;
 }
