@@ -80,7 +80,8 @@ AstRef ast_make_right_shift_assignment_expression(
     AstRef unary, AstRef assignment);
 AstRef ast_make_bitwise_and_assignment_expression(
     AstRef unary, AstRef assignment);
-AstRef ast_make_bitwise_xor_assignment_expression();
+AstRef ast_make_bitwise_xor_assignment_expression(
+    AstRef unary, AstRef assignment);
 AstRef ast_make_bitwise_or_assignment_expression();
 AstRef ast_make_expression();
 AstRef ast_make_comma_expression();

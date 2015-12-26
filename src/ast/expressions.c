@@ -287,6 +287,8 @@ struct AstBitwiseAndAssignmentExpression {
 };
 
 struct AstBitwiseXorAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstBitwiseOrAssignmentExpression {
@@ -1230,6 +1232,22 @@ AstRef ast_make_bitwise_and_assignment_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_BITWISE_AND_ASSIGNMENT_EXPRESSION;
     self->data.bitwise_and_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_bitwise_xor_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstBitwiseXorAssignmentExpressionRef data =
+        ast_palloc(struct AstBitwiseXorAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_BITWISE_XOR_ASSIGNMENT_EXPRESSION;
+    self->data.bitwise_xor_assignment_expression = data;
   }
   return self;
 }
