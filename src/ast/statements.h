@@ -14,6 +14,10 @@ AstRef ast_make_statement_list();
 AstRef ast_make_expression_statement();
 AstRef ast_make_selection_statement();
 AstRef ast_make_iteration_statement();
-AstRef ast_make_jump_statement();
+AstRef ast_make_jump_statement(AstRef jump_statement);
+AstRef ast_make_goto_jump_statement(AstRef identifier, AstRef statement);
+AstRef ast_make_continue_jump_statement(AstRef statement);
+AstRef ast_make_break_jump_statement(AstRef statement);
+AstRef ast_make_return_jump_statement(AstRef expression, AstRef statement);
 
 #endif  /* KMC_C89_COMPILER_AST_STATEMENTS_H */

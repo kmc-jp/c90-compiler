@@ -127,6 +127,10 @@ enum AstTag {
   AST_SELECTION_STATEMENT,
   AST_ITERATION_STATEMENT,
   AST_JUMP_STATEMENT,
+  AST_GOTO_JUMP_STATEMENT,
+  AST_CONTINUE_JUMP_STATEMENT,
+  AST_BREAK_JUMP_STATEMENT,
+  AST_RETURN_JUMP_STATEMENT,
   AST_TRANSLATION_UNIT,
   AST_EXTERNAL_DECLARATION,
   AST_FUNCTION_DEFINITION,
@@ -264,6 +268,10 @@ typedef struct AstExpressionStatement* AstExpressionStatementRef;
 typedef struct AstSelectionStatement* AstSelectionStatementRef;
 typedef struct AstIterationStatement* AstIterationStatementRef;
 typedef struct AstJumpStatement* AstJumpStatementRef;
+typedef struct AstGotoJumpStatement* AstGotoJumpStatementRef;
+typedef struct AstContinueJumpStatement* AstContinueJumpStatementRef;
+typedef struct AstBreakJumpStatement* AstBreakJumpStatementRef;
+typedef struct AstReturnJumpStatement* AstReturnJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
