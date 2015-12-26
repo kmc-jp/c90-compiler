@@ -169,6 +169,7 @@ struct AstGreaterThanOrEqualToExpression {
 };
 
 struct AstEqualityExpression {
+  AstRef expression;
 };
 
 struct AstEqualToExpression {
@@ -797,6 +798,21 @@ AstRef ast_make_greater_than_or_equal_to_expression(
     self = ast_palloc(struct Ast);
     self->tag = AST_GREATER_THAN_OR_EQUAL_TO_EXPRESSION;
     self->data.greater_than_or_equal_to_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_equality_expression(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_relational_expression(expression) ||
+      ast_is_equal_to_expression(expression) ||
+      ast_is_not_equal_to_expression(expression)) {
+    AstEqualityExpressionRef data =
+        ast_palloc(struct AstEqualityExpression);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_EQUALITY_EXPRESSION;
+    self->data.equality_expression = data;
   }
   return self;
 }
