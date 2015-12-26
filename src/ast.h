@@ -118,7 +118,10 @@ enum AstTag {
   AST_IDENTIFIER_LIST,
   AST_TYPE_NAME,
   AST_ABSTRACT_DECLARATOR,
+  AST_POINTER_ABSTRACT_DECLARATOR,
   AST_DIRECT_ABSTRACT_DECLARATOR,
+  AST_ARRAY_ABSTRACT_DECLARATOR,
+  AST_FUNCTION_ABSTRACT_DECLARATOR,
   AST_TYPEDEF_NAME,
   AST_INITIALIZER,
   AST_INITIALIZER_LIST,
@@ -259,7 +262,10 @@ typedef struct AstParameterAbstractDeclaration* AstParameterAbstractDeclarationR
 typedef struct AstIdentifierList* AstIdentifierListRef;
 typedef struct AstTypeName* AstTypeNameRef;
 typedef struct AstAbstractDeclarator* AstAbstractDeclaratorRef;
+typedef struct AstPointerAbstractDeclarator* AstPointerAbstractDeclaratorRef;
 typedef struct AstDirectAbstractDeclarator* AstDirectAbstractDeclaratorRef;
+typedef struct AstArrayAbstractDeclarator* AstArrayAbstractDeclaratorRef;
+typedef struct AstFunctionAbstractDeclarator* AstFunctionAbstractDeclaratorRef;
 typedef struct AstTypedefName* AstTypedefNameRef;
 typedef struct AstInitializer* AstInitializerRef;
 typedef struct AstInitializerList* AstInitializerListRef;

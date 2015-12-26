@@ -700,7 +700,11 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-abstract-declarator
+| pointer-abstract-declarator
+;
+
+pointer-abstract-declarator
+: pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
@@ -710,8 +714,16 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression.opt ']'
-| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
+| array-abstract-declarator
+| function-abstract-declarator
+;
+
+array-abstract-declarator
+: direct-abstract-declarator.opt '[' constant-expression.opt ']'
+;
+
+function-abstract-declarator
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
