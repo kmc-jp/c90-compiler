@@ -135,6 +135,8 @@ struct AstShiftExpression {
 };
 
 struct AstLeftShiftExpression {
+  AstRef shift;
+  AstRef additive;
 };
 
 struct AstRightShiftExpression {
@@ -677,6 +679,20 @@ AstRef ast_make_shift_expression(AstRef expression) {
     self = ast_palloc(struct Ast);
     self->tag = AST_SHIFT_EXPRESSION;
     self->data.shift_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_left_shift_expression(AstRef shift, AstRef additive) {
+  AstRef self = NULL;
+  if (ast_is_shift_expression(shift) &&
+      ast_is_additive_expression(additive)) {
+    AstLeftShiftExpressionRef data = ast_palloc(struct AstLeftShiftExpression);
+    data->shift = shift;
+    data->additive = additive;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_LEFT_SHIFT_EXPRESSION;
+    self->data.left_shift_expression = data;
   }
   return self;
 }
