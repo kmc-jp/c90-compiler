@@ -97,6 +97,16 @@ first_time:
 end_of_3_nested_for:
 
   return_nothing();
+
+  goto NULL;
+  print("\"goto NULL;\" failed\n");
+NULL:
+  goto define;
+  print("\"goto define;\" failed\n");
+define:
+  goto include;
+  print("\"goto include;\" failed\n");
+include:
   
   return 0;
 }
