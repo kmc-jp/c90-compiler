@@ -105,8 +105,12 @@ struct AstEnumeratorList {
 };
 
 struct AstEnumerator {
+  AstRef enumerator;
+};
+
+struct AstEnumeratorWithInitializer {
   AstRef enumeration_constant;
-  AstNullableRef constant_expression;
+  AstRef constant_expression;
 };
 
 struct AstTypeQualifier {
@@ -566,18 +570,30 @@ AstRef ast_push_enumerator_list(AstRef enumerator_list, AstRef enumerator) {
   return self;
 }
 
-AstRef ast_make_enumerator(
-    AstRef enumeration_constant, AstRef constant_expression) {
+AstRef ast_make_enumerator(AstRef enumerator) {
   AstRef self = NULL;
-  if (ast_is_identifier(enumeration_constant) &&
-      (constant_expression == NULL ||
-       ast_is_constant_expression(constant_expression))) {
+  if (ast_is_enumeration_constant(enumerator) ||
+      ast_is_enumerator_with_initializer(enumerator)) {
     AstEnumeratorRef data = ast_palloc(struct AstEnumerator);
-    data->enumeration_constant = enumeration_constant;
-    data->constant_expression = constant_expression;
+    data->enumerator = enumerator;
     self = ast_palloc(struct Ast);
     self->tag = AST_ENUMERATOR;
     self->data.enumerator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_enumerator_with_initializer(
+    AstRef enumeration_constant, AstRef constant_expression) {
+  AstRef self = NULL;
+  if (ast_is_identifier(enumeration_constant) &&
+      ast_is_constant_expression(constant_expression)) {
+    AstEnumeratorWithInitializerRef data = ast_palloc(struct AstEnumeratorWithInitializer);
+    data->enumeration_constant = enumeration_constant;
+    data->constant_expression = constant_expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ENUMERATOR_WITH_INITIALIZER;
+    self->data.enumerator_with_initializer = data;
   }
   return self;
 }

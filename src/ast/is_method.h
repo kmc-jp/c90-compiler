@@ -102,6 +102,7 @@ bool ast_is_enum_definition(AstRef ast);
 bool ast_is_enum_declaration(AstRef ast);
 bool ast_is_enumerator_list(AstRef ast);
 bool ast_is_enumerator(AstRef ast);
+bool ast_is_enumerator_with_initializer(AstRef ast);
 bool ast_is_type_qualifier(AstRef ast);
 bool ast_is_declarator(AstRef ast);
 bool ast_is_direct_declarator(AstRef ast);
