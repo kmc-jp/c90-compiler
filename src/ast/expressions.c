@@ -262,6 +262,8 @@ struct AstModuloAssignmentExpression {
 };
 
 struct AstAdditionAssignmentExpression {
+  AstRef unary;
+  AstRef assignment;
 };
 
 struct AstSubtractionAssignmentExpression {
@@ -1140,6 +1142,22 @@ AstRef ast_make_modulo_assignment_expression(AstRef unary, AstRef assignment) {
     self = ast_palloc(struct Ast);
     self->tag = AST_MODULO_ASSIGNMENT_EXPRESSION;
     self->data.modulo_assignment_expression = data;
+  }
+  return self;
+}
+
+AstRef ast_make_addition_assignment_expression(
+    AstRef unary, AstRef assignment) {
+  AstRef self = NULL;
+  if (ast_is_unary_expression(unary) &&
+      ast_is_assignment_expression(assignment)) {
+    AstAdditionAssignmentExpressionRef data =
+        ast_palloc(struct AstAdditionAssignmentExpression);
+    data->unary = unary;
+    data->assignment = assignment;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_ADDITION_ASSIGNMENT_EXPRESSION;
+    self->data.addition_assignment_expression = data;
   }
   return self;
 }
