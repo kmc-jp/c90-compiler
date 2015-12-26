@@ -486,6 +486,7 @@ AstRef ast_make_struct_declarator_list(void) {
   self->data.struct_declarator_list = data;
   return self;
 }
+
 AstRef ast_push_struct_declarator_list(
     AstRef struct_declarator_list, AstRef struct_declarator) {
   AstRef self = NULL;
@@ -827,6 +828,7 @@ AstRef ast_push_identifier_list(AstRef identifier_list, AstRef identifier) {
   }
   return self;
 }
+
 AstRef ast_make_type_name(
     AstRef specifier_qualifier_list, AstNullableRef abstract_declarator) {
   AstRef self = NULL;
