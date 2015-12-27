@@ -166,22 +166,23 @@ postfix-decrement-expression
 
 argument-expression-list.opt
 : /* empty */ {
-  $$ = NULL;
+  $$ = ast_make_argument_expression_list();
 }
 | argument-expression-list {
   $$ = $[argument-expression-list];
 }
 ;
 
-argument-expression-list[lhs]
+argument-expression-list
 : assignment-expression {
-  $$ = ast_make_argument_expression_list($[assignment-expression]);
+  $$ = ast_make_argument_expression_list();
+  $$ = ast_push_argument_expression_list($$, $[assignment-expression]);
   if (!$$) {
     AST_ERROR("argument-expression-list", "assignment-expression");
   }
 }
-| argument-expression-list[rhs] ',' assignment-expression {
-  $$ = ast_make_argument_expression_list($[lhs], $[assignment-expression]);
+| argument-expression-list[src] ',' assignment-expression {
+  $$ = ast_push_argument_expression_list($[src], $[assignment-expression]);
   if (!$$) {
     AST_ERROR("argument-expression-list", "argument-expression-list ',' assignment-expression");
   }
