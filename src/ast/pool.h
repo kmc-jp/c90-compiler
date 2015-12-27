@@ -15,8 +15,6 @@ DECLARE_VECTOR(AstRef)
 
 static const size_t AST_POOL_CHUNK_SIZE = 1024;
 
-void ast_pool_ctor(void);
-void ast_pool_dtor(void);
 MemoryPoolRef ast_pool(void);
 
 void ast_string_allocator_ctor(void);
