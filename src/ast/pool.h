@@ -28,4 +28,7 @@ void ast_vector_allocator_ctor(void);
 AstVectorRef ast_make_vector(void);
 void ast_push_vector(AstVectorRef vector, AstRef element);
 
+void ast_initialize_pool(void);
+void ast_finalize_pool(void);
+
 #endif  /* KMC_C89_COMPILER_AST_POOL_H */
