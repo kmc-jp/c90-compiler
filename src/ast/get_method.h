@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_GET_METHOD_H
 #define KMC_C89_COMPILER_AST_GET_METHOD_H
 
-#include "ast_impl.h"
+#include "../ast.h"
 
 AstIdentifierRef ast_get_identifier(AstRef ast);
 AstConstantRef ast_get_constant(AstRef ast);
@@ -153,7 +153,6 @@ AstTranslationUnitRef ast_get_translation_unit(AstRef ast);
 AstExternalDeclarationRef ast_get_external_declaration(AstRef ast);
 AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);
 
-AstVectorRef ast_get_vector(AstRef ast);
 AstTokenRef ast_get_token(AstRef ast);
 
 #endif  /* KMC_C89_COMPILER_AST_GET_METHOD_H */

@@ -152,7 +152,6 @@ enum AstTag {
   AST_EXTERNAL_DECLARATION,
   AST_FUNCTION_DEFINITION,
 
-  AST_VECTOR,
   AST_TOKEN,
   AST_TAG_ENUM_END
 };
@@ -309,5 +308,7 @@ typedef struct AstVoidReturnJumpStatement* AstVoidReturnJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
+
+typedef struct String* AstTokenRef;
 
 #endif  /* KMC_C89_COMPILER_AST_H */
