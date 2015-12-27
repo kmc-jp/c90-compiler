@@ -1,41 +1,36 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "token.h"
-#include "yacc_mock.h"
 #include "utility.h"
 #include "use_vector.h"
-/* #include "y.tab.h" */
+#include "ast/ast_string.h"
+#include "parser.tab.h"
+#include "ast_method.h"
+#include <stdlib.h>
 
 int yywrap(void) {
   return 1;
-}
-
-void copy_to_yylval(char *src, int size) {
-  char *literal = safe_array_malloc(char, size + 1);
-  strncpy(literal, src, size);
-  literal[size] = '\0';
-  yylval = literal;
 }
 
 VECTORREF(char) lexer_string_literal;
 
 void initialize_lexer(void) {
   lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
+  ast_initialize_pool();
 }
 %}
-ESCAPE_SEQUENCE "\\"[\\\'\"abfnrtv0?]
-NOT_ESCAPE_SEQUENCE [^\\]
-CHARACTER {ESCAPE_SEQUENCE}|{NOT_ESCAPE_SEQUENCE}
+SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
+OCT_ESCAPE_SEQUENCE "\\"[0-7]{1,3}
+HEX_ESCAPE_SEQUANCE "\\x"[0-9a-fA-F]+
+ESCAPE_SEQUENCE {SIMPLE_ESCAPE_SEQUENCE}|{OCT_ESCAPE_SEQUENCE}|{HEX_ESCAPE_SEQUANCE}
+C_CHAR ([^\'\\\n]|{ESCAPE_SEQUENCE})
+S_CHAR ([^\"\\\n]|{ESCAPE_SEQUENCE})
 IDENTIFIER [_a-zA-Z][_a-zA-Z0-9]*
-DIGIT2 "0b"("0"|1[01]*)
-DIGIT4 "0q"("0"|[1-3][0-3]*)
-DIGIT8 "0"("0"|[1-7][0-7]*)
-DIGIT10 "0"|[1-9][0-9]*
-DIGIT16 "0x"("0"|[1-9A-F][0-9A-F]*)
-CHAR8 "\\"[0-7]+
-CHAR16 "\\x"[0-9A-F]+
+DIGIT8 "0"[0-7]*
+DIGIT10 [1-9][0-9]*
+DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
+INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 WHITESPACE [ \t\n]
 %x COMMENT
 %x STRING
@@ -45,34 +40,39 @@ WHITESPACE [ \t\n]
 <COMMENT>"*/" BEGIN(INITIAL);
 <COMMENT>.    ;
 
-"\"" BEGIN(STRING);
+("L"?)"\"" BEGIN(STRING);
 
 <STRING>"\"" {
   int len = VECTORFUNC(char, size)(lexer_string_literal);
   char *str = VECTORFUNC(char, data)(lexer_string_literal);
-  copy_to_yylval(str, len);
+  yylval = ast_make_token(str, len);
   VECTORFUNC(char, clear)(lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
 }
 
-<STRING>{CHARACTER} {
+<STRING>{S_CHAR} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
     VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
   }
 }
 
-WHITESPACE ;
-
-[+-]?[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return DOUBLE_LITERAL;
+("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
+  yylval = ast_make_token(yytext, yyleng);
+  return CHARACTER_CONSTANT;
 }
 
-[+-]?({DIGIT2}|{DIGIT4}|{DIGIT8}|{DIGIT10}|{DIGIT16})[UuLl]? {
-  copy_to_yylval(yytext, yyleng);
-  return INT_LITERAL;
+WHITESPACE ;
+
+[0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
+  yylval = ast_make_token(yytext, yyleng);
+  return FLOATING_CONSTANT;
+}
+
+({DIGIT8}|{DIGIT10}|{DIGIT16})({INTEGER_SUFFIX})? {
+  yylval = ast_make_token(yytext, yyleng);
+  return INTEGER_CONSTANT;
 }
 
 {SINGLE_CHARACTER_TOKEN} {
@@ -137,13 +137,8 @@ WHITESPACE ;
 "while"    return WHILE;
 
 {IDENTIFIER} {
-  copy_to_yylval(yytext, yyleng);
+  yylval = ast_make_token(yytext, yyleng);
   return IDENTIFIER;
-}
-
-"'"({CHARACTER}|{CHAR8}|{CHAR16})"'" {
-  copy_to_yylval(yytext, yyleng);
-  return CHAR_LITERAL;
 }
 
 . {
@@ -151,3 +146,16 @@ WHITESPACE ;
   exit(EXIT_FAILURE);
 }
 %%
+
+void set_yyin_string(const char *code) {
+  yy_scan_string(code);
+}
+
+void set_yyin_file(const char *filename) {
+  FILE* fp = fopen(filename, "r");
+  if (fp == NULL) {
+    printf("fatal error: failed to open %s\n", filename);
+    exit(EXIT_FAILURE);
+  }
+  yyin = fp;
+}
