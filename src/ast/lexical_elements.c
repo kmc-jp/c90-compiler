@@ -1,4 +1,5 @@
 #include "lexical_elements.h"
+#include "lexical_elements_impl.h"
 #include "ast_impl.h"
 #include "is_method.h"
 #include "pool.h"
