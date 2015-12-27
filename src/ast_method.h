@@ -11,7 +11,7 @@
 #include "ast/ast_string.h"
 #include "ast/ast_vector.h"
 
-void ast_initialize_pool(size_t size);
+void ast_initialize_pool(void);
 void ast_finalize_pool(void);
 
 #endif  /* KMC_C89_COMPILER_AST_METHOD_H */
