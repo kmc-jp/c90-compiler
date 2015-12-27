@@ -523,17 +523,42 @@ modulo-expression
 ;
 
 additive-expression
-: multiplicative-expression
-| addition-expression
-| subtraction-expression
+: multiplicative-expression {
+  $$ = ast_make_additive_expression($[multiplicative-expression]);
+  if (!$$) {
+    AST_ERROR("additive-expression", "multiplicative-expression");
+  }
+}
+| addition-expression {
+  $$ = ast_make_additive_expression($[addition-expression]);
+  if (!$$) {
+    AST_ERROR("additive-expression", "addition-expression");
+  }
+}
+| subtraction-expression {
+  $$ = ast_make_additive_expression($[subtraction-expression]);
+  if (!$$) {
+    AST_ERROR("additive-expression", "subtraction-expression");
+  }
+}
 ;
 
 addition-expression
-: additive-expression '+' multiplicative-expression
+: additive-expression '+' multiplicative-expression {
+  $$ = ast_make_addition_expression($[additive-expression], $[multiplicative-expression]);
+  if (!$$) {
+    AST_ERROR("addition-expression", "additive-expression '+' multiplicative-expression");
+  }
+}
 ;
 
 subtraction-expression
-: additive-expression '-' multiplicative-expression
+: additive-expression '-' multiplicative-expression {
+  $$ = ast_make_subtraction_expression($[additive-expression], $[multiplicative-expression]);
+  if (!$$) {
+    AST_ERROR("subtraction-expression", "additive-expression '-' multiplicative-expression");
+  }
+}
 ;
 
 shift-expression
