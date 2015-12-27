@@ -1,7 +1,5 @@
 #include "ast_method.h"
-#include "ast/ast_string.h"
 #include "ast/ast_vector.h"
-#include "ast/pool.h"
 
 void ast_initialize_pool(void) {
   static bool is_first = true;
