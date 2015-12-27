@@ -1,23 +1,9 @@
 #include "external_definitions.h"
+#include "external_definitions_impl.h"
 #include "ast_impl.h"
 #include "is_method.h"
 #include "get_method.h"
 #include "pool.h"
-
-struct AstTranslationUnit {
-  AstVectorRef external_declaration_vector;
-};
-
-struct AstExternalDeclaration {
-  AstRef external_declaration;
-};
-
-struct AstFunctionDefinition {
-  AstRef declaration_specifier_list;
-  AstRef declarator;
-  AstRef declaration_list;
-  AstRef compound_statement;
-};
 
 AstRef ast_make_translation_unit(void) {
   AstRef self = ast_palloc(struct Ast);
