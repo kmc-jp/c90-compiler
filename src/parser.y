@@ -469,22 +469,57 @@ type-cast-expression
 ;
 
 multiplicative-expression
-: cast-expression
-| product-expression
-| division-expression
-| modulo-expression
+: cast-expression {
+  $$ = ast_make_multiplicative_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "cast-expression");
+  }
+}
+| product-expression {
+  $$ = ast_make_multiplicative_expression($[product-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "product-expression");
+  }
+}
+| division-expression {
+  $$ = ast_make_multiplicative_expression($[division-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "division-expression");
+  }
+}
+| modulo-expression {
+  $$ = ast_make_multiplicative_expression($[modulo-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "modulo-expression");
+  }
+}
 ;
 
 product-expression
-: multiplicative-expression '*' cast-expression
+: multiplicative-expression '*' cast-expression {
+  $$ = ast_make_product_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("product-expression", "multiplicative-expression '*' cast-expression");
+  }
+}
 ;
 
 division-expression
-: multiplicative-expression '/' cast-expression
+: multiplicative-expression '/' cast-expression {
+  $$ = ast_make_division_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("division-expression", "multiplicative-expression '/' cast-expression");
+  }
+}
 ;
 
 modulo-expression
-: multiplicative-expression '%' cast-expression
+: multiplicative-expression '%' cast-expression {
+  $$ = ast_make_modulo_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("modulo-expression", "multiplicative-expression '%' cast-expression");
+  }
+}
 ;
 
 additive-expression
