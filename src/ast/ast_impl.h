@@ -2,8 +2,6 @@
 #define KMC_C89_COMPILER_AST_AST_IMPL_H
 
 #include "../ast.h"
-#include "ast_vector.h"
-#include "ast_string.h"
 
 struct Ast {
   enum AstTag tag;
