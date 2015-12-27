@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_GET_METHOD_H
 #define KMC_C89_COMPILER_AST_GET_METHOD_H
 
-#include "ast_impl.h"
+#include "../ast.h"
 
 AstIdentifierRef ast_get_identifier(AstRef ast);
 AstConstantRef ast_get_constant(AstRef ast);
@@ -128,18 +128,31 @@ AstInitializerRef ast_get_initializer(AstRef ast);
 AstInitializerListRef ast_get_initializer_list(AstRef ast);
 AstStatementRef ast_get_statement(AstRef ast);
 AstLabeledStatementRef ast_get_labeled_statement(AstRef ast);
+AstIdentifierLabeledStatementRef ast_get_identifier_labeled_statement(AstRef ast);
+AstCaseLabeledStatementRef ast_get_case_labeled_statement(AstRef ast);
+AstDefaultLabeledStatementRef ast_get_default_labeled_statement(AstRef ast);
 AstCompoundStatementRef ast_get_compound_statement(AstRef ast);
 AstDeclarationListRef ast_get_declaration_list(AstRef ast);
 AstStatementListRef ast_get_statement_list(AstRef ast);
 AstExpressionStatementRef ast_get_expression_statement(AstRef ast);
 AstSelectionStatementRef ast_get_selection_statement(AstRef ast);
+AstIfStatementRef ast_get_if_statement(AstRef ast);
+AstIfElseStatementRef ast_get_if_else_statement(AstRef ast);
+AstSwitchStatementRef ast_get_switch_statement(AstRef ast);
 AstIterationStatementRef ast_get_iteration_statement(AstRef ast);
+AstWhileStatementRef ast_get_while_statement(AstRef ast);
+AstDoWhileStatementRef ast_get_do_while_statement(AstRef ast);
+AstForStatementRef ast_get_for_statement(AstRef ast);
 AstJumpStatementRef ast_get_jump_statement(AstRef ast);
+AstGotoJumpStatementRef ast_get_goto_jump_statement(AstRef ast);
+AstContinueJumpStatementRef ast_get_continue_jump_statement(AstRef ast);
+AstBreakJumpStatementRef ast_get_break_jump_statement(AstRef ast);
+AstReturnJumpStatementRef ast_get_return_jump_statement(AstRef ast);
+AstVoidReturnJumpStatementRef ast_get_void_return_jump_statement(AstRef ast);
 AstTranslationUnitRef ast_get_translation_unit(AstRef ast);
 AstExternalDeclarationRef ast_get_external_declaration(AstRef ast);
 AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);
 
-AstVectorRef ast_get_vector(AstRef ast);
 AstTokenRef ast_get_token(AstRef ast);
 
 #endif  /* KMC_C89_COMPILER_AST_GET_METHOD_H */
