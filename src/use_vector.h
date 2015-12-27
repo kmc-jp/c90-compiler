@@ -3,6 +3,4 @@
 
 #include "vector.h"
 
-DECLARE_VECTOR(char)
-
 #endif  /* KMC_C89_COMPILER_USE_VECTOR_H */

@@ -1,21 +1,18 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "utility.h"
-#include "use_vector.h"
-#include "ast/ast_string.h"
 #include "parser.tab.h"
 #include "ast_method.h"
+#include "stdstring.h"
 #include <stdlib.h>
 
 int yywrap(void) {
   return 1;
 }
 
-VECTORREF(char) lexer_string_literal;
+StringRef lexer_string_literal;
 
 void initialize_lexer(void) {
-  lexer_string_literal = VECTORFUNC(char, ctor)(NULL);
   ast_initialize_pool();
 }
 %}
@@ -40,13 +37,15 @@ WHITESPACE [ \t\n]
 <COMMENT>"*/" BEGIN(INITIAL);
 <COMMENT>.    ;
 
-("L"?)"\"" BEGIN(STRING);
+("L"?)"\"" {
+  lexer_string_literal = string_ctor("", NULL);
+  BEGIN(STRING);
+}
 
 <STRING>"\"" {
-  int len = VECTORFUNC(char, size)(lexer_string_literal);
-  char *str = VECTORFUNC(char, data)(lexer_string_literal);
-  yylval = ast_make_token(str, len);
-  VECTORFUNC(char, clear)(lexer_string_literal);
+  const size_t leng = string_length(lexer_string_literal);
+  yylval = ast_make_token(string_data(lexer_string_literal), leng);
+  string_dtor(&lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
 }
@@ -54,7 +53,7 @@ WHITESPACE [ \t\n]
 <STRING>{S_CHAR} {
   unsigned i;
   for (i = 0; i < yyleng; ++i) {
-    VECTORFUNC(char, push_back)(lexer_string_literal, yytext[i]);
+    string_push_back(lexer_string_literal, yytext[i]);
   }
 }
 
