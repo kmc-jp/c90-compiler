@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_GET_METHOD_H
 #define KMC_C89_COMPILER_AST_GET_METHOD_H
 
-#include "ast_impl.h"
+#include "../ast.h"
 
 AstIdentifierRef ast_get_identifier(AstRef ast);
 AstConstantRef ast_get_constant(AstRef ast);
