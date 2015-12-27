@@ -1,10 +1,11 @@
 /* %option yywrap */
 %{
 #define YY_USER_INIT initialize_lexer()
-#include "parser.tab.h"
+#include <stdlib.h>
 #include "ast_method.h"
 #include "stdstring.h"
-#include <stdlib.h>
+#include "parser.tab.h"
+#include "ast/ast_string.h"
 
 int yywrap(void) {
   return 1;
