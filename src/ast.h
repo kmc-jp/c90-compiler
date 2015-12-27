@@ -100,18 +100,28 @@ enum AstTag {
   AST_ENUM_DECLARATION,
   AST_ENUMERATOR_LIST,
   AST_ENUMERATOR,
+  AST_ENUMERATOR_WITH_INITIALIZER,
   AST_TYPE_QUALIFIER,
   AST_DECLARATOR,
   AST_DIRECT_DECLARATOR,
+  AST_ARRAY_DECLARATOR,
+  AST_FUNCTION_DECLARATOR,
+  AST_OLD_STYLE_FUNCTION_DECLARATOR,
   AST_POINTER,
   AST_TYPE_QUALIFIER_LIST,
   AST_PARAMETER_TYPE_LIST,
+  AST_VARIADIC_PARAMETER_LIST,
   AST_PARAMETER_LIST,
   AST_PARAMETER_DECLARATION,
+  AST_PARAMETER_CONCRETE_DECLARATION,
+  AST_PARAMETER_ABSTRACT_DECLARATION,
   AST_IDENTIFIER_LIST,
   AST_TYPE_NAME,
   AST_ABSTRACT_DECLARATOR,
+  AST_POINTER_ABSTRACT_DECLARATOR,
   AST_DIRECT_ABSTRACT_DECLARATOR,
+  AST_ARRAY_ABSTRACT_DECLARATOR,
+  AST_FUNCTION_ABSTRACT_DECLARATOR,
   AST_TYPEDEF_NAME,
   AST_INITIALIZER,
   AST_INITIALIZER_LIST,
@@ -248,18 +258,28 @@ typedef struct AstEnumDefinition* AstEnumDefinitionRef;
 typedef struct AstEnumDeclaration* AstEnumDeclarationRef;
 typedef struct AstEnumeratorList* AstEnumeratorListRef;
 typedef struct AstEnumerator* AstEnumeratorRef;
+typedef struct AstEnumeratorWithInitializer* AstEnumeratorWithInitializerRef;
 typedef struct AstTypeQualifier* AstTypeQualifierRef;
 typedef struct AstDeclarator* AstDeclaratorRef;
 typedef struct AstDirectDeclarator* AstDirectDeclaratorRef;
+typedef struct AstArrayDeclarator* AstArrayDeclaratorRef;
+typedef struct AstFunctionDeclarator* AstFunctionDeclaratorRef;
+typedef struct AstOldStyleFunctionDeclarator* AstOldStyleFunctionDeclaratorRef;
 typedef struct AstPointer* AstPointerRef;
 typedef struct AstTypeQualifierList* AstTypeQualifierListRef;
 typedef struct AstParameterTypeList* AstParameterTypeListRef;
+typedef struct AstVariadicParameterList* AstVariadicParameterListRef;
 typedef struct AstParameterList* AstParameterListRef;
 typedef struct AstParameterDeclaration* AstParameterDeclarationRef;
+typedef struct AstParameterConcreteDeclaration* AstParameterConcreteDeclarationRef;
+typedef struct AstParameterAbstractDeclaration* AstParameterAbstractDeclarationRef;
 typedef struct AstIdentifierList* AstIdentifierListRef;
 typedef struct AstTypeName* AstTypeNameRef;
 typedef struct AstAbstractDeclarator* AstAbstractDeclaratorRef;
+typedef struct AstPointerAbstractDeclarator* AstPointerAbstractDeclaratorRef;
 typedef struct AstDirectAbstractDeclarator* AstDirectAbstractDeclaratorRef;
+typedef struct AstArrayAbstractDeclarator* AstArrayAbstractDeclaratorRef;
+typedef struct AstFunctionAbstractDeclarator* AstFunctionAbstractDeclaratorRef;
 typedef struct AstTypedefName* AstTypedefNameRef;
 typedef struct AstInitializer* AstInitializerRef;
 typedef struct AstInitializerList* AstInitializerListRef;

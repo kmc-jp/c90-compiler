@@ -1,10 +1,20 @@
 %code {
 #include <stdio.h>
+#include "ast_method.h"
+
+#define AST_ERROR(lhs, rhs) \
+  do { \
+    yyerror("cannot parse `" lhs "` as `" rhs "`"); \
+    YYERROR; \
+  } while (false)
+
 void yyerror(const char *);
 }
 
 %code provides {
 int yylex(void);
+void set_yyin_file(const char *filename);
+void set_yyin_string(const char *code);
 }
 
 %code requires {
@@ -17,6 +27,61 @@ int yylex(void);
 %token INTEGER_CONSTANT
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
+%token ARROW "->"
+%token INCREMENT "++"
+%token DECREMENT "--"
+%token LEFT_SHIFT "<<"
+%token RIGHT_SHIFT ">>"
+%token EQUAL "=="
+%token NOT_EQUAL "!="
+%token LESS "<"
+%token GREATER ">"
+%token LESS_EQUAL "<="
+%token GREATER_EQUAL ">="
+%token AND "&&"
+%token OR "||"
+%token ADD_ASSIGN "+="
+%token SUB_ASSIGN "-="
+%token MUL_ASSIGN "*="
+%token DIV_ASSIGN "/="
+%token MOD_ASSIGN "%="
+%token LEFT_SHIFT_ASSIGN "<<="
+%token RIGHT_SHIFT_ASSIGN ">>="
+%token AND_ASSIGN "&="
+%token OR_ASSIGN "|="
+%token XOR_ASSIGN "^="
+%token AUTO "auto"
+%token BREAK "break"
+%token CASE "case"
+%token CHAR "char"
+%token CONST "const"
+%token CONTINUE "continue"
+%token DEFAULT "default"
+%token DO "do"
+%token DOUBLE "double"
+%token ELSE "else"
+%token ENUM "enum"
+%token EXTERN "extern"
+%token FLOAT "float"
+%token FOR "for"
+%token GOTO "goto"
+%token IF "if"
+%token INT "int"
+%token LONG "long"
+%token REGISTER "register"
+%token RETURN "return"
+%token SHORT "short"
+%token SIGNED "signed"
+%token SIZEOF "sizeof"
+%token STATIC "static"
+%token STRUCT "struct"
+%token SWITCH "switch"
+%token TYPEDEF "typedef"
+%token UNION "union"
+%token UNSIGNED "unsigned"
+%token VOID "void"
+%token VOLATILE "volatile"
+%token WHILE "while"
 
 %start translation-unit
 
@@ -39,64 +104,174 @@ constant
 ;
 
 floating-constant
-: FLOATING_CONSTANT
+: FLOATING_CONSTANT {
+  $$ = ast_make_floating_constant($[FLOATING_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("floating-constant", "FLOATING_CONSTANT");
+  }
+}
 ;
 
 integer-constant
-: INTEGER_CONSTANT
+: INTEGER_CONSTANT {
+  $$ = ast_make_integer_constant($[INTEGER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("integer-constant", "INTEGER_CONSTANT");
+  }
+}
 ;
 
 enumeration-constant
-: identifier
+: identifier {
+  $$ = ast_make_enumeration_constant($[identifier]);
+  if (!$$) {
+    AST_ERROR("enumeration-constant", "identifier");
+  }
+}
 ;
 
 character-constant
-: CHARACTER_CONSTANT
+: CHARACTER_CONSTANT {
+  $$ = ast_make_character_constant($[CHARACTER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("character-constant", "CHARACTER_CONSTANT");
+  }
+}
 ;
 
 string-literal
-: STRING_LITERAL
+: STRING_LITERAL {
+  $$ = ast_make_string_literal($[STRING_LITERAL]);
+  if (!$$) {
+    AST_ERROR("string-literal", "STRING_LITERAL");
+  }
+}
 ;
 
 primary-expression
-: identifier
-| constant
-| string-literal
-| '(' expression ')'
+: identifier {
+  $$ = ast_make_primary_expression($[identifier]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "identifier");
+  }
+}
+| constant {
+  $$ = ast_make_primary_expression($[constant]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "constant");
+  }
+}
+| string-literal {
+  $$ = ast_make_primary_expression($[string-literal]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "string-literal");
+  }
+}
+| '(' expression ')' {
+  $$ = ast_make_expression($[expression]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "'(' expression ')'");
+  }
+}
 ;
 
 postfix-expression
-: primary-expression
-| array-subscript-expression
-| function-call-expression
-| member-access-expression
-| member-access-through-pointer-expression
-| postfix-increment-expression
-| postfix-decrement-expression
+: primary-expression {
+  $$ = ast_make_postfix_expression($[primary-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "primary-expression");
+  }
+}
+| array-subscript-expression {
+  $$ = ast_make_postfix_expression($[array-subscript-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "array-subscript-expression");
+  }
+}
+| function-call-expression {
+  $$ = ast_make_postfix_expression($[function-call-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "function-call-expression");
+  }
+}
+| member-access-expression {
+  $$ = ast_make_postfix_expression($[member-access-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-expression");
+  }
+}
+| member-access-through-pointer-expression {
+  $$ = ast_make_postfix_expression($[member-access-through-pointer-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-through-pointer-expression");
+  }
+}
+| postfix-increment-expression {
+  $$ = ast_make_postfix_expression($[postfix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-increment-expression");
+  }
+}
+| postfix-decrement-expression {
+  $$ = ast_make_postfix_expression($[postfix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-decrement-expression");
+  }
+}
 ;
 
 array-subscript-expression
-: postfix-expression '[' expression ']'
+: postfix-expression '[' expression ']' {
+  $$ = ast_make_array_subscript_expression($[postfix-expression], $[expression]);
+  if (!$$) {
+    AST_ERROR("array-subscript-expression", "postfix-expression '[' expression ']'");
+  }
+}
 ;
 
 function-call-expression
-: postfix-expression '(' argument-expression-list.opt ')'
+: postfix-expression '(' argument-expression-list.opt ')' {
+  $$ = ast_make_function_call_expression($[postfix-expression], $[argument-expression-list.opt]);
+  if (!$$) {
+    AST_ERROR("function-call-expression", "postfix-expression '(' argument-expression-list.opt ')'");
+  }
+}
 ;
 
 member-access-expression
-: postfix-expression '.' identifier
+: postfix-expression '.' identifier {
+  $$ = ast_make_member_access_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-expression", "postfix-expression '.' identifier");
+  }
+}
 ;
 
 member-access-through-pointer-expression
-: postfix-expression "->" identifier
+: postfix-expression "->" identifier {
+  $$ = ast_make_member_access_through_pointer_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-through-pointer-expression", "postfix-expression \"->\" identifier");
+  }
+}
 ;
 
 postfix-increment-expression
-: postfix-expression "++"
+: postfix-expression "++" {
+  $$ = ast_make_postfix_increment_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-increment-expression", "postfix-expression \"++\"");
+  }
+}
 ;
 
 postfix-decrement-expression
-: postfix-expression "--"
+: postfix-expression "--" {
+  $$ = ast_make_postfix_decrement_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-decrement-expression", "postfix-expression \"--\"");
+  }
+}
 ;
 
 argument-expression-list.opt
@@ -110,66 +285,186 @@ argument-expression-list
 ;
 
 unary-expression
-: postfix-expression
-| prefix-increment-expression
-| prefix-decrement-expression
-| address-of-expression
-| pointer-dereference-expression
-| unary-plus-expression
-| unary-minus-expression
-| bitwise-NOT-expression
-| logical-NOT-expression
-| sizeof-expression
-| sizeof-type-expression
+: postfix-expression {
+  $$ = ast_make_unary_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "postfix-expression");
+  }
+}
+| prefix-increment-expression {
+  $$ = ast_make_unary_expression($[prefix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-increment-expression");
+  }
+}
+| prefix-decrement-expression {
+  $$ = ast_make_unary_expression($[prefix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-decrement-expression");
+  }
+}
+| address-of-expression {
+  $$ = ast_make_unary_expression($[address-of-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "address-of-expression");
+  }
+}
+| pointer-dereference-expression {
+  $$ = ast_make_unary_expression($[pointer-dereference-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "pointer-dereference-expression");
+  }
+}
+| unary-plus-expression {
+  $$ = ast_make_unary_expression($[unary-plus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-plus-expression");
+  }
+}
+| unary-minus-expression {
+  $$ = ast_make_unary_expression($[unary-minus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-minus-expression");
+  }
+}
+| bitwise-NOT-expression {
+  $$ = ast_make_unary_expression($[bitwise-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "bitwise-NOT-expression");
+  }
+}
+| logical-NOT-expression {
+  $$ = ast_make_unary_expression($[logical-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "logical-NOT-expression");
+  }
+}
+| sizeof-expression {
+  $$ = ast_make_unary_expression($[sizeof-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-expression");
+  }
+}
+| sizeof-type-expression {
+  $$ = ast_make_unary_expression($[sizeof-type-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-type-expression");
+  }
+}
 ;
 
 prefix-increment-expression
-: "++" unary-expression
+: "++" unary-expression {
+  $$ = ast_make_prefix_increment_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-increment-expression", "\"++\" unary-expression");
+  }
+}
 ;
 
 prefix-decrement-expression
-: "--" unary-expression
+: "--" unary-expression {
+  $$ = ast_make_prefix_decrement_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-decrement-expression", "\"--\" unary-expression");
+  }
+}
 ;
 
 address-of-expression
-: '&' cast-expression
+: '&' cast-expression {
+  $$ = ast_make_address_of_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("address-of-expression", "'&' cast-expression");
+  }
+}
 ;
 
 pointer-dereference-expression
-: '*' cast-expression
+: '*' cast-expression {
+  $$ = ast_make_pointer_dereference_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("pointer-dereference-expression", "'*' cast-expression");
+  }
+}
 ;
 
 unary-plus-expression
-: '+' cast-expression
+: '+' cast-expression {
+  $$ = ast_make_unary_plus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-plus-expression", "'+' cast-expression");
+  }
+}
 ;
 
 unary-minus-expression
-: '-' cast-expression
+: '-' cast-expression {
+  $$ = ast_make_unary_minus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-minus-expression", "'-' cast-expression");
+  }
+}
 ;
 
 bitwise-NOT-expression
-: '~' cast-expression
+: '~' cast-expression {
+  $$ = ast_make_bitwise_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-NOT-expression", "'~' cast-expression");
+  }
+}
 ;
 
 logical-NOT-expression
-: '!' cast-expression
+: '!' cast-expression {
+  $$ = ast_make_logical_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("logical-NOT-expression", "'!' cast-expression");
+  }
+}
 ;
 
 sizeof-expression
-: "sizeof" unary-expression
+: "sizeof" unary-expression {
+  $$ = ast_make_sizeof_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("sizeof-expression", "\"sizeof\" unary-expression");
+  }
+}
 ;
 
 sizeof-type-expression
-: "sizeof" '(' type-name ')'
+: "sizeof" '(' type-name ')' {
+  $$ = ast_make_sizeof_type_expression($[type-name]);
+  if (!$$) {
+    AST_ERROR("sizeof-type-expression", "\"sizeof\" '(' type-name ')'");
+  }
+}
 ;
 
 cast-expression
-: unary-expression
-| type-cast-expression
+: unary-expression {
+  $$ = ast_make_cast_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "unary-expression");
+  }
+}
+| type-cast-expression {
+  $$ = ast_make_cast_expression($[type-cast-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "type-cast-expression");
+  }
+}
 ;
 
 type-cast-expression
-: '(' type-name ')' cast-expression
+: '(' type-name ')' cast-expression {
+  $$ = ast_make_type_cast_expression($[type-name], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("type-cast-expression", "'(' type-name ')' cast-expression");
+  }
+}
 ;
 
 multiplicative-expression
@@ -529,7 +824,11 @@ enumerator-list
 
 enumerator
 : enumeration-constant
-| enumeration-constant '=' constant-expression
+| enumerator-with-initializer
+;
+
+enumerator-with-initializer
+: enumeration-constant '=' constant-expression
 ;
 
 type-qualifier
@@ -548,10 +847,22 @@ declarator
 
 direct-declarator
 : identifier
-| '{' declarator '}'
-| direct-declarator '[' constant-expression.opt ']'
-| direct-declarator '(' parameter-type-list ')'
-| direct-declarator '(' identifier-list.opt ')'
+| '(' declarator ')'
+| array-declarator
+| function-declarator
+| old-style-function-declarator
+;
+
+array-declarator
+: direct-declarator '[' constant-expression.opt ']'
+;
+
+function-declarator
+: direct-declarator '(' parameter-type-list ')'
+;
+
+old-style-function-declarator
+: direct-declarator '(' identifier-list.opt ')'
 ;
 
 pointer.opt
@@ -581,7 +892,11 @@ parameter-type-list.opt
 
 parameter-type-list
 : parameter-list
-| parameter-list ',' "..."
+| variadic-parameter-list
+;
+
+variadic-parameter-list
+: parameter-list ',' "..."
 ;
 
 parameter-list
@@ -590,8 +905,16 @@ parameter-list
 ;
 
 parameter-declaration
+: parameter-concrete-declaration
+| parameter-abstract-declaration
+;
+
+parameter-concrete-declaration
 : declaration-specifier-list declarator
-| declaration-specifier-list abstract-declarator.opt
+;
+
+parameter-abstract-declaration
+: declaration-specifier-list abstract-declarator.opt
 ;
 
 identifier-list.opt
@@ -615,7 +938,11 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-abstract-declarator
+| pointer-abstract-declarator
+;
+
+pointer-abstract-declarator
+: pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
@@ -625,8 +952,16 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression.opt ']'
-| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
+| array-abstract-declarator
+| function-abstract-declarator
+;
+
+array-abstract-declarator
+: direct-abstract-declarator.opt '[' constant-expression.opt ']'
+;
+
+function-abstract-declarator
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
@@ -635,7 +970,7 @@ typedef-name
 
 initializer
 : assignment-expression
-| '{' initializer '}'
+| '{' initializer-list '}'
 | '{' initializer-list ',' '}'
 ;
 
