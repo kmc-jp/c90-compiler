@@ -310,4 +310,6 @@ typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
 
+typedef struct String* AstTokenRef;
+
 #endif  /* KMC_C89_COMPILER_AST_H */
