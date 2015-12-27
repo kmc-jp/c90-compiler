@@ -330,18 +330,6 @@ AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier) {
   return self;
 }
 
-AstRef ast_make_typedef_name(AstRef identifier) {
-  AstRef self = NULL;
-  if (ast_is_identifier(identifier)) {
-    AstTypedefNameRef data = ast_palloc(struct AstTypedefName);
-    data->identifier = identifier;
-    self = ast_palloc(struct Ast);
-    self->tag = AST_TYPEDEF_NAME;
-    self->data.typedef_name = data;
-  }
-  return self;
-}
-
 AstRef ast_make_type_specifier(AstRef type_specifier) {
   AstRef self = NULL;
   if (ast_is_token(type_specifier) ||
@@ -949,6 +937,18 @@ AstRef ast_make_function_abstract_declarator(
     self = ast_palloc(struct Ast);
     self->tag = AST_FUNCTION_ABSTRACT_DECLARATOR;
     self->data.function_abstract_declarator = data;
+  }
+  return self;
+}
+
+AstRef ast_make_typedef_name(AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier)) {
+    AstTypedefNameRef data = ast_palloc(struct AstTypedefName);
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_TYPEDEF_NAME;
+    self->data.typedef_name = data;
   }
   return self;
 }
