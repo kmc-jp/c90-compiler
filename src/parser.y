@@ -276,13 +276,28 @@ postfix-decrement-expression
 ;
 
 argument-expression-list.opt
-: /* empty */
-| argument-expression-list
+: /* empty */ {
+  $$ = ast_make_argument_expression_list();
+}
+| argument-expression-list {
+  $$ = $[argument-expression-list];
+}
 ;
 
 argument-expression-list
-: assignment-expression
-| argument-expression-list ',' assignment-expression
+: assignment-expression {
+  $$ = ast_make_argument_expression_list();
+  $$ = ast_push_argument_expression_list($$, $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("argument-expression-list", "assignment-expression");
+  }
+}
+| argument-expression-list[src] ',' assignment-expression {
+  $$ = ast_push_argument_expression_list($[src], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("argument-expression-list", "argument-expression-list ',' assignment-expression");
+  }
+}
 ;
 
 unary-expression
