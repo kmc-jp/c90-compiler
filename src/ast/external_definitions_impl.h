@@ -1,6 +1,9 @@
 #ifndef KMC_C89_COMPILER_AST_EXTERNAL_DEFINITIONS_IMPL_H
 #define KMC_C89_COMPILER_AST_EXTERNAL_DEFINITIONS_IMPL_H
 
+#include "../ast.h"
+#include "ast_vector.h"
+
 struct AstTranslationUnit {
   AstVectorRef external_declaration_vector;
 };
