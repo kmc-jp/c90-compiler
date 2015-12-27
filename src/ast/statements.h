@@ -20,7 +20,7 @@ AstRef ast_make_if_else_statement(AstRef expression, AstRef statement_if, AstRef
 AstRef ast_make_switch_statement(AstRef expression, AstRef statement);
 AstRef ast_make_iteration_statement(AstRef iteration_statement);
 AstRef ast_make_while_statement(AstRef expression, AstRef statement);
-AstRef ast_make_do_while_statement(AstRef expression, AstRef statement);
+AstRef ast_make_do_while_statement(AstRef statement, AstRef expression);
 AstRef ast_make_for_statement(AstNullableRef expression_1, AstNullableRef expression_2, AstNullableRef expression_3, AstRef statement);
 AstRef ast_make_jump_statement(AstRef jump_statement);
 AstRef ast_make_goto_jump_statement(AstRef identifier);
