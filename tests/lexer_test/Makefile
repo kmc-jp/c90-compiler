@@ -9,9 +9,16 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-LEX_SRCS := lex.yy.c yacc_mock.c use_vector.c utility.c allocator.c
+LEX_SRCS := lex.yy.c use_vector.c utility.c parser.tab.c allocator.c memory_pool.c stdstring.c ast_method.c
 LEX_OBJS := $(LEX_SRCS:%.c=$(SRC_DIR)/%.o)
 TARGET := lexer_test.out
+
+AST_DIR := $(SRC_DIR)/ast
+AST_SRCS := $(wildcard $(AST_DIR)/*.c)
+AST_OBJS := $(AST_SRCS:.c=.o)
+LEX_SRCS += $(AST_SRCS)
+LEX_OBJS += $(AST_OBJS)
+
 CLEAN_OBJS += $(LEX_OBJS)
 
 unit_test: $(TARGET)
