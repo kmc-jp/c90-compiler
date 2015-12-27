@@ -104,30 +104,75 @@ constant
 ;
 
 floating-constant
-: FLOATING_CONSTANT
+: FLOATING_CONSTANT {
+  $$ = ast_make_floating_constant($[FLOATING_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("floating-constant", "FLOATING_CONSTANT");
+  }
+}
 ;
 
 integer-constant
-: INTEGER_CONSTANT
+: INTEGER_CONSTANT {
+  $$ = ast_make_integer_constant($[INTEGER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("integer-constant", "INTEGER_CONSTANT");
+  }
+}
 ;
 
 enumeration-constant
-: identifier
+: identifier {
+  $$ = ast_make_enumeration_constant($[identifier]);
+  if (!$$) {
+    AST_ERROR("enumeration-constant", "identifier");
+  }
+}
 ;
 
 character-constant
-: CHARACTER_CONSTANT
+: CHARACTER_CONSTANT {
+  $$ = ast_make_character_constant($[CHARACTER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("character-constant", "CHARACTER_CONSTANT");
+  }
+}
 ;
 
 string-literal
-: STRING_LITERAL
+: STRING_LITERAL {
+  $$ = ast_make_string_literal($[STRING_LITERAL]);
+  if (!$$) {
+    AST_ERROR("string-literal", "STRING_LITERAL");
+  }
+}
 ;
 
 primary-expression
-: identifier
-| constant
-| string-literal
-| '(' expression ')'
+: identifier {
+  $$ = ast_make_primary_expression($[identifier]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "identifier");
+  }
+}
+| constant {
+  $$ = ast_make_primary_expression($[constant]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "constant");
+  }
+}
+| string-literal {
+  $$ = ast_make_primary_expression($[string-literal]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "string-literal");
+  }
+}
+| '(' expression ')' {
+  $$ = ast_make_expression($[expression]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "'(' expression ')'");
+  }
+}
 ;
 
 postfix-expression
