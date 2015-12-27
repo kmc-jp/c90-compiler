@@ -11,7 +11,7 @@ AstRef ast_make_init_declarator_list(void);
 AstRef ast_push_init_declarator_list(AstRef init_declarator_list, AstRef init_declarator);
 AstRef ast_make_init_declarator(AstRef init_declarator);
 AstRef ast_make_declarator_with_initializer(AstRef declarator, AstRef initializer);
-AstRef ast_make_storage_class_specifier();
+AstRef ast_make_storage_class_specifier(AstRef storage_class_specifier);
 AstRef ast_make_type_specifier(AstRef type_specifier);
 AstRef ast_make_struct_or_union_specifier(AstRef struct_or_union_specifier);
 AstRef ast_make_struct_or_union_definition(AstRef struct_or_union, AstNullableRef identifier, AstRef struct_declaration_list);
