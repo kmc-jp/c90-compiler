@@ -73,8 +73,8 @@ struct AstWhileStatement {
 };
 
 struct AstDoWhileStatement {
-  AstRef expression;
   AstRef statement;
+  AstRef expression;
 };
 
 struct AstForStatement {
