@@ -1,6 +1,7 @@
 %code {
 #include <stdio.h>
 #include "ast_method.h"
+#include "utility.h"
 
 #define AST_ERROR(lhs, rhs) \
   do { \
@@ -104,30 +105,75 @@ constant
 ;
 
 floating-constant
-: FLOATING_CONSTANT
+: FLOATING_CONSTANT {
+  $$ = ast_make_floating_constant($[FLOATING_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("floating-constant", "FLOATING_CONSTANT");
+  }
+}
 ;
 
 integer-constant
-: INTEGER_CONSTANT
+: INTEGER_CONSTANT {
+  $$ = ast_make_integer_constant($[INTEGER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("integer-constant", "INTEGER_CONSTANT");
+  }
+}
 ;
 
 enumeration-constant
-: identifier
+: identifier {
+  $$ = ast_make_enumeration_constant($[identifier]);
+  if (!$$) {
+    AST_ERROR("enumeration-constant", "identifier");
+  }
+}
 ;
 
 character-constant
-: CHARACTER_CONSTANT
+: CHARACTER_CONSTANT {
+  $$ = ast_make_character_constant($[CHARACTER_CONSTANT]);
+  if (!$$) {
+    AST_ERROR("character-constant", "CHARACTER_CONSTANT");
+  }
+}
 ;
 
 string-literal
-: STRING_LITERAL
+: STRING_LITERAL {
+  $$ = ast_make_string_literal($[STRING_LITERAL]);
+  if (!$$) {
+    AST_ERROR("string-literal", "STRING_LITERAL");
+  }
+}
 ;
 
 primary-expression
-: identifier
-| constant
-| string-literal
-| '(' expression ')'
+: identifier {
+  $$ = ast_make_primary_expression($[identifier]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "identifier");
+  }
+}
+| constant {
+  $$ = ast_make_primary_expression($[constant]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "constant");
+  }
+}
+| string-literal {
+  $$ = ast_make_primary_expression($[string-literal]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "string-literal");
+  }
+}
+| '(' expression ')' {
+  $$ = ast_make_expression($[expression]);
+  if (!$$) {
+    AST_ERROR("primary-expression", "'(' expression ')'");
+  }
+}
 ;
 
 postfix-expression
@@ -423,22 +469,57 @@ type-cast-expression
 ;
 
 multiplicative-expression
-: cast-expression
-| product-expression
-| division-expression
-| modulo-expression
+: cast-expression {
+  $$ = ast_make_multiplicative_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "cast-expression");
+  }
+}
+| product-expression {
+  $$ = ast_make_multiplicative_expression($[product-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "product-expression");
+  }
+}
+| division-expression {
+  $$ = ast_make_multiplicative_expression($[division-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "division-expression");
+  }
+}
+| modulo-expression {
+  $$ = ast_make_multiplicative_expression($[modulo-expression]);
+  if (!$$) {
+    AST_ERROR("multiplicative-expression", "modulo-expression");
+  }
+}
 ;
 
 product-expression
-: multiplicative-expression '*' cast-expression
+: multiplicative-expression '*' cast-expression {
+  $$ = ast_make_product_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("product-expression", "multiplicative-expression '*' cast-expression");
+  }
+}
 ;
 
 division-expression
-: multiplicative-expression '/' cast-expression
+: multiplicative-expression '/' cast-expression {
+  $$ = ast_make_division_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("division-expression", "multiplicative-expression '/' cast-expression");
+  }
+}
 ;
 
 modulo-expression
-: multiplicative-expression '%' cast-expression
+: multiplicative-expression '%' cast-expression {
+  $$ = ast_make_modulo_expression($[multiplicative-expression], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("modulo-expression", "multiplicative-expression '%' cast-expression");
+  }
+}
 ;
 
 additive-expression
@@ -969,9 +1050,21 @@ statement
 ;
 
 labeled-statement
+: identifier-labeled-statement
+| case-labeled-statement
+| default-labeled-statement
+;
+
+identifier-labeled-statement
 : identifier ':' statement
-| "case" constant-expression ':' statement
-| "default" ':' statement
+;
+
+case-labeled-statement
+: "case" constant-expression ':' statement
+;
+
+default-labeled-statement
+: "default" ':' statement
 ;
 
 compound-statement
@@ -1003,22 +1096,66 @@ expression-statement
 ;
 
 selection-statement
+: if-statement
+| if-else-statement
+| switch-statement
+;
+
+if-statement
 : "if" '(' expression ')' statement
-| "if" '(' expression ')' statement "else" statement
-| "switch" '(' expression ')' statement
+;
+
+if-else-statement
+: "if" '(' expression ')' statement "else" statement
+;
+
+switch-statement
+: "switch" '(' expression ')' statement
 ;
 
 iteration-statement
+: while-statement
+| do-while-statement
+| for-statement
+;
+
+while-statement
 : "while" '(' expression ')' statement
-| "do" statement "while" '(' expression ')' ';'
-| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+;
+
+do-while-statement
+: "do" statement "while" '(' expression ')' ';'
+;
+
+for-statement
+: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement
+: goto-jump-statement
+| continue-jump-statement
+| break-jump-statement
+| return-jump-statement
+| void-return-jump-statement
+;
+
+goto-jump-statement
 : "goto" identifier ';'
-| "continue" ';'
-| "break" ';'
-| "return" expression.opt ';'
+
+continue-jump-statement
+: "continue" ';'
+;
+
+break-jump-statement
+: "break" ';'
+;
+
+return-jump-statement
+: "return" expression ';'
+;
+
+void-return-jump-statement
+: "return" ';'
 ;
 
 translation-unit

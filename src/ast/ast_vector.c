@@ -1,6 +1,5 @@
 #include "ast_vector.h"
 #include <assert.h>
-#include "../ast_method.h"
 #include "ast_impl.h"
 #include "pool.h"
 
