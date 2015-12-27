@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "use_vector.h"
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
