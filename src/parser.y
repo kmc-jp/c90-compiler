@@ -1,6 +1,12 @@
 %code {
 #include <stdio.h>
-#include <stdlib.h>
+
+#define AST_ERROR(lhs, rhs) \
+  do { \
+    yyerror("cannot parse `" lhs "` as `" rhs "`"); \
+    YYERROR; \
+  } while (false)
+
 void yyerror(const char *);
 }
 
@@ -587,7 +593,11 @@ enumerator-list
 
 enumerator
 : enumeration-constant
-| enumeration-constant '=' constant-expression
+| enumerator-with-initializer
+;
+
+enumerator-with-initializer
+: enumeration-constant '=' constant-expression
 ;
 
 type-qualifier
@@ -697,7 +707,11 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-abstract-declarator
+| pointer-abstract-declarator
+;
+
+pointer-abstract-declarator
+: pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
@@ -707,8 +721,16 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression.opt ']'
-| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
+| array-abstract-declarator
+| function-abstract-declarator
+;
+
+array-abstract-declarator
+: direct-abstract-declarator.opt '[' constant-expression.opt ']'
+;
+
+function-abstract-declarator
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
@@ -717,7 +739,7 @@ typedef-name
 
 initializer
 : assignment-expression
-| '{' initializer '}'
+| '{' initializer-list '}'
 | '{' initializer-list ',' '}'
 ;
 
@@ -806,19 +828,4 @@ function-definition
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
-}
-
-extern FILE *yyin;
-
-void set_yyin_file(const char *filename) {
-  FILE* fp = fopen(filename, "r");
-  if (fp == NULL) {
-    printf("fatal error: failed to open %s\n", filename);
-    exit(EXIT_FAILURE);
-  }
-  yyin = fp;
-}
-
-void set_yyin_string(const char *code) {
-  yy_scan_string(code);
 }

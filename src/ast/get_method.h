@@ -101,6 +101,7 @@ AstEnumDefinitionRef ast_get_enum_definition(AstRef ast);
 AstEnumDeclarationRef ast_get_enum_declaration(AstRef ast);
 AstEnumeratorListRef ast_get_enumerator_list(AstRef ast);
 AstEnumeratorRef ast_get_enumerator(AstRef ast);
+AstEnumeratorWithInitializerRef ast_get_enumerator_with_initializer(AstRef ast);
 AstTypeQualifierRef ast_get_type_qualifier(AstRef ast);
 AstDeclaratorRef ast_get_declarator(AstRef ast);
 AstDirectDeclaratorRef ast_get_direct_declarator(AstRef ast);
@@ -118,7 +119,10 @@ AstParameterAbstractDeclarationRef ast_get_parameter_abstract_declaration(AstRef
 AstIdentifierListRef ast_get_identifier_list(AstRef ast);
 AstTypeNameRef ast_get_type_name(AstRef ast);
 AstAbstractDeclaratorRef ast_get_abstract_declarator(AstRef ast);
+AstPointerAbstractDeclaratorRef ast_get_pointer_abstract_declarator(AstRef ast);
 AstDirectAbstractDeclaratorRef ast_get_direct_abstract_declarator(AstRef ast);
+AstArrayAbstractDeclaratorRef ast_get_array_abstract_declarator(AstRef ast);
+AstFunctionAbstractDeclaratorRef ast_get_function_abstract_declarator(AstRef ast);
 AstTypedefNameRef ast_get_typedef_name(AstRef ast);
 AstInitializerRef ast_get_initializer(AstRef ast);
 AstInitializerListRef ast_get_initializer_list(AstRef ast);

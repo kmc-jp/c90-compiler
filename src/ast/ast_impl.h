@@ -106,6 +106,7 @@ struct Ast {
     AstEnumDeclarationRef enum_declaration;
     AstEnumeratorListRef enumerator_list;
     AstEnumeratorRef enumerator;
+    AstEnumeratorWithInitializerRef enumerator_with_initializer;
     AstTypeQualifierRef type_qualifier;
     AstDeclaratorRef declarator;
     AstDirectDeclaratorRef direct_declarator;
@@ -123,7 +124,10 @@ struct Ast {
     AstIdentifierListRef identifier_list;
     AstTypeNameRef type_name;
     AstAbstractDeclaratorRef abstract_declarator;
+    AstPointerAbstractDeclaratorRef pointer_abstract_declarator;
     AstDirectAbstractDeclaratorRef direct_abstract_declarator;
+    AstArrayAbstractDeclaratorRef array_abstract_declarator;
+    AstFunctionAbstractDeclaratorRef function_abstract_declarator;
     AstTypedefNameRef typedef_name;
     AstInitializerRef initializer;
     AstInitializerListRef initializer_list;
