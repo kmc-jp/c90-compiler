@@ -158,7 +158,6 @@ struct Ast {
     AstExternalDeclarationRef external_declaration;
     AstFunctionDefinitionRef function_definition;
 
-    AstVectorRef vector;
     AstTokenRef token;
   } data;
 };
