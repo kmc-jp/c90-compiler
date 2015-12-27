@@ -1,5 +1,6 @@
 %code {
 #include <stdio.h>
+#include "ast_method.h"
 
 #define AST_ERROR(lhs, rhs) \
   do { \
@@ -130,37 +131,102 @@ primary-expression
 ;
 
 postfix-expression
-: primary-expression
-| array-subscript-expression
-| function-call-expression
-| member-access-expression
-| member-access-through-pointer-expression
-| postfix-increment-expression
-| postfix-decrement-expression
+: primary-expression {
+  $$ = ast_make_postfix_expression($[primary-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "primary-expression");
+  }
+}
+| array-subscript-expression {
+  $$ = ast_make_postfix_expression($[array-subscript-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "array-subscript-expression");
+  }
+}
+| function-call-expression {
+  $$ = ast_make_postfix_expression($[function-call-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "function-call-expression");
+  }
+}
+| member-access-expression {
+  $$ = ast_make_postfix_expression($[member-access-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-expression");
+  }
+}
+| member-access-through-pointer-expression {
+  $$ = ast_make_postfix_expression($[member-access-through-pointer-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-through-pointer-expression");
+  }
+}
+| postfix-increment-expression {
+  $$ = ast_make_postfix_expression($[postfix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-increment-expression");
+  }
+}
+| postfix-decrement-expression {
+  $$ = ast_make_postfix_expression($[postfix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-decrement-expression");
+  }
+}
 ;
 
 array-subscript-expression
-: postfix-expression '[' expression ']'
+: postfix-expression '[' expression ']' {
+  $$ = ast_make_array_subscript_expression($[postfix-expression], $[expression]);
+  if (!$$) {
+    AST_ERROR("array-subscript-expression", "postfix-expression '[' expression ']'");
+  }
+}
 ;
 
 function-call-expression
-: postfix-expression '(' argument-expression-list.opt ')'
+: postfix-expression '(' argument-expression-list.opt ')' {
+  $$ = ast_make_function_call_expression($[postfix-expression], $[argument-expression-list.opt]);
+  if (!$$) {
+    AST_ERROR("function-call-expression", "postfix-expression '(' argument-expression-list.opt ')'");
+  }
+}
 ;
 
 member-access-expression
-: postfix-expression '.' identifier
+: postfix-expression '.' identifier {
+  $$ = ast_make_member_access_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-expression", "postfix-expression '.' identifier");
+  }
+}
 ;
 
 member-access-through-pointer-expression
-: postfix-expression "->" identifier
+: postfix-expression "->" identifier {
+  $$ = ast_make_member_access_through_pointer_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-through-pointer-expression", "postfix-expression \"->\" identifier");
+  }
+}
 ;
 
 postfix-increment-expression
-: postfix-expression "++"
+: postfix-expression "++" {
+  $$ = ast_make_postfix_increment_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-increment-expression", "postfix-expression \"++\"");
+  }
+}
 ;
 
 postfix-decrement-expression
-: postfix-expression "--"
+: postfix-expression "--" {
+  $$ = ast_make_postfix_decrement_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-decrement-expression", "postfix-expression \"--\"");
+  }
+}
 ;
 
 argument-expression-list.opt
@@ -174,66 +240,186 @@ argument-expression-list
 ;
 
 unary-expression
-: postfix-expression
-| prefix-increment-expression
-| prefix-decrement-expression
-| address-of-expression
-| pointer-dereference-expression
-| unary-plus-expression
-| unary-minus-expression
-| bitwise-NOT-expression
-| logical-NOT-expression
-| sizeof-expression
-| sizeof-type-expression
+: postfix-expression {
+  $$ = ast_make_unary_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "postfix-expression");
+  }
+}
+| prefix-increment-expression {
+  $$ = ast_make_unary_expression($[prefix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-increment-expression");
+  }
+}
+| prefix-decrement-expression {
+  $$ = ast_make_unary_expression($[prefix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "prefix-decrement-expression");
+  }
+}
+| address-of-expression {
+  $$ = ast_make_unary_expression($[address-of-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "address-of-expression");
+  }
+}
+| pointer-dereference-expression {
+  $$ = ast_make_unary_expression($[pointer-dereference-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "pointer-dereference-expression");
+  }
+}
+| unary-plus-expression {
+  $$ = ast_make_unary_expression($[unary-plus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-plus-expression");
+  }
+}
+| unary-minus-expression {
+  $$ = ast_make_unary_expression($[unary-minus-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "unary-minus-expression");
+  }
+}
+| bitwise-NOT-expression {
+  $$ = ast_make_unary_expression($[bitwise-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "bitwise-NOT-expression");
+  }
+}
+| logical-NOT-expression {
+  $$ = ast_make_unary_expression($[logical-NOT-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "logical-NOT-expression");
+  }
+}
+| sizeof-expression {
+  $$ = ast_make_unary_expression($[sizeof-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-expression");
+  }
+}
+| sizeof-type-expression {
+  $$ = ast_make_unary_expression($[sizeof-type-expression]);
+  if (!$$) {
+    AST_ERROR("unary-expression", "sizeof-type-expression");
+  }
+}
 ;
 
 prefix-increment-expression
-: "++" unary-expression
+: "++" unary-expression {
+  $$ = ast_make_prefix_increment_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-increment-expression", "\"++\" unary-expression");
+  }
+}
 ;
 
 prefix-decrement-expression
-: "--" unary-expression
+: "--" unary-expression {
+  $$ = ast_make_prefix_decrement_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("prefix-decrement-expression", "\"--\" unary-expression");
+  }
+}
 ;
 
 address-of-expression
-: '&' cast-expression
+: '&' cast-expression {
+  $$ = ast_make_address_of_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("address-of-expression", "'&' cast-expression");
+  }
+}
 ;
 
 pointer-dereference-expression
-: '*' cast-expression
+: '*' cast-expression {
+  $$ = ast_make_pointer_dereference_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("pointer-dereference-expression", "'*' cast-expression");
+  }
+}
 ;
 
 unary-plus-expression
-: '+' cast-expression
+: '+' cast-expression {
+  $$ = ast_make_unary_plus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-plus-expression", "'+' cast-expression");
+  }
+}
 ;
 
 unary-minus-expression
-: '-' cast-expression
+: '-' cast-expression {
+  $$ = ast_make_unary_minus_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("unary-minus-expression", "'-' cast-expression");
+  }
+}
 ;
 
 bitwise-NOT-expression
-: '~' cast-expression
+: '~' cast-expression {
+  $$ = ast_make_bitwise_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-NOT-expression", "'~' cast-expression");
+  }
+}
 ;
 
 logical-NOT-expression
-: '!' cast-expression
+: '!' cast-expression {
+  $$ = ast_make_logical_not_expression($[cast-expression]);
+  if (!$$) {
+    AST_ERROR("logical-NOT-expression", "'!' cast-expression");
+  }
+}
 ;
 
 sizeof-expression
-: "sizeof" unary-expression
+: "sizeof" unary-expression {
+  $$ = ast_make_sizeof_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("sizeof-expression", "\"sizeof\" unary-expression");
+  }
+}
 ;
 
 sizeof-type-expression
-: "sizeof" '(' type-name ')'
+: "sizeof" '(' type-name ')' {
+  $$ = ast_make_sizeof_type_expression($[type-name]);
+  if (!$$) {
+    AST_ERROR("sizeof-type-expression", "\"sizeof\" '(' type-name ')'");
+  }
+}
 ;
 
 cast-expression
-: unary-expression
-| type-cast-expression
+: unary-expression {
+  $$ = ast_make_cast_expression($[unary-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "unary-expression");
+  }
+}
+| type-cast-expression {
+  $$ = ast_make_cast_expression($[type-cast-expression]);
+  if (!$$) {
+    AST_ERROR("cast-expression", "type-cast-expression");
+  }
+}
 ;
 
 type-cast-expression
-: '(' type-name ')' cast-expression
+: '(' type-name ')' cast-expression {
+  $$ = ast_make_type_cast_expression($[type-name], $[cast-expression]);
+  if (!$$) {
+    AST_ERROR("type-cast-expression", "'(' type-name ')' cast-expression");
+  }
+}
 ;
 
 multiplicative-expression
