@@ -1,10 +1,20 @@
 %code {
 #include <stdio.h>
+#include "ast_method.h"
+
+#define AST_ERROR(lhs, rhs) \
+  do { \
+    yyerror("cannot parse `" lhs "` as `" rhs "`"); \
+    YYERROR; \
+  } while (false)
+
 void yyerror(const char *);
 }
 
 %code provides {
 int yylex(void);
+void set_yyin_file(const char *filename);
+void set_yyin_string(const char *code);
 }
 
 %code requires {
@@ -17,6 +27,61 @@ int yylex(void);
 %token INTEGER_CONSTANT
 %token CHARACTER_CONSTANT
 %token STRING_LITERAL
+%token ARROW "->"
+%token INCREMENT "++"
+%token DECREMENT "--"
+%token LEFT_SHIFT "<<"
+%token RIGHT_SHIFT ">>"
+%token EQUAL "=="
+%token NOT_EQUAL "!="
+%token LESS "<"
+%token GREATER ">"
+%token LESS_EQUAL "<="
+%token GREATER_EQUAL ">="
+%token AND "&&"
+%token OR "||"
+%token ADD_ASSIGN "+="
+%token SUB_ASSIGN "-="
+%token MUL_ASSIGN "*="
+%token DIV_ASSIGN "/="
+%token MOD_ASSIGN "%="
+%token LEFT_SHIFT_ASSIGN "<<="
+%token RIGHT_SHIFT_ASSIGN ">>="
+%token AND_ASSIGN "&="
+%token OR_ASSIGN "|="
+%token XOR_ASSIGN "^="
+%token AUTO "auto"
+%token BREAK "break"
+%token CASE "case"
+%token CHAR "char"
+%token CONST "const"
+%token CONTINUE "continue"
+%token DEFAULT "default"
+%token DO "do"
+%token DOUBLE "double"
+%token ELSE "else"
+%token ENUM "enum"
+%token EXTERN "extern"
+%token FLOAT "float"
+%token FOR "for"
+%token GOTO "goto"
+%token IF "if"
+%token INT "int"
+%token LONG "long"
+%token REGISTER "register"
+%token RETURN "return"
+%token SHORT "short"
+%token SIGNED "signed"
+%token SIZEOF "sizeof"
+%token STATIC "static"
+%token STRUCT "struct"
+%token SWITCH "switch"
+%token TYPEDEF "typedef"
+%token UNION "union"
+%token UNSIGNED "unsigned"
+%token VOID "void"
+%token VOLATILE "volatile"
+%token WHILE "while"
 
 %start translation-unit
 
@@ -62,6 +127,7 @@ primary-expression
 : identifier
 | constant
 | string-literal
+| '(' expression ')'
 ;
 
 postfix-expression
@@ -458,18 +524,22 @@ constant-expression
 ;
 
 declaration
-: declaration-specifiers init-declarator-list.opt ';'
+: declaration-specifier-list init-declarator-list.opt ';'
 ;
 
-declaration-specifiers.opt
+declaration-specifier-list.opt
 : /* empty */
-| declaration-specifiers
+| declaration-specifier-list
 ;
 
-declaration-specifiers
-: storage-class-specifier declaration-specifiers.opt
-| type-specifier declaration-specifiers.opt
-| type-qualifier declaration-specifiers.opt
+declaration-specifier-list
+: declaration-specifier declaration-specifier-list.opt
+;
+
+declaration-specifier
+: storage-class-specifier
+| type-specifier
+| type-qualifier
 ;
 
 init-declarator-list.opt
@@ -484,7 +554,11 @@ init-declarator-list
 
 init-declarator
 : declarator
-| declarator '=' initializer
+| declarator-with-initializer
+;
+
+declarator-with-initializer
+: declarator '=' initializer
 ;
 
 storage-class-specifier
@@ -511,8 +585,16 @@ type-specifier
 ;
 
 struct-or-union-specifier
+: struct-or-union-definition
+| struct-or-union-declaration
+;
+
+struct-or-union-definition
 : struct-or-union identifier.opt '{' struct-declaration-list '}'
-| struct-or-union identifier
+;
+
+struct-or-union-declaration
+: struct-or-union identifier
 ;
 
 struct-or-union
@@ -535,8 +617,12 @@ specifier-qualifier-list.opt
 ;
 
 specifier-qualifier-list
-: type-specifier specifier-qualifier-list.opt
-| type-qualifier specifier-qualifier-list.opt
+: specifier-qualifier specifier-qualifier-list.opt
+;
+
+specifier-qualifier
+: type-specifier
+| type-qualifier
 ;
 
 struct-declarator-list
@@ -546,12 +632,24 @@ struct-declarator-list
 
 struct-declarator
 : declarator
-| declarator.opt ':' constant-expression
+| bit-field-declarator
+;
+
+bit-field-declarator
+: declarator.opt ':' constant-expression
 ;
 
 enum-specifier
+: enum-definition
+| enum-declaration
+;
+
+enum-definition
 : "enum" identifier.opt '{' enumerator-list '}'
-| "enum" identifier
+;
+
+enum-declaration
+: "enum" identifier
 ;
 
 enumerator-list
@@ -561,7 +659,11 @@ enumerator-list
 
 enumerator
 : enumeration-constant
-| enumeration-constant '=' constant-expression
+| enumerator-with-initializer
+;
+
+enumerator-with-initializer
+: enumeration-constant '=' constant-expression
 ;
 
 type-qualifier
@@ -580,10 +682,22 @@ declarator
 
 direct-declarator
 : identifier
-| '{' declarator '}'
-| direct-declarator '[' constant-expression.opt ']'
-| direct-declarator '(' parameter-type-list ')'
-| direct-declarator '(' identifier-list.opt ')'
+| '(' declarator ')'
+| array-declarator
+| function-declarator
+| old-style-function-declarator
+;
+
+array-declarator
+: direct-declarator '[' constant-expression.opt ']'
+;
+
+function-declarator
+: direct-declarator '(' parameter-type-list ')'
+;
+
+old-style-function-declarator
+: direct-declarator '(' identifier-list.opt ')'
 ;
 
 pointer.opt
@@ -613,7 +727,11 @@ parameter-type-list.opt
 
 parameter-type-list
 : parameter-list
-| parameter-list ',' "..."
+| variadic-parameter-list
+;
+
+variadic-parameter-list
+: parameter-list ',' "..."
 ;
 
 parameter-list
@@ -622,8 +740,16 @@ parameter-list
 ;
 
 parameter-declaration
-: declaration-specifiers declarator
-| declaration-specifiers abstract-declarator.opt
+: parameter-concrete-declaration
+| parameter-abstract-declaration
+;
+
+parameter-concrete-declaration
+: declaration-specifier-list declarator
+;
+
+parameter-abstract-declaration
+: declaration-specifier-list abstract-declarator.opt
 ;
 
 identifier-list.opt
@@ -647,7 +773,11 @@ abstract-declarator.opt
 
 abstract-declarator
 : pointer
-| pointer.opt direct-abstract-declarator
+| pointer-abstract-declarator
+;
+
+pointer-abstract-declarator
+: pointer.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
@@ -657,8 +787,16 @@ direct-abstract-declarator.opt
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| direct-abstract-declarator.opt '[' constant-expression.opt ']'
-| direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
+| array-abstract-declarator
+| function-abstract-declarator
+;
+
+array-abstract-declarator
+: direct-abstract-declarator.opt '[' constant-expression.opt ']'
+;
+
+function-abstract-declarator
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
 ;
 
 typedef-name
@@ -667,7 +805,7 @@ typedef-name
 
 initializer
 : assignment-expression
-| '{' initializer '}'
+| '{' initializer-list '}'
 | '{' initializer-list ',' '}'
 ;
 
@@ -749,7 +887,7 @@ external-declaration
 ;
 
 function-definition
-: declaration-specifiers.opt declarator declaration-list.opt compound-statement
+: declaration-specifier-list.opt declarator declaration-list.opt compound-statement
 ;
 
 %%
