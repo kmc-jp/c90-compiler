@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <string.h>
-#include "lexer_adapter.h"
 #include "use_vector.h"
-#include "token.h"
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
+extern "C" {
+#include "parser.tab.h"
+}
+
+typedef int Token;
 
 std::vector<Token> lex_from_file(const std::string &filename) {
-  yyin_from_file(filename.c_str());
+  set_yyin_file(filename.c_str());
   std::vector<Token> tokens;
   Token tok;
   while ((tok = (Token)yylex()) != 0) {
@@ -22,7 +25,7 @@ Token lex_first_token(const std::string &code) {
   str.reserve(code.length() + 1);
   str.assign(code);
   str.resize(code.length() + 1);
-  yyin_from_string(str.data());
+  set_yyin_string(str.data());
   Token tok = (Token)yylex();
   return tok;
 }
@@ -139,45 +142,47 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ(IDENTIFIER, lex_first_token("_while_"));
   EXPECT_EQ(IDENTIFIER, lex_first_token("forty_two_million"));
 
-  EXPECT_EQ(INT_LITERAL, lex_first_token("42"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("+42"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("-42"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("0x2A"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("-0x2A"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("052"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("0q222"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("0b1001"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("42U"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("42u"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("-42L"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("+42l"));
-  EXPECT_EQ(INT_LITERAL, lex_first_token("0x42ul"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0x2A"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("052"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0q222"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0b1001"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42U"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("42u"));
+  EXPECT_EQ(INTEGER_CONSTANT, lex_first_token("0x42ul"));
 
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("+3.14"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-.14"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3."));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14e+4"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14E-4"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14F"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-3.14f"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("-3.14L"));
-  EXPECT_EQ(DOUBLE_LITERAL, lex_first_token("3.14l"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3."));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14e+4"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14E-4"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14e10"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14F"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token("3.14l"));
+  EXPECT_EQ(FLOATING_CONSTANT, lex_first_token(".14E-10L"));
 
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token("'*'"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\a')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\b')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\f')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\n')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\r')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\v')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\0')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\10')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\x8')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\\')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\"')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\'')"));
-  EXPECT_EQ(CHAR_LITERAL, lex_first_token(R"('\?')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'*'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'&'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'ab'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token("'x'"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"(L'R')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"(L'-%&-\?\x01a\0')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\a')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\b')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\f')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\n')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\r')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\v')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\0')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\10')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\076')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\x8')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\xAaF0')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\\')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\"')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\'')"));
+  EXPECT_EQ(CHARACTER_CONSTANT, lex_first_token(R"('\?')"));
 
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
+  EXPECT_EQ(STRING_LITERAL, lex_first_token(R"(L"abcdefgABCDEF\"G\t\'\n\\____;;;")"));
 }
