@@ -131,37 +131,102 @@ primary-expression
 ;
 
 postfix-expression
-: primary-expression
-| array-subscript-expression
-| function-call-expression
-| member-access-expression
-| member-access-through-pointer-expression
-| postfix-increment-expression
-| postfix-decrement-expression
+: primary-expression {
+  $$ = ast_make_postfix_expression($[primary-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "primary-expression");
+  }
+}
+| array-subscript-expression {
+  $$ = ast_make_postfix_expression($[array-subscript-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "array-subscript-expression");
+  }
+}
+| function-call-expression {
+  $$ = ast_make_postfix_expression($[function-call-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "function-call-expression");
+  }
+}
+| member-access-expression {
+  $$ = ast_make_postfix_expression($[member-access-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-expression");
+  }
+}
+| member-access-through-pointer-expression {
+  $$ = ast_make_postfix_expression($[member-access-through-pointer-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "member-access-through-pointer-expression");
+  }
+}
+| postfix-increment-expression {
+  $$ = ast_make_postfix_expression($[postfix-increment-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-increment-expression");
+  }
+}
+| postfix-decrement-expression {
+  $$ = ast_make_postfix_expression($[postfix-decrement-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-expression", "postfix-decrement-expression");
+  }
+}
 ;
 
 array-subscript-expression
-: postfix-expression '[' expression ']'
+: postfix-expression '[' expression ']' {
+  $$ = ast_make_array_subscript_expression($[postfix-expression], $[expression]);
+  if (!$$) {
+    AST_ERROR("array-subscript-expression", "postfix-expression '[' expression ']'");
+  }
+}
 ;
 
 function-call-expression
-: postfix-expression '(' argument-expression-list.opt ')'
+: postfix-expression '(' argument-expression-list.opt ')' {
+  $$ = ast_make_function_call_expression($[postfix-expression], $[argument-expression-list.opt]);
+  if (!$$) {
+    AST_ERROR("function-call-expression", "postfix-expression '(' argument-expression-list.opt ')'");
+  }
+}
 ;
 
 member-access-expression
-: postfix-expression '.' identifier
+: postfix-expression '.' identifier {
+  $$ = ast_make_member_access_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-expression", "postfix-expression '.' identifier");
+  }
+}
 ;
 
 member-access-through-pointer-expression
-: postfix-expression "->" identifier
+: postfix-expression "->" identifier {
+  $$ = ast_make_member_access_through_pointer_expression($[postfix-expression], $[identifier]);
+  if (!$$) {
+    AST_ERROR("member-access-through-pointer-expression", "postfix-expression \"->\" identifier");
+  }
+}
 ;
 
 postfix-increment-expression
-: postfix-expression "++"
+: postfix-expression "++" {
+  $$ = ast_make_postfix_increment_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-increment-expression", "postfix-expression \"++\"");
+  }
+}
 ;
 
 postfix-decrement-expression
-: postfix-expression "--"
+: postfix-expression "--" {
+  $$ = ast_make_postfix_decrement_expression($[postfix-expression]);
+  if (!$$) {
+    AST_ERROR("postfix-decrement-expression", "postfix-expression \"--\"");
+  }
+}
 ;
 
 argument-expression-list.opt
