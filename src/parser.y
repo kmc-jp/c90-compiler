@@ -736,10 +736,30 @@ for-statement
 ;
 
 jump-statement
+: goto-jump-statement
+| continue-jump-statement
+| break-jump-statement
+| return-jump-statement
+| void-return-jump-statement
+;
+
+goto-jump-statement
 : "goto" identifier ';'
-| "continue" ';'
-| "break" ';'
-| "return" expression.opt ';'
+
+continue-jump-statement
+: "continue" ';'
+;
+
+break-jump-statement
+: "break" ';'
+;
+
+return-jump-statement
+: "return" expression ';'
+;
+
+void-return-jump-statement
+: "return" ';'
 ;
 
 translation-unit

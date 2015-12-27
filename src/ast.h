@@ -133,6 +133,11 @@ enum AstTag {
   AST_DO_WHILE_STATEMENT,
   AST_FOR_STATEMENT,
   AST_JUMP_STATEMENT,
+  AST_GOTO_JUMP_STATEMENT,
+  AST_CONTINUE_JUMP_STATEMENT,
+  AST_BREAK_JUMP_STATEMENT,
+  AST_RETURN_JUMP_STATEMENT,
+  AST_VOID_RETURN_JUMP_STATEMENT,
   AST_TRANSLATION_UNIT,
   AST_EXTERNAL_DECLARATION,
   AST_FUNCTION_DEFINITION,
@@ -276,6 +281,11 @@ typedef struct AstWhileStatement* AstWhileStatementRef;
 typedef struct AstDoWhileStatement* AstDoWhileStatementRef;
 typedef struct AstForStatement* AstForStatementRef;
 typedef struct AstJumpStatement* AstJumpStatementRef;
+typedef struct AstGotoJumpStatement* AstGotoJumpStatementRef;
+typedef struct AstContinueJumpStatement* AstContinueJumpStatementRef;
+typedef struct AstBreakJumpStatement* AstBreakJumpStatementRef;
+typedef struct AstReturnJumpStatement* AstReturnJumpStatementRef;
+typedef struct AstVoidReturnJumpStatement* AstVoidReturnJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;

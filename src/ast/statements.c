@@ -85,6 +85,27 @@ struct AstForStatement {
 };
 
 struct AstJumpStatement {
+  AstRef jump_statement;
+};
+
+struct AstGotoJumpStatement {
+  AstRef identifier;
+};
+
+struct AstContinueJumpStatement {
+  AstRef self;
+};
+
+struct AstBreakJumpStatement {
+  AstRef self;
+};
+
+struct AstReturnJumpStatement {
+  AstRef expression;
+};
+
+struct AstVoidReturnJumpStatement {
+  AstRef self;
 };
 
 AstRef ast_make_statement(AstRef statement) {
@@ -340,5 +361,72 @@ AstRef ast_make_for_statement(
     self->tag = AST_FOR_STATEMENT;
     self->data.for_statement = data;
   }
+  return self;
+}
+
+AstRef ast_make_jump_statement(AstRef jump_statement) {
+  AstRef self = NULL;
+  if (ast_is_goto_jump_statement(jump_statement) ||
+      ast_is_continue_jump_statement(jump_statement) ||
+      ast_is_break_jump_statement(jump_statement) ||
+      ast_is_return_jump_statement(jump_statement) ||
+      ast_is_void_return_jump_statement(jump_statement)) {
+    AstJumpStatementRef data = ast_palloc(struct AstJumpStatement);
+    data->jump_statement = jump_statement;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_JUMP_STATEMENT;
+    self->data.jump_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_goto_jump_statement(AstRef identifier) {
+  AstRef self = NULL;
+  if (ast_is_identifier(identifier)) {
+    AstGotoJumpStatementRef data = ast_palloc(struct AstGotoJumpStatement);
+    data->identifier = identifier;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_GOTO_JUMP_STATEMENT;
+    self->data.goto_jump_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_continue_jump_statement(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstContinueJumpStatementRef data = ast_palloc(struct AstContinueJumpStatement);
+  data->self = self;
+  self->tag = AST_CONTINUE_JUMP_STATEMENT;
+  self->data.continue_jump_statement = data;
+  return self;
+}
+
+AstRef ast_make_break_jump_statement(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstBreakJumpStatementRef data = ast_palloc(struct AstBreakJumpStatement);
+  data->self = self;
+  self->tag = AST_BREAK_JUMP_STATEMENT;
+  self->data.break_jump_statement = data;
+  return self;
+}
+
+AstRef ast_make_return_jump_statement(AstRef expression) {
+  AstRef self = NULL;
+  if (ast_is_expression(expression)) {
+    AstReturnJumpStatementRef data = ast_palloc(struct AstReturnJumpStatement);
+    data->expression = expression;
+    self = ast_palloc(struct Ast);
+    self->tag = AST_RETURN_JUMP_STATEMENT;
+    self->data.return_jump_statement = data;
+  }
+  return self;
+}
+
+AstRef ast_make_void_return_jump_statement(void) {
+  AstRef self = ast_palloc(struct Ast);
+  AstVoidReturnJumpStatementRef data = ast_palloc(struct AstVoidReturnJumpStatement);
+  data->self = self;
+  self->tag = AST_VOID_RETURN_JUMP_STATEMENT;
+  self->data.void_return_jump_statement = data;
   return self;
 }
