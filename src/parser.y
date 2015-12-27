@@ -989,9 +989,21 @@ statement
 ;
 
 labeled-statement
+: identifier-labeled-statement
+| case-labeled-statement
+| default-labeled-statement
+;
+
+identifier-labeled-statement
 : identifier ':' statement
-| "case" constant-expression ':' statement
-| "default" ':' statement
+;
+
+case-labeled-statement
+: "case" constant-expression ':' statement
+;
+
+default-labeled-statement
+: "default" ':' statement
 ;
 
 compound-statement
@@ -1023,22 +1035,66 @@ expression-statement
 ;
 
 selection-statement
+: if-statement
+| if-else-statement
+| switch-statement
+;
+
+if-statement
 : "if" '(' expression ')' statement
-| "if" '(' expression ')' statement "else" statement
-| "switch" '(' expression ')' statement
+;
+
+if-else-statement
+: "if" '(' expression ')' statement "else" statement
+;
+
+switch-statement
+: "switch" '(' expression ')' statement
 ;
 
 iteration-statement
+: while-statement
+| do-while-statement
+| for-statement
+;
+
+while-statement
 : "while" '(' expression ')' statement
-| "do" statement "while" '(' expression ')' ';'
-| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+;
+
+do-while-statement
+: "do" statement "while" '(' expression ')' ';'
+;
+
+for-statement
+: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement
+: goto-jump-statement
+| continue-jump-statement
+| break-jump-statement
+| return-jump-statement
+| void-return-jump-statement
+;
+
+goto-jump-statement
 : "goto" identifier ';'
-| "continue" ';'
-| "break" ';'
-| "return" expression.opt ';'
+
+continue-jump-statement
+: "continue" ';'
+;
+
+break-jump-statement
+: "break" ';'
+;
+
+return-jump-statement
+: "return" expression ';'
+;
+
+void-return-jump-statement
+: "return" ';'
 ;
 
 translation-unit

@@ -127,13 +127,27 @@ enum AstTag {
   AST_INITIALIZER_LIST,
   AST_STATEMENT,
   AST_LABELED_STATEMENT,
+  AST_IDENTIFIER_LABELED_STATEMENT,
+  AST_CASE_LABELED_STATEMENT,
+  AST_DEFAULT_LABELED_STATEMENT,
   AST_COMPOUND_STATEMENT,
   AST_DECLARATION_LIST,
   AST_STATEMENT_LIST,
   AST_EXPRESSION_STATEMENT,
   AST_SELECTION_STATEMENT,
+  AST_IF_STATEMENT,
+  AST_IF_ELSE_STATEMENT,
+  AST_SWITCH_STATEMENT,
   AST_ITERATION_STATEMENT,
+  AST_WHILE_STATEMENT,
+  AST_DO_WHILE_STATEMENT,
+  AST_FOR_STATEMENT,
   AST_JUMP_STATEMENT,
+  AST_GOTO_JUMP_STATEMENT,
+  AST_CONTINUE_JUMP_STATEMENT,
+  AST_BREAK_JUMP_STATEMENT,
+  AST_RETURN_JUMP_STATEMENT,
+  AST_VOID_RETURN_JUMP_STATEMENT,
   AST_TRANSLATION_UNIT,
   AST_EXTERNAL_DECLARATION,
   AST_FUNCTION_DEFINITION,
@@ -271,13 +285,27 @@ typedef struct AstInitializer* AstInitializerRef;
 typedef struct AstInitializerList* AstInitializerListRef;
 typedef struct AstStatement* AstStatementRef;
 typedef struct AstLabeledStatement* AstLabeledStatementRef;
+typedef struct AstIdentifierLabeledStatement* AstIdentifierLabeledStatementRef;
+typedef struct AstCaseLabeledStatement* AstCaseLabeledStatementRef;
+typedef struct AstDefaultLabeledStatement* AstDefaultLabeledStatementRef;
 typedef struct AstCompoundStatement* AstCompoundStatementRef;
 typedef struct AstDeclarationList* AstDeclarationListRef;
 typedef struct AstStatementList* AstStatementListRef;
 typedef struct AstExpressionStatement* AstExpressionStatementRef;
 typedef struct AstSelectionStatement* AstSelectionStatementRef;
+typedef struct AstIfStatement* AstIfStatementRef;
+typedef struct AstIfElseStatement* AstIfElseStatementRef;
+typedef struct AstSwitchStatement* AstSwitchStatementRef;
 typedef struct AstIterationStatement* AstIterationStatementRef;
+typedef struct AstWhileStatement* AstWhileStatementRef;
+typedef struct AstDoWhileStatement* AstDoWhileStatementRef;
+typedef struct AstForStatement* AstForStatementRef;
 typedef struct AstJumpStatement* AstJumpStatementRef;
+typedef struct AstGotoJumpStatement* AstGotoJumpStatementRef;
+typedef struct AstContinueJumpStatement* AstContinueJumpStatementRef;
+typedef struct AstBreakJumpStatement* AstBreakJumpStatementRef;
+typedef struct AstReturnJumpStatement* AstReturnJumpStatementRef;
+typedef struct AstVoidReturnJumpStatement* AstVoidReturnJumpStatementRef;
 typedef struct AstTranslationUnit* AstTranslationUnitRef;
 typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
