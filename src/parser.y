@@ -591,27 +591,72 @@ right-shift-expression
 ;
 
 relational-expression
-: shift-expression
-| less-than-expression
-| greater-than-expression
-| less-than-or-equal-to-expression
-| greater-than-or-equal-to-expression
+: shift-expression {
+  $$ = ast_make_relational_expression($[shift-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "shift-expression");
+  }
+}
+| less-than-expression {
+  $$ = ast_make_relational_expression($[less-than-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "less-than-expression");
+  }
+}
+| greater-than-expression {
+  $$ = ast_make_relational_expression($[greater-than-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "greater-than-expression");
+  }
+}
+| less-than-or-equal-to-expression {
+  $$ = ast_make_relational_expression($[less-than-or-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "less-than-or-equal-to-expression");
+  }
+}
+| greater-than-or-equal-to-expression {
+  $$ = ast_make_relational_expression($[greater-than-or-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "greater-than-or-equal-to-expression");
+  }
+}
 ;
 
 less-than-expression
-: relational-expression '<' shift-expression
+: relational-expression '<' shift-expression {
+  $$ = ast_make_less_than_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("less-than-expression", "relational-expression '<' shift-expression");
+  }
+}
 ;
 
 greater-than-expression
-: relational-expression '>' shift-expression
+: relational-expression '>' shift-expression {
+  $$ = ast_make_greater_than_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("greater-than-expression", "relational-expression '>' shift-expression");
+  }
+}
 ;
 
 less-than-or-equal-to-expression
-: relational-expression "<=" shift-expression
+: relational-expression "<=" shift-expression {
+  $$ = ast_make_less_than_or_equal_to_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("less-than-or-equal-to-expression", "relational-expression \"<=\" shift-expression");
+  }
+}
 ;
 
 greater-than-or-equal-to-expression
-: relational-expression ">=" shift-expression
+: relational-expression ">=" shift-expression {
+  $$ = ast_make_greater_than_or_equal_to_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("greater-than-or-equal-to-expression", "relational-expression \">=\" shift-expression");
+  }
+}
 ;
 
 equality-expression
