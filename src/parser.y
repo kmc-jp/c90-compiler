@@ -577,17 +577,42 @@ subtraction-expression
 ;
 
 shift-expression
-: additive-expression
-| left-shift-expression
-| right-shift-expression
+: additive-expression {
+  $$ = ast_make_shift_expression($[additive-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "additive-expression");
+  }
+}
+| left-shift-expression {
+  $$ = ast_make_shift_expression($[left-shift-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "left-shift-expression");
+  }
+}
+| right-shift-expression {
+  $$ = ast_make_shift_expression($[right-shift-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "right-shift-expression");
+  }
+}
 ;
 
 left-shift-expression
-: shift-expression "<<" additive-expression
+: shift-expression "<<" additive-expression {
+  $$ = ast_make_left_shift_expression($[shift-expression], $[additive-expression]);
+  if (!$$) {
+    AST_ERROR("left-shift-expression", "shift-expression \"<<\" additive-expression");
+  }
+}
 ;
 
 right-shift-expression
-: shift-expression ">>" additive-expression
+: shift-expression ">>" additive-expression {
+  $$ = ast_make_right_shift_expression($[shift-expression], $[additive-expression]);
+  if (!$$) {
+    AST_ERROR("right-shift-expression", "shift-expression \">>\" additive-expression");
+  }
+}
 ;
 
 relational-expression
