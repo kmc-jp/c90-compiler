@@ -123,7 +123,7 @@ LLVMValueRef build_expression_function_call_expression(
         ast_get_argument_expression_list(function_call->argument_list));
   int argument_count = ValueVectorFunc(size)(argument_vec);
   if (parameter_count != argument_count) return NULL;
-  LLVMBuildCall(builder, function, ValueVectorFunc(data)(argument_vec),
+  return LLVMBuildCall(builder, function, ValueVectorFunc(data)(argument_vec),
       ValueVectorFunc(size)(argument_vec), string_data(function_name));
 }
 
