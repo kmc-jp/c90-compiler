@@ -1056,54 +1056,149 @@ initializer-list
 ;
 
 statement
-: labeled-statement
-| compound-statement
-| expression-statement
-| selection-statement
-| iteration-statement
-| jump-statement
+: labeled-statement {
+  $$ = ast_make_statement($[labeled-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "labeled-statement");
+  }
+}
+| compound-statement {
+  $$ = ast_make_statement($[compound-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "compound-statement");
+  }
+}
+| expression-statement {
+  $$ = ast_make_statement($[expression-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "expression-statement");
+  }
+}
+| selection-statement {
+  $$ = ast_make_statement($[selection-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "selection-statement");
+  }
+}
+| iteration-statement {
+  $$ = ast_make_statement($[iteration-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "iteration-statement");
+  }
+}
+| jump-statement {
+  $$ = ast_make_statement($[jump-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "jump-statement");
+  }
+}
 ;
 
 labeled-statement
-: identifier-labeled-statement
-| case-labeled-statement
-| default-labeled-statement
+: identifier-labeled-statement {
+  $$ = ast_make_labeled_statement($[identifier-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "identifier-labeled-statement");
+  }
+}
+| case-labeled-statement {
+  $$ = ast_make_labeled_statement($[case-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "case-labeled-statement");
+  }
+}
+| default-labeled-statement {
+  $$ = ast_make_labeled_statement($[default-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "default-labeled-statement");
+  }
+}
 ;
 
 identifier-labeled-statement
-: identifier ':' statement
+: identifier ':' statement {
+  $$ = ast_make_identifier_labeled_statement($[identifier], $[statement]);
+  if (!$$) {
+    AST_ERROR("identifier-labeled-statement", "identifier ':' statement");
+  }
+}
 ;
 
 case-labeled-statement
-: "case" constant-expression ':' statement
+: "case" constant-expression ':' statement {
+  $$ = ast_make_case_labeled_statement($[constant-expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("case-labeled-statement", "\"case\" constant-expression ':' statement");
+  }
+}
 ;
 
 default-labeled-statement
-: "default" ':' statement
+: "default" ':' statement {
+  $$ = ast_make_default_labeled_statement($[statement]);
+  if (!$$) {
+    AST_ERROR("default-labeled-statement", "\"default\" ':' statement");
+  }
+}
 ;
 
 compound-statement
-: '{' declaration-list.opt statement-list.opt '}'
+: '{' declaration-list.opt statement-list.opt '}' {
+  $$ = ast_make_compound_statement($[declaration-list.opt], $[statement-list.opt]);
+  if (!$$) {
+    AST_ERROR("compound-statement", "'{' declaration-list.opt statement-list.opt '}'");
+  }
+}
 ;
 
 declaration-list.opt
-: /* empty */
-| declaration-list
+: /* empty */ {
+  $$ = ast_make_declaration_list();
+}
+| declaration-list {
+  $$ = $[declaration-list];
+}
 ;
 
 declaration-list
-: declaration
-| declaration-list declaration
+: declaration {
+  $$ = ast_make_declaration_list();
+  $$ = ast_push_declaration_list($$, $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration");
+  }
+}
+| declaration-list[src] declaration {
+  $$ = ast_push_declaration_list($[src], $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration-list declaration");
+  }
+}
 ;
 
 statement-list.opt
-: /* empty */
-| statement-list
+: /* empty */ {
+  $$ = ast_make_statement_list();
+}
+| statement-list {
+  $$ = $[statement-list];
+}
 ;
 
 statement-list
-: statement
-| statement-list statement
+: statement {
+  $$ = ast_make_statement_list();
+  $$ = ast_push_statement_list($$, $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement");
+  }
+}
+| statement-list[src] statement {
+  $$ = ast_push_statement_list($[src], $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement-list statement");
+  }
+}
 ;
 
 expression-statement
@@ -1179,17 +1274,44 @@ void-return-jump-statement
 ;
 
 translation-unit
-: external-declaration
-| translation-unit external-declaration
+: external-declaration {
+  $$ = ast_make_translation_unit();
+  $$ = ast_push_translation_unit($$, $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "external-declaration");
+  }
+}
+| translation-unit[src] external-declaration {
+  $$ = ast_push_translation_unit($[src], $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "translation-unit external-declaration");
+  }
+}
 ;
 
 external-declaration
-: function-definition
-| declaration
+: function-definition {
+  $$ = ast_make_external_declaration($[function-definition]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "function-definition");
+  }
+}
+| declaration {
+  $$ = ast_make_external_declaration($[declaration]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "declaration");
+  }
+}
 ;
 
 function-definition
-: declaration-specifier-list.opt declarator declaration-list.opt compound-statement
+: declaration-specifier-list.opt declarator declaration-list.opt compound-statement {
+  $$ = ast_make_function_definition($[declaration-specifier-list.opt], $[declarator],
+      $[declaration-list.opt], $[compound-statement]);
+  if (!$$) {
+    AST_ERROR("function-definition", "declaration-specifier-list.opt declarator declaration-list.opt compound-statement");
+  }
+}
 ;
 
 %%
