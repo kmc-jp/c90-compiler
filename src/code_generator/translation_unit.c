@@ -29,11 +29,12 @@ void define_function(LLVMModuleRef module, LLVMBuilderRef builder,
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit) {
   AstVectorRef vector = translation_unit->external_declaration_vector;
   LLVMBuilderRef builder = LLVMCreateBuilder();
-  int i;
-  for (i = 0; i < (int)AST_VECTOR_FUNC(size)(vector); ++i) {
-    AstRef external_declaration = AST_VECTOR_FUNC(at)(vector, i);
-    if (ast_is_function_definition(external_declaration)) {
-      define_function(module, builder, ast_get_function_definition(external_declaration));
+  AstRef *itr;
+  AstRef *begin = AST_VECTOR_FUNC(begin)(vector);
+  AstRef *end = AST_VECTOR_FUNC(end)(vector);
+  for (itr = begin; itr != end; itr++) {
+    if (ast_is_function_definition(*itr)) {
+      define_function(module, builder, ast_get_function_definition(*itr));
     } else {
       /* declaration(ast_get_declaration(external_declaration)); */
     }
