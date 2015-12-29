@@ -1,7 +1,7 @@
 #include "ast_string.h"
 #include <assert.h>
-#include "../allocator_impl.h"
-#include "../stdstring_impl.h"
+#include "allocator_impl.h"
+#include "stdstring_impl.h"
 #include "ast_impl.h"
 #include "pool.h"
 

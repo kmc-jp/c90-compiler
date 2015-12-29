@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_POOL_H
 #define KMC_C89_COMPILER_AST_POOL_H
 
-#include "../memory_pool.h"
+#include "memory_pool.h"
 
 #define ast_palloc(type) \
   palloc(type, ast_pool(), 1)
