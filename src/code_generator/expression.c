@@ -132,6 +132,18 @@ LLVMValueRef build_expression_postfix_expression(
   return build_expression(module, builder, variable_set, postfix->postfix);
 }
 
+LLVMValueRef build_expression_primary_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstPrimaryExpressionRef primary) {
+  return build_expression(module, builder, variable_set, primary->primary_expression);
+}
+
+LLVMValueRef build_expression_constant(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstConstantRef constant) {
+  return build_expression(module, builder, variable_set, constant->constant);
+}
+
 LLVMValueRef build_expression(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast) {
   switch (ast->tag) {
