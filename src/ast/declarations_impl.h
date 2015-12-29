@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_DECLARATIONS_IMPL_H
 #define KMC_C89_COMPILER_AST_DECLARATIONS_IMPL_H
 
-#include "../ast.h"
+#include "ast.h"
 
 struct AstDeclaration {
   AstRef declaration_specifier_list;

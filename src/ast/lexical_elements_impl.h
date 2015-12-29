@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_LEXICAL_ELEMENTS_IMPL_H
 #define KMC_C89_COMPILER_AST_LEXICAL_ELEMENTS_IMPL_H
 
-#include "../ast.h"
+#include "ast.h"
 
 struct AstIdentifier {
   AstRef token;
