@@ -1,8 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_IS_METHOD_H
 #define KMC_C89_COMPILER_AST_IS_METHOD_H
 
-#include "../ast.h"
-#include "../utility.h"
+#include "ast.h"
+#include "utility.h"
 
 bool ast_is_identifier(AstRef ast);
 bool ast_is_constant(AstRef ast);

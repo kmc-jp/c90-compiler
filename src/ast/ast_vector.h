@@ -1,8 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_AST_VECTOR_H
 #define KMC_C89_COMPILER_AST_AST_VECTOR_H
 
-#include "../ast.h"
-#include "../vector.h"
+#include "ast.h"
+#include "vector.h"
 
 #define AST_VECTOR_FUNC(function) \
   VECTORFUNC(AstRef, function)

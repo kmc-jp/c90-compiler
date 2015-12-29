@@ -1,8 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_AST_STRING_H
 #define KMC_C89_COMPILER_AST_AST_STRING_H
 
-#include "../ast.h"
-#include "../utility.h"
+#include "ast.h"
+#include "utility.h"
 
 void ast_string_allocator_ctor(void);
 
