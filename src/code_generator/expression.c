@@ -116,7 +116,10 @@ LLVMValueRef build_expression_function_call_expression(
   LLVMValueRef function = LLVMGetNamedFunction(module, string_data(function_name));
   LLVMTypeRef function_type = LLVMGetElementType(LLVMTypeOf(function));
   int parameter_count = LLVMCountParamTypes(function_type);
-  ValueVectorRef argument_vec = get_arguments(variable_set, function_call->argument_list);
+  ValueVectorRef argument_vec =
+    get_arguments(
+        variable_set,
+        ast_get_argument_expression_list(function_call->argument_list));
   int argument_count = ValueVectorFunc(size)(argument_vec);
   if (parameter_count != argument_count) return NULL;
   LLVMBuildCall(builder, function, ValueVectorFunc(data)(argument_vec),
