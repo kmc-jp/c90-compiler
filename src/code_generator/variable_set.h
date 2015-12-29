@@ -21,5 +21,6 @@ DECLARE_VECTOR(VariableRef)
 typedef VECTORREF(VariableRef) VariableSetRef;
 
 VariableRef get_variable(VariableSetRef variable_set, AstRef ast);
+VariableRef get_variable_identifier(VariableSetRef variable_set, AstIdentifierRef ast);
 
 #endif /* KMC_C89_COMPILER_VARIABLE_SET_H */
