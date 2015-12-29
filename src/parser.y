@@ -1086,7 +1086,12 @@ labeled-statement
 ;
 
 identifier-labeled-statement
-: identifier ':' statement
+: identifier ':' statement {
+  $$ = ast_make_identifier_labeled_statement($[identifier], $[statement]);
+  if (!$$) {
+    AST_ERROR("statement", "identifier ':' statement");
+  }
+}
 ;
 
 case-labeled-statement
