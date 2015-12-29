@@ -1168,7 +1168,12 @@ do-while-statement
 ;
 
 for-statement
-: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+: "for" '(' expression.opt[expression_1] ';' expression.opt[expression_2] ';' expression.opt[expression_3] ')' statement {
+  $$ = ast_make_for_statement($[expression_1], $[expression_2], $[expression_3], $[statement]);
+  if (!$$) {
+    AST_ERROR("for-statement", "\"for\" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement");
+  }
+}
 ;
 
 jump-statement
