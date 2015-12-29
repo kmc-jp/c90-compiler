@@ -1129,9 +1129,24 @@ switch-statement
 ;
 
 iteration-statement
-: while-statement
-| do-while-statement
-| for-statement
+: while-statement {
+  $$ = ast_make_iteration_statement($[while-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "while-statement");
+  }
+}
+| do-while-statement {
+  $$ = ast_make_iteration_statement($[do-while-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "do-while-statement");
+  }
+}
+| for-statement {
+  $$ = ast_make_iteration_statement($[for-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "for-statement");
+  }
+}
 ;
 
 while-statement
