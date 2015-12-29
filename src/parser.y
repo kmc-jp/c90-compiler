@@ -1065,9 +1065,24 @@ statement
 ;
 
 labeled-statement
-: identifier-labeled-statement
-| case-labeled-statement
-| default-labeled-statement
+: identifier-labeled-statement {
+  $$ = ast_make_labeled_statement($[identifier-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "identifier-labeled-statement");
+  }
+}
+| case-labeled-statement {
+  $$ = ast_make_labeled_statement($[case-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "case-labeled-statement");
+  }
+}
+| default-labeled-statement {
+  $$ = ast_make_labeled_statement($[default-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "default-labeled-statement");
+  }
+}
 ;
 
 identifier-labeled-statement
