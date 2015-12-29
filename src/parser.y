@@ -1117,13 +1117,28 @@ declaration-list
 ;
 
 statement-list.opt
-: /* empty */
-| statement-list
+: /* empty */ {
+  $$ = ast_make_statement_list();
+}
+| statement-list {
+  $$ = $[statement-list];
+}
 ;
 
 statement-list
-: statement
-| statement-list statement
+: statement {
+  $$ = ast_make_statement_list();
+  $$ = ast_push_statement_list($$, $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement");
+  }
+}
+| statement-list[src] statement {
+  $$ = ast_push_statement_list($[src], $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement-list statement");
+  }
+}
 ;
 
 expression-statement
