@@ -1104,7 +1104,12 @@ case-labeled-statement
 ;
 
 default-labeled-statement
-: "default" ':' statement
+: "default" ':' statement {
+  $$ = ast_make_default_labeled_statement($[statement]);
+  if (!$$) {
+    AST_ERROR("default-labeled-statement", "\"default\" ':' statement");
+  }
+}
 ;
 
 compound-statement
