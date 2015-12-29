@@ -109,6 +109,20 @@ LLVMValueRef build_expression_unary_expression(
   return build_expression(module, builder, variable_set, unary->unary);
 }
 
+LLVMValueRef build_expression_function_call_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstFunctionCallExpressionRef function_call) {
+  AstTokenRef function_name = get_name(function_call->function);
+  LLVMValueRef function = LLVMGetNamedFunction(module, string_data(function_name));
+  LLVMTypeRef function_type = LLVMGetElementType(LLVMTypeOf(function));
+  int parameter_count = LLVMCountParamTypes(function_type);
+  ValueVectorRef argument_vec = get_arguments(variable_set, function_call->argument_list);
+  int argument_count = ValueVectorFunc(size)(argument_vec);
+  if (parameter_count != argument_count) return NULL;
+  LLVMBuildCall(builder, function, ValueVectorFunc(data)(argument_vec),
+      ValueVectorFunc(size)(argument_vec), string_data(function_name));
+}
+
 LLVMValueRef build_expression_postfix_expression(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
     AstPostfixExpressionRef postfix) {
