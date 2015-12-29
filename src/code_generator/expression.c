@@ -31,6 +31,90 @@ LLVMValueRef build_expression_basic_assignment_expression(
   return LLVMBuildStore(builder, rhs, get_variable(variable_set, expression->unary)->value);
 }
 
+LLVMValueRef build_expression_conditional_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstConditionalExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_logical_or_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstLogicalOrExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_logical_and_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstLogicalAndExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_bitwise_or_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstBitwiseOrExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_bitwise_xor_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstBitwiseXorExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_bitwise_and_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstBitwiseAndExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_equality_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstEqualityExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_relarional_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstRelationalExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_shift_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstShiftExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_additive_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstAdditiveExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_multiplicative_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstMultiplicativeExpressionRef expression) {
+  return build_expression(module, builder, variable_set, expression->expression);
+}
+
+LLVMValueRef build_expression_cast_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstCastExpressionRef cast) {
+  return build_expression(module, builder, variable_set, cast->cast);
+}
+
+LLVMValueRef build_expression_unary_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstUnaryExpressionRef unary) {
+  return build_expression(module, builder, variable_set, unary->unary);
+}
+
+LLVMValueRef build_expression_postfix_expression(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstPostfixExpressionRef postfix) {
+  return build_expression(module, builder, variable_set, postfix->postfix);
+}
+
 LLVMValueRef build_expression(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast) {
   switch (ast->tag) {
@@ -42,7 +126,42 @@ LLVMValueRef build_expression(
       return build_expression_assignment_expression(module, builder, variable_set, ast_get_assignment_expression(ast));
     case AST_BASIC_ASSIGNMENT_EXPRESSION:
       return build_expression_basic_assignment_expression(module, builder, variable_set, ast_get_basic_assignment_expression(ast));
-    case AST_CONDITIONAL_EXPRESSION:;
+    case AST_CONDITIONAL_EXPRESSION:
+      return build_expression_conditional_expression(module, builder, variable_set, ast_get_conditional_expression(ast));
+    case AST_LOGICAL_OR_EXPRESSION:
+      return build_expression_logical_or_expression(module, builder, variable_set, ast_get_logical_or_expression(ast));
+    case AST_LOGICAL_AND_EXPRESSION:
+      return build_expression_logical_and_expression(module, builder, variable_set, ast_get_logical_and_expression(ast));
+    case AST_BITWISE_OR_EXPRESSION:
+      return build_expression_bitwise_or_expression(module, builder, variable_set, ast_get_bitwise_or_expression(ast));
+    case AST_BITWISE_XOR_EXPRESSION:
+      return build_expression_bitwise_xor_expression(module, builder, variable_set, ast_get_bitwise_xor_expression(ast));
+    case AST_BITWISE_AND_EXPRESSION:
+      return build_expression_bitwise_and_expression(module, builder, variable_set, ast_get_bitwise_and_expression(ast));
+    case AST_EQUALITY_EXPRESSION:
+      return build_expression_equality_expression(module, builder, variable_set, ast_get_equality_expression(ast));
+    case AST_RELATIONAL_EXPRESSION:
+      return build_expression_relarional_expression(module, builder, variable_set, ast_get_relational_expression(ast));
+    case AST_SHIFT_EXPRESSION:
+      return build_expression_shift_expression(module, builder, variable_set, ast_get_shift_expression(ast));
+    case AST_ADDITIVE_EXPRESSION:
+      return build_expression_additive_expression(module, builder, variable_set, ast_get_additive_expression(ast));
+    case AST_MULTIPLICATIVE_EXPRESSION:
+      return build_expression_multiplicative_expression(module, builder, variable_set, ast_get_multiplicative_expression(ast));
+    case AST_CAST_EXPRESSION:
+      return build_expression_cast_expression(module, builder, variable_set, ast_get_cast_expression(ast));
+    case AST_UNARY_EXPRESSION:
+      return build_expression_unary_expression(module, builder, variable_set, ast_get_unary_expression(ast));
+    case AST_POSTFIX_EXPRESSION:
+      return build_expression_postfix_expression(module, builder, variable_set, ast_get_postfix_expression(ast));
+    case AST_FUNCTION_CALL_EXPRESSION:
+      return build_expression_function_call_expression(module, builder, variable_set, ast_get_function_call_expression(ast));
+    case AST_PRIMARY_EXPRESSION:
+      return build_expression_primary_expression(module, builder, variable_set, ast_get_primary_expression(ast));
+    case AST_CONSTANT:
+      return build_expression_constant(module, builder, variable_set, ast_get_constant(ast));
+    case AST_IDENTIFIER:
+      return build_expression_identifier(module, builder, variable_set, ast_get_identifier(ast));
     default:;
   }
   return NULL;
