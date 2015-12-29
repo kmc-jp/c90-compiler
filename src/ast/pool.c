@@ -43,6 +43,7 @@ static struct Allocator g_string_allocator = {
 };
 
 static void ast_initialize_string_allocator(MemoryPoolRef pool) {
+  assert(!g_string_allocator.manager_);
   g_string_allocator.manager_ = pool;
 }
 
@@ -84,6 +85,7 @@ static struct Allocator g_ast_vector_allocator = {
 };
 
 static void ast_initialize_vector_allocator(MemoryPoolRef pool) {
+  assert(!g_ast_vector_allocator.manager_);
   g_ast_vector_allocator.manager_ = pool;
 }
 
