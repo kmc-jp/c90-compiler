@@ -1132,7 +1132,12 @@ selection-statement
 ;
 
 if-statement
-: "if" '(' expression ')' statement
+: "if" '(' expression ')' statement {
+  $$ = ast_make_if_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("if-statement", "\"if\" '(' expression ')' statement");
+  }
+}
 ;
 
 if-else-statement
