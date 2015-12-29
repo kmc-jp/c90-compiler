@@ -4,8 +4,6 @@
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
 
-DEFINE_VECTOR(LLVMTypeRef)
-
 TypeVectorRef get_parameter_types_declarator(AstDeclaratorRef declarator) {
   return get_parameter_types(declarator->direct_declarator);
 }
