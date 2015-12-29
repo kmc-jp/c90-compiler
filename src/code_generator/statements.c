@@ -1,4 +1,5 @@
 #include "code_generator.h"
+#include "ast/statements_impl.h"
 #include "ast/is_method.h"
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
