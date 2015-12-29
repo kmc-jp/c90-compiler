@@ -724,57 +724,147 @@ not-equal-to-expression
 ;
 
 bitwise-AND-expression
-: equality-expression
-| bitwise-AND-operator-expression
+: equality-expression {
+  $$ = ast_make_bitwise_and_expression($[equality-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-and-expression", "equality-expression");
+  }
+}
+| bitwise-AND-operator-expression {
+  $$ = ast_make_bitwise_and_expression($[bitwise-AND-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-expression", "bitwise-AND-operator-expression");
+  }
+}
 ;
 
 bitwise-AND-operator-expression
-: bitwise-AND-expression '&' equality-expression
+: bitwise-AND-expression '&' equality-expression {
+  $$ = ast_make_bitwise_and_operator_expression($[bitwise-AND-expression], $[equality-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-operator-expression", "bitwise-AND-expression '&' equality-expression");
+  }
+}
 ;
 
 bitwise-XOR-expression
-: bitwise-AND-expression
-| bitwise-XOR-operator-expression
+: bitwise-AND-expression {
+  $$ = ast_make_bitwise_xor_expression($[bitwise-AND-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-expression", "bitwise-AND-expression");
+  }
+}
+| bitwise-XOR-operator-expression {
+  $$ = ast_make_bitwise_xor_expression($[bitwise-XOR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-expression", "bitwise-XOR-operator-expression");
+  }
+}
 ;
 
 bitwise-XOR-operator-expression
-: bitwise-XOR-expression '^' bitwise-AND-expression
+: bitwise-XOR-expression '^' bitwise-AND-expression {
+  $$ = ast_make_bitwise_xor_operator_expression($[bitwise-XOR-expression], $[bitwise-AND-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-operator-expression", "bitwise-XOR-expression '^' bitwise-AND-expression");
+  }
+}
 ;
 
 bitwise-OR-expression
-: bitwise-XOR-expression
-| bitwise-OR-operator-expression
+: bitwise-XOR-expression {
+  $$ = ast_make_bitwise_or_expression($[bitwise-XOR-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-expression", "bitwise-XOR-expression");
+  }
+}
+| bitwise-OR-operator-expression {
+  $$ = ast_make_bitwise_or_expression($[bitwise-OR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-expression", "bitwise-OR-operator-expression");
+  }
+}
 ;
 
 bitwise-OR-operator-expression
-: bitwise-OR-expression '|' bitwise-XOR-expression
+: bitwise-OR-expression '|' bitwise-XOR-expression {
+  $$ = ast_make_bitwise_or_operator_expression($[bitwise-OR-expression], $[bitwise-XOR-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-operator-expression", "bitwise-OR-expression '|' bitwise-XOR-expression");
+  }
+}
 ;
 
 logical-AND-expression
-: bitwise-OR-expression
-| logical-AND-operator-expression
+: bitwise-OR-expression {
+  $$ = ast_make_logical_and_expression($[bitwise-OR-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-expression", "bitwise-OR-expression");
+  }
+}
+| logical-AND-operator-expression {
+  $$ = ast_make_logical_and_expression($[logical-AND-operator-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-expression", "logical-AND-operator-expression");
+  }
+}
 ;
 
 logical-AND-operator-expression
-: logical-AND-expression "&&" bitwise-OR-expression
+: logical-AND-expression "&&" bitwise-OR-expression {
+  $$ = ast_make_logical_and_operator_expression($[logical-AND-expression], $[bitwise-OR-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-operator-expression", "logical-AND-expression \"&&\" bitwise-OR-expression");
+  }
+}
 ;
 
 logical-OR-expression
-: logical-AND-expression
-| logical-OR-operator-expression
+: logical-AND-expression {
+  $$ = ast_make_logical_or_expression($[logical-AND-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-expression", "logical-AND-expression");
+  }
+}
+| logical-OR-operator-expression {
+  $$ = ast_make_logical_or_expression($[logical-OR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-expression", "logical-OR-operator-expression");
+  }
+}
 ;
 
 logical-OR-operator-expression
-: logical-OR-expression "||" logical-AND-expression
+: logical-OR-expression "||" logical-AND-expression {
+  $$ = ast_make_logical_or_operator_expression($[logical-OR-expression], $[logical-AND-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-operator-expression", "logical-OR-expression \"||\" logical-AND-expression");
+  }
+}
 ;
 
 conditional-expression
-: logical-OR-expression
-| conditional-operator-expression
+: logical-OR-expression {
+  $$ = ast_make_conditional_expression($[logical-OR-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-expression", "logical-OR-expression");
+  }
+}
+| conditional-operator-expression {
+  $$ = ast_make_conditional_expression($[conditional-operator-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-expression", "conditional-operator-expression");
+  }
+}
 ;
 
 conditional-operator-expression
-: logical-OR-expression '?' expression ':' conditional-expression
+: logical-OR-expression '?' expression ':' conditional-expression {
+  $$ = ast_make_conditional_operator_expression($[logical-OR-expression], $[expression], $[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-operator-expression", "logical-OR-expression '?' expression ':' conditional-expression");
+  }
+}
 ;
 
 assignment-expression
