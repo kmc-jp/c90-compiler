@@ -6,10 +6,15 @@
 
 DEFINE_VECTOR(LLVMTypeRef)
 
+LLVMTypeRef get_type_declaration_specifier_list(
+    AstDeclarationSpecifierListRef declaration_specifier_list) {
+  return LLVMInt32Type();
+}
+
 LLVMTypeRef get_type(AstRef ast) {
   switch (ast->tag) {
     case AST_DECLARATION_SPECIFIER_LIST:
-      return LLVMInt32Type();
+      return get_type_declaration_specifier_list(ast_get_declaration_specifier_list(ast));
     default:
       return NULL;
   }
