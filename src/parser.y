@@ -1042,17 +1042,36 @@ bitwise-OR-assignment-expression
 ;
 
 expression.opt
-: /* empty */
-| expression
+: /* empty */ {
+  $$ = NULL;
+}
+| expression {
+  $$ = $[expression];
+}
 ;
 
 expression
-: assignment-expression
-| comma-expression
+: assignment-expression {
+  $$ = ast_make_expression($[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("expression", "assignment-expression");
+  }
+}
+| comma-expression {
+  $$ = ast_make_expression($[comma-expression]);
+  if (!$$) {
+    AST_ERROR("expression", "comma-expression");
+  }
+}
 ;
 
 comma-expression
-: expression ',' assignment-expression
+: expression ',' assignment-expression {
+  $$ = ast_make_comma_expression($[expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("comma-expression", "expression ',' assignment-expression");
+  }
+}
 ;
 
 constant-expression.opt
