@@ -6,25 +6,25 @@
 
 DEFINE_VECTOR(LLVMTypeRef)
 
-ParameterTypeRef get_parameter_types_declarator(AstDeclaratorRef declarator) {
+TypeVectorRef get_parameter_types_declarator(AstDeclaratorRef declarator) {
   return get_parameter_types(declarator->direct_declarator);
 }
 
-ParameterTypeRef get_parameter_types_direct_declarator(AstDirectDeclaratorRef direct_declarator) {
+TypeVectorRef get_parameter_types_direct_declarator(AstDirectDeclaratorRef direct_declarator) {
   return get_parameter_types(direct_declarator->direct_declarator);
 }
 
-ParameterTypeRef get_parameter_types_function_declarator(AstFunctionDeclaratorRef function_declarator) {
+TypeVectorRef get_parameter_types_function_declarator(AstFunctionDeclaratorRef function_declarator) {
   return get_parameter_types(function_declarator->parameter_type_list);
 }
 
-ParameterTypeRef get_parameter_types_parameter_type_list(AstParameterTypeListRef parameter_type_list) {
+TypeVectorRef get_parameter_types_parameter_type_list(AstParameterTypeListRef parameter_type_list) {
   return get_parameter_types(parameter_type_list->parameter_type_list);
 }
 
-ParameterTypeRef get_parameter_types_parameter_list(AstParameterListRef parameter_list) {
+TypeVectorRef get_parameter_types_parameter_list(AstParameterListRef parameter_list) {
   AstVectorRef parameter_vector = parameter_list->parameter_declaration_vector;
-  ParameterTypeRef parameter_types = ParameterTypeFunc(ctor)(NULL);
+  TypeVectorRef parameter_types = ParameterTypeFunc(ctor)(NULL);
   int i;
   for (i = 0; i < (int)AST_VECTOR_FUNC(size)(parameter_vector); i++) {
     AstParameterDeclarationRef parameter_declaration = 
@@ -42,7 +42,7 @@ ParameterTypeRef get_parameter_types_parameter_list(AstParameterListRef paramete
   return parameter_types;
 }
 
-ParameterTypeRef get_parameter_types(AstRef ast) {
+TypeVectorRef get_parameter_types(AstRef ast) {
   switch (ast->tag) {
     case AST_DECLARATOR:
       return get_parameter_types_declarator(ast_get_declarator(ast));
