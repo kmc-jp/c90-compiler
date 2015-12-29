@@ -20,5 +20,6 @@ ParameterTypeRef get_parameter_types(AstRef ast);
 LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition);
 StringRef get_function_name(AstFunctionDefinitionRef function_definition);
 void build_block(LLVMModuleRef module, LLVMBuilderRef builder, AstRef ast);
+LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder, AstRef ast);
 
 #endif /* KMC_C89_COMPILER_CODE_GENERATOR_H */
