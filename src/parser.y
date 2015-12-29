@@ -1084,7 +1084,7 @@ default-labeled-statement
 
 compound-statement
 : '{' declaration-list.opt statement-list.opt '}' {
-  $$ = ast_make_compound_statement($[declaration-list], $[statement-list]);
+  $$ = ast_make_compound_statement($[declaration-list.opt], $[statement-list.opt]);
   if (!$$) {
     AST_ERROR("compound-statement", "'{' declaration-list.opt statement-list.opt '}'");
   }
