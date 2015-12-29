@@ -1056,12 +1056,21 @@ comma-expression
 ;
 
 constant-expression.opt
-: /* empty */
-| constant-expression
+: /* empty */ {
+  $$ = NULL;
+}
+| constant-expression {
+  $$ = $[constant-expression];
+}
 ;
 
 constant-expression
-: conditional-expression
+: conditional-expression {
+  $$ = ast_make_constant_expression($[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("constant-expression", "conditional-expression");
+  }
+}
 ;
 
 declaration
