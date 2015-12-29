@@ -1189,19 +1189,30 @@ goto-jump-statement
 ;
 
 continue-jump-statement
-: "continue" ';'
+: "continue" ';' {
+  $$ = ast_make_continue_jump_statement();
+}
 ;
 
 break-jump-statement
-: "break" ';'
+: "break" ';' {
+  $$ = ast_make_break_jump_statement();
+}
 ;
 
 return-jump-statement
-: "return" expression ';'
+: "return" expression ';' {
+  $$ = ast_make_return_jump_statement($[expression]);
+  if (!$$) {
+    AST_ERROR("return-jump-statement", "\"return\" expression ';'");
+  }
+}
 ;
 
 void-return-jump-statement
-: "return" ';'
+: "return" ';' {
+  $$ = ast_make_void_return_jump_statement();
+}
 ;
 
 translation-unit
