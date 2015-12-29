@@ -144,6 +144,13 @@ LLVMValueRef build_expression_constant(
   return build_expression(module, builder, variable_set, constant->constant);
 }
 
+LLVMValueRef build_expression_integer_constant(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstIntegerConstantRef constant) {
+  return LLVMConstIntOfString(
+      LLVMInt32Type(), string_data(ast_get_token(constant->token)), 10);
+}
+
 LLVMValueRef build_expression(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast) {
   switch (ast->tag) {
@@ -189,6 +196,8 @@ LLVMValueRef build_expression(
       return build_expression_primary_expression(module, builder, variable_set, ast_get_primary_expression(ast));
     case AST_CONSTANT:
       return build_expression_constant(module, builder, variable_set, ast_get_constant(ast));
+    case AST_INTEGER_CONSTANT:
+      return build_expression_integer_constant(module, builder, variable_set, ast_get_integer_constant(ast));
     case AST_IDENTIFIER:
       return build_expression_identifier(module, builder, variable_set, ast_get_identifier(ast));
     default:;
