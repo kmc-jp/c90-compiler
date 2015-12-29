@@ -1,5 +1,6 @@
 #include "code_generator.h"
 #include "variable_set.h"
+#include "ast/lexical_elements_impl.h"
 #include "ast/expressions_impl.h"
 #include "ast/is_method.h"
 #include "ast/get_method.h"
