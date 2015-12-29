@@ -1095,21 +1095,51 @@ statement
 ;
 
 labeled-statement
-: identifier-labeled-statement
-| case-labeled-statement
-| default-labeled-statement
+: identifier-labeled-statement {
+  $$ = ast_make_labeled_statement($[identifier-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "identifier-labeled-statement");
+  }
+}
+| case-labeled-statement {
+  $$ = ast_make_labeled_statement($[case-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "case-labeled-statement");
+  }
+}
+| default-labeled-statement {
+  $$ = ast_make_labeled_statement($[default-labeled-statement]);
+  if (!$$) {
+    AST_ERROR("labeled-statement", "default-labeled-statement");
+  }
+}
 ;
 
 identifier-labeled-statement
-: identifier ':' statement
+: identifier ':' statement {
+  $$ = ast_make_identifier_labeled_statement($[identifier], $[statement]);
+  if (!$$) {
+    AST_ERROR("identifier-labeled-statement", "identifier ':' statement");
+  }
+}
 ;
 
 case-labeled-statement
-: "case" constant-expression ':' statement
+: "case" constant-expression ':' statement {
+  $$ = ast_make_case_labeled_statement($[constant-expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("case-labeled-statement", "\"case\" constant-expression ':' statement");
+  }
+}
 ;
 
 default-labeled-statement
-: "default" ':' statement
+: "default" ':' statement {
+  $$ = ast_make_default_labeled_statement($[statement]);
+  if (!$$) {
+    AST_ERROR("default-labeled-statement", "\"default\" ':' statement");
+  }
+}
 ;
 
 compound-statement
