@@ -87,6 +87,10 @@ static void ast_initialize_vector_allocator(MemoryPoolRef pool) {
   g_ast_vector_allocator.manager_ = pool;
 }
 
+static void ast_finalize_vector_allocator(void) {
+  g_ast_vector_allocator.manager_ = NULL;
+}
+
 AstVectorRef ast_make_vector(void) {
   return AST_VECTOR_FUNC(ctor)(&g_ast_vector_allocator);
 }
@@ -108,6 +112,7 @@ void ast_initialize_pool(void) {
 }
 
 void ast_finalize_pool(void) {
+  ast_finalize_vector_allocator();
   ast_finalize_string_allocator();
   ast_pool_dtor();
 }
