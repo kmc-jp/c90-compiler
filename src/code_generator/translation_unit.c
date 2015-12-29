@@ -5,18 +5,6 @@
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
 
-LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition);
-StringRef get_function_name(AstFunctionDefinitionRef function_definition);
-
-LLVMTypeRef get_type(AstRef ast) {
-  switch (ast->tag) {
-    case AST_DECLARATION_SPECIFIER_LIST:
-      return LLVMInt32Type();
-    default:
-      return NULL;
-  }
-}
-
 LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition) {
   LLVMTypeRef return_type = get_type(function_definition->declaration_specifier_list);
   ParameterTypeRef parameter_types = get_parameter_types(function_definition->declarator);
