@@ -2,7 +2,6 @@
 #define KMC_C89_COMPILER_AST_EXPRESSION_IMPL_H
 
 #include "../ast.h"
-#include "ast_vector.h"
 
 struct AstPrimaryExpression {
   AstRef primary_expression;
