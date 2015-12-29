@@ -778,62 +778,177 @@ conditional-operator-expression
 ;
 
 assignment-expression
-: conditional-expression
-| basic-assignment-expression
-| multiplication-assignment-expression
-| division-assignment-expression
-| modulo-assignment-expression
-| addition-assignment-expression
-| subtraction-assignment-expression
-| left-shift-assignment-expression
-| right-shift-assignment-expression
-| bitwise-AND-assignment-expression
-| bitwise-XOR-assignment-expression
-| bitwise-OR-assignment-expression
+: conditional-expression {
+  $$ = ast_make_assignment_expression($[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "conditional-expression");
+  }
+}
+| basic-assignment-expression {
+  $$ = ast_make_assignment_expression($[basic-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "basic-assignment-expression");
+  }
+}
+| multiplication-assignment-expression {
+  $$ = ast_make_assignment_expression($[multiplication-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "multiplication-assignment-expression");
+  }
+}
+| division-assignment-expression {
+  $$ = ast_make_assignment_expression($[division-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "division-assignment-expression");
+  }
+}
+| modulo-assignment-expression {
+  $$ = ast_make_assignment_expression($[modulo-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "modulo-assignment-expression");
+  }
+}
+| addition-assignment-expression {
+  $$ = ast_make_assignment_expression($[addition-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "addition-assignment-expression");
+  }
+}
+| subtraction-assignment-expression {
+  $$ = ast_make_assignment_expression($[subtraction-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "subtraction-assignment-expression");
+  }
+}
+| left-shift-assignment-expression {
+  $$ = ast_make_assignment_expression($[left-shift-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "left-shift-assignment-expression");
+  }
+}
+| right-shift-assignment-expression {
+  $$ = ast_make_assignment_expression($[right-shift-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "right-shift-assignment-expression");
+  }
+}
+| bitwise-AND-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-AND-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-AND-assignment-expression");
+  }
+}
+| bitwise-XOR-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-XOR-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-XOR-assignment-expression");
+  }
+}
+| bitwise-OR-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-OR-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-OR-assignment-expression");
+  }
+}
 ;
 
 basic-assignment-expression
-: unary-expression '=' assignment-expression
+: unary-expression '=' assignment-expression {
+  $$ = ast_make_basic_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("basic-assignment-expression", "unary-expression '=' assignment-expression");
+  }
+}
 ;
 
 multiplication-assignment-expression
-: unary-expression "*=" assignment-expression
+: unary-expression "*=" assignment-expression {
+  $$ = ast_make_multiplication_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("multiplication-assignment-expression", "unary-expression \"*=\" assignment-expression");
+  }
+}
 ;
 
 division-assignment-expression
-: unary-expression "/=" assignment-expression
+: unary-expression "/=" assignment-expression {
+  $$ = ast_make_division_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("division-assignment-expression", "unary-expression \"/=\" assignment-expression");
+  }
+}
 ;
 
 modulo-assignment-expression
-: unary-expression "%=" assignment-expression
+: unary-expression "%=" assignment-expression {
+  $$ = ast_make_modulo_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("modulo-assignment-expression", "unary-expression \"%=\" assignment-expression");
+  }
+}
 ;
 
 addition-assignment-expression
-: unary-expression "+=" assignment-expression
+: unary-expression "+=" assignment-expression {
+  $$ = ast_make_addition_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("addition-assignment-expression", "unary-expression \"+=\" assignment-expression");
+  }
+}
 ;
 
 subtraction-assignment-expression
-: unary-expression "-=" assignment-expression
+: unary-expression "-=" assignment-expression {
+  $$ = ast_make_subtraction_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("subtraction-assignment-expression", "unary-expression \"-=\" assignment-expression");
+  }
+}
 ;
 
 left-shift-assignment-expression
-: unary-expression "<<=" assignment-expression
+: unary-expression "<<=" assignment-expression {
+  $$ = ast_make_left_shift_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("left-shift-assignment-expression", "unary-expression \"<<=\" assignment-expression");
+  }
+}
 ;
 
 right-shift-assignment-expression
-: unary-expression ">>=" assignment-expression
+: unary-expression ">>=" assignment-expression {
+  $$ = ast_make_right_shift_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("right-shift-assignment-expression", "unary-expression \">>=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-AND-assignment-expression
-: unary-expression "&=" assignment-expression
+: unary-expression "&=" assignment-expression {
+  $$ = ast_make_bitwise_and_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-assignment-expression", "unary-expression \"&=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-XOR-assignment-expression
-: unary-expression "^=" assignment-expression
+: unary-expression "^=" assignment-expression {
+  $$ = ast_make_bitwise_xor_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-assignment-expression", "unary-expression \"^=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-OR-assignment-expression
-: unary-expression "|=" assignment-expression
+: unary-expression "|=" assignment-expression {
+  $$ = ast_make_bitwise_or_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-assignment-expression", "unary-expression \"|=\" assignment-expression");
+  }
+}
 ;
 
 expression.opt
