@@ -1111,9 +1111,24 @@ expression-statement
 ;
 
 selection-statement
-: if-statement
-| if-else-statement
-| switch-statement
+: if-statement {
+  $$ = ast_make_selection_statement($[if-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "if-statement");
+  }
+}
+| if-else-statement {
+  $$ = ast_make_selection_statement($[if-else-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "if-else-statement");
+  }
+}
+| switch-statement {
+  $$ = ast_make_selection_statement($[switch-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "switch-statement");
+  }
+}
 ;
 
 if-statement
