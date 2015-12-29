@@ -46,6 +46,10 @@ static void ast_initialize_string_allocator(MemoryPoolRef pool) {
   g_string_allocator.manager_ = pool;
 }
 
+static void ast_finalize_string_allocator(void) {
+  g_string_allocator.manager_ = NULL;
+}
+
 AstRef ast_make_token(const char* src, size_t length) {
   AstRef self = ast_palloc(struct Ast);
   assert(src);
@@ -104,5 +108,6 @@ void ast_initialize_pool(void) {
 }
 
 void ast_finalize_pool(void) {
+  ast_finalize_string_allocator();
   ast_pool_dtor();
 }
