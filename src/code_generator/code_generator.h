@@ -6,6 +6,7 @@
 #include "ast/external_definitions.h"
 #include "utility.h"
 #include "vector.h"
+#include "stdstring.h"
 
 #define ParameterTypeFunc(func) VECTORFUNC(LLVMTypeRef, func)
 
