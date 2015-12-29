@@ -12,11 +12,13 @@ ValueVectorRef get_arguments(
     VariableSetRef variable_set,
     AstArgumentExpressionListRef argument_expression_list) {
   AstVectorRef argument_list = argument_expression_list->argument_list;
-  int i;
   ValueVectorRef value_vec = ValueVectorFunc(ctor)(NULL);
-  for (i = 0; i < (int)AST_VECTOR_FUNC(size)(argument_list); i++) {
+  AstRef *itr;
+  AstRef *begin = AST_VECTOR_FUNC(begin)(argument_list);
+  AstRef *end = AST_VECTOR_FUNC(end)(argument_list);
+  for (itr = begin; itr != end; itr++) {
     ValueVectorFunc(push_back)(value_vec,
-        get_variable(variable_set, AST_VECTOR_FUNC(at)(argument_list, i))->value);
+        get_variable(variable_set, *itr)->value);
   }
   return value_vec;
 }
