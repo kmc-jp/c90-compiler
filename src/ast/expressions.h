@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_EXPRESSION_H
 #define KMC_C89_COMPILER_AST_EXPRESSION_H
 
-#include "../ast.h"
+#include "ast.h"
 
 AstRef ast_make_primary_expression(AstRef primary_expression);
 AstRef ast_make_postfix_expression(AstRef postfix);

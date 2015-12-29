@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_EXTERNAL_DEFINITIONS_H
 #define KMC_C89_COMPILER_AST_EXTERNAL_DEFINITIONS_H
 
-#include "../ast.h"
+#include "ast.h"
 
 AstRef ast_make_translation_unit(void);
 AstRef ast_push_translation_unit(AstRef translation_unit, AstRef external_declaration);
