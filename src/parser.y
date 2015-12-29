@@ -1159,7 +1159,12 @@ while-statement
 ;
 
 do-while-statement
-: "do" statement "while" '(' expression ')' ';'
+: "do" statement "while" '(' expression ')' ';' {
+  $$ = ast_make_do_while_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("do-while-statement", "\"do\" statement \"while\" '(' expression ')' ';'");
+  }
+}
 ;
 
 for-statement
