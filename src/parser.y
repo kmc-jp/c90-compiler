@@ -1174,8 +1174,19 @@ void-return-jump-statement
 ;
 
 translation-unit
-: external-declaration
-| translation-unit external-declaration
+: external-declaration {
+  $$ = ast_make_translation_unit();
+  $$ = ast_push_translation_unit($$, $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "external-declaration");
+  }
+}
+| translation-unit[src] external-declaration {
+  $$ = ast_push_translation_unit($[src], $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "translation-unit external-declaration");
+  }
+}
 ;
 
 external-declaration
