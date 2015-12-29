@@ -1184,7 +1184,13 @@ external-declaration
 ;
 
 function-definition
-: declaration-specifier-list.opt declarator declaration-list.opt compound-statement
+: declaration-specifier-list.opt declarator declaration-list.opt compound-statement {
+  $$ = ast_make_function_definition($[declaration-specifier-list.opt], $[declarator],
+      $[declaration-list.opt], $[compound-statement]);
+  if (!$$) {
+    AST_ERROR("function-definition", "declaration-specifier-list.opt declarator declaration-list.opt compound-statement");
+  }
+}
 ;
 
 %%
