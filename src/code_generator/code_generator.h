@@ -14,6 +14,8 @@
 DECLARE_VECTOR(LLVMTypeRef)
 typedef VECTORREF(LLVMTypeRef) TypeVectorRef;
 
+DECLARE_VECTOR(LLVMValueRef)
+typedef VECTORREF(LLVMValueRef) ValueVectorRef;
 
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit);
 LLVMTypeRef get_type(AstRef ast);
