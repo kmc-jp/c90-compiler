@@ -19,7 +19,7 @@ void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_un
 LLVMTypeRef get_type(AstRef ast);
 ParameterTypeRef get_parameter_types(AstRef ast);
 LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition);
-StringRef get_function_name(AstFunctionDefinitionRef function_definition);
+AstTokenRef get_name(AstRef ast);
 void build_block(LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast);
 LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast);
 

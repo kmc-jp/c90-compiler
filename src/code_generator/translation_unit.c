@@ -17,7 +17,7 @@ LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition) {
 
 void define_function(LLVMModuleRef module, LLVMBuilderRef builder,
     AstFunctionDefinitionRef function_definition) {
-  StringRef name = get_function_name(function_definition);
+  StringRef name = get_name(function_definition->declarator);
   LLVMTypeRef type = get_function_type(function_definition);
   LLVMValueRef func = LLVMAddFunction(module, string_data(name), type);
   LLVMBasicBlockRef entry = LLVMAppendBasicBlock(func, "entry");
