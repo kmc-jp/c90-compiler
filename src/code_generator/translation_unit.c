@@ -21,8 +21,9 @@ void define_function(LLVMModuleRef module, LLVMBuilderRef builder,
   LLVMTypeRef type = get_function_type(function_definition);
   LLVMValueRef func = LLVMAddFunction(module, string_data(name), type);
   LLVMBasicBlockRef entry = LLVMAppendBasicBlock(func, "entry");
+  VariableSetRef variable_set = VariableSetFunc(ctor)(NULL);
   LLVMPositionBuilderAtEnd(builder, entry);
-  build_block(module, builder, function_definition->compound_statement);
+  build_block(module, builder, variable_set, function_definition->compound_statement);
 }
 
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit) {
