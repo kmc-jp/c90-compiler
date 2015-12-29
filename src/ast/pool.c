@@ -42,8 +42,8 @@ static struct Allocator g_string_allocator = {
   ast_string_deallocate
 };
 
-void ast_string_allocator_ctor(void) {
-  g_string_allocator.manager_ = ast_pool();
+static void ast_initialize_string_allocator(MemoryPoolRef pool) {
+  g_string_allocator.manager_ = pool;
 }
 
 AstRef ast_make_token(const char* src, size_t length) {
@@ -97,7 +97,7 @@ void ast_initialize_pool(void) {
   static bool is_first = true;
   if (is_first) {
     ast_pool_ctor();
-    ast_string_allocator_ctor();
+    ast_initialize_string_allocator(ast_pool());
     ast_vector_allocator_ctor();
     is_first = false;
   }

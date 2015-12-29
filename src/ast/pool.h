@@ -17,8 +17,6 @@ static const size_t AST_POOL_CHUNK_SIZE = 1024;
 
 MemoryPoolRef ast_pool(void);
 
-void ast_string_allocator_ctor(void);
-
 AstRef ast_make_token(const char* src, size_t length);
 
 void ast_vector_allocator_ctor(void);
