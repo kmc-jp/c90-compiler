@@ -17,7 +17,7 @@ void build_block_declaration_list(
   AstVectorRef declaration_vector = declaration_list->declaration_vector;
   int i;
   for (i = 0; i < AST_VECTOR_FUNC(size)(declaration_vector); i++) {
-    build_block(AST_VECTOR_FUNC(at)(declaration_vector, i));
+    build_block(module, builder, AST_VECTOR_FUNC(at)(declaration_vector, i));
   }
 }
 
@@ -27,18 +27,21 @@ void build_block_statement_list(
   AstVectorRef statement_vector = statement_list->statement_vector;
   int i;
   for (i = 0; i < AST_VECTOR_FUNC(size)(statement_vector); i++) {
-    build_block(AST_VECTOR_FUNC(at)(statement_vector, i));
+    build_block(module, builder, AST_VECTOR_FUNC(at)(statement_vector, i));
   }
-}
-
-void build_block_statement_list(
-    LLVMModuleRef module, LLVMBuilderRef builder,
-    AstStatementListRef statement_list) {
 }
 
 void build_block_statement(
     LLVMModuleRef module, LLVMBuilderRef builder,
-    AstStatement statement) {
+    AstStatementRef statement) {
+  build_block(module, builder, statement->statement);
+}
+
+void build_block_expression_statement(
+    LLVMModuleRef module, LLVMBuilderRef builder,
+    AstExpressionStatementRef expression_statement) {
+  if (expression_statement->expression != NULL)
+    build_expression(module, builder, expression_statement->expression);
 }
 
 void build_block(LLVMModuleRef module, LLVMBuilderRef builder, AstRef ast) {
@@ -51,6 +54,8 @@ void build_block(LLVMModuleRef module, LLVMBuilderRef builder, AstRef ast) {
       build_block_statement_list(module, builder, ast_get_statement_list(ast)); break;
     case AST_STATEMENT:
       build_block_statement(module, builder, ast_get_statement(ast)); break;
-    default:
+    case AST_EXPRESSION_STATEMENT:
+      build_block_expression_statement(module, builder, ast_get_expression_statement(ast)); break;
+    default:;
   }
 }
