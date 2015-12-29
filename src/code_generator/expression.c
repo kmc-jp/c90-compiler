@@ -152,6 +152,12 @@ LLVMValueRef build_expression_integer_constant(
       LLVMInt32Type(), string_data(ast_get_token(constant->token)), 10);
 }
 
+LLVMValueRef build_expression_identifier(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    AstIdentifierRef identifier) {
+  return get_variable_identifier(variable_set, identifier)->value;
+}
+
 LLVMValueRef build_expression(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast) {
   switch (ast->tag) {
