@@ -1150,7 +1150,12 @@ iteration-statement
 ;
 
 while-statement
-: "while" '(' expression ')' statement
+: "while" '(' expression ')' statement {
+  $$ = ast_make_while_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("while-statement", "\"while\" '(' expression ')' statement");
+  }
+}
 ;
 
 do-while-statement
