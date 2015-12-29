@@ -10,11 +10,12 @@ DEFINE_VECTOR(VariableRef)
 VariableRef get_variable_identifier(
     VariableSetRef variable_set, AstIdentifierRef name) {
   AstTokenRef name_str = ast_get_token(name->token);
-  int i;
-  for (i = 0; i < VariableSetFunc(size)(variable_set); i++) {
-    VariableRef variable = VariableSetFunc(at)(variable_set, i);
-    if (string_compare(variable->name, name_str) == 0)
-      return variable;
+  VariableRef *itr;
+  VariableRef *begin = VariableSetFunc(begin)(variable_set);
+  VariableRef *end = VariableSetFunc(end)(variable_set);
+  for (itr = begin; itr != end; itr++) {
+    if (string_compare((*itr)->name, name_str) == 0)
+      return *itr;
   }
   return NULL;
 }
