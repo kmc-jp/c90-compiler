@@ -19,8 +19,6 @@ MemoryPoolRef ast_pool(void);
 
 AstRef ast_make_token(const char* src, size_t length);
 
-void ast_vector_allocator_ctor(void);
-
 AstVectorRef ast_make_vector(void);
 void ast_push_vector(AstVectorRef vector, AstRef element);
 

@@ -83,8 +83,8 @@ static struct Allocator g_ast_vector_allocator = {
   ast_vector_deallocate
 };
 
-void ast_vector_allocator_ctor(void) {
-  g_ast_vector_allocator.manager_ = ast_pool();
+static void ast_initialize_vector_allocator(MemoryPoolRef pool) {
+  g_ast_vector_allocator.manager_ = pool;
 }
 
 AstVectorRef ast_make_vector(void) {
@@ -102,7 +102,7 @@ void ast_initialize_pool(void) {
   if (is_first) {
     ast_pool_ctor();
     ast_initialize_string_allocator(ast_pool());
-    ast_vector_allocator_ctor();
+    ast_initialize_vector_allocator(ast_pool());
     is_first = false;
   }
 }
