@@ -1056,12 +1056,42 @@ initializer-list
 ;
 
 statement
-: labeled-statement
-| compound-statement
-| expression-statement
-| selection-statement
-| iteration-statement
-| jump-statement
+: labeled-statement {
+  $$ = ast_make_statement($[labeled-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "labeled-statement");
+  }
+}
+| compound-statement {
+  $$ = ast_make_statement($[compound-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "compound-statement");
+  }
+}
+| expression-statement {
+  $$ = ast_make_statement($[expression-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "expression-statement");
+  }
+}
+| selection-statement {
+  $$ = ast_make_statement($[selection-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "selection-statement");
+  }
+}
+| iteration-statement {
+  $$ = ast_make_statement($[iteration-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "iteration-statement");
+  }
+}
+| jump-statement {
+  $$ = ast_make_statement($[jump-statement]);
+  if (!$$) {
+    AST_ERROR("statement", "jump-statement");
+  }
+}
 ;
 
 labeled-statement
