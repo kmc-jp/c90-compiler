@@ -1202,7 +1202,12 @@ statement-list
 ;
 
 expression-statement
-: expression.opt ';'
+: expression.opt ';' {
+  $$ = ast_make_expression_statement($[expression.opt]);
+  if (!$$) {
+    AST_ERROR("expression-statement", "expression.opt ';'");
+  }
+}
 ;
 
 selection-statement
