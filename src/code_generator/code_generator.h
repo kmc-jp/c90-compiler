@@ -9,7 +9,7 @@
 #include "stdstring.h"
 #include "variable_set.h"
 
-#define ParameterTypeFunc(func) VECTORFUNC(LLVMTypeRef, func)
+#define TypeVectorFunc(func) VECTORFUNC(LLVMTypeRef, func)
 
 DECLARE_VECTOR(LLVMTypeRef)
 typedef VECTORREF(LLVMTypeRef) TypeVectorRef;

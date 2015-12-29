@@ -24,7 +24,7 @@ TypeVectorRef get_parameter_types_parameter_type_list(AstParameterTypeListRef pa
 
 TypeVectorRef get_parameter_types_parameter_list(AstParameterListRef parameter_list) {
   AstVectorRef parameter_vector = parameter_list->parameter_declaration_vector;
-  TypeVectorRef parameter_types = ParameterTypeFunc(ctor)(NULL);
+  TypeVectorRef parameter_types = TypeVectorFunc(ctor)(NULL);
   int i;
   for (i = 0; i < (int)AST_VECTOR_FUNC(size)(parameter_vector); i++) {
     AstParameterDeclarationRef parameter_declaration = 
@@ -33,7 +33,7 @@ TypeVectorRef get_parameter_types_parameter_list(AstParameterListRef parameter_l
           parameter_declaration->parameter_declaration)) {
       AstParameterConcreteDeclarationRef parameter_concrete_declaration =
         ast_get_parameter_concrete_declaration(parameter_declaration->parameter_declaration);
-      ParameterTypeFunc(push_back)(parameter_types,
+      TypeVectorFunc(push_back)(parameter_types,
           get_type(parameter_concrete_declaration->declaration_specifier_list));
     } else {
       return NULL;
