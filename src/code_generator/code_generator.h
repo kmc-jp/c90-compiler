@@ -14,6 +14,8 @@
 DECLARE_VECTOR(LLVMTypeRef)
 typedef VECTORREF(LLVMTypeRef) TypeVectorRef;
 
+#define ValueVectorFunc(func) VECTORFUNC(LLVMValueRef, func)
+
 DECLARE_VECTOR(LLVMValueRef)
 typedef VECTORREF(LLVMValueRef) ValueVectorRef;
 
