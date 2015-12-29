@@ -1092,13 +1092,28 @@ compound-statement
 ;
 
 declaration-list.opt
-: /* empty */
-| declaration-list
+: /* empty */ {
+  $$ = ast_make_declaration_list();
+}
+| declaration-list {
+  $$ = $[declaration-list];
+}
 ;
 
 declaration-list
-: declaration
-| declaration-list declaration
+: declaration {
+  $$ = ast_make_declaration_list();
+  $$ = ast_push_declaration_list($$, $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration");
+  }
+}
+| declaration-list[src] declaration {
+  $$ = ast_push_declaration_list($[src], $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration-list declaration");
+  }
+}
 ;
 
 statement-list.opt
