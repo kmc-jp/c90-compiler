@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_DECLARATIONS_H
 #define KMC_C89_COMPILER_AST_DECLARATIONS_H
 
-#include "../ast.h"
+#include "ast.h"
 
 AstRef ast_make_declaration(AstRef declaration_specifier_list, AstRef init_declarator_list);
 AstRef ast_make_declaration_specifier_list(void);

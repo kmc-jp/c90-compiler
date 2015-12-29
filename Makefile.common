@@ -1,5 +1,13 @@
 # c89-compiler/Makefile.common
 
+ifndef TOP_DIR
+$(error TOP_DIR must be defined)
+endif
+
+ifndef SRC_DIR
+SRC_DIR := $(TOP_DIR)/src
+endif
+
 .SUFFIXES: .out .o .c .cc .cpp .d
 
 C_SRCS := $(wildcard *.c)
@@ -21,10 +29,11 @@ COMMON_FLAGS := -Wall -Wextra -O2 -DDEBUG
 DEPEND_FLAGS := -MMD -MP
 C89_RESTRICT_FLAGS := -ansi -pedantic
 CXX11_FLAGS := -std=c++11
+INCLUDE := -I$(SRC_DIR)
 CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
 CXXFLAGS ?= $(COMMON_FLAGS) $(CXX11_FLAGS)
-CFLAGS += $(DEPEND_FLAGS)
-CXXFLAGS += $(DEPEND_FLAGS)
+CFLAGS += $(DEPEND_FLAGS) $(INCLUDE)
+CXXFLAGS += $(DEPEND_FLAGS) $(INCLUDE)
 RM := rm -f
 AR := ar rcs
 

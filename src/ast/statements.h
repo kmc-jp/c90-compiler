@@ -1,7 +1,7 @@
 #ifndef KMC_C89_COMPILER_AST_STATEMENTS_H
 #define KMC_C89_COMPILER_AST_STATEMENTS_H
 
-#include "../ast.h"
+#include "ast.h"
 
 AstRef ast_make_statement(AstRef statement);
 AstRef ast_make_labeled_statement(AstRef labeled_statement);
