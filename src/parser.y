@@ -1190,8 +1190,18 @@ translation-unit
 ;
 
 external-declaration
-: function-definition
-| declaration
+: function-definition {
+  $$ = ast_make_external_declaration($[function-definition]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "function-definition");
+  }
+}
+| declaration {
+  $$ = ast_make_external_declaration($[declaration]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "declaration");
+  }
+}
 ;
 
 function-definition
