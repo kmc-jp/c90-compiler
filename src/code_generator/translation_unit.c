@@ -7,7 +7,7 @@
 
 LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition) {
   LLVMTypeRef return_type = get_type(function_definition->declaration_specifier_list);
-  ParameterTypeRef parameter_types = get_parameter_types(function_definition->declarator);
+  TypeVectorRef parameter_types = get_parameter_types(function_definition->declarator);
   return LLVMFunctionType(
       return_type,
       TypeVectorFunc(data)(parameter_types),
