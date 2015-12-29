@@ -9,8 +9,6 @@
 
 DECLARE_VECTOR(AstRef)
 
-typedef VECTORREF(AstRef) AstVectorRef;
-
 void ast_vector_allocator_ctor(void);
 
 AstVectorRef ast_make_vector(void);
