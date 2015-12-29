@@ -1143,27 +1143,62 @@ default-labeled-statement
 ;
 
 compound-statement
-: '{' declaration-list.opt statement-list.opt '}'
+: '{' declaration-list.opt statement-list.opt '}' {
+  $$ = ast_make_compound_statement($[declaration-list.opt], $[statement-list.opt]);
+  if (!$$) {
+    AST_ERROR("compound-statement", "'{' declaration-list.opt statement-list.opt '}'");
+  }
+}
 ;
 
 declaration-list.opt
-: /* empty */
-| declaration-list
+: /* empty */ {
+  $$ = ast_make_declaration_list();
+}
+| declaration-list {
+  $$ = $[declaration-list];
+}
 ;
 
 declaration-list
-: declaration
-| declaration-list declaration
+: declaration {
+  $$ = ast_make_declaration_list();
+  $$ = ast_push_declaration_list($$, $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration");
+  }
+}
+| declaration-list[src] declaration {
+  $$ = ast_push_declaration_list($[src], $[declaration]);
+  if (!$$) {
+    AST_ERROR("declaration-list", "declaration-list declaration");
+  }
+}
 ;
 
 statement-list.opt
-: /* empty */
-| statement-list
+: /* empty */ {
+  $$ = ast_make_statement_list();
+}
+| statement-list {
+  $$ = $[statement-list];
+}
 ;
 
 statement-list
-: statement
-| statement-list statement
+: statement {
+  $$ = ast_make_statement_list();
+  $$ = ast_push_statement_list($$, $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement");
+  }
+}
+| statement-list[src] statement {
+  $$ = ast_push_statement_list($[src], $[statement]);
+  if (!$$) {
+    AST_ERROR("statement-list", "statement-list statement");
+  }
+}
 ;
 
 expression-statement
