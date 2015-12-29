@@ -1180,7 +1180,13 @@ jump-statement
 ;
 
 goto-jump-statement
-: "goto" identifier ';'
+: "goto" identifier ';' {
+  $$ = ast_make_goto_jump_statement($[identifier]);
+  if (!$$) {
+    AST_ERROR("goto-jump-statement", "\"goto\" identifier ';'");
+  }
+}
+;
 
 continue-jump-statement
 : "continue" ';'
