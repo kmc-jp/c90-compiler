@@ -1147,11 +1147,36 @@ for-statement
 ;
 
 jump-statement
-: goto-jump-statement
-| continue-jump-statement
-| break-jump-statement
-| return-jump-statement
-| void-return-jump-statement
+: goto-jump-statement {
+  $$ = ast_make_jump_statement($[goto-jump-statement]);
+  if (!$$) {
+    AST_ERROR("jump-statement", "goto-jump-statement");
+  }
+}
+| continue-jump-statement {
+  $$ = ast_make_jump_statement($[continue-jump-statement]);
+  if (!$$) {
+    AST_ERROR("jump-statement", "continue-jump-statement");
+  }
+}
+| break-jump-statement {
+  $$ = ast_make_jump_statement($[break-jump-statement]);
+  if (!$$) {
+    AST_ERROR("jump-statement", "break-jump-statement");
+  }
+}
+| return-jump-statement {
+  $$ = ast_make_jump_statement($[return-jump-statement]);
+  if (!$$) {
+    AST_ERROR("jump-statement", "return-jump-statement");
+  }
+}
+| void-return-jump-statement {
+  $$ = ast_make_jump_statement($[void-return-jump-statement]);
+  if (!$$) {
+    AST_ERROR("jump-statement", "void-return-jump-statement");
+  }
+}
 ;
 
 goto-jump-statement
