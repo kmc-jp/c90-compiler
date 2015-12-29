@@ -1174,17 +1174,44 @@ void-return-jump-statement
 ;
 
 translation-unit
-: external-declaration
-| translation-unit external-declaration
+: external-declaration {
+  $$ = ast_make_translation_unit();
+  $$ = ast_push_translation_unit($$, $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "external-declaration");
+  }
+}
+| translation-unit[src] external-declaration {
+  $$ = ast_push_translation_unit($[src], $[external-declaration]);
+  if (!$$) {
+    AST_ERROR("translation-unit", "translation-unit external-declaration");
+  }
+}
 ;
 
 external-declaration
-: function-definition
-| declaration
+: function-definition {
+  $$ = ast_make_external_declaration($[function-definition]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "function-definition");
+  }
+}
+| declaration {
+  $$ = ast_make_external_declaration($[declaration]);
+  if (!$$) {
+    AST_ERROR("external-declaration", "declaration");
+  }
+}
 ;
 
 function-definition
-: declaration-specifier-list.opt declarator declaration-list.opt compound-statement
+: declaration-specifier-list.opt declarator declaration-list.opt compound-statement {
+  $$ = ast_make_function_definition($[declaration-specifier-list.opt], $[declarator],
+      $[declaration-list.opt], $[compound-statement]);
+  if (!$$) {
+    AST_ERROR("function-definition", "declaration-specifier-list.opt declarator declaration-list.opt compound-statement");
+  }
+}
 ;
 
 %%
