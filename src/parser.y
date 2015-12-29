@@ -1150,7 +1150,12 @@ if-else-statement
 ;
 
 switch-statement
-: "switch" '(' expression ')' statement
+: "switch" '(' expression ')' statement {
+  $$ = ast_make_switch_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("switch-statement", "\"switch\" '(' expression ')' statement");
+  }
+}
 ;
 
 iteration-statement
