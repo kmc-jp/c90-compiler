@@ -685,17 +685,42 @@ greater-than-or-equal-to-expression
 ;
 
 equality-expression
-: relational-expression
-| equal-to-expression
-| not-equal-to-expression
+: relational-expression {
+  $$ = ast_make_equality_expression($[relational-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "relational-expression");
+  }
+}
+| equal-to-expression {
+  $$ = ast_make_equality_expression($[equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "equal-to-expression");
+  }
+}
+| not-equal-to-expression {
+  $$ = ast_make_equality_expression($[not-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "not-equal-to-expression");
+  }
+}
 ;
 
 equal-to-expression
-: equality-expression "==" relational-expression
+: equality-expression "==" relational-expression {
+  $$ = ast_make_equal_to_expression($[equality-expression], $[relational-expression]);
+  if (!$$) {
+    AST_ERROR("equal-to-expression", "equality-expression \"==\" relational-expression");
+  }
+}
 ;
 
 not-equal-to-expression
-: equality-expression "!=" relational-expression
+: equality-expression "!=" relational-expression {
+  $$ = ast_make_not_equal_to_expression($[equality-expression], $[relational-expression]);
+  if (!$$) {
+    AST_ERROR("not-equal-to-expression", "equality-expression \"!=\" relational-expression");
+  }
+}
 ;
 
 bitwise-AND-expression
