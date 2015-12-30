@@ -34,8 +34,20 @@ void build_block_with_type_declarator(
     LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstDeclaratorRef declarator) {
   AstTokenRef name = get_name(declarator->direct_declarator);
-  LLVMTypeRef type = base_type; /* get_type_with_base_type(declarator->direct_declarator); */
-  make_variable(variable_set, name, type, NULL);
+  LLVMTypeRef type = base_type; /* get_type_with_type(declarator->direct_declarator); */
+  LLVMValueRef variable = LLVMGetUndef(type);
+  LLVMSetValueName(variable, string_data(name));
+  ValueVectorFunc(push_back)(variable_set, variable);
+}
+
+void build_block_with_type_declarator_with_initializer(
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
+    LLVMTypeRef base_type, AstDeclaratorWithInitializerRef declarator) {
+  AstTokenRef name = get_name(declarator->declarator);
+  LLVMTypeRef type = base_type; /* get_type_with_type(declarator->declarator); */
+  LLVMValueRef variable = make_value(module, builder, variable_set, type, declarator->initializer);
+  LLVMSetValueName(variable, string_data(name));
+  ValueVectorFunc(push_back)(variable_set, variable);
 }
 
 void build_block_with_type(
