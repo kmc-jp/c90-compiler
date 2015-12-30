@@ -792,9 +792,24 @@ declaration-specifier-list
 ;
 
 declaration-specifier
-: storage-class-specifier
-| type-specifier
-| type-qualifier
+: storage-class-specifier {
+  $$ = ast_make_declaration_specifier($[storage-class-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "storage-class-specifier");
+  }
+}
+| type-specifier {
+  $$ = ast_make_declaration_specifier($[type-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "type-specifier");
+  }
+}
+| type-qualifier {
+  $$ = ast_make_declaration_specifier($[type-qualifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "type-qualifier");
+  }
+}
 ;
 
 init-declarator-list.opt
