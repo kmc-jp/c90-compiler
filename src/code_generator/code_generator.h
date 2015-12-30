@@ -18,5 +18,6 @@ AstTokenRef get_name(AstRef ast);
 ValueVectorRef get_arguments(ValueVectorRef variable_set, AstArgumentExpressionListRef ast);
 void build_block(LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set, AstRef ast);
 LLVMValueRef build_expression(LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set, AstRef ast);
+LLVMValueRef make_value(LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set, LLVMTypeRef type, AstRef ast);
 
 #endif /* KMC_C89_COMPILER_CODE_GENERATOR_H */
