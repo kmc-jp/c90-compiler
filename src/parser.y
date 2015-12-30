@@ -765,16 +765,30 @@ constant-expression
 ;
 
 declaration
-: declaration-specifier-list init-declarator-list.opt ';'
+: declaration-specifier-list init-declarator-list.opt ';' {
+  $$ = ast_make_declaration($[declaration-specifier-list], $[init-declarator-list.opt]);
+  if (!$$) {
+    AST_ERROR("declaration", "declaration-specifier-list init-declarator-list.opt ';'");
+  }
+}
 ;
 
 declaration-specifier-list.opt
-: /* empty */
-| declaration-specifier-list
+: /* empty */ {
+  $$ = ast_make_declaration_specifier_list();
+}
+| declaration-specifier-list {
+  $$ = $[declaration-specifier-list];
+}
 ;
 
 declaration-specifier-list
-: declaration-specifier declaration-specifier-list.opt
+: declaration-specifier declaration-specifier-list.opt {
+  $$ = ast_push_declaration_specifier_list($[declaration-specifier-list.opt], $[declaration-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier-list", "declaration-specifier declaration-specifier-list.opt");
+  }
+}
 ;
 
 declaration-specifier
