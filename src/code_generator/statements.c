@@ -6,6 +6,66 @@
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
 
+void build_block_with_type(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMTypeRef base_type, AstRef ast);
+
+void build_block_with_type_init_declarator_list(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMTypeRef base_type, AstInitDeclaratorListRef init_declarator_list) {
+  AstVectorRef vector = init_declarator_list->init_declarator_vector;
+  AstRef *itr;
+  AstRef *begin = AST_VECTOR_FUNC(begin)(vector);
+  AstRef *end = AST_VECTOR_FUNC(end)(vector);
+  for (itr = begin; itr != end; itr++) {
+    build_block_with_type(module, builder, variable_set, base_type, *itr);
+  }
+}
+
+void build_block_with_type_init_declarator(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMTypeRef base_type, AstInitDeclaratorRef init_declarator) {
+  build_block_with_type(
+      module, builder, variable_set, base_type,
+      init_declarator->init_declarator);
+}
+
+void build_block_with_type_declarator(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMTypeRef base_type, AstDeclaratorRef declarator) {
+  AstTokenRef name = get_name(declarator->direct_declarator);
+  LLVMTypeRef type = base_type; /* get_type_with_base_type(declarator->direct_declarator); */
+  make_variable(variable_set, name, type, NULL);
+}
+
+void build_block_with_type(
+    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMTypeRef base_type, AstRef ast) {
+  switch (ast->tag) {
+    case AST_INIT_DECLARATOR_LIST:
+      build_block_with_type_init_declarator_list(
+          module, builder, variable_set, base_type,
+          ast_get_init_declarator_list(ast));
+      break;
+    case AST_INIT_DECLARATOR:
+      build_block_with_type_init_declarator(
+          module, builder, variable_set, base_type,
+          ast_get_init_declarator(ast));
+      break;
+    case AST_DECLARATOR:
+      build_block_with_type_declarator(
+          module, builder, variable_set, base_type,
+          ast_get_declarator(ast));
+      break;
+    case AST_DECLARATOR_WITH_INITIALIZER:
+      build_block_with_type_declarator_with_initializer(
+          module, builder, variable_set, base_type,
+          ast_get_declarator_with_initializer(ast));
+      break;
+    default:;
+  }
+}
+
 void build_block_compound_statement(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
     AstCompoundStatementRef compound_statement) {
