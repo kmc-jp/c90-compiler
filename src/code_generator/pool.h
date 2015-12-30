@@ -4,8 +4,6 @@
 #include <llvm-c/Core.h>
 #include "memory_pool.h"
 #include "vector.h"
-#include "stdstring.h"
-#include "variable_set.h"
 
 #define codegen_palloc(type) \
   palloc(type, codegen_pool(), 1)

@@ -1,7 +1,6 @@
 #include "variable_set.h"
 #include <string.h>
 #include "vector_impl.h"
-#include "pool.h"
 #include "ast/get_method.h"
 #include "ast/lexical_elements_impl.h"
 #include "ast/expressions_impl.h"

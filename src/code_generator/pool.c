@@ -1,4 +1,5 @@
 #include "pool.h"
+#include "vector_impl.h"
 #include <assert.h>
 
 static MemoryPoolRef g_codegen_pool = NULL;
