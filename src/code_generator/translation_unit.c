@@ -22,7 +22,7 @@ void define_function(LLVMModuleRef module, LLVMBuilderRef builder,
   LLVMTypeRef type = get_function_type(function_definition);
   LLVMValueRef func = LLVMAddFunction(module, string_data(name), type);
   LLVMBasicBlockRef entry = LLVMAppendBasicBlock(func, "entry");
-  VariableSetRef variable_set = VariableSetFunc(ctor)(NULL);
+  ValueVectorRef variable_set = ValueVectorFunc(ctor)(NULL);
   LLVMPositionBuilderAtEnd(builder, entry);
   build_block(module, builder, variable_set, function_definition->compound_statement);
 }

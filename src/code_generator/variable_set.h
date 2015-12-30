@@ -3,23 +3,9 @@
 
 #include <llvm-c/Core.h>
 #include "ast.h"
-#include "vector.h"
+#include "pool.h"
 
-struct Variable {
-  AstTokenRef name;
-  LLVMTypeRef type;
-  LLVMValueRef value;
-};
-
-typedef struct Variable *VariableRef;
-
-#define VariableSetFunc(func) VECTORFUNC(VariableRef, func)
-DECLARE_VECTOR(VariableRef)
-
-typedef struct VECTOR(VariableRef) *VariableSetRef;
-
-VariableRef get_variable(VariableSetRef variable_set, AstRef ast);
-VariableRef get_variable_identifier(VariableSetRef variable_set, AstIdentifierRef ast);
-void make_variable(VariableSetRef variable_set, AstTokenRef name, LLVMTypeRef type, LLVMValueRef value);
+LLVMValueRef get_variable(ValueVectorRef variable_set, AstRef ast);
+LLVMValueRef get_variable_identifier(ValueVectorRef variable_set, AstIdentifierRef ast);
 
 #endif /* KMC_C89_COMPILER_VARIABLE_SET_H */

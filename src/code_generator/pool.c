@@ -18,4 +18,3 @@ MemoryPoolRef codegen_pool(void) {
 
 DEFINE_VECTOR(LLVMTypeRef)
 DEFINE_VECTOR(LLVMValueRef)
-DEFINE_VECTOR(VariableRef)

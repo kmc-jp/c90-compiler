@@ -8,7 +8,7 @@
 #include "ast/ast_impl.h"
 
 ValueVectorRef get_arguments(
-    VariableSetRef variable_set,
+    ValueVectorRef variable_set,
     AstArgumentExpressionListRef argument_expression_list) {
   AstVectorRef argument_list = argument_expression_list->argument_list;
   ValueVectorRef value_vec = ValueVectorFunc(ctor)(NULL);
@@ -17,7 +17,7 @@ ValueVectorRef get_arguments(
   AstRef *end = AST_VECTOR_FUNC(end)(argument_list);
   for (itr = begin; itr != end; itr++) {
     ValueVectorFunc(push_back)(value_vec,
-        get_variable(variable_set, *itr)->value);
+        get_variable(variable_set, *itr));
   }
   return value_vec;
 }

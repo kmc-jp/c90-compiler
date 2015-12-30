@@ -7,11 +7,11 @@
 #include "ast/ast_impl.h"
 
 void build_block_with_type(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstRef ast);
 
 void build_block_with_type_init_declarator_list(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstInitDeclaratorListRef init_declarator_list) {
   AstVectorRef vector = init_declarator_list->init_declarator_vector;
   AstRef *itr;
@@ -23,7 +23,7 @@ void build_block_with_type_init_declarator_list(
 }
 
 void build_block_with_type_init_declarator(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstInitDeclaratorRef init_declarator) {
   build_block_with_type(
       module, builder, variable_set, base_type,
@@ -31,7 +31,7 @@ void build_block_with_type_init_declarator(
 }
 
 void build_block_with_type_declarator(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstDeclaratorRef declarator) {
   AstTokenRef name = get_name(declarator->direct_declarator);
   LLVMTypeRef type = base_type; /* get_type_with_base_type(declarator->direct_declarator); */
@@ -39,7 +39,7 @@ void build_block_with_type_declarator(
 }
 
 void build_block_with_type(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     LLVMTypeRef base_type, AstRef ast) {
   switch (ast->tag) {
     case AST_INIT_DECLARATOR_LIST:
@@ -67,14 +67,14 @@ void build_block_with_type(
 }
 
 void build_block_compound_statement(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstCompoundStatementRef compound_statement) {
   build_block(module, builder, variable_set, compound_statement->declaration_list);
   build_block(module, builder, variable_set, compound_statement->statement_list);
 }
 
 void build_block_declaration_list(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstDeclarationListRef declaration_list) {
   AstVectorRef declaration_vector = declaration_list->declaration_vector;
   AstRef *itr;
@@ -86,14 +86,14 @@ void build_block_declaration_list(
 }
 
 void build_block_declaration(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstDeclarationRef declaration) {
   LLVMTypeRef type = get_type(declaration->declaration_specifier_list);
   build_block_with_type(module, builder, variable_set, type, declaration->init_declarator_list);
 }
 
 void build_block_statement_list(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstStatementListRef statement_list) {
   AstVectorRef statement_vector = statement_list->statement_vector;
   AstRef *itr;
@@ -105,19 +105,19 @@ void build_block_statement_list(
 }
 
 void build_block_statement(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstStatementRef statement) {
   build_block(module, builder, variable_set, statement->statement);
 }
 
 void build_block_expression_statement(
-    LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
+    LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set,
     AstExpressionStatementRef expression_statement) {
   if (expression_statement->expression != NULL)
     build_expression(module, builder, variable_set, expression_statement->expression);
 }
 
-void build_block(LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set, AstRef ast) {
+void build_block(LLVMModuleRef module, LLVMBuilderRef builder, ValueVectorRef variable_set, AstRef ast) {
   switch (ast->tag) {
     case AST_COMPOUND_STATEMENT:
       build_block_compound_statement(module, builder, variable_set, ast_get_compound_statement(ast)); break;
