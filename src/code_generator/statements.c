@@ -17,9 +17,11 @@ void build_block_declaration_list(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
     AstDeclarationListRef declaration_list) {
   AstVectorRef declaration_vector = declaration_list->declaration_vector;
-  int i;
-  for (i = 0; i < AST_VECTOR_FUNC(size)(declaration_vector); i++) {
-    build_block(module, builder, variable_set, AST_VECTOR_FUNC(at)(declaration_vector, i));
+  AstRef *itr;
+  AstRef *begin = AST_VECTOR_FUNC(begin)(declaration_vector);
+  AstRef *end = AST_VECTOR_FUNC(end)(declaration_vector);
+  for (itr = begin; itr != end; itr++) {
+    build_block(module, builder, variable_set, *itr);
   }
 }
 
@@ -34,9 +36,11 @@ void build_block_statement_list(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
     AstStatementListRef statement_list) {
   AstVectorRef statement_vector = statement_list->statement_vector;
-  int i;
-  for (i = 0; i < AST_VECTOR_FUNC(size)(statement_vector); i++) {
-    build_block(module, builder, variable_set, AST_VECTOR_FUNC(at)(statement_vector, i));
+  AstRef *itr;
+  AstRef *begin = AST_VECTOR_FUNC(begin)(statement_vector);
+  AstRef *end = AST_VECTOR_FUNC(end)(statement_vector);
+  for (itr = begin; itr != end; itr++) {
+    build_block(module, builder, variable_set, *itr);
   }
 }
 
