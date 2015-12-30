@@ -1211,21 +1211,51 @@ expression-statement
 ;
 
 selection-statement
-: if-statement
-| if-else-statement
-| switch-statement
+: if-statement {
+  $$ = ast_make_selection_statement($[if-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "if-statement");
+  }
+}
+| if-else-statement {
+  $$ = ast_make_selection_statement($[if-else-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "if-else-statement");
+  }
+}
+| switch-statement {
+  $$ = ast_make_selection_statement($[switch-statement]);
+  if (!$$) {
+    AST_ERROR("selection-statement", "switch-statement");
+  }
+}
 ;
 
 if-statement
-: "if" '(' expression ')' statement
+: "if" '(' expression ')' statement {
+  $$ = ast_make_if_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("if-statement", "\"if\" '(' expression ')' statement");
+  }
+}
 ;
 
 if-else-statement
-: "if" '(' expression ')' statement "else" statement
+: "if" '(' expression ')' statement[if] "else" statement[else] {
+  $$ = ast_make_if_else_statement($[expression], $[if], $[else]);
+  if (!$$) {
+    AST_ERROR("if-else-statement", "\"if\" '(' expression ')' statement \"else\" statement");
+  }
+}
 ;
 
 switch-statement
-: "switch" '(' expression ')' statement
+: "switch" '(' expression ')' statement {
+  $$ = ast_make_switch_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("switch-statement", "\"switch\" '(' expression ')' statement");
+  }
+}
 ;
 
 iteration-statement
