@@ -36,3 +36,4 @@ kmc89
 *.tab.c
 *.tab.h
 *.d
+*.bc
