@@ -1259,21 +1259,51 @@ switch-statement
 ;
 
 iteration-statement
-: while-statement
-| do-while-statement
-| for-statement
+: while-statement {
+  $$ = ast_make_iteration_statement($[while-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "while-statement");
+  }
+}
+| do-while-statement {
+  $$ = ast_make_iteration_statement($[do-while-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "do-while-statement");
+  }
+}
+| for-statement {
+  $$ = ast_make_iteration_statement($[for-statement]);
+  if (!$$) {
+    AST_ERROR("iteration-statement", "for-statement");
+  }
+}
 ;
 
 while-statement
-: "while" '(' expression ')' statement
+: "while" '(' expression ')' statement {
+  $$ = ast_make_while_statement($[expression], $[statement]);
+  if (!$$) {
+    AST_ERROR("while-statement", "\"while\" '(' expression ')' statement");
+  }
+}
 ;
 
 do-while-statement
-: "do" statement "while" '(' expression ')' ';'
+: "do" statement "while" '(' expression ')' ';' {
+  $$ = ast_make_do_while_statement($[statement], $[expression]);
+  if (!$$) {
+    AST_ERROR("do-while-statement", "\"do\" statement \"while\" '(' expression ')' ';'");
+  }
+}
 ;
 
 for-statement
-: "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
+: "for" '(' expression.opt[expression_1] ';' expression.opt[expression_2] ';' expression.opt[expression_3] ')' statement {
+  $$ = ast_make_for_statement($[expression_1], $[expression_2], $[expression_3], $[statement]);
+  if (!$$) {
+    AST_ERROR("for-statement", "\"for\" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement");
+  }
+}
 ;
 
 jump-statement
