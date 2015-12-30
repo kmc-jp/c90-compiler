@@ -9,8 +9,6 @@
 #include "stdstring.h"
 #include "variable_set.h"
 #include "pool.h"
-typedef struct VECTOR(LLVMTypeRef) *TypeVectorRef;
-typedef struct VECTOR(LLVMValueRef) *ValueVectorRef;
 
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit);
 LLVMTypeRef get_type(AstRef ast);
