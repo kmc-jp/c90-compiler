@@ -29,7 +29,7 @@ void build_block_declaration(
     LLVMModuleRef module, LLVMBuilderRef builder, VariableSetRef variable_set,
     AstDeclarationRef declaration) {
   LLVMTypeRef type = get_type(declaration->declaration_specifier_list);
-  build_block_type(module, builder, variable_set, type, declaration->init_declarator_list);
+  build_block_with_type(module, builder, variable_set, type, declaration->init_declarator_list);
 }
 
 void build_block_statement_list(
