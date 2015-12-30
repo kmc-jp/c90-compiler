@@ -1,4 +1,5 @@
 #include "code_generator.h"
+#include "pool.h"
 #include "ast/external_definitions_impl.h"
 #include "stdstring.h"
 #include "ast/is_method.h"

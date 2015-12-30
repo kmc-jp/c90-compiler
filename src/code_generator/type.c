@@ -4,8 +4,6 @@
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
 
-DEFINE_VECTOR(LLVMTypeRef)
-
 LLVMTypeRef get_type_declaration_specifier_list(
     AstDeclarationSpecifierListRef declaration_specifier_list) {
   return LLVMInt32Type();

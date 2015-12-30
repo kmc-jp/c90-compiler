@@ -1,11 +1,10 @@
 #include "variable_set.h"
 #include "vector_impl.h"
+#include "pool.h"
 #include "ast/get_method.h"
 #include "ast/lexical_elements_impl.h"
 #include "ast/expressions_impl.h"
 #include "ast/ast_impl.h"
-
-DEFINE_VECTOR(VariableRef)
 
 VariableRef get_variable_identifier(
     VariableSetRef variable_set, AstIdentifierRef name) {

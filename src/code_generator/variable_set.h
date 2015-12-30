@@ -4,7 +4,6 @@
 #include <llvm-c/Core.h>
 #include "ast.h"
 #include "vector.h"
-#include "stdstring.h"
 
 struct Variable {
   AstTokenRef name;
@@ -15,10 +14,9 @@ struct Variable {
 typedef struct Variable *VariableRef;
 
 #define VariableSetFunc(func) VECTORFUNC(VariableRef, func)
-
 DECLARE_VECTOR(VariableRef)
 
-typedef VECTORREF(VariableRef) VariableSetRef;
+typedef struct VECTOR(VariableRef) *VariableSetRef;
 
 VariableRef get_variable(VariableSetRef variable_set, AstRef ast);
 VariableRef get_variable_identifier(VariableSetRef variable_set, AstIdentifierRef ast);

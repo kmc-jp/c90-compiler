@@ -8,16 +8,9 @@
 #include "vector.h"
 #include "stdstring.h"
 #include "variable_set.h"
-
-#define TypeVectorFunc(func) VECTORFUNC(LLVMTypeRef, func)
-
-DECLARE_VECTOR(LLVMTypeRef)
-typedef VECTORREF(LLVMTypeRef) TypeVectorRef;
-
-#define ValueVectorFunc(func) VECTORFUNC(LLVMValueRef, func)
-
-DECLARE_VECTOR(LLVMValueRef)
-typedef VECTORREF(LLVMValueRef) ValueVectorRef;
+#include "pool.h"
+typedef struct VECTOR(LLVMTypeRef) *TypeVectorRef;
+typedef struct VECTOR(LLVMValueRef) *ValueVectorRef;
 
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit);
 LLVMTypeRef get_type(AstRef ast);

@@ -1,12 +1,11 @@
 #include "code_generator.h"
 #include "variable_set.h"
+#include "pool.h"
 #include "stdstring.h"
 #include "ast/expressions_impl.h"
 #include "ast/is_method.h"
 #include "ast/get_method.h"
 #include "ast/ast_impl.h"
-
-DEFINE_VECTOR(LLVMValueRef)
 
 ValueVectorRef get_arguments(
     VariableSetRef variable_set,
