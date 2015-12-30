@@ -41,3 +41,11 @@ VariableRef get_variable(VariableSetRef variable_set, AstRef ast) {
   }
   return NULL;
 }
+
+void make_variable(VariableSetRef variable_set, AstTokenRef name, LLVMTypeRef type, LLVMValueRef value) {
+  VariableRef variable = codegen_palloc(struct Variable);
+  variable->name = name;
+  variable->type = type;
+  variable->value = value;
+  VariableSetFunc(push_back)(variable_set, variable);
+}
