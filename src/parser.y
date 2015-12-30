@@ -1244,7 +1244,7 @@ if-else-statement
 : "if" '(' expression ')' statement[if] "else" statement[else] {
   $$ = ast_make_if_else_statement($[expression], $[if], $[else]);
   if (!$$) {
-    AST_ERROR("if-else-statement", "\"if\" '(' expression ')' statement[if] \"else\" statement[else]");
+    AST_ERROR("if-else-statement", "\"if\" '(' expression ')' statement \"else\" statement");
   }
 }
 ;
