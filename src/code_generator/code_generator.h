@@ -12,6 +12,7 @@
 
 void translation_unit(LLVMModuleRef module, AstTranslationUnitRef translation_unit);
 LLVMTypeRef get_type(AstRef ast);
+LLVMTypeRef get_type_with_type(LLVMTypeRef base_type, AstRef ast);
 TypeVectorRef get_parameter_types(AstRef ast);
 LLVMTypeRef get_function_type(AstFunctionDefinitionRef function_definition);
 AstTokenRef get_name(AstRef ast);
