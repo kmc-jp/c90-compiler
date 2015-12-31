@@ -765,41 +765,100 @@ constant-expression
 ;
 
 declaration
-: declaration-specifier-list init-declarator-list.opt ';'
+: declaration-specifier-list init-declarator-list.opt ';' {
+  $$ = ast_make_declaration($[declaration-specifier-list], $[init-declarator-list.opt]);
+  if (!$$) {
+    AST_ERROR("declaration", "declaration-specifier-list init-declarator-list.opt ';'");
+  }
+}
 ;
 
 declaration-specifier-list.opt
-: /* empty */
-| declaration-specifier-list
+: /* empty */ {
+  $$ = ast_make_declaration_specifier_list();
+}
+| declaration-specifier-list {
+  $$ = $[declaration-specifier-list];
+}
 ;
 
 declaration-specifier-list
-: declaration-specifier declaration-specifier-list.opt
+: declaration-specifier declaration-specifier-list.opt {
+  $$ = ast_push_declaration_specifier_list($[declaration-specifier-list.opt], $[declaration-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier-list", "declaration-specifier declaration-specifier-list.opt");
+  }
+}
 ;
 
 declaration-specifier
-: storage-class-specifier
-| type-specifier
-| type-qualifier
+: storage-class-specifier {
+  $$ = ast_make_declaration_specifier($[storage-class-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "storage-class-specifier");
+  }
+}
+| type-specifier {
+  $$ = ast_make_declaration_specifier($[type-specifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "type-specifier");
+  }
+}
+| type-qualifier {
+  $$ = ast_make_declaration_specifier($[type-qualifier]);
+  if (!$$) {
+    AST_ERROR("declaration-specifier", "type-qualifier");
+  }
+}
 ;
 
 init-declarator-list.opt
-: /* empty */
-| init-declarator-list
+: /* empty */ {
+  $$ = ast_make_init_declarator_list();
+}
+| init-declarator-list {
+  $$ = $[init-declarator-list];
+}
 ;
 
 init-declarator-list
-: init-declarator
-| init-declarator-list ',' init-declarator
+: init-declarator {
+  $$ = ast_make_init_declarator_list();
+  $$ = ast_push_init_declarator_list($$, $[init-declarator]);
+  if (!$$) {
+    AST_ERROR("init-declarator-list", "init-declarator");
+  }
+}
+| init-declarator-list[src] ',' init-declarator {
+  $$ = ast_push_init_declarator_list($[src], $[init-declarator]);
+  if (!$$) {
+    AST_ERROR("init-declarator-list", "init-declarator-list ',' init-declarator");
+  }
+}
 ;
 
 init-declarator
-: declarator
-| declarator-with-initializer
+: declarator {
+  $$ = ast_make_init_declarator($[declarator]);
+  if (!$$) {
+    AST_ERROR("init-declarator", "declarator");
+  }
+}
+| declarator-with-initializer {
+  $$ = ast_make_init_declarator($[declarator-with-initializer]);
+  if (!$$) {
+    AST_ERROR("init-declarator", "declarator-with-initializer");
+  }
+}
 ;
 
 declarator-with-initializer
-: declarator '=' initializer
+: declarator '=' initializer {
+  $$ = ast_make_declarator_with_initializer($[declarator], $[initializer]);
+  if (!$$) {
+    AST_ERROR("declarator-with-initializer", "declarator '=' initializer");
+  }
+}
 ;
 
 storage-class-specifier
