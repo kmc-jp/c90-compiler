@@ -19,6 +19,8 @@ install:
        export CXX="g++-4.8";
     fi
   - $CXX --version
+  - flex --version
+  - bison --version
   - make
 script:
   - make test
