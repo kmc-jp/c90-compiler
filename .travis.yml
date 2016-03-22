@@ -9,6 +9,9 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
+before_install:
+  - https://launchpadlibrarian.net/160037457/bison_3.0.2.dfsg-2_amd64.deb
+  - sudo dpkg -i bison_3.0.2.dfsg-2_amd64.deb
 install:
   - if [ "$CXX" = "g++" ]; then
        export CXX="g++-4.8";
