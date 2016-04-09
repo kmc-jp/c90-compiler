@@ -6,8 +6,6 @@
 #include "ast/declarations.h"
 #include "ast/statements.h"
 #include "ast/external_definitions.h"
-
-void ast_initialize_pool(void);
-void ast_finalize_pool(void);
+#include "ast/pool.h"
 
 #endif  /* KMC_C89_COMPILER_AST_METHOD_H */

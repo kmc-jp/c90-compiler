@@ -1,6 +1,8 @@
 #ifndef KMC_C89_COMPILER_AST_H
 #define KMC_C89_COMPILER_AST_H
 
+#include "vector.h"
+
 enum AstTag {
   AST_IDENTIFIER,
   AST_CONSTANT,
@@ -310,5 +312,6 @@ typedef struct AstExternalDeclaration* AstExternalDeclarationRef;
 typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
 
 typedef struct String* AstTokenRef;
+typedef struct VECTOR(AstRef)* AstVectorRef;
 
 #endif  /* KMC_C89_COMPILER_AST_H */

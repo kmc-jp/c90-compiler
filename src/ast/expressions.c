@@ -1,7 +1,6 @@
 #include "expressions.h"
 #include "expressions_impl.h"
 #include "ast_impl.h"
-#include "ast_vector.h"
 #include "is_method.h"
 #include "get_method.h"
 #include "pool.h"
