@@ -1,9 +1,7 @@
 %code {
 #include <stdio.h>
 #include "ast_method.h"
-#include "stdstring.h"
 #include "utility.h"
-#include "ast/ast_string.h"
 
 #define AST_ERROR(lhs, rhs) \
   do { \
