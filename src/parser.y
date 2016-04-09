@@ -865,51 +865,31 @@ declarator-with-initializer
 
 storage-class-specifier
 : "typedef" {
-  StringRef token_string = string_ctor("typedef", NULL);
-  const size_t length = string_length(token_string);
-  const AstRef token = ast_make_token(string_data(token_string), length);
-  string_dtor(&token_string);
-  $$ = ast_make_storage_class_specifier(token);
+  $$ = ast_make_storage_class_specifier($1);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "typedef");
   }
 }
 | "extern" {
-  StringRef token_string = string_ctor("extern", NULL);
-  const size_t length = string_length(token_string);
-  const AstRef token = ast_make_token(string_data(token_string), length);
-  string_dtor(&token_string);
-  $$ = ast_make_storage_class_specifier(token);
+  $$ = ast_make_storage_class_specifier($1);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "extern");
   }
 }
 | "static" {
-  StringRef token_string = string_ctor("static", NULL);
-  const size_t length = string_length(token_string);
-  const AstRef token = ast_make_token(string_data(token_string), length);
-  string_dtor(&token_string);
-  $$ = ast_make_storage_class_specifier(token);
+  $$ = ast_make_storage_class_specifier($1);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "static");
   }
 }
 | "auto" {
-  StringRef token_string = string_ctor("auto", NULL);
-  const size_t length = string_length(token_string);
-  const AstRef token = ast_make_token(string_data(token_string), length);
-  string_dtor(&token_string);
-  $$ = ast_make_storage_class_specifier(token);
+  $$ = ast_make_storage_class_specifier($1);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "auto");
   }
 }
 | "register" {
-  StringRef token_string = string_ctor("register", NULL);
-  const size_t length = string_length(token_string);
-  const AstRef token = ast_make_token(string_data(token_string), length);
-  string_dtor(&token_string);
-  $$ = ast_make_storage_class_specifier(token);
+  $$ = ast_make_storage_class_specifier($1);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "register");
   }
