@@ -89,7 +89,7 @@ void set_yyin_string(const char *code);
 %%
 
 identifier.opt
-: /* empty */
+: %empty
 | identifier
 ;
 
@@ -276,7 +276,7 @@ postfix-decrement-expression
 ;
 
 argument-expression-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_argument_expression_list();
 }
 | argument-expression-list {
@@ -742,7 +742,7 @@ bitwise-OR-assignment-expression
 ;
 
 expression.opt
-: /* empty */
+: %empty
 | expression
 ;
 
@@ -756,7 +756,7 @@ comma-expression
 ;
 
 constant-expression.opt
-: /* empty */
+: %empty
 | constant-expression
 ;
 
@@ -774,7 +774,7 @@ declaration
 ;
 
 declaration-specifier-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_declaration_specifier_list();
 }
 | declaration-specifier-list {
@@ -813,7 +813,7 @@ declaration-specifier
 ;
 
 init-declarator-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_init_declarator_list();
 }
 | init-declarator-list {
@@ -912,7 +912,7 @@ struct-declaration
 ;
 
 specifier-qualifier-list.opt
-: /* empty */
+: %empty
 | specifier-qualifier-list
 ;
 
@@ -972,7 +972,7 @@ type-qualifier
 ;
 
 declarator.opt
-: /* empty */
+: %empty
 | declarator
 ;
 
@@ -1001,7 +1001,7 @@ old-style-function-declarator
 ;
 
 pointer.opt
-: /* empty */
+: %empty
 | pointer
 ;
 
@@ -1011,7 +1011,7 @@ pointer
 ;
 
 type-qualifier-list.opt
-: /* empty */
+: %empty
 | type-qualifier-list
 ;
 
@@ -1021,7 +1021,7 @@ type-qualifier-list
 ;
 
 parameter-type-list.opt
-: /* empty */
+: %empty
 | parameter-type-list
 ;
 
@@ -1053,7 +1053,7 @@ parameter-abstract-declaration
 ;
 
 identifier-list.opt
-: /* empty */
+: %empty
 | identifier-list
 ;
 
@@ -1067,7 +1067,7 @@ type-name
 ;
 
 abstract-declarator.opt
-: /* empty */
+: %empty
 | abstract-declarator
 ;
 
@@ -1081,7 +1081,7 @@ pointer-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
-: /* empty */
+: %empty
 | direct-abstract-declarator
 ;
 
@@ -1211,7 +1211,7 @@ compound-statement
 ;
 
 declaration-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_declaration_list();
 }
 | declaration-list {
@@ -1236,7 +1236,7 @@ declaration-list
 ;
 
 statement-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_statement_list();
 }
 | statement-list {
