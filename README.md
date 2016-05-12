@@ -1,7 +1,7 @@
 # kmc90 c90-compiler
 ISO C90のコンパイラ
 
-[![Build Status](https://travis-ci.org/kmc-jp/c89-compiler.svg?branch=master)](https://travis-ci.org/kmc-jp/c89-compiler)
+[![Build Status](https://travis-ci.org/kmc-jp/c90-compiler.svg?branch=master)](https://travis-ci.org/kmc-jp/c90-compiler)
 
 ## コンパイラのテスト用のCのソースコードの書き方
 
