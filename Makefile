@@ -4,7 +4,7 @@ SRC_DIR := src
 TESTS_DIR := tests
 DIRS := $(SRC_DIR) $(TESTS_DIR)
 
-TARGET := kmc89
+TARGET := kmc90
 RM := rm -f
 
 CLEAN_PREFIX := clean_
