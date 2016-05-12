@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_DECLARATIONS_H
-#define KMC_C89_COMPILER_AST_DECLARATIONS_H
+#ifndef KMC_C90_COMPILER_AST_DECLARATIONS_H
+#define KMC_C90_COMPILER_AST_DECLARATIONS_H
 
 #include "ast.h"
 
@@ -63,4 +63,4 @@ AstRef ast_make_initializer(AstRef initializer);
 AstRef ast_make_initializer_list(void);
 AstRef ast_push_initializer_list(AstRef initializer_list, AstRef initializer);
 
-#endif  /* KMC_C89_COMPILER_AST_DECLARATIONS_H */
+#endif  /* KMC_C90_COMPILER_AST_DECLARATIONS_H */

@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_IS_METHOD_H
-#define KMC_C89_COMPILER_AST_IS_METHOD_H
+#ifndef KMC_C90_COMPILER_AST_IS_METHOD_H
+#define KMC_C90_COMPILER_AST_IS_METHOD_H
 
 #include "ast.h"
 #include "utility.h"
@@ -156,4 +156,4 @@ bool ast_is_function_definition(AstRef ast);
 
 bool ast_is_token(AstRef ast);
 
-#endif  /* KMC_C89_COMPILER_AST_IS_METHOD_H */
+#endif  /* KMC_C90_COMPILER_AST_IS_METHOD_H */

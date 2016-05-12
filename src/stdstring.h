@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_STDSTRING_H
-#define KMC_C89_COMPILER_STDSTRING_H
+#ifndef KMC_C90_COMPILER_STDSTRING_H
+#define KMC_C90_COMPILER_STDSTRING_H
 
 #include "allocator.h"
 #include "utility.h"
@@ -114,4 +114,4 @@ size_t string_find_first_of(StringRef self, const char* str);
 /* behavior is undefined if str is NULL */
 size_t string_find_first_not_of(StringRef self, const char* str);
 
-#endif  /* KMC_C89_COMPILER_STDSTRING_H */
+#endif  /* KMC_C90_COMPILER_STDSTRING_H */

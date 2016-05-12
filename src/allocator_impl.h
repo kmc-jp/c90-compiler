@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_ALLOCATOR_IMPL_H
-#define KMC_C89_COMPILER_ALLOCATOR_IMPL_H
+#ifndef KMC_C90_COMPILER_ALLOCATOR_IMPL_H
+#define KMC_C90_COMPILER_ALLOCATOR_IMPL_H
 
 #include "utility.h"
 
@@ -10,4 +10,4 @@ struct Allocator {
   void (*deallocator_)(void* ptr, void* manager);
 };
 
-#endif  /* KMC_C89_COMPILER_ALLOCATOR_IMPL_H */
+#endif  /* KMC_C90_COMPILER_ALLOCATOR_IMPL_H */
