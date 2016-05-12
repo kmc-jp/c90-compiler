@@ -862,32 +862,32 @@ declarator-with-initializer
 ;
 
 storage-class-specifier
-: "typedef" {
-  $$ = ast_make_storage_class_specifier($1);
+: "typedef"[typedef] {
+  $$ = ast_make_storage_class_specifier($typedef);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "typedef");
   }
 }
-| "extern" {
-  $$ = ast_make_storage_class_specifier($1);
+| "extern"[extern] {
+  $$ = ast_make_storage_class_specifier($extern);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "extern");
   }
 }
-| "static" {
-  $$ = ast_make_storage_class_specifier($1);
+| "static"[static] {
+  $$ = ast_make_storage_class_specifier($static);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "static");
   }
 }
-| "auto" {
-  $$ = ast_make_storage_class_specifier($1);
+| "auto"[auto] {
+  $$ = ast_make_storage_class_specifier($auto);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "auto");
   }
 }
-| "register" {
-  $$ = ast_make_storage_class_specifier($1);
+| "register"[register] {
+  $$ = ast_make_storage_class_specifier($register);
   if (!$$) {
     AST_ERROR("storage-class-specifier", "register");
   }
