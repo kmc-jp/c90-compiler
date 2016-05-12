@@ -1,4 +1,4 @@
-# c89-compiler/tests/stage1/Makefile
+# c90-compiler/tests/stage1/Makefile
 
 TOP_DIR := ../..
 LIB_DIR := lib

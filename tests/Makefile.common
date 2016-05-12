@@ -1,4 +1,4 @@
-# c89-compiler/tests/Makefile.common
+# c90-compiler/tests/Makefile.common
 
 ifndef TESTS_DIR
 TESTS_DIR := $(TOP_DIR)/tests

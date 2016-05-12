@@ -1,4 +1,4 @@
-# c89-compiler/src/Makefile
+# c90-compiler/src/Makefile
 
 TOP_DIR := ..
 SRC_DIR := .
@@ -21,7 +21,7 @@ LEX := flex
 LEX_OPTION :=
 YACC := bison
 YACC_OPTION := -d
-TARGET := kmc89
+TARGET := kmc90
 OBJS += $(AST_OBJS)
 OBJS += $(LEX_TARGET) $(YACC_TARGET)
 CLEAN_OBJS += $(LEX_INTERMEDIATE) $(YACC_INTERMEDIATE)

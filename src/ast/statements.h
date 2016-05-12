@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_STATEMENTS_H
-#define KMC_C89_COMPILER_AST_STATEMENTS_H
+#ifndef KMC_C90_COMPILER_AST_STATEMENTS_H
+#define KMC_C90_COMPILER_AST_STATEMENTS_H
 
 #include "ast.h"
 
@@ -29,4 +29,4 @@ AstRef ast_make_break_jump_statement(void);
 AstRef ast_make_return_jump_statement(AstRef expression);
 AstRef ast_make_void_return_jump_statement(void);
 
-#endif  /* KMC_C89_COMPILER_AST_STATEMENTS_H */
+#endif  /* KMC_C90_COMPILER_AST_STATEMENTS_H */

@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_MEMORY_POOL_H
-#define KMC_C89_COMPILER_MEMORY_POOL_H
+#ifndef KMC_C90_COMPILER_MEMORY_POOL_H
+#define KMC_C90_COMPILER_MEMORY_POOL_H
 
 #include "utility.h"
 
@@ -16,4 +16,4 @@ void memory_pool_dtor(MemoryPoolRef* ppool);
 /* allocate 'size' memory from pool */
 void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment);
 
-#endif  /* KMC_C89_COMPILER_MEMORY_POOL_H */
+#endif  /* KMC_C90_COMPILER_MEMORY_POOL_H */

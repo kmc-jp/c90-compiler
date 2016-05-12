@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_H
-#define KMC_C89_COMPILER_AST_H
+#ifndef KMC_C90_COMPILER_AST_H
+#define KMC_C90_COMPILER_AST_H
 
 #include "vector.h"
 
@@ -314,4 +314,4 @@ typedef struct AstFunctionDefinition* AstFunctionDefinitionRef;
 typedef struct String* AstTokenRef;
 typedef struct VECTOR(AstRef)* AstVectorRef;
 
-#endif  /* KMC_C89_COMPILER_AST_H */
+#endif  /* KMC_C90_COMPILER_AST_H */
