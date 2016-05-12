@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_GET_METHOD_H
-#define KMC_C89_COMPILER_AST_GET_METHOD_H
+#ifndef KMC_C90_COMPILER_AST_GET_METHOD_H
+#define KMC_C90_COMPILER_AST_GET_METHOD_H
 
 #include "ast.h"
 
@@ -155,4 +155,4 @@ AstFunctionDefinitionRef ast_get_function_definition(AstRef ast);
 
 AstTokenRef ast_get_token(AstRef ast);
 
-#endif  /* KMC_C89_COMPILER_AST_GET_METHOD_H */
+#endif  /* KMC_C90_COMPILER_AST_GET_METHOD_H */

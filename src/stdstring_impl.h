@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_STDSTRING_IMPL_H
-#define KMC_C89_COMPILER_STDSTRING_IMPL_H
+#ifndef KMC_C90_COMPILER_STDSTRING_IMPL_H
+#define KMC_C90_COMPILER_STDSTRING_IMPL_H
 
 #include "allocator.h"
 #include "stdstring.h"
@@ -11,4 +11,4 @@ struct String {
   AllocatorRef allocator_;
 };
 
-#endif  /* KMC_C89_COMPILER_STDSTRING_IMPL_H */
+#endif  /* KMC_C90_COMPILER_STDSTRING_IMPL_H */
