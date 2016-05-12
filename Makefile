@@ -1,4 +1,4 @@
-# c89-compiler/Makefile
+# c90-compiler/Makefile
 
 SRC_DIR := src
 TESTS_DIR := tests

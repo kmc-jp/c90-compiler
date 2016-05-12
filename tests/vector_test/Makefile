@@ -1,4 +1,4 @@
-# c89-compiler/tests/vector_test/Makefile
+# c90-compiler/tests/vector_test/Makefile
 
 TOP_DIR := ../..
 SRC_DIR := $(TOP_DIR)/src

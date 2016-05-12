@@ -1,4 +1,4 @@
-# c89-compiler/Makefile.common
+# c90-compiler/Makefile.common
 
 ifndef TOP_DIR
 $(error TOP_DIR must be defined)

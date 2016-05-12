@@ -1,4 +1,4 @@
-# c89-compiler/tests/lexer_test/Makefile
+# c90-compiler/tests/lexer_test/Makefile
 
 TOP_DIR := ../..
 SRC_DIR := $(TOP_DIR)/src

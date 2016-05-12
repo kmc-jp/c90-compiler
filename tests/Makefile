@@ -1,4 +1,4 @@
-# c89-compiler/tests/Makefile
+# c90-compiler/tests/Makefile
 
 STAGE1_DIR := stage1
 STAGE2_DIR := stage2
