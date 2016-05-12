@@ -1,9 +1,9 @@
 void vidualizer(AstRef root) {
-  switch(root.tag) {
+  switch(root->tag) {
     <% @pairs.each do |e| %>
     <% tag = e[0]; type=e[1] %>
     case <%= tag %>:
-      <%= type %>_to_string(root.data.<%= type %>);
+      <%= type %>_to_string(root->data.<%= type %>);
       break;
     <% end%>
   }
