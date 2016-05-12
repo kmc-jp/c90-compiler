@@ -1,5 +1,5 @@
-# kmc89 c89-compiler
-ANSI C89のコンパイラ
+# kmc90 c90-compiler
+ISO C90のコンパイラ
 
 [![Build Status](https://travis-ci.org/kmc-jp/c89-compiler.svg?branch=master)](https://travis-ci.org/kmc-jp/c89-compiler)
 
