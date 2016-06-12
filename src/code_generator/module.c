@@ -30,3 +30,8 @@ void builder_dtor(void) {
   LLVMDisposeBuilder(g_builder);
   g_builder = NULL;
 }
+
+LLVMBuilderRef get_builder(void) {
+  assert(g_module);
+  return g_builder;
+}
