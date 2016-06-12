@@ -22,3 +22,15 @@ void generate_translation_unit(AstTranslationUnitRef translation_unit) {
     }
   }
 }
+
+void generate_external_declaration(AstExternalDeclarationRef external_declaration) {
+  assert(external_declaration);
+  {
+    const AstRef ast = external_declaration->external_declaration;
+    if (ast_is_function_definition(ast) || ast_is_declaration(ast)) {
+      generate_code(ast);
+    } else {
+      error("Not external_declaration");
+    }
+  }
+}
