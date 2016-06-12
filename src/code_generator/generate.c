@@ -1,5 +1,6 @@
 #include "generate.h"
 #include <assert.h>
+#include <stdio.h>
 #include "ast/ast_impl.h"
 
 void generate_code(AstRef ast) {

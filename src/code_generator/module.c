@@ -1,5 +1,6 @@
 #include "module.h"
 #include <assert.h>
+#include <stddef.h>
 
 static LLVMModuleRef g_module = NULL;
 static LLVMBuilderRef g_builder = NULL;
