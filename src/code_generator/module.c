@@ -13,3 +13,8 @@ void module_dtor(void) {
   LLVMDisposeModule(g_module);
   g_module = NULL;
 }
+
+LLVMModuleRef get_module(void) {
+  assert(g_module);
+  return g_module;
+}
