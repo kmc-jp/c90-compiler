@@ -27,7 +27,7 @@ CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2 -DDEBUG
 DEPEND_FLAGS := -MMD -MP
-C90_RESTRICT_FLAGS := -ansi -pedantic
+C90_RESTRICT_FLAGS := -ansi -pedantic -Wno-long-long
 CXX11_FLAGS := -std=c++11
 INCLUDE := -I$(SRC_DIR)
 CFLAGS ?= $(COMMON_FLAGS) $(C90_RESTRICT_FLAGS)
