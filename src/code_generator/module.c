@@ -1,4 +1,4 @@
-#include "module.h"
+#include "code_generator/module.h"
 #include <assert.h>
 #include <stddef.h>
 

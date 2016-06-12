@@ -1,4 +1,4 @@
-#include "generate.h"
+#include "code_generator/generate.h"
 #include <assert.h>
 #include <stdio.h>
 #include "ast/ast_impl.h"
