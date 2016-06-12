@@ -2,6 +2,7 @@
 #include <assert.h>
 
 static LLVMModuleRef g_module = NULL;
+static LLVMBuilderRef g_builder = NULL;
 
 void module_ctor(const char* module_name) {
   assert(!g_module);
@@ -17,4 +18,15 @@ void module_dtor(void) {
 LLVMModuleRef get_module(void) {
   assert(g_module);
   return g_module;
+}
+
+void builder_ctor(void) {
+  assert(!g_builder);
+  g_builder = LLVMCreateBuilder();
+}
+
+void builder_dtor(void) {
+  assert(g_module);
+  LLVMDisposeBuilder(g_builder);
+  g_builder = NULL;
 }
