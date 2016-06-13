@@ -7,4 +7,6 @@ void generate_translation_unit(AstTranslationUnitRef translation_unit);
 
 void generate_external_declaration(AstExternalDeclarationRef external_declaration);
 
+void generate_function_definition(AstFunctionDefinitionRef function_definition);
+
 #endif  /* KMC_C90_COMPILER_CODE_GENERATOR_EXTERNAL_DEFINITIONS_H */

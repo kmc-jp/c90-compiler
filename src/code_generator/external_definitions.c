@@ -1,6 +1,7 @@
 #include "code_generator/external_definitions.h"
 #include <assert.h>
 #include "ast/external_definitions_impl.h"
+#include "ast/get_method.h"
 #include "ast/is_method.h"
 #include "ast/pool.h"
 #include "code_generator/generate.h"
@@ -31,6 +32,28 @@ void generate_external_declaration(AstExternalDeclarationRef external_declaratio
       generate_code(ast);
     } else {
       error("Not external_declaration");
+    }
+  }
+}
+
+void generate_function_definition(AstFunctionDefinitionRef function_definition) {
+  assert(function_definition);
+  {
+    const AstRef specifiers = function_definition->declaration_specifier_list;
+    const AstRef declarator = function_definition->declarator;
+    /* Do not support old style function definition */
+    const AstRef old_style = function_definition->declaration_list;
+    const AstRef body = function_definition->compound_statement;
+    if (ast_is_declaration_specifier_list(specifiers) &&
+        ast_is_declarator(declarator) &&
+        ast_is_declaration_list(old_style) &&
+        ast_is_compound_statement(body)) {
+      start_function(ast_get_declaration_specifier_list(specifiers),
+                     ast_get_declarator(declarator));
+      generate_code(body);
+      finish_function();
+    } else {
+      error("Not function_definition");
     }
   }
 }
