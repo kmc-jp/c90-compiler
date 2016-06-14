@@ -577,191 +577,519 @@ subtraction-expression
 ;
 
 shift-expression
-: additive-expression
-| left-shift-expression
-| right-shift-expression
+: additive-expression {
+  $$ = ast_make_shift_expression($[additive-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "additive-expression");
+  }
+}
+| left-shift-expression {
+  $$ = ast_make_shift_expression($[left-shift-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "left-shift-expression");
+  }
+}
+| right-shift-expression {
+  $$ = ast_make_shift_expression($[right-shift-expression]);
+  if (!$$) {
+    AST_ERROR("shift-expression", "right-shift-expression");
+  }
+}
 ;
 
 left-shift-expression
-: shift-expression "<<" additive-expression
+: shift-expression "<<" additive-expression {
+  $$ = ast_make_left_shift_expression($[shift-expression], $[additive-expression]);
+  if (!$$) {
+    AST_ERROR("left-shift-expression", "shift-expression \"<<\" additive-expression");
+  }
+}
 ;
 
 right-shift-expression
-: shift-expression ">>" additive-expression
+: shift-expression ">>" additive-expression {
+  $$ = ast_make_right_shift_expression($[shift-expression], $[additive-expression]);
+  if (!$$) {
+    AST_ERROR("right-shift-expression", "shift-expression \">>\" additive-expression");
+  }
+}
 ;
 
 relational-expression
-: shift-expression
-| less-than-expression
-| greater-than-expression
-| less-than-or-equal-to-expression
-| greater-than-or-equal-to-expression
+: shift-expression {
+  $$ = ast_make_relational_expression($[shift-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "shift-expression");
+  }
+}
+| less-than-expression {
+  $$ = ast_make_relational_expression($[less-than-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "less-than-expression");
+  }
+}
+| greater-than-expression {
+  $$ = ast_make_relational_expression($[greater-than-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "greater-than-expression");
+  }
+}
+| less-than-or-equal-to-expression {
+  $$ = ast_make_relational_expression($[less-than-or-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "less-than-or-equal-to-expression");
+  }
+}
+| greater-than-or-equal-to-expression {
+  $$ = ast_make_relational_expression($[greater-than-or-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("relational-expression", "greater-than-or-equal-to-expression");
+  }
+}
 ;
 
 less-than-expression
-: relational-expression '<' shift-expression
+: relational-expression '<' shift-expression {
+  $$ = ast_make_less_than_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("less-than-expression", "relational-expression '<' shift-expression");
+  }
+}
 ;
 
 greater-than-expression
-: relational-expression '>' shift-expression
+: relational-expression '>' shift-expression {
+  $$ = ast_make_greater_than_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("greater-than-expression", "relational-expression '>' shift-expression");
+  }
+}
 ;
 
 less-than-or-equal-to-expression
-: relational-expression "<=" shift-expression
+: relational-expression "<=" shift-expression {
+  $$ = ast_make_less_than_or_equal_to_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("less-than-or-equal-to-expression", "relational-expression \"<=\" shift-expression");
+  }
+}
 ;
 
 greater-than-or-equal-to-expression
-: relational-expression ">=" shift-expression
+: relational-expression ">=" shift-expression {
+  $$ = ast_make_greater_than_or_equal_to_expression($[relational-expression], $[shift-expression]);
+  if (!$$) {
+    AST_ERROR("greater-than-or-equal-to-expression", "relational-expression \">=\" shift-expression");
+  }
+}
 ;
 
 equality-expression
-: relational-expression
-| equal-to-expression
-| not-equal-to-expression
+: relational-expression {
+  $$ = ast_make_equality_expression($[relational-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "relational-expression");
+  }
+}
+| equal-to-expression {
+  $$ = ast_make_equality_expression($[equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "equal-to-expression");
+  }
+}
+| not-equal-to-expression {
+  $$ = ast_make_equality_expression($[not-equal-to-expression]);
+  if (!$$) {
+    AST_ERROR("equality-expression", "not-equal-to-expression");
+  }
+}
 ;
 
 equal-to-expression
-: equality-expression "==" relational-expression
+: equality-expression "==" relational-expression {
+  $$ = ast_make_equal_to_expression($[equality-expression], $[relational-expression]);
+  if (!$$) {
+    AST_ERROR("equal-to-expression", "equality-expression \"==\" relational-expression");
+  }
+}
 ;
 
 not-equal-to-expression
-: equality-expression "!=" relational-expression
+: equality-expression "!=" relational-expression {
+  $$ = ast_make_not_equal_to_expression($[equality-expression], $[relational-expression]);
+  if (!$$) {
+    AST_ERROR("not-equal-to-expression", "equality-expression \"!=\" relational-expression");
+  }
+}
 ;
 
 bitwise-AND-expression
-: equality-expression
-| bitwise-AND-operator-expression
+: equality-expression {
+  $$ = ast_make_bitwise_and_expression($[equality-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-and-expression", "equality-expression");
+  }
+}
+| bitwise-AND-operator-expression {
+  $$ = ast_make_bitwise_and_expression($[bitwise-AND-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-expression", "bitwise-AND-operator-expression");
+  }
+}
 ;
 
 bitwise-AND-operator-expression
-: bitwise-AND-expression '&' equality-expression
+: bitwise-AND-expression '&' equality-expression {
+  $$ = ast_make_bitwise_and_operator_expression($[bitwise-AND-expression], $[equality-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-operator-expression", "bitwise-AND-expression '&' equality-expression");
+  }
+}
 ;
 
 bitwise-XOR-expression
-: bitwise-AND-expression
-| bitwise-XOR-operator-expression
+: bitwise-AND-expression {
+  $$ = ast_make_bitwise_xor_expression($[bitwise-AND-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-expression", "bitwise-AND-expression");
+  }
+}
+| bitwise-XOR-operator-expression {
+  $$ = ast_make_bitwise_xor_expression($[bitwise-XOR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-expression", "bitwise-XOR-operator-expression");
+  }
+}
 ;
 
 bitwise-XOR-operator-expression
-: bitwise-XOR-expression '^' bitwise-AND-expression
+: bitwise-XOR-expression '^' bitwise-AND-expression {
+  $$ = ast_make_bitwise_xor_operator_expression($[bitwise-XOR-expression], $[bitwise-AND-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-operator-expression", "bitwise-XOR-expression '^' bitwise-AND-expression");
+  }
+}
 ;
 
 bitwise-OR-expression
-: bitwise-XOR-expression
-| bitwise-OR-operator-expression
+: bitwise-XOR-expression {
+  $$ = ast_make_bitwise_or_expression($[bitwise-XOR-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-expression", "bitwise-XOR-expression");
+  }
+}
+| bitwise-OR-operator-expression {
+  $$ = ast_make_bitwise_or_expression($[bitwise-OR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-expression", "bitwise-OR-operator-expression");
+  }
+}
 ;
 
 bitwise-OR-operator-expression
-: bitwise-OR-expression '|' bitwise-XOR-expression
+: bitwise-OR-expression '|' bitwise-XOR-expression {
+  $$ = ast_make_bitwise_or_operator_expression($[bitwise-OR-expression], $[bitwise-XOR-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-operator-expression", "bitwise-OR-expression '|' bitwise-XOR-expression");
+  }
+}
 ;
 
 logical-AND-expression
-: bitwise-OR-expression
-| logical-AND-operator-expression
+: bitwise-OR-expression {
+  $$ = ast_make_logical_and_expression($[bitwise-OR-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-expression", "bitwise-OR-expression");
+  }
+}
+| logical-AND-operator-expression {
+  $$ = ast_make_logical_and_expression($[logical-AND-operator-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-expression", "logical-AND-operator-expression");
+  }
+}
 ;
 
 logical-AND-operator-expression
-: logical-AND-expression "&&" bitwise-OR-expression
+: logical-AND-expression "&&" bitwise-OR-expression {
+  $$ = ast_make_logical_and_operator_expression($[logical-AND-expression], $[bitwise-OR-expression]);
+  if (!$$) {
+    AST_ERROR("logical-AND-operator-expression", "logical-AND-expression \"&&\" bitwise-OR-expression");
+  }
+}
 ;
 
 logical-OR-expression
-: logical-AND-expression
-| logical-OR-operator-expression
+: logical-AND-expression {
+  $$ = ast_make_logical_or_expression($[logical-AND-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-expression", "logical-AND-expression");
+  }
+}
+| logical-OR-operator-expression {
+  $$ = ast_make_logical_or_expression($[logical-OR-operator-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-expression", "logical-OR-operator-expression");
+  }
+}
 ;
 
 logical-OR-operator-expression
-: logical-OR-expression "||" logical-AND-expression
+: logical-OR-expression "||" logical-AND-expression {
+  $$ = ast_make_logical_or_operator_expression($[logical-OR-expression], $[logical-AND-expression]);
+  if (!$$) {
+    AST_ERROR("logical-OR-operator-expression", "logical-OR-expression \"||\" logical-AND-expression");
+  }
+}
 ;
 
 conditional-expression
-: logical-OR-expression
-| conditional-operator-expression
+: logical-OR-expression {
+  $$ = ast_make_conditional_expression($[logical-OR-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-expression", "logical-OR-expression");
+  }
+}
+| conditional-operator-expression {
+  $$ = ast_make_conditional_expression($[conditional-operator-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-expression", "conditional-operator-expression");
+  }
+}
 ;
 
 conditional-operator-expression
-: logical-OR-expression '?' expression ':' conditional-expression
+: logical-OR-expression '?' expression ':' conditional-expression {
+  $$ = ast_make_conditional_operator_expression($[logical-OR-expression], $[expression], $[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("conditional-operator-expression", "logical-OR-expression '?' expression ':' conditional-expression");
+  }
+}
 ;
 
 assignment-expression
-: conditional-expression
-| basic-assignment-expression
-| multiplication-assignment-expression
-| division-assignment-expression
-| modulo-assignment-expression
-| addition-assignment-expression
-| subtraction-assignment-expression
-| left-shift-assignment-expression
-| right-shift-assignment-expression
-| bitwise-AND-assignment-expression
-| bitwise-XOR-assignment-expression
-| bitwise-OR-assignment-expression
+: conditional-expression {
+  $$ = ast_make_assignment_expression($[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "conditional-expression");
+  }
+}
+| basic-assignment-expression {
+  $$ = ast_make_assignment_expression($[basic-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "basic-assignment-expression");
+  }
+}
+| multiplication-assignment-expression {
+  $$ = ast_make_assignment_expression($[multiplication-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "multiplication-assignment-expression");
+  }
+}
+| division-assignment-expression {
+  $$ = ast_make_assignment_expression($[division-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "division-assignment-expression");
+  }
+}
+| modulo-assignment-expression {
+  $$ = ast_make_assignment_expression($[modulo-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "modulo-assignment-expression");
+  }
+}
+| addition-assignment-expression {
+  $$ = ast_make_assignment_expression($[addition-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "addition-assignment-expression");
+  }
+}
+| subtraction-assignment-expression {
+  $$ = ast_make_assignment_expression($[subtraction-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "subtraction-assignment-expression");
+  }
+}
+| left-shift-assignment-expression {
+  $$ = ast_make_assignment_expression($[left-shift-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "left-shift-assignment-expression");
+  }
+}
+| right-shift-assignment-expression {
+  $$ = ast_make_assignment_expression($[right-shift-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "right-shift-assignment-expression");
+  }
+}
+| bitwise-AND-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-AND-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-AND-assignment-expression");
+  }
+}
+| bitwise-XOR-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-XOR-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-XOR-assignment-expression");
+  }
+}
+| bitwise-OR-assignment-expression {
+  $$ = ast_make_assignment_expression($[bitwise-OR-assignment-expression]);
+  if (!$$) {
+    AST_ERROR("assignment-expression", "bitwise-OR-assignment-expression");
+  }
+}
 ;
 
 basic-assignment-expression
-: unary-expression '=' assignment-expression
+: unary-expression '=' assignment-expression {
+  $$ = ast_make_basic_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("basic-assignment-expression", "unary-expression '=' assignment-expression");
+  }
+}
 ;
 
 multiplication-assignment-expression
-: unary-expression "*=" assignment-expression
+: unary-expression "*=" assignment-expression {
+  $$ = ast_make_multiplication_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("multiplication-assignment-expression", "unary-expression \"*=\" assignment-expression");
+  }
+}
 ;
 
 division-assignment-expression
-: unary-expression "/=" assignment-expression
+: unary-expression "/=" assignment-expression {
+  $$ = ast_make_division_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("division-assignment-expression", "unary-expression \"/=\" assignment-expression");
+  }
+}
 ;
 
 modulo-assignment-expression
-: unary-expression "%=" assignment-expression
+: unary-expression "%=" assignment-expression {
+  $$ = ast_make_modulo_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("modulo-assignment-expression", "unary-expression \"%=\" assignment-expression");
+  }
+}
 ;
 
 addition-assignment-expression
-: unary-expression "+=" assignment-expression
+: unary-expression "+=" assignment-expression {
+  $$ = ast_make_addition_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("addition-assignment-expression", "unary-expression \"+=\" assignment-expression");
+  }
+}
 ;
 
 subtraction-assignment-expression
-: unary-expression "-=" assignment-expression
+: unary-expression "-=" assignment-expression {
+  $$ = ast_make_subtraction_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("subtraction-assignment-expression", "unary-expression \"-=\" assignment-expression");
+  }
+}
 ;
 
 left-shift-assignment-expression
-: unary-expression "<<=" assignment-expression
+: unary-expression "<<=" assignment-expression {
+  $$ = ast_make_left_shift_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("left-shift-assignment-expression", "unary-expression \"<<=\" assignment-expression");
+  }
+}
 ;
 
 right-shift-assignment-expression
-: unary-expression ">>=" assignment-expression
+: unary-expression ">>=" assignment-expression {
+  $$ = ast_make_right_shift_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("right-shift-assignment-expression", "unary-expression \">>=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-AND-assignment-expression
-: unary-expression "&=" assignment-expression
+: unary-expression "&=" assignment-expression {
+  $$ = ast_make_bitwise_and_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-AND-assignment-expression", "unary-expression \"&=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-XOR-assignment-expression
-: unary-expression "^=" assignment-expression
+: unary-expression "^=" assignment-expression {
+  $$ = ast_make_bitwise_xor_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-XOR-assignment-expression", "unary-expression \"^=\" assignment-expression");
+  }
+}
 ;
 
 bitwise-OR-assignment-expression
-: unary-expression "|=" assignment-expression
+: unary-expression "|=" assignment-expression {
+  $$ = ast_make_bitwise_or_assignment_expression($[unary-expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("bitwise-OR-assignment-expression", "unary-expression \"|=\" assignment-expression");
+  }
+}
 ;
 
 expression.opt
-: %empty
-| expression
+: %empty {
+  $$ = NULL;
+}
+| expression {
+  $$ = $[expression];
+}
 ;
 
 expression
-: assignment-expression
-| comma-expression
+: assignment-expression {
+  $$ = ast_make_expression($[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("expression", "assignment-expression");
+  }
+}
+| comma-expression {
+  $$ = ast_make_expression($[comma-expression]);
+  if (!$$) {
+    AST_ERROR("expression", "comma-expression");
+  }
+}
 ;
 
 comma-expression
-: expression ',' assignment-expression
+: expression ',' assignment-expression {
+  $$ = ast_make_comma_expression($[expression], $[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("comma-expression", "expression ',' assignment-expression");
+  }
+}
 ;
 
 constant-expression.opt
-: %empty
-| constant-expression
+: %empty {
+  $$ = NULL;
+}
+| constant-expression {
+  $$ = $[constant-expression];
+}
 ;
 
 constant-expression
-: conditional-expression
+: conditional-expression {
+  $$ = ast_make_constant_expression($[conditional-expression]);
+  if (!$$) {
+    AST_ERROR("constant-expression", "conditional-expression");
+  }
+}
 ;
 
 declaration
@@ -862,11 +1190,36 @@ declarator-with-initializer
 ;
 
 storage-class-specifier
-: "typedef"
-| "extern"
-| "static"
-| "auto"
-| "register"
+: "typedef"[typedef] {
+  $$ = ast_make_storage_class_specifier($[typedef]);
+  if (!$$) {
+    AST_ERROR("storage-class-specifier", "typedef");
+  }
+}
+| "extern"[extern] {
+  $$ = ast_make_storage_class_specifier($[extern]);
+  if (!$$) {
+    AST_ERROR("storage-class-specifier", "extern");
+  }
+}
+| "static"[static] {
+  $$ = ast_make_storage_class_specifier($[static]);
+  if (!$$) {
+    AST_ERROR("storage-class-specifier", "static");
+  }
+}
+| "auto"[auto] {
+  $$ = ast_make_storage_class_specifier($[auto]);
+  if (!$$) {
+    AST_ERROR("storage-class-specifier", "auto");
+  }
+}
+| "register"[register] {
+  $$ = ast_make_storage_class_specifier($[register]);
+  if (!$$) {
+    AST_ERROR("storage-class-specifier", "register");
+  }
+}
 ;
 
 type-specifier
