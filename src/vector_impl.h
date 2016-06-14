@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_VECTOR_IMPL_H
-#define KMC_C89_COMPILER_VECTOR_IMPL_H
+#ifndef KMC_C90_COMPILER_VECTOR_IMPL_H
+#define KMC_C90_COMPILER_VECTOR_IMPL_H
 #include "allocator_impl.h"
 #include <assert.h>
 
@@ -252,4 +252,4 @@
     } \
   } \
 
-#endif  /* KMC_C89_COMPILER_VECTOR_IMPL_H */
+#endif  /* KMC_C90_COMPILER_VECTOR_IMPL_H */

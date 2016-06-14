@@ -1,4 +1,4 @@
-# c89-compiler/Makefile.common
+# c90-compiler/Makefile.common
 
 ifndef TOP_DIR
 $(error TOP_DIR must be defined)
@@ -27,10 +27,10 @@ CC ?= gcc
 CXX ?= g++
 COMMON_FLAGS := -Wall -Wextra -O2 -DDEBUG
 DEPEND_FLAGS := -MMD -MP
-C89_RESTRICT_FLAGS := -ansi -pedantic
+C90_RESTRICT_FLAGS := -ansi -pedantic
 CXX11_FLAGS := -std=c++11
 INCLUDE := -I$(SRC_DIR)
-CFLAGS ?= $(COMMON_FLAGS) $(C89_RESTRICT_FLAGS)
+CFLAGS ?= $(COMMON_FLAGS) $(C90_RESTRICT_FLAGS)
 CXXFLAGS ?= $(COMMON_FLAGS) $(CXX11_FLAGS)
 CFLAGS += $(DEPEND_FLAGS) $(INCLUDE)
 CXXFLAGS += $(DEPEND_FLAGS) $(INCLUDE)

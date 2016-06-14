@@ -1,4 +1,4 @@
-# c89-compiler/tests/gtest/Makefile
+# c90-compiler/tests/gtest/Makefile
 
 TOP_DIR := ../..
 TESTS_DIR := $(TOP_DIR)/tests

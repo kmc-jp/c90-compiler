@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_UTILITY_H
-#define KMC_C89_COMPILER_UTILITY_H
+#ifndef KMC_C90_COMPILER_UTILITY_H
+#define KMC_C90_COMPILER_UTILITY_H
 
 #include <stddef.h>
 
@@ -59,4 +59,4 @@ void memory_move(void* dst, const void* src, size_t size, size_t count);
 
 END_EXTERN_C
 
-#endif  /* KMC_C89_COMPILER_UTILITY_H */
+#endif  /* KMC_C90_COMPILER_UTILITY_H */

@@ -1,4 +1,4 @@
-# c89-compiler/tests/memory_pool_test/Makefile
+# c90-compiler/tests/memory_pool_test/Makefile
 
 TOP_DIR := ../..
 SRC_DIR := $(TOP_DIR)/src

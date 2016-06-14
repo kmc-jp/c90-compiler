@@ -32,6 +32,7 @@
 *.dSYM/
 
 kmc89
+kmc90
 *.yy.c
 *.tab.c
 *.tab.h

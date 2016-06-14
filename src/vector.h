@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_VECTOR_H
-#define KMC_C89_COMPILER_VECTOR_H
+#ifndef KMC_C90_COMPILER_VECTOR_H
+#define KMC_C90_COMPILER_VECTOR_H
 
 #include "utility.h"
 #include "allocator.h"
@@ -83,4 +83,4 @@
 
 #include "vector_impl.h"
 
-#endif  /* KMC_C89_COMPILER_VECTOR_H */
+#endif  /* KMC_C90_COMPILER_VECTOR_H */
