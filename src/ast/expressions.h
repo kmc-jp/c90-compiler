@@ -1,5 +1,5 @@
-#ifndef KMC_C89_COMPILER_AST_EXPRESSION_H
-#define KMC_C89_COMPILER_AST_EXPRESSION_H
+#ifndef KMC_C90_COMPILER_AST_EXPRESSION_H
+#define KMC_C90_COMPILER_AST_EXPRESSION_H
 
 #include "ast.h"
 
@@ -88,4 +88,4 @@ AstRef ast_make_expression(AstRef expression);
 AstRef ast_make_comma_expression(AstRef expression, AstRef assignment);
 AstRef ast_make_constant_expression(AstRef conditional);
 
-#endif  /* KMC_C89_COMPILER_AST_EXPRESSION_H */
+#endif  /* KMC_C90_COMPILER_AST_EXPRESSION_H */

@@ -5,7 +5,7 @@
 #include "utility.h"
 
 int main(int argc, char *argv[]) {
-  LLVMModuleRef module = LLVMModuleCreateWithName("kmc89_module");
+  LLVMModuleRef module = LLVMModuleCreateWithName("kmc90_module");
   /* int main() { return 0; } */
   LLVMTypeRef main_type = LLVMFunctionType(LLVMInt32Type(), NULL, 0, false);
   LLVMValueRef main_func = LLVMAddFunction(module, "main", main_type);

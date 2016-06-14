@@ -1,4 +1,4 @@
-# c89-compiler/src/Makefile.common
+# c90-compiler/src/Makefile.common
 
 LLVM_CONFIG ?= llvm-config
 LLVM_MODULES := core analysis bitwriter
