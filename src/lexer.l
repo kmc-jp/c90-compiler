@@ -102,7 +102,10 @@ WHITESPACE ;
 "|=" return OR_ASSIGN;
 "^=" return XOR_ASSIGN;
 
-"auto"     return AUTO;
+"auto" {
+  yylval = ast_make_token(yytext, yyleng);
+  return AUTO;
+}
 "break"    return BREAK;
 "case"     return CASE;
 "char"     return CHAR;
@@ -113,22 +116,34 @@ WHITESPACE ;
 "double"   return DOUBLE;
 "else"     return ELSE;
 "enum"     return ENUM;
-"extern"   return EXTERN;
+"extern" {
+  yylval = ast_make_token(yytext, yyleng);
+  return EXTERN;
+}
 "float"    return FLOAT;
 "for"      return FOR;
 "goto"     return GOTO;
 "if"       return IF;
 "int"      return INT;
 "long"     return LONG;
-"register" return REGISTER;
+"register" {
+  yylval = ast_make_token(yytext, yyleng);
+  return REGISTER;
+}
 "return"   return RETURN;
 "short"    return SHORT;
 "signed"   return SIGNED;
 "sizeof"   return SIZEOF;
-"static"   return STATIC;
+"static" {
+  yylval = ast_make_token(yytext, yyleng);
+  return STATIC;
+}
 "struct"   return STRUCT;
 "switch"   return SWITCH;
-"typedef"  return TYPEDEF;
+"typedef" {
+  yylval = ast_make_token(yytext, yyleng);
+  return TYPEDEF;
+}
 "union"    return UNION;
 "unsigned" return UNSIGNED;
 "void"     return VOID;
