@@ -45,3 +45,24 @@ void symbol_block_dtor(SymbolBlockRef* pself) {
   }
   safe_free(*pself);
 }
+
+SymbolTableRef symbol_table_ctor(void) {
+  const SymbolTableRef table = safe_malloc(struct SymbolTable);
+  table->stack = VECTORFUNC(SymbolBlockRef, ctor)(NULL);
+  return table;
+}
+
+void symbol_table_dtor(SymbolTableRef* pself) {
+  assert(pself);
+  {
+    const VECTORREF(SymbolBlockRef) vector = (*pself)->stack;
+    SymbolBlockRef* iter = VECTORFUNC(SymbolBlockRef, begin)(vector);
+    const SymbolBlockRef* const end = VECTORFUNC(SymbolBlockRef, end)(vector);
+    for (; iter != end; ++iter) {
+      SymbolBlockRef* const tmp = iter;
+      symbol_block_dtor(tmp);
+    }
+    VECTORFUNC(SymbolBlockRef, dtor)(&(*pself)->stack);
+  }
+  safe_free(*pself);
+}
