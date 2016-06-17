@@ -88,12 +88,13 @@ void finalize_symbol_table(void) {
 void symbol_table_push(StringRef name) {
   const SymbolBlockRef block = symbol_block_ctor(name);
   VECTORFUNC(SymbolBlockRef, push_back)(g_symbol_table->stack, block);
-  string_push_back(g_symbol_table->prefix, g_separator);
   string_append(g_symbol_table->prefix, name);
+  string_push_back(g_symbol_table->prefix, g_separator);
 }
 
 void symbol_table_pop(void) {
-  assert(!string_empty(g_symbol_table->prefix));
+  const size_t length = string_length(g_symbol_table->prefix);
+  assert(2 <= length);
   assert(!VECTORFUNC(SymbolBlockRef, empty)(g_symbol_table->stack));
   {
     SymbolBlockRef block =
@@ -102,10 +103,9 @@ void symbol_table_pop(void) {
     VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
   }
   {
-    const size_t length = string_length(g_symbol_table->prefix);
     size_t i = length - 1;
     for (; 0 < i; --i) {
-      if (string_at(g_symbol_table->prefix, i) == g_separator) {
+      if (string_at(g_symbol_table->prefix, i - 1) == g_separator) {
         break;
       }
     }
