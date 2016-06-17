@@ -123,3 +123,34 @@ void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value) {
 void append_prefix(StringRef name) {
   string_insert(name, 0, g_symbol_table->prefix);
 }
+
+static SymbolInfoRef find_symbol_in_block(StringRef name,
+                                          SymbolBlockRef block) {
+  const SymbolInfoRef* const begin =
+      VECTORFUNC(SymbolInfoRef, begin)(block->symbols);
+  const SymbolInfoRef* const end =
+      VECTORFUNC(SymbolInfoRef, end)(block->symbols);
+  const SymbolInfoRef* iter = begin;
+  for (; iter != end; ++iter) {
+    if (string_compare((*iter)->name, name) == 0) {
+      return *iter;
+    }
+  }
+  return NULL;
+}
+
+SymbolInfoRef find_symbol(StringRef name) {
+  const SymbolBlockRef* const begin =
+      VECTORFUNC(SymbolBlockRef, begin)(g_symbol_table->stack);
+  const SymbolBlockRef* const end =
+      VECTORFUNC(SymbolBlockRef, end)(g_symbol_table->stack);
+  const SymbolBlockRef* iter = end;
+  for (; iter != begin; --iter) {
+    const SymbolInfoRef symbol = find_symbol_in_block(name, *(iter - 1));
+    if (symbol) {
+      return symbol;
+    }
+  }
+  /* TODO: find global symbol */
+  return NULL;
+}

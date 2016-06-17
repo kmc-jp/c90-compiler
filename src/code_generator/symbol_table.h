@@ -14,5 +14,6 @@ void symbol_table_push(StringRef name);
 void symbol_table_pop(void);
 void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value);
 void append_prefix(StringRef name);
+SymbolInfoRef find_symbol(StringRef name);
 
 #endif  /* KMC_C90_COMPILER_CODE_GENERATOR_SYMBOL_TABLE_H */
