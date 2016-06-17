@@ -6,6 +6,8 @@
 DEFINE_VECTOR(SymbolInfoRef)
 DEFINE_VECTOR(SymbolBlockRef)
 
+static SymbolTableRef g_symbol_table;
+
 SymbolInfoRef symbol_info_ctor(StringRef name, LLVMTypeRef type,
                                LLVMValueRef value) {
   const SymbolInfoRef symbol = safe_malloc(struct SymbolInfo);
@@ -69,4 +71,14 @@ void symbol_table_dtor(SymbolTableRef* pself) {
     VECTORFUNC(SymbolBlockRef, dtor)(&(*pself)->stack);
   }
   safe_free(*pself);
+}
+
+void initialize_symbol_table(StringRef name) {
+  assert(!g_symbol_table);
+  g_symbol_table = symbol_table_ctor(name);
+}
+
+void finalize_symbol_table(void) {
+  assert(g_symbol_table);
+  symbol_table_dtor(&g_symbol_table);
 }
