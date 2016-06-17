@@ -119,3 +119,7 @@ void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value) {
       VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
   VECTORFUNC(SymbolInfoRef, push_back)(block->symbols, symbol);
 }
+
+void append_prefix(StringRef name) {
+  string_insert(name, 0, g_symbol_table->prefix);
+}
