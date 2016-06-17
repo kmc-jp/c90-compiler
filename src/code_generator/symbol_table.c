@@ -93,18 +93,24 @@ void symbol_table_push(StringRef name) {
 }
 
 void symbol_table_pop(void) {
-  const size_t length = string_length(g_symbol_table->prefix);
-  size_t i = length - 1;
-  SymbolBlockRef block =
-      VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
-  symbol_block_dtor(&block);
-  VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
-  for (; 0 < i; --i) {
-    if (string_at(g_symbol_table->prefix, i) == g_separator) {
-      break;
-    }
+  assert(!string_empty(g_symbol_table->prefix));
+  assert(!VECTORFUNC(SymbolBlockRef, empty)(g_symbol_table->stack));
+  {
+    SymbolBlockRef block =
+        VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
+    symbol_block_dtor(&block);
+    VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
   }
-  string_erase(g_symbol_table->prefix, i, length - i);
+  {
+    const size_t length = string_length(g_symbol_table->prefix);
+    size_t i = length - 1;
+    for (; 0 < i; --i) {
+      if (string_at(g_symbol_table->prefix, i) == g_separator) {
+        break;
+      }
+    }
+    string_erase(g_symbol_table->prefix, i, length - i);
+  }
 }
 
 void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value) {
