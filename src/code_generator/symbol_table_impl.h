@@ -22,6 +22,7 @@ DECLARE_VECTOR(SymbolBlockRef)
 
 struct SymbolTable {
   LLVMModuleRef module;
+  LLVMBuilderRef builder;
   VECTORREF(SymbolBlockRef) stack;
 };
 
