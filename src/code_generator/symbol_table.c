@@ -48,14 +48,16 @@ void symbol_block_dtor(SymbolBlockRef* pself) {
   safe_free(*pself);
 }
 
-SymbolTableRef symbol_table_ctor(void) {
+SymbolTableRef symbol_table_ctor(StringRef name) {
   const SymbolTableRef table = safe_malloc(struct SymbolTable);
+  table->module = LLVMModuleCreateWithName(string_data(name));
   table->stack = VECTORFUNC(SymbolBlockRef, ctor)(NULL);
   return table;
 }
 
 void symbol_table_dtor(SymbolTableRef* pself) {
   assert(pself);
+  LLVMDisposeModule((*pself)->module);
   {
     const VECTORREF(SymbolBlockRef) vector = (*pself)->stack;
     SymbolBlockRef* iter = VECTORFUNC(SymbolBlockRef, begin)(vector);
