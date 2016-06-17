@@ -199,4 +199,7 @@ SINGLE_to_string(void_return_jump_statement, AstVoidReturnJumpStatementRef, self
 translation_unit_to_string() // vec
 SINGLE_to_string(external_declaration, AstExternalDeclarationRef, external_declaration)
 function_definition_to_string()
-token_to_string() // typedef struct String* AstTokenRef;
+
+void token_to_string(AstTokenRef val) {
+  printf("AstTokenRef: %s", string_data(val));
+}
