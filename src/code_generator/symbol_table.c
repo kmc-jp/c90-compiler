@@ -21,3 +21,27 @@ void symbol_info_dtor(SymbolInfoRef* pself) {
   string_dtor(&(*pself)->name);
   safe_free(*pself);
 }
+
+SymbolBlockRef symbol_block_ctor(StringRef name) {
+  const SymbolBlockRef block = safe_malloc(struct SymbolBlock);
+  const StringRef block_name = string_ctor(string_data(name), NULL);
+  block->name = block_name;
+  block->symbols = VECTORFUNC(SymbolInfoRef, ctor)(NULL);
+  return block;
+}
+
+void symbol_block_dtor(SymbolBlockRef* pself) {
+  assert(pself);
+  string_dtor(&(*pself)->name);
+  {
+    const VECTORREF(SymbolInfoRef) vector = (*pself)->symbols;
+    SymbolInfoRef* iter = VECTORFUNC(SymbolInfoRef, begin)(vector);
+    const SymbolInfoRef* const end = VECTORFUNC(SymbolInfoRef, end)(vector);
+    for (; iter != end; ++iter) {
+      SymbolInfoRef* const tmp = iter;
+      symbol_info_dtor(tmp);
+    }
+    VECTORFUNC(SymbolInfoRef, dtor)(&(*pself)->symbols);
+  }
+  safe_free(*pself);
+}
