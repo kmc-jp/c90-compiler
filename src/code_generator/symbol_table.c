@@ -6,6 +6,7 @@ DEFINE_VECTOR(SymbolInfoRef)
 DEFINE_VECTOR(SymbolBlockRef)
 
 static SymbolTableRef g_symbol_table;
+static const char g_separator = '$';
 
 SymbolInfoRef symbol_info_ctor(StringRef name, LLVMTypeRef type,
                                LLVMValueRef value) {
@@ -87,13 +88,23 @@ void finalize_symbol_table(void) {
 void symbol_table_push(StringRef name) {
   const SymbolBlockRef block = symbol_block_ctor(name);
   VECTORFUNC(SymbolBlockRef, push_back)(g_symbol_table->stack, block);
+  string_push_back(g_symbol_table->prefix, g_separator);
+  string_append(g_symbol_table->prefix, name);
 }
 
 void symbol_table_pop(void) {
+  const size_t length = string_length(g_symbol_table->prefix);
+  size_t i = length - 1;
   SymbolBlockRef block =
       VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
   symbol_block_dtor(&block);
   VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
+  for (; 0 < i; --i) {
+    if (string_at(g_symbol_table->prefix, i) == g_separator) {
+      break;
+    }
+  }
+  string_erase(g_symbol_table->prefix, i, length - i);
 }
 
 void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value) {
