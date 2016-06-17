@@ -14,4 +14,10 @@ struct SymbolBlock {
   VECTORREF(SymbolInfoRef) symbols;
 };
 
+DECLARE_VECTOR(SymbolBlockRef);
+
+struct SymbolTable {
+  VECTORREF(SymbolBlockRef) stack;
+};
+
 #endif  /* KMC_C90_COMPILER_CODE_GENERATOR_SYMBOL_TABLE_IMPL_H */
