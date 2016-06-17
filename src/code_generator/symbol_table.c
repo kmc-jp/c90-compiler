@@ -1,6 +1,5 @@
 #include "code_generator/symbol_table.h"
 #include "code_generator/symbol_table_impl.h"
-#include "stdstring.h"
 #include "utility.h"
 
 DEFINE_VECTOR(SymbolInfoRef)
@@ -81,4 +80,16 @@ void initialize_symbol_table(StringRef name) {
 void finalize_symbol_table(void) {
   assert(g_symbol_table);
   symbol_table_dtor(&g_symbol_table);
+}
+
+void symbol_table_push(StringRef name) {
+  const SymbolBlockRef block = symbol_block_ctor(name);
+  VECTORFUNC(SymbolBlockRef, push_back)(g_symbol_table->stack, block);
+}
+
+void symbol_table_pop(void) {
+  SymbolBlockRef block =
+      VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
+  symbol_block_dtor(&block);
+  VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
 }
