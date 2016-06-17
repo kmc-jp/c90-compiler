@@ -112,3 +112,10 @@ void symbol_table_pop(void) {
     string_erase(g_symbol_table->prefix, i, length - i);
   }
 }
+
+void register_symbol(StringRef name, LLVMTypeRef type, LLVMValueRef value) {
+  const SymbolInfoRef symbol = symbol_info_ctor(name, type, value);
+  const SymbolBlockRef block =
+      VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
+  VECTORFUNC(SymbolInfoRef, push_back)(block->symbols, symbol);
+}
