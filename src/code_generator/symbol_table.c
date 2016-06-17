@@ -1,12 +1,12 @@
 #include "code_generator/symbol_table.h"
 #include "code_generator/symbol_table_impl.h"
-#include "stdstring.h"
 #include "utility.h"
 
 DEFINE_VECTOR(SymbolInfoRef)
 DEFINE_VECTOR(SymbolBlockRef)
 
 static SymbolTableRef g_symbol_table;
+static const char g_separator = '$';
 
 SymbolInfoRef symbol_info_ctor(StringRef name, LLVMTypeRef type,
                                LLVMValueRef value) {
@@ -83,4 +83,32 @@ void initialize_symbol_table(StringRef name) {
 void finalize_symbol_table(void) {
   assert(g_symbol_table);
   symbol_table_dtor(&g_symbol_table);
+}
+
+void symbol_table_push(StringRef name) {
+  const SymbolBlockRef block = symbol_block_ctor(name);
+  VECTORFUNC(SymbolBlockRef, push_back)(g_symbol_table->stack, block);
+  string_append(g_symbol_table->prefix, name);
+  string_push_back(g_symbol_table->prefix, g_separator);
+}
+
+void symbol_table_pop(void) {
+  const size_t length = string_length(g_symbol_table->prefix);
+  assert(2 <= length);
+  assert(!VECTORFUNC(SymbolBlockRef, empty)(g_symbol_table->stack));
+  {
+    SymbolBlockRef block =
+        VECTORFUNC(SymbolBlockRef, back)(g_symbol_table->stack);
+    symbol_block_dtor(&block);
+    VECTORFUNC(SymbolBlockRef, pop_back)(g_symbol_table->stack);
+  }
+  {
+    size_t i = length - 1;
+    for (; 0 < i; --i) {
+      if (string_at(g_symbol_table->prefix, i - 1) == g_separator) {
+        break;
+      }
+    }
+    string_erase(g_symbol_table->prefix, i, length - i);
+  }
 }
