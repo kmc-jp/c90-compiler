@@ -9,7 +9,7 @@ void generate_code(AstRef ast) {
   assert(ast);
   switch (ast->tag) {
     default:
-      fprintf(stderr, "Unimplemented: %d\n", ast->tag);
+      error("Unimplemented: %d\n", ast->tag);
       break;
   }
 }
