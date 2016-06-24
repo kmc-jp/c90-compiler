@@ -69,9 +69,9 @@ void symbol_table_dtor(SymbolTableRef* pself) {
   safe_free(*pself);
 }
 
-void initialize_symbol_table(StringRef name) {
+void initialize_symbol_table(void) {
   assert(!g_symbol_table);
-  g_symbol_table = symbol_table_ctor(name);
+  g_symbol_table = symbol_table_ctor();
 }
 
 void finalize_symbol_table(void) {
