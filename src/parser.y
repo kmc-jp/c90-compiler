@@ -1798,8 +1798,8 @@ type-name
 ;
 
 abstract-declarator.opt
-: /* empty */ {
-  $$ = ast_make_abstract_declarator();
+: %empty {
+  $$ = NULL;
 }
 | abstract-declarator {
   $$ = $[abstract-declarator];
@@ -1831,8 +1831,8 @@ pointer-abstract-declarator
 ;
 
 direct-abstract-declarator.opt
-: /* empty */ {
-  $$ = ast_make_direct_abstract_declarator();
+: %empty {
+  $$ = NULL;
 }
 | direct-abstract-declarator {
   $$ = $[direct-abstract-declarator];
