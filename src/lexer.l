@@ -15,6 +15,9 @@ StringRef lexer_string_literal;
 void initialize_lexer(void) {
   ast_initialize_pool();
 }
+void create_token(void) {
+  yylval = ast_make_token(yytext, yyleng);
+}
 %}
 SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
 OCT_ESCAPE_SEQUENCE "\\"[0-7]{1,3}
@@ -58,19 +61,19 @@ WHITESPACE [ \t\n]
 }
 
 ("'"{C_CHAR}*"'"|"L'"{C_CHAR}*"'") {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return CHARACTER_CONSTANT;
 }
 
 WHITESPACE ;
 
 [0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return FLOATING_CONSTANT;
 }
 
 ({DIGIT8}|{DIGIT10}|{DIGIT16})({INTEGER_SUFFIX})? {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return INTEGER_CONSTANT;
 }
 
@@ -103,94 +106,94 @@ WHITESPACE ;
 "^=" return XOR_ASSIGN;
 
 "auto" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return AUTO;
 }
 "break"    return BREAK;
 "case"     return CASE;
 "char" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return CHAR;
 }
 "const" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return CONST;
 }
 "continue" return CONTINUE;
 "default"  return DEFAULT;
 "do"       return DO;
 "double" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return DOUBLE;
 }
 "else"     return ELSE;
 "enum"     return ENUM;
 "extern" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return EXTERN;
 }
 "float" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return FLOAT;
 }
 "for"      return FOR;
 "goto"     return GOTO;
 "if"       return IF;
 "int" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return INT;
 }
 "long" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return LONG;
 }
 "register" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return REGISTER;
 }
 "return"   return RETURN;
 "short" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return SHORT;
 }
 "signed" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return SIGNED;
 }
 "sizeof"   return SIZEOF;
 "static" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return STATIC;
 }
 "struct" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return STRUCT;
 }
 "switch"   return SWITCH;
 "typedef" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return TYPEDEF;
 }
 "union"  {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return UNION;
 }
 "unsigned" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return UNSIGNED;
 }
 "void" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return VOID;
 }
 "volatile" {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return VOLATILE;
 }
 "while"    return WHILE;
 
 {IDENTIFIER} {
-  yylval = ast_make_token(yytext, yyleng);
+  create_token();
   return IDENTIFIER;
 }
 
