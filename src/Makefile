@@ -10,6 +10,10 @@ AST_DIR := ast
 AST_SRCS := $(wildcard $(AST_DIR)/*.c)
 AST_OBJS := $(AST_SRCS:.c=.o)
 
+CODEGEN_DIR := code_generator
+CODEGEN_SRCS := $(wildcard $(CODEGEN_DIR)/*c)
+CODEGEN_OBJS := $(CODEGEN_SRCS:.c=.o)
+
 LEX_SRC := lexer.l
 LEX_INTERMEDIATE := lex.yy.c
 LEX_TARGET := lex.yy.o
@@ -23,6 +27,7 @@ YACC := bison
 YACC_OPTION := -d
 TARGET := kmc90
 OBJS += $(AST_OBJS)
+OBJS += $(CODEGEN_OBJS)
 OBJS += $(LEX_TARGET) $(YACC_TARGET)
 CLEAN_OBJS += $(LEX_INTERMEDIATE) $(YACC_INTERMEDIATE)
 
@@ -38,7 +43,5 @@ $(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
 	$(LEX) $(LEX_OPTION) $<
 
 $(LEX_TARGET): CFLAGS += -Wno-unused-function
-
-main.o: CFLAGS += -Wno-long-long
 
 .PHONY: build
