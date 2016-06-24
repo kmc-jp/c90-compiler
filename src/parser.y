@@ -1910,13 +1910,14 @@ initializer
 
 initializer-list
 : initializer {
-  $$ = ast_make_initializer_list($[initializer]);
+  $$ = ast_make_initializer_list();
+  $$ = ast_push_initializer_list($$, $[initializer]);
   if (!$$) {
     AST_ERROR("initializer-list", "initializer");
   }
 }
-| initializer-list ',' initializer {
-  $$ = ast_make_initializer_list($[initializer-list], $[initializer]);
+| initializer-list[src] ',' initializer {
+  $$ = ast_push_initializer_list($[src], $[initializer]);
   if (!$$) {
     AST_ERROR("initializer-list", "initializer-list ',' initializer");
   }
