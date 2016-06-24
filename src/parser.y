@@ -1561,8 +1561,8 @@ type-qualifier
 ;
 
 declarator.opt
-: /* empty */ {
-  $$ = ast_make_declarator();
+: %empty {
+  $$ = NULL;
 }
 | declarator {
   $$ = $[declarator];
@@ -1639,8 +1639,8 @@ old-style-function-declarator
 ;
 
 pointer.opt
-: /* empty */ {
-  $$ = ast_make_pointer();
+: %empty {
+  $$ = NULL;
 }
 | pointer {
   $$ = $[pointer];
@@ -1648,22 +1648,16 @@ pointer.opt
 ;
 
 pointer
-: '*' type-qualifier-list.opt {
-  $$ = ast_make_pointer($[type-qualifier-list.opt]);
-  if (!$$) {
-    AST_ERROR("pointer", "'*' type-qualifier-list.opt");
-  }
-}
-| '*' type-qualifier-list.opt pointer {
+: '*' type-qualifier-list.opt pointer.opt {
   $$ = ast_make_pointer($[type-qualifier-list.opt], $[pointer]);
   if (!$$) {
-    AST_ERROR("pointer", "'*' type-qualifier-list.opt pointer");
+    AST_ERROR("pointer", "'*' type-qualifier-list.opt pointer.opt");
   }
 }
 ;
 
 type-qualifier-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_type_qualifier_list();
 }
 | type-qualifier-list {
@@ -1673,13 +1667,14 @@ type-qualifier-list.opt
 
 type-qualifier-list
 : type-qualifier {
-  $$ = ast_make_type_qualifier_list($[type-qualifier]);
+  $$ = ast_make_type_qualifier_list();
+  $$ = ast_push_type_qualifier_list($$, $[type-qualifier]);
   if (!$$) {
     AST_ERROR("type-qualifier-list", "type-qualifier");
   }
 }
-| type-qualifier-list type-qualifier {
-  $$ = ast_make_type_qualifier_list($[type-qualifier-list], $[type-qualifier]);
+| type-qualifier-list[src] type-qualifier {
+  $$ = ast_push_type_qualifier_list($[src], $[type-qualifier]);
   if (!$$) {
     AST_ERROR("type-qualifier-list", "type-qualifier-list type-qualifier");
   }
@@ -1687,8 +1682,8 @@ type-qualifier-list
 ;
 
 parameter-type-list.opt
-: /* empty */ {
-  $$ = ast_make_parameter_type_list();
+: %empty {
+  $$ = NULL;
 }
 | parameter-type-list {
   $$ = $[parameter-type-list];
@@ -1712,7 +1707,7 @@ parameter-type-list
 
 variadic-parameter-list
 : parameter-list ',' "..." {
-  $$ = ast_make_variadic_parameter_list($[parameter-list], $["..."]);
+  $$ = ast_make_variadic_parameter_list($[parameter-list]);
   if (!$$) {
     AST_ERROR("variadic-parameter-list", "parameter-list ',' \"...\"");
   }
@@ -1721,13 +1716,14 @@ variadic-parameter-list
 
 parameter-list
 : parameter-declaration {
-  $$ = ast_make_parameter_list($[parameter-declaration]);
+  $$ = ast_make_parameter_list();
+  $$ = ast_push_parameter_list($$, $[parameter-declaration]);
   if (!$$) {
     AST_ERROR("parameter-list", "parameter-declaration");
   }
 }
-| parameter-list ',' parameter-declaration {
-  $$ = ast_make_parameter_list($[parameter-list], $[parameter-declaration]);
+| parameter-list[src] ',' parameter-declaration {
+  $$ = ast_push_parameter_list($[src], $[parameter-declaration]);
   if (!$$) {
     AST_ERROR("parameter-list", "parameter-list ',' parameter-declaration");
   }
@@ -1768,7 +1764,7 @@ parameter-abstract-declaration
 ;
 
 identifier-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_identifier_list();
 }
 | identifier-list {
@@ -1778,13 +1774,14 @@ identifier-list.opt
 
 identifier-list
 : identifier {
-  $$ = ast_make_identifier_list($[identifier]);
+  $$ = ast_make_identifier_list();
+  $$ = ast_push_identifier_list($$, $[identifier]);
   if (!$$) {
     AST_ERROR("identifier-list", "identifier");
   }
 }
-| identifier-list ',' identifier {
-  $$ = ast_make_identifier_list($[identifier-list], $[identifier]);
+| identifier-list[src] ',' identifier {
+  $$ = ast_push_identifier_list($[src], $[identifier]);
   if (!$$) {
     AST_ERROR("identifier-list", "identifier-list ',' identifier");
   }
