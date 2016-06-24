@@ -1252,58 +1252,58 @@ storage-class-specifier
 ;
 
 type-specifier
-: "void" {
-  $$ = ast_make_type_specifier($["void"]);
+: "void"[void] {
+  $$ = ast_make_type_specifier($[void]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"void\"");
+    AST_ERROR("type-specifier", "void");
   }
 }
-| "char" {
-  $$ = ast_make_type_specifier($["char"]);
+| "char"[char] {
+  $$ = ast_make_type_specifier($[char]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"char\"");
+    AST_ERROR("type-specifier", "char");
   }
 }
-| "short" {
-  $$ = ast_make_type_specifier($["short"]);
+| "short"[short] {
+  $$ = ast_make_type_specifier($[short]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"short\"");
+    AST_ERROR("type-specifier", "short");
   }
 }
-| "int" {
-  $$ = ast_make_type_specifier($["int"]);
+| "int"[int] {
+  $$ = ast_make_type_specifier($[int]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"int\"");
+    AST_ERROR("type-specifier", "int");
   }
 }
-| "long" {
-  $$ = ast_make_type_specifier($["long"]);
+| "long"[long] {
+  $$ = ast_make_type_specifier($[long]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"long\"");
+    AST_ERROR("type-specifier", "long");
   }
 }
-| "float" {
-  $$ = ast_make_type_specifier($["float"]);
+| "float"[float] {
+  $$ = ast_make_type_specifier($[float]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"float\"");
+    AST_ERROR("type-specifier", "float");
   }
 }
-| "double" {
-  $$ = ast_make_type_specifier($["double"]);
+| "double"[double] {
+  $$ = ast_make_type_specifier($[double]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"double\"");
+    AST_ERROR("type-specifier", "double");
   }
 }
-| "signed" {
-  $$ = ast_make_type_specifier($["signed"]);
+| "signed"[signed] {
+  $$ = ast_make_type_specifier($[signed]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"signed\"");
+    AST_ERROR("type-specifier", "signed");
   }
 }
-| "unsigned" {
-  $$ = ast_make_type_specifier($["unsigned"]);
+| "unsigned"[unsigned] {
+  $$ = ast_make_type_specifier($[unsigned]);
   if (!$$) {
-    AST_ERROR("type-specifier", "\"unsigned\"");
+    AST_ERROR("type-specifier", "unsigned");
   }
 }
 | struct-or-union-specifier {
