@@ -108,46 +108,85 @@ WHITESPACE ;
 }
 "break"    return BREAK;
 "case"     return CASE;
-"char"     return CHAR;
-"const"    return CONST;
+"char" {
+  yylval = ast_make_token(yytext, yyleng);
+  return CHAR;
+}
+"const" {
+  yylval = ast_make_token(yytext, yyleng);
+  return CONST;
+}
 "continue" return CONTINUE;
 "default"  return DEFAULT;
 "do"       return DO;
-"double"   return DOUBLE;
+"double" {
+  yylval = ast_make_token(yytext, yyleng);
+  return DOUBLE;
+}
 "else"     return ELSE;
 "enum"     return ENUM;
 "extern" {
   yylval = ast_make_token(yytext, yyleng);
   return EXTERN;
 }
-"float"    return FLOAT;
+"float" {
+  yylval = ast_make_token(yytext, yyleng);
+  return FLOAT;
+}
 "for"      return FOR;
 "goto"     return GOTO;
 "if"       return IF;
-"int"      return INT;
-"long"     return LONG;
+"int" {
+  yylval = ast_make_token(yytext, yyleng);
+  return INT;
+}
+"long" {
+  yylval = ast_make_token(yytext, yyleng);
+  return LONG;
+}
 "register" {
   yylval = ast_make_token(yytext, yyleng);
   return REGISTER;
 }
 "return"   return RETURN;
-"short"    return SHORT;
-"signed"   return SIGNED;
+"short" {
+  yylval = ast_make_token(yytext, yyleng);
+  return SHORT;
+}
+"signed" {
+  yylval = ast_make_token(yytext, yyleng);
+  return SIGNED;
+}
 "sizeof"   return SIZEOF;
 "static" {
   yylval = ast_make_token(yytext, yyleng);
   return STATIC;
 }
-"struct"   return STRUCT;
+"struct" {
+  yylval = ast_make_token(yytext, yyleng);
+  return STRUCT;
+}
 "switch"   return SWITCH;
 "typedef" {
   yylval = ast_make_token(yytext, yyleng);
   return TYPEDEF;
 }
-"union"    return UNION;
-"unsigned" return UNSIGNED;
-"void"     return VOID;
-"volatile" return VOLATILE;
+"union"  {
+  yylval = ast_make_token(yytext, yyleng);
+  return UNION;
+}
+"unsigned" {
+  yylval = ast_make_token(yytext, yyleng);
+  return UNSIGNED;
+}
+"void" {
+  yylval = ast_make_token(yytext, yyleng);
+  return VOID;
+}
+"volatile" {
+  yylval = ast_make_token(yytext, yyleng);
+  return VOLATILE;
+}
 "while"    return WHILE;
 
 {IDENTIFIER} {
