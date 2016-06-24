@@ -1360,29 +1360,30 @@ struct-or-union-declaration
 ;
 
 struct-or-union
-: "struct" {
-  $$ = ast_make_struct_or_union($["struct"]);
+: "struct"[struct] {
+  $$ = ast_make_struct_or_union($[struct]);
   if (!$$) {
-    AST_ERROR("struct-or-union", "\"struct\"");
+    AST_ERROR("struct-or-union", "struct");
   }
 }
-| "union" {
-  $$ = ast_make_struct_or_union($["union"]);
+| "union"[union] {
+  $$ = ast_make_struct_or_union($[union]);
   if (!$$) {
-    AST_ERROR("struct-or-union", "\"union\"");
+    AST_ERROR("struct-or-union", "union");
   }
 }
 ;
 
 struct-declaration-list
 : struct-declaration {
-  $$ = ast_make_struct_declaration_list($[struct-declaration]);
+  $$ = ast_make_struct_declaration_list();
+  $$ = ast_push_struct_declaration_list($$, $[struct-declaration]);
   if (!$$) {
     AST_ERROR("struct-declaration-list", "struct-declaration");
   }
 }
-| struct-declaration-list struct-declaration {
-  $$ = ast_make_struct_declaration_list($[struct-declaration-list], $[struct-declaration]);
+| struct-declaration-list[src] struct-declaration {
+  $$ = ast_push_struct_declaration_list($[src], $[struct-declaration]);
   if (!$$) {
     AST_ERROR("struct-declaration-list", "struct-declaration-list struct-declaration");
   }
@@ -1399,7 +1400,7 @@ struct-declaration
 ;
 
 specifier-qualifier-list.opt
-: /* empty */ {
+: %empty {
   $$ = ast_make_specifier_qualifier_list();
 }
 | specifier-qualifier-list {
@@ -1409,7 +1410,7 @@ specifier-qualifier-list.opt
 
 specifier-qualifier-list
 : specifier-qualifier specifier-qualifier-list.opt {
-  $$ = ast_make_specifier_qualifier_list($[specifier-qualifier], $[specifier-qualifier-list.opt]);
+  $$ = ast_push_specifier_qualifier_list($[specifier-qualifier-list.opt], $[specifier-qualifier]);
   if (!$$) {
     AST_ERROR("specifier-qualifier-list", "specifier-qualifier specifier-qualifier-list.opt");
   }
@@ -1433,13 +1434,14 @@ specifier-qualifier
 
 struct-declarator-list
 : struct-declarator {
-  $$ = ast_make_struct_declarator_list($[struct-declarator]);
+  $$ = ast_make_struct_declarator_list();
+  $$ = ast_push_struct_declarator_list($$, $[struct-declarator]);
   if (!$$) {
     AST_ERROR("struct-declarator-list", "struct-declarator");
   }
 }
-| struct-declarator-list ',' struct-declarator {
-  $$ = ast_make_struct_declarator_list($[struct-declarator-list], $[struct-declarator]);
+| struct-declarator-list[src] ',' struct-declarator {
+  $$ = ast_push_struct_declarator_list($[src], $[struct-declarator]);
   if (!$$) {
     AST_ERROR("struct-declarator-list", "struct-declarator-list ',' struct-declarator");
   }
