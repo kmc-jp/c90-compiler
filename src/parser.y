@@ -1219,34 +1219,34 @@ declarator-with-initializer
 ;
 
 storage-class-specifier
-: "typedef" {
-  $$ = ast_make_storage_class_specifier($["typedef"]);
+: "typedef"[typedef] {
+  $$ = ast_make_storage_class_specifier($[typedef]);
   if (!$$) {
-    AST_ERROR("storage-class-specifier", "\"typedef\"");
+    AST_ERROR("storage-class-specifier", "typedef");
   }
 }
-| "extern" {
-  $$ = ast_make_storage_class_specifier($["extern"]);
+| "extern"[extern] {
+  $$ = ast_make_storage_class_specifier($[extern]);
   if (!$$) {
-    AST_ERROR("storage-class-specifier", "\"extern\"");
+    AST_ERROR("storage-class-specifier", "extern");
   }
 }
-| "static" {
-  $$ = ast_make_storage_class_specifier($["static"]);
+| "static"[static] {
+  $$ = ast_make_storage_class_specifier($[static]);
   if (!$$) {
-    AST_ERROR("storage-class-specifier", "\"static\"");
+    AST_ERROR("storage-class-specifier", "static");
   }
 }
-| "auto" {
-  $$ = ast_make_storage_class_specifier($["auto"]);
+| "auto"[auto] {
+  $$ = ast_make_storage_class_specifier($[auto]);
   if (!$$) {
-    AST_ERROR("storage-class-specifier", "\"auto\"");
+    AST_ERROR("storage-class-specifier", "auto");
   }
 }
-| "register" {
-  $$ = ast_make_storage_class_specifier($["register"]);
+| "register"[register] {
+  $$ = ast_make_storage_class_specifier($[register]);
   if (!$$) {
-    AST_ERROR("storage-class-specifier", "\"register\"");
+    AST_ERROR("storage-class-specifier", "register");
   }
 }
 ;
