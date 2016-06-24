@@ -1018,7 +1018,7 @@ addition-assignment-expression
 
 subtraction-assignment-expression
 : unary-expression "-=" assignment-expression {
-  $$ = ast_make_subtraction_assignment_expression($[unary-expression], $["-="], $[assignment-expression]);
+  $$ = ast_make_subtraction_assignment_expression($[unary-expression], $[assignment-expression]);
   if (!$$) {
     AST_ERROR("subtraction-assignment-expression", "unary-expression \"-=\" assignment-expression");
   }
@@ -1071,8 +1071,8 @@ bitwise-OR-assignment-expression
 ;
 
 expression.opt
-: /* empty */ {
-  $$ = ast_make_expression();
+: %empty {
+  $$ = NULL;
 }
 | expression {
   $$ = $[expression];
@@ -1104,8 +1104,8 @@ comma-expression
 ;
 
 constant-expression.opt
-: /* empty */ {
-  $$ = ast_make_constant_expression();
+: %empty {
+  $$ = NULL;
 }
 | constant-expression {
   $$ = $[constant-expression];
