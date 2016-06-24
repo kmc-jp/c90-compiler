@@ -1546,16 +1546,16 @@ enumerator-with-initializer
 ;
 
 type-qualifier
-: "const" {
-  $$ = ast_make_type_qualifier($["const"]);
+: "const"[const] {
+  $$ = ast_make_type_qualifier($[const]);
   if (!$$) {
-    AST_ERROR("type-qualifier", "\"const\"");
+    AST_ERROR("type-qualifier", "const");
   }
 }
-| "volatile" {
-  $$ = ast_make_type_qualifier($["volatile"]);
+| "volatile"[volatile] {
+  $$ = ast_make_type_qualifier($[volatile]);
   if (!$$) {
-    AST_ERROR("type-qualifier", "\"volatile\"");
+    AST_ERROR("type-qualifier", "volatile");
   }
 }
 ;
