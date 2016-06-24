@@ -198,7 +198,9 @@ WHITESPACE ;
 }
 
 . {
-  fprintf(stderr, "could not lex: %s\n", yytext);
+  StringRef text = make_string(yytext, yyleng, NULL);
+  fprintf(stderr, "could not lex: %s\n", string_data(text));
+  string_dtor(&text);
   exit(EXIT_FAILURE);
 }
 %%
