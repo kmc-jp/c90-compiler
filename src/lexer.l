@@ -10,7 +10,7 @@ int yywrap(void) {
   return 1;
 }
 
-StringRef lexer_string_literal;
+static StringRef lexer_string_literal;
 
 void initialize_lexer(void) {
   ast_initialize_pool();
