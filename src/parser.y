@@ -89,8 +89,8 @@ void set_yyin_string(const char *code);
 %%
 
 identifier.opt
-: /* empty */ {
-  $$ = ast_make_identifier();
+: %empty {
+  $$ = NULL;
 }
 | identifier {
   $$ = $[identifier];
