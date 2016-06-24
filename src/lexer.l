@@ -198,7 +198,7 @@ WHITESPACE ;
 }
 
 . {
-  printf("could not lex: %s\n", yytext);
+  fprintf(stderr, "could not lex: %s\n", yytext);
   exit(EXIT_FAILURE);
 }
 %%
@@ -210,7 +210,7 @@ void set_yyin_string(const char *code) {
 void set_yyin_file(const char *filename) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
-    printf("fatal error: failed to open %s\n", filename);
+    fprintf(stderr, "fatal error: failed to open %s\n", filename);
     exit(EXIT_FAILURE);
   }
   yyin = fp;
