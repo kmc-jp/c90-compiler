@@ -1489,7 +1489,7 @@ enum-specifier
 
 enum-definition
 : "enum" identifier.opt '{' enumerator-list '}' {
-  $$ = ast_make_enum_definition($["enum"], $[identifier.opt], $[enumerator-list]);
+  $$ = ast_make_enum_definition($[identifier.opt], $[enumerator-list]);
   if (!$$) {
     AST_ERROR("enum-definition", "\"enum\" identifier.opt '{' enumerator-list '}'");
   }
@@ -1498,7 +1498,7 @@ enum-definition
 
 enum-declaration
 : "enum" identifier {
-  $$ = ast_make_enum_declaration($["enum"], $[identifier]);
+  $$ = ast_make_enum_declaration($[identifier]);
   if (!$$) {
     AST_ERROR("enum-declaration", "\"enum\" identifier");
   }
@@ -1507,13 +1507,14 @@ enum-declaration
 
 enumerator-list
 : enumerator {
-  $$ = ast_make_enumerator_list($[enumerator]);
+  $$ = ast_make_enumerator_list();
+  $$ = ast_push_enumerator_list($$, $[enumerator]);
   if (!$$) {
     AST_ERROR("enumerator-list", "enumerator");
   }
 }
-| enumerator-list ',' enumerator {
-  $$ = ast_make_enumerator_list($[enumerator-list], $[enumerator]);
+| enumerator-list[src] ',' enumerator {
+  $$ = ast_push_enumerator_list($[src], $[enumerator]);
   if (!$$) {
     AST_ERROR("enumerator-list", "enumerator-list ',' enumerator");
   }
