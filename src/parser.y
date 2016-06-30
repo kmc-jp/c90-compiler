@@ -84,7 +84,7 @@ void set_yyin_string(const char *code);
 %token VOLATILE "volatile"
 %token WHILE "while"
 
-%start translation-unit
+%start entry-point
 
 %%
 
@@ -281,6 +281,11 @@ function-definition-declarator
 function-definition
 : declaration-specifiers function-definition-declarator compound-statement
 ;
+
+entry-point
+: translation-unit {
+  g_ast_root = $[translation-unit];
+}
 
 %%
 
