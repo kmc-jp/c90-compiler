@@ -45,3 +45,5 @@ $(LEX_INTERMEDIATE): $(LEX_SRC) $(YACC_INTERMEDIATE)
 $(LEX_TARGET): CFLAGS += -Wno-unused-function
 
 .PHONY: build
+
+main.c: $(YACC_INTERMEDIATE)
