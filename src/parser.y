@@ -1649,7 +1649,7 @@ pointer.opt
 
 pointer
 : '*' type-qualifier-list.opt pointer.opt {
-  $$ = ast_make_pointer($[type-qualifier-list.opt], $[pointer]);
+  $$ = ast_make_pointer($[type-qualifier-list.opt], $[pointer.opt]);
   if (!$$) {
     AST_ERROR("pointer", "'*' type-qualifier-list.opt pointer.opt");
   }
