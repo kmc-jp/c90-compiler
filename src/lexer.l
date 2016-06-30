@@ -32,9 +32,14 @@ DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 WHITESPACE [ \t\n]
+%x PREPROCESS
 %x COMMENT
 %x STRING
 %%
+
+"#"              BEGIN(PREPROCESS);
+<PREPROCESS>"\n" BEGIN(INITIAL);
+<PREPROCESS>.    ;
 
 "/*"          BEGIN(COMMENT);
 <COMMENT>"*/" BEGIN(INITIAL);
