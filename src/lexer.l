@@ -31,7 +31,6 @@ DIGIT10 [1-9][0-9]*
 DIGIT16 ("0x"|"0X")[0-9a-fA-F]+
 SINGLE_CHARACTER_TOKEN [\[\]\(\)\{\}+\-*/%&|^!?=,:;]
 INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
-WHITESPACE [ \t\n]
 %x PREPROCESS
 %x COMMENT
 %x STRING
@@ -70,7 +69,7 @@ WHITESPACE [ \t\n]
   return CHARACTER_CONSTANT;
 }
 
-WHITESPACE ;
+[ \t\n] ;
 
 [0-9]*"."[0-9]*([Ee][+-]?{DIGIT10})?[FfLl]? {
   create_token();
