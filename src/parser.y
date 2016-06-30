@@ -7,6 +7,7 @@
     YYERROR; \
   } while (false)
 
+static YYSTYPE g_ast_root;
 void yyerror(const char *);
 }
 
