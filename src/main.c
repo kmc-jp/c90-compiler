@@ -1,30 +1,17 @@
 #include <stdio.h>
-#include <llvm-c/Analysis.h>
-#include <llvm-c/BitWriter.h>
-#include <llvm-c/Core.h>
+#include "parser.tab.h"
+#include "sexpr_pool.h"
 #include "utility.h"
 
 int main(int argc, char *argv[]) {
-  LLVMModuleRef module = LLVMModuleCreateWithName("kmc90_module");
-  /* int main() { return 0; } */
-  LLVMTypeRef main_type = LLVMFunctionType(LLVMInt32Type(), NULL, 0, false);
-  LLVMValueRef main_func = LLVMAddFunction(module, "main", main_type);
-  LLVMBasicBlockRef main_entry = LLVMAppendBasicBlock(main_func, "main_entry");
-  LLVMValueRef return_value = LLVMConstInt(LLVMInt32Type(), 0, false);
-  LLVMBuilderRef builder = LLVMCreateBuilder();
-  LLVMPositionBuilderAtEnd(builder, main_entry);
-  LLVMBuildRet(builder, return_value);
-  {
-    char *error = NULL;
-    LLVMVerifyModule(module, LLVMAbortProcessAction, &error);
-    LLVMDisposeMessage(error);
+  if (1 < argc) {
+    FILE* fp = fopen(argv[1], "r");
+    if (fp) {
+      sexpr_initialize_pool();
+      parse(fp);
+      sexpr_finalize_pool();
+      fclose(fp);
+    }
   }
-  if (LLVMWriteBitcodeToFile(module, "main.bc") != 0) {
-    fputs("failed to write bitcode to file\n", stderr);
-  }
-  LLVMDisposeBuilder(builder);
-  LLVMDisposeModule(module);
   return 0;
-  UNUSED(argc);
-  UNUSED(argv);
 }
