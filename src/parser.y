@@ -89,19 +89,48 @@ void set_yyin_string(const char *code);
 %%
 
 identifier.opt
-: %empty
-| identifier
+: %empty {
+  $$ = NULL;
+}
+| identifier {
+  $$ = $[identifier];
+}
 ;
 
 identifier
-: IDENTIFIER
+: IDENTIFIER {
+  $$ = ast_make_identifier($[IDENTIFIER]);
+  if (!$$) {
+    AST_ERROR("identifier", "IDENTIFIER");
+  }
+}
 ;
 
 constant
-: floating-constant
-| integer-constant
-| enumeration-constant
-| character-constant
+: floating-constant {
+  $$ = ast_make_constant($[floating-constant]);
+  if (!$$) {
+    AST_ERROR("constant", "floating-constant");
+  }
+}
+| integer-constant {
+  $$ = ast_make_constant($[integer-constant]);
+  if (!$$) {
+    AST_ERROR("constant", "integer-constant");
+  }
+}
+| enumeration-constant {
+  $$ = ast_make_constant($[enumeration-constant]);
+  if (!$$) {
+    AST_ERROR("constant", "enumeration-constant");
+  }
+}
+| character-constant {
+  $$ = ast_make_constant($[character-constant]);
+  if (!$$) {
+    AST_ERROR("constant", "character-constant");
+  }
+}
 ;
 
 floating-constant
@@ -727,7 +756,7 @@ bitwise-AND-expression
 : equality-expression {
   $$ = ast_make_bitwise_and_expression($[equality-expression]);
   if (!$$) {
-    AST_ERROR("bitwise-and-expression", "equality-expression");
+    AST_ERROR("bitwise-AND-expression", "equality-expression");
   }
 }
 | bitwise-AND-operator-expression {
@@ -1223,248 +1252,676 @@ storage-class-specifier
 ;
 
 type-specifier
-: "void"
-| "char"
-| "short"
-| "int"
-| "long"
-| "float"
-| "double"
-| "signed"
-| "unsigned"
-| struct-or-union-specifier
-| enum-specifier
-| typedef-name
+: "void"[void] {
+  $$ = ast_make_type_specifier($[void]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "void");
+  }
+}
+| "char"[char] {
+  $$ = ast_make_type_specifier($[char]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "char");
+  }
+}
+| "short"[short] {
+  $$ = ast_make_type_specifier($[short]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "short");
+  }
+}
+| "int"[int] {
+  $$ = ast_make_type_specifier($[int]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "int");
+  }
+}
+| "long"[long] {
+  $$ = ast_make_type_specifier($[long]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "long");
+  }
+}
+| "float"[float] {
+  $$ = ast_make_type_specifier($[float]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "float");
+  }
+}
+| "double"[double] {
+  $$ = ast_make_type_specifier($[double]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "double");
+  }
+}
+| "signed"[signed] {
+  $$ = ast_make_type_specifier($[signed]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "signed");
+  }
+}
+| "unsigned"[unsigned] {
+  $$ = ast_make_type_specifier($[unsigned]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "unsigned");
+  }
+}
+| struct-or-union-specifier {
+  $$ = ast_make_type_specifier($[struct-or-union-specifier]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "struct-or-union-specifier");
+  }
+}
+| enum-specifier {
+  $$ = ast_make_type_specifier($[enum-specifier]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "enum-specifier");
+  }
+}
+| typedef-name {
+  $$ = ast_make_type_specifier($[typedef-name]);
+  if (!$$) {
+    AST_ERROR("type-specifier", "typedef-name");
+  }
+}
 ;
 
 struct-or-union-specifier
-: struct-or-union-definition
-| struct-or-union-declaration
+: struct-or-union-definition {
+  $$ = ast_make_struct_or_union_specifier($[struct-or-union-definition]);
+  if (!$$) {
+    AST_ERROR("struct-or-union-specifier", "struct-or-union-definition");
+  }
+}
+| struct-or-union-declaration {
+  $$ = ast_make_struct_or_union_specifier($[struct-or-union-declaration]);
+  if (!$$) {
+    AST_ERROR("struct-or-union-specifier", "struct-or-union-declaration");
+  }
+}
 ;
 
 struct-or-union-definition
-: struct-or-union identifier.opt '{' struct-declaration-list '}'
+: struct-or-union identifier.opt '{' struct-declaration-list '}' {
+  $$ = ast_make_struct_or_union_definition($[struct-or-union], $[identifier.opt], $[struct-declaration-list]);
+  if (!$$) {
+    AST_ERROR("struct-or-union-definition", "struct-or-union identifier.opt '{' struct-declaration-list '}'");
+  }
+}
 ;
 
 struct-or-union-declaration
-: struct-or-union identifier
+: struct-or-union identifier {
+  $$ = ast_make_struct_or_union_declaration($[struct-or-union], $[identifier]);
+  if (!$$) {
+    AST_ERROR("struct-or-union-declaration", "struct-or-union identifier");
+  }
+}
 ;
 
 struct-or-union
-: "struct"
-| "union"
+: "struct"[struct] {
+  $$ = ast_make_struct_or_union($[struct]);
+  if (!$$) {
+    AST_ERROR("struct-or-union", "struct");
+  }
+}
+| "union"[union] {
+  $$ = ast_make_struct_or_union($[union]);
+  if (!$$) {
+    AST_ERROR("struct-or-union", "union");
+  }
+}
 ;
 
 struct-declaration-list
-: struct-declaration
-| struct-declaration-list struct-declaration
+: struct-declaration {
+  $$ = ast_make_struct_declaration_list();
+  $$ = ast_push_struct_declaration_list($$, $[struct-declaration]);
+  if (!$$) {
+    AST_ERROR("struct-declaration-list", "struct-declaration");
+  }
+}
+| struct-declaration-list[src] struct-declaration {
+  $$ = ast_push_struct_declaration_list($[src], $[struct-declaration]);
+  if (!$$) {
+    AST_ERROR("struct-declaration-list", "struct-declaration-list struct-declaration");
+  }
+}
 ;
 
 struct-declaration
-: specifier-qualifier-list struct-declarator-list ';'
+: specifier-qualifier-list struct-declarator-list ';' {
+  $$ = ast_make_struct_declaration($[specifier-qualifier-list], $[struct-declarator-list]);
+  if (!$$) {
+    AST_ERROR("struct-declaration", "specifier-qualifier-list struct-declarator-list ';'");
+  }
+}
 ;
 
 specifier-qualifier-list.opt
-: %empty
-| specifier-qualifier-list
+: %empty {
+  $$ = ast_make_specifier_qualifier_list();
+}
+| specifier-qualifier-list {
+  $$ = $[specifier-qualifier-list];
+}
 ;
 
 specifier-qualifier-list
-: specifier-qualifier specifier-qualifier-list.opt
+: specifier-qualifier specifier-qualifier-list.opt {
+  $$ = ast_push_specifier_qualifier_list($[specifier-qualifier-list.opt], $[specifier-qualifier]);
+  if (!$$) {
+    AST_ERROR("specifier-qualifier-list", "specifier-qualifier specifier-qualifier-list.opt");
+  }
+}
 ;
 
 specifier-qualifier
-: type-specifier
-| type-qualifier
+: type-specifier {
+  $$ = ast_make_specifier_qualifier($[type-specifier]);
+  if (!$$) {
+    AST_ERROR("specifier-qualifier", "type-specifier");
+  }
+}
+| type-qualifier {
+  $$ = ast_make_specifier_qualifier($[type-qualifier]);
+  if (!$$) {
+    AST_ERROR("specifier-qualifier", "type-qualifier");
+  }
+}
 ;
 
 struct-declarator-list
-: struct-declarator
-| struct-declarator-list ',' struct-declarator
+: struct-declarator {
+  $$ = ast_make_struct_declarator_list();
+  $$ = ast_push_struct_declarator_list($$, $[struct-declarator]);
+  if (!$$) {
+    AST_ERROR("struct-declarator-list", "struct-declarator");
+  }
+}
+| struct-declarator-list[src] ',' struct-declarator {
+  $$ = ast_push_struct_declarator_list($[src], $[struct-declarator]);
+  if (!$$) {
+    AST_ERROR("struct-declarator-list", "struct-declarator-list ',' struct-declarator");
+  }
+}
 ;
 
 struct-declarator
-: declarator
-| bit-field-declarator
+: declarator {
+  $$ = ast_make_struct_declarator($[declarator]);
+  if (!$$) {
+    AST_ERROR("struct-declarator", "declarator");
+  }
+}
+| bit-field-declarator {
+  $$ = ast_make_struct_declarator($[bit-field-declarator]);
+  if (!$$) {
+    AST_ERROR("struct-declarator", "bit-field-declarator");
+  }
+}
 ;
 
 bit-field-declarator
-: declarator.opt ':' constant-expression
+: declarator.opt ':' constant-expression {
+  $$ = ast_make_bit_field_declarator($[declarator.opt], $[constant-expression]);
+  if (!$$) {
+    AST_ERROR("bit-field-declarator", "declarator.opt ':' constant-expression");
+  }
+}
 ;
 
 enum-specifier
-: enum-definition
-| enum-declaration
+: enum-definition {
+  $$ = ast_make_enum_specifier($[enum-definition]);
+  if (!$$) {
+    AST_ERROR("enum-specifier", "enum-definition");
+  }
+}
+| enum-declaration {
+  $$ = ast_make_enum_specifier($[enum-declaration]);
+  if (!$$) {
+    AST_ERROR("enum-specifier", "enum-declaration");
+  }
+}
 ;
 
 enum-definition
-: "enum" identifier.opt '{' enumerator-list '}'
+: "enum" identifier.opt '{' enumerator-list '}' {
+  $$ = ast_make_enum_definition($[identifier.opt], $[enumerator-list]);
+  if (!$$) {
+    AST_ERROR("enum-definition", "\"enum\" identifier.opt '{' enumerator-list '}'");
+  }
+}
 ;
 
 enum-declaration
-: "enum" identifier
+: "enum" identifier {
+  $$ = ast_make_enum_declaration($[identifier]);
+  if (!$$) {
+    AST_ERROR("enum-declaration", "\"enum\" identifier");
+  }
+}
 ;
 
 enumerator-list
-: enumerator
-| enumerator-list ',' enumerator
+: enumerator {
+  $$ = ast_make_enumerator_list();
+  $$ = ast_push_enumerator_list($$, $[enumerator]);
+  if (!$$) {
+    AST_ERROR("enumerator-list", "enumerator");
+  }
+}
+| enumerator-list[src] ',' enumerator {
+  $$ = ast_push_enumerator_list($[src], $[enumerator]);
+  if (!$$) {
+    AST_ERROR("enumerator-list", "enumerator-list ',' enumerator");
+  }
+}
 ;
 
 enumerator
-: enumeration-constant
-| enumerator-with-initializer
+: enumeration-constant {
+  $$ = ast_make_enumerator($[enumeration-constant]);
+  if (!$$) {
+    AST_ERROR("enumerator", "enumeration-constant");
+  }
+}
+| enumerator-with-initializer {
+  $$ = ast_make_enumerator($[enumerator-with-initializer]);
+  if (!$$) {
+    AST_ERROR("enumerator", "enumerator-with-initializer");
+  }
+}
 ;
 
 enumerator-with-initializer
-: enumeration-constant '=' constant-expression
+: enumeration-constant '=' constant-expression {
+  $$ = ast_make_enumerator_with_initializer($[enumeration-constant], $[constant-expression]);
+  if (!$$) {
+    AST_ERROR("enumerator-with-initializer", "enumeration-constant '=' constant-expression");
+  }
+}
 ;
 
 type-qualifier
-: "const"
-| "volatile"
+: "const"[const] {
+  $$ = ast_make_type_qualifier($[const]);
+  if (!$$) {
+    AST_ERROR("type-qualifier", "const");
+  }
+}
+| "volatile"[volatile] {
+  $$ = ast_make_type_qualifier($[volatile]);
+  if (!$$) {
+    AST_ERROR("type-qualifier", "volatile");
+  }
+}
 ;
 
 declarator.opt
-: %empty
-| declarator
+: %empty {
+  $$ = NULL;
+}
+| declarator {
+  $$ = $[declarator];
+}
 ;
 
 declarator
-: pointer.opt direct-declarator
+: pointer.opt direct-declarator {
+  $$ = ast_make_declarator($[pointer.opt], $[direct-declarator]);
+  if (!$$) {
+    AST_ERROR("declarator", "pointer.opt direct-declarator");
+  }
+}
 ;
 
 direct-declarator
-: identifier
-| '(' declarator ')'
-| array-declarator
-| function-declarator
-| old-style-function-declarator
+: identifier {
+  $$ = ast_make_direct_declarator($[identifier]);
+  if (!$$) {
+    AST_ERROR("direct-declarator", "identifier");
+  }
+}
+| '(' declarator ')' {
+  $$ = ast_make_direct_declarator($[declarator]);
+  if (!$$) {
+    AST_ERROR("direct-declarator", "'(' declarator ')'");
+  }
+}
+| array-declarator {
+  $$ = ast_make_direct_declarator($[array-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-declarator", "array-declarator");
+  }
+}
+| function-declarator {
+  $$ = ast_make_direct_declarator($[function-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-declarator", "function-declarator");
+  }
+}
+| old-style-function-declarator {
+  $$ = ast_make_direct_declarator($[old-style-function-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-declarator", "old-style-function-declarator");
+  }
+}
 ;
 
 array-declarator
-: direct-declarator '[' constant-expression.opt ']'
+: direct-declarator '[' constant-expression.opt ']' {
+  $$ = ast_make_array_declarator($[direct-declarator], $[constant-expression.opt]);
+  if (!$$) {
+    AST_ERROR("array-declarator", "direct-declarator '[' constant-expression.opt ']'");
+  }
+}
 ;
 
 function-declarator
-: direct-declarator '(' parameter-type-list ')'
+: direct-declarator '(' parameter-type-list ')' {
+  $$ = ast_make_function_declarator($[direct-declarator], $[parameter-type-list]);
+  if (!$$) {
+    AST_ERROR("function-declarator", "direct-declarator '(' parameter-type-list ')'");
+  }
+}
 ;
 
 old-style-function-declarator
-: direct-declarator '(' identifier-list.opt ')'
+: direct-declarator '(' identifier-list.opt ')' {
+  $$ = ast_make_old_style_function_declarator($[direct-declarator], $[identifier-list.opt]);
+  if (!$$) {
+    AST_ERROR("old-style-function-declarator", "direct-declarator '(' identifier-list.opt ')'");
+  }
+}
 ;
 
 pointer.opt
-: %empty
-| pointer
+: %empty {
+  $$ = NULL;
+}
+| pointer {
+  $$ = $[pointer];
+}
 ;
 
 pointer
-: '*' type-qualifier-list.opt
-| '*' type-qualifier-list.opt pointer
+: '*' type-qualifier-list.opt pointer.opt {
+  $$ = ast_make_pointer($[type-qualifier-list.opt], $[pointer.opt]);
+  if (!$$) {
+    AST_ERROR("pointer", "'*' type-qualifier-list.opt pointer.opt");
+  }
+}
 ;
 
 type-qualifier-list.opt
-: %empty
-| type-qualifier-list
+: %empty {
+  $$ = ast_make_type_qualifier_list();
+}
+| type-qualifier-list {
+  $$ = $[type-qualifier-list];
+}
 ;
 
 type-qualifier-list
-: type-qualifier
-| type-qualifier-list type-qualifier
+: type-qualifier {
+  $$ = ast_make_type_qualifier_list();
+  $$ = ast_push_type_qualifier_list($$, $[type-qualifier]);
+  if (!$$) {
+    AST_ERROR("type-qualifier-list", "type-qualifier");
+  }
+}
+| type-qualifier-list[src] type-qualifier {
+  $$ = ast_push_type_qualifier_list($[src], $[type-qualifier]);
+  if (!$$) {
+    AST_ERROR("type-qualifier-list", "type-qualifier-list type-qualifier");
+  }
+}
 ;
 
 parameter-type-list.opt
-: %empty
-| parameter-type-list
+: %empty {
+  $$ = NULL;
+}
+| parameter-type-list {
+  $$ = $[parameter-type-list];
+}
 ;
 
 parameter-type-list
-: parameter-list
-| variadic-parameter-list
+: parameter-list {
+  $$ = ast_make_parameter_type_list($[parameter-list]);
+  if (!$$) {
+    AST_ERROR("parameter-type-list", "parameter-list");
+  }
+}
+| variadic-parameter-list {
+  $$ = ast_make_parameter_type_list($[variadic-parameter-list]);
+  if (!$$) {
+    AST_ERROR("parameter-type-list", "variadic-parameter-list");
+  }
+}
 ;
 
 variadic-parameter-list
-: parameter-list ',' "..."
+: parameter-list ',' "..." {
+  $$ = ast_make_variadic_parameter_list($[parameter-list]);
+  if (!$$) {
+    AST_ERROR("variadic-parameter-list", "parameter-list ',' \"...\"");
+  }
+}
 ;
 
 parameter-list
-: parameter-declaration
-| parameter-list ',' parameter-declaration
+: parameter-declaration {
+  $$ = ast_make_parameter_list();
+  $$ = ast_push_parameter_list($$, $[parameter-declaration]);
+  if (!$$) {
+    AST_ERROR("parameter-list", "parameter-declaration");
+  }
+}
+| parameter-list[src] ',' parameter-declaration {
+  $$ = ast_push_parameter_list($[src], $[parameter-declaration]);
+  if (!$$) {
+    AST_ERROR("parameter-list", "parameter-list ',' parameter-declaration");
+  }
+}
 ;
 
 parameter-declaration
-: parameter-concrete-declaration
-| parameter-abstract-declaration
+: parameter-concrete-declaration {
+  $$ = ast_make_parameter_declaration($[parameter-concrete-declaration]);
+  if (!$$) {
+    AST_ERROR("parameter-declaration", "parameter-concrete-declaration");
+  }
+}
+| parameter-abstract-declaration {
+  $$ = ast_make_parameter_declaration($[parameter-abstract-declaration]);
+  if (!$$) {
+    AST_ERROR("parameter-declaration", "parameter-abstract-declaration");
+  }
+}
 ;
 
 parameter-concrete-declaration
-: declaration-specifier-list declarator
+: declaration-specifier-list declarator {
+  $$ = ast_make_parameter_concrete_declaration($[declaration-specifier-list], $[declarator]);
+  if (!$$) {
+    AST_ERROR("parameter-concrete-declaration", "declaration-specifier-list declarator");
+  }
+}
 ;
 
 parameter-abstract-declaration
-: declaration-specifier-list abstract-declarator.opt
+: declaration-specifier-list abstract-declarator.opt {
+  $$ = ast_make_parameter_abstract_declaration($[declaration-specifier-list], $[abstract-declarator.opt]);
+  if (!$$) {
+    AST_ERROR("parameter-abstract-declaration", "declaration-specifier-list abstract-declarator.opt");
+  }
+}
 ;
 
 identifier-list.opt
-: %empty
-| identifier-list
+: %empty {
+  $$ = ast_make_identifier_list();
+}
+| identifier-list {
+  $$ = $[identifier-list];
+}
 ;
 
 identifier-list
-: identifier
-| identifier-list ',' identifier
+: identifier {
+  $$ = ast_make_identifier_list();
+  $$ = ast_push_identifier_list($$, $[identifier]);
+  if (!$$) {
+    AST_ERROR("identifier-list", "identifier");
+  }
+}
+| identifier-list[src] ',' identifier {
+  $$ = ast_push_identifier_list($[src], $[identifier]);
+  if (!$$) {
+    AST_ERROR("identifier-list", "identifier-list ',' identifier");
+  }
+}
 ;
 
 type-name
-: specifier-qualifier-list abstract-declarator.opt
+: specifier-qualifier-list abstract-declarator.opt {
+  $$ = ast_make_type_name($[specifier-qualifier-list], $[abstract-declarator.opt]);
+  if (!$$) {
+    AST_ERROR("type-name", "specifier-qualifier-list abstract-declarator.opt");
+  }
+}
 ;
 
 abstract-declarator.opt
-: %empty
-| abstract-declarator
+: %empty {
+  $$ = NULL;
+}
+| abstract-declarator {
+  $$ = $[abstract-declarator];
+}
 ;
 
 abstract-declarator
-: pointer
-| pointer-abstract-declarator
+: pointer {
+  $$ = ast_make_abstract_declarator($[pointer]);
+  if (!$$) {
+    AST_ERROR("abstract-declarator", "pointer");
+  }
+}
+| pointer-abstract-declarator {
+  $$ = ast_make_abstract_declarator($[pointer-abstract-declarator]);
+  if (!$$) {
+    AST_ERROR("abstract-declarator", "pointer-abstract-declarator");
+  }
+}
 ;
 
 pointer-abstract-declarator
-: pointer.opt direct-abstract-declarator
+: pointer.opt direct-abstract-declarator {
+  $$ = ast_make_pointer_abstract_declarator($[pointer.opt], $[direct-abstract-declarator]);
+  if (!$$) {
+    AST_ERROR("pointer-abstract-declarator", "pointer.opt direct-abstract-declarator");
+  }
+}
 ;
 
 direct-abstract-declarator.opt
-: %empty
-| direct-abstract-declarator
+: %empty {
+  $$ = NULL;
+}
+| direct-abstract-declarator {
+  $$ = $[direct-abstract-declarator];
+}
 ;
 
 direct-abstract-declarator
-: '(' abstract-declarator ')'
-| array-abstract-declarator
-| function-abstract-declarator
+: '(' abstract-declarator ')' {
+  $$ = ast_make_direct_abstract_declarator($[abstract-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-abstract-declarator", "'(' abstract-declarator ')'");
+  }
+}
+| array-abstract-declarator {
+  $$ = ast_make_direct_abstract_declarator($[array-abstract-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-abstract-declarator", "array-abstract-declarator");
+  }
+}
+| function-abstract-declarator {
+  $$ = ast_make_direct_abstract_declarator($[function-abstract-declarator]);
+  if (!$$) {
+    AST_ERROR("direct-abstract-declarator", "function-abstract-declarator");
+  }
+}
 ;
 
 array-abstract-declarator
-: direct-abstract-declarator.opt '[' constant-expression.opt ']'
+: direct-abstract-declarator.opt '[' constant-expression.opt ']' {
+  $$ = ast_make_array_abstract_declarator($[direct-abstract-declarator.opt], $[constant-expression.opt]);
+  if (!$$) {
+    AST_ERROR("array-abstract-declarator", "direct-abstract-declarator.opt '[' constant-expression.opt ']'");
+  }
+}
 ;
 
 function-abstract-declarator
-: direct-abstract-declarator.opt '(' parameter-type-list.opt ')'
+: direct-abstract-declarator.opt '(' parameter-type-list.opt ')' {
+  $$ = ast_make_function_abstract_declarator($[direct-abstract-declarator.opt], $[parameter-type-list.opt]);
+  if (!$$) {
+    AST_ERROR("function-abstract-declarator", "direct-abstract-declarator.opt '(' parameter-type-list.opt ')'");
+  }
+}
 ;
 
 typedef-name
-: identifier
+: identifier {
+  $$ = ast_make_typedef_name($[identifier]);
+  if (!$$) {
+    AST_ERROR("typedef-name", "identifier");
+  }
+}
 ;
 
 initializer
-: assignment-expression
-| '{' initializer-list '}'
-| '{' initializer-list ',' '}'
+: assignment-expression {
+  $$ = ast_make_initializer($[assignment-expression]);
+  if (!$$) {
+    AST_ERROR("initializer", "assignment-expression");
+  }
+}
+| '{' initializer-list '}' {
+  $$ = ast_make_initializer($[initializer-list]);
+  if (!$$) {
+    AST_ERROR("initializer", "'{' initializer-list '}'");
+  }
+}
+| '{' initializer-list ',' '}' {
+  $$ = ast_make_initializer($[initializer-list]);
+  if (!$$) {
+    AST_ERROR("initializer", "'{' initializer-list ',' '}'");
+  }
+}
 ;
 
 initializer-list
-: initializer
-| initializer-list ',' initializer
+: initializer {
+  $$ = ast_make_initializer_list();
+  $$ = ast_push_initializer_list($$, $[initializer]);
+  if (!$$) {
+    AST_ERROR("initializer-list", "initializer");
+  }
+}
+| initializer-list[src] ',' initializer {
+  $$ = ast_push_initializer_list($[src], $[initializer]);
+  if (!$$) {
+    AST_ERROR("initializer-list", "initializer-list ',' initializer");
+  }
+}
 ;
 
 statement
