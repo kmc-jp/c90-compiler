@@ -130,6 +130,15 @@ declaration
 : declaration-specifiers declarator-list
 ;
 
+declarator-list.opt
+: %empty
+| ',' declarator-list
+;
+
+declarator-list
+: declarator declarator-list.opt
+;
+
 init-declaration
 : declaration-specifiers init-declarator-list
 ;
