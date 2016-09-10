@@ -91,6 +91,12 @@ translation-unit
 : external-declaration translation-unit.opt
 ;
 
+external-declaration
+: linkage-specifier.opt function-definition
+| linkage-specifier.opt init-declaration
+| typedef-declaration
+;
+
 %%
 
 void yyerror(const char* s) {
