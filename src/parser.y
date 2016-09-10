@@ -82,6 +82,16 @@ void set_yyin_string(const char *code);
 
 %%
 
+linkage-specifier.opt
+: %empty
+| linkage-specifier
+;
+
+linkage-specifier
+: EXTERN
+| STATIC
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
