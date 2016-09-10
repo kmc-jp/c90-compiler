@@ -182,6 +182,11 @@ parameter-declaration-list
 : parameter-declaration parameter-declaration-list.opt
 ;
 
+parameter-declaration
+: declaration-specifiers declarator
+/* | declaration-specifiers abstract-declarator.opt */
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
