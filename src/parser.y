@@ -103,6 +103,17 @@ fundamental-specifier
 /* | LONG DOUBLE */
 ;
 
+storage-class-specifier.opt
+: %empty
+| storage-class-specifier
+;
+
+storage-class-specifier
+: AUTO
+| REGISTER
+| STATIC
+;
+
 linkage-specifier.opt
 : %empty
 | linkage-specifier
