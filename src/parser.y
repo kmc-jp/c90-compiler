@@ -82,6 +82,10 @@ void set_yyin_string(const char *code);
 
 %%
 
+identifier
+: IDENTIFIER
+;
+
 fundamental-specifier
 : VOID
 | INT
