@@ -187,6 +187,10 @@ parameter-declaration
 /* | declaration-specifiers abstract-declarator.opt */
 ;
 
+compound-statement
+: '{' declaration-statement-list.opt statement-list.opt '}'
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
