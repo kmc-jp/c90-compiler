@@ -1,6 +1,8 @@
 #ifndef KMC_C90_COMPILER_SEXPR_H
 #define KMC_C90_COMPILER_SEXPR_H
 
+#include "utility.h"
+
 struct Sexpr;
 typedef struct Sexpr* SexprRef;
 
@@ -19,5 +21,7 @@ struct Sexpr {
     struct ConsData cons;  /* SEXPR_CONS */
   } data;
 };
+
+bool sexpr_is_null(SexprRef sexpr);
 
 #endif  /* KMC_C90_COMPILER_SEXPR_H */
