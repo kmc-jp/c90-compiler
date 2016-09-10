@@ -33,6 +33,7 @@ bool sexpr_is_pair(SexprRef sexpr);
 bool sexpr_is_atom(SexprRef sexpr);
 bool sexpr_is_symbol(SexprRef sexpr);
 
+SexprRef sexpr_new_symbol(const char* src, size_t length);
 SexprRef sexpr_make_symbol(StringRef symbol);
 StringRef sexpr_get_symbol(SexprRef sexpr);
 
