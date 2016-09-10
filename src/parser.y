@@ -82,8 +82,13 @@ void set_yyin_string(const char *code);
 
 %%
 
-translation-unit
+translation-unit.opt
 : %empty
+| translation-unit
+;
+
+translation-unit
+: external-declaration translation-unit.opt
 ;
 
 %%
