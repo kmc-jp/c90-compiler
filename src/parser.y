@@ -198,6 +198,15 @@ parameter-declaration
 /* | declaration-specifiers abstract-declarator.opt */
 ;
 
+statement-list.opt
+: %empty
+| statement-list
+;
+
+statement-list
+: statement statement-list.opt
+;
+
 compound-statement
 : '{' declaration-statement-list.opt statement-list.opt '}'
 ;
