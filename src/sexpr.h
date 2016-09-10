@@ -22,6 +22,8 @@ struct Sexpr {
   } data;
 };
 
+SexprRef cons(SexprRef car, SexprRef cdr);
+
 bool sexpr_is_null(SexprRef sexpr);
 bool sexpr_is_pair(SexprRef sexpr);
 bool sexpr_is_atom(SexprRef sexpr);
