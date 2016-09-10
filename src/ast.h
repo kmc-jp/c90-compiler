@@ -1,4 +1,8 @@
 #ifndef KMC_C90_COMPILER_AST_H
 #define KMC_C90_COMPILER_AST_H
 
+enum AstTag {
+  AST_IDENTIFIER
+};
+
 #endif  /* KMC_C90_COMPILER_AST_H */
