@@ -92,6 +92,12 @@ linkage-specifier
 | STATIC
 ;
 
+declaration-specifiers
+: type-specifier
+/* : type-specifier type-qualifier-list.opt */
+/* | type-qualifier declaration-specifiers */
+;
+
 init-declaration
 : declaration-specifiers init-declarator-list
 ;
