@@ -31,5 +31,6 @@ SexprRef cdr(SexprRef sexpr);
 bool sexpr_is_null(SexprRef sexpr);
 bool sexpr_is_pair(SexprRef sexpr);
 bool sexpr_is_atom(SexprRef sexpr);
+bool sexpr_is_symbol(SexprRef sexpr);
 
 #endif  /* KMC_C90_COMPILER_SEXPR_H */

@@ -32,3 +32,6 @@ bool sexpr_is_pair(SexprRef sexpr) {
 bool sexpr_is_atom(SexprRef sexpr) {
   return !sexpr_is_null(sexpr) && sexpr->tag != SEXPR_CONS;
 }
+bool sexpr_is_symbol(SexprRef sexpr) {
+  return !sexpr_is_null(sexpr) && sexpr->tag == SEXPR_SYMBOL;
+}
