@@ -92,6 +92,10 @@ linkage-specifier
 | STATIC
 ;
 
+init-declaration
+: declaration-specifiers init-declarator-list
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
