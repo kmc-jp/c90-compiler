@@ -42,3 +42,7 @@ SexprRef sexpr_make_symbol(StringRef symbol) {
   sexpr->data.symbol = symbol;
   return sexpr;
 }
+StringRef sexpr_get_symbol(SexprRef sexpr) {
+  assert(sexpr_is_symbol(sexpr));
+  return sexpr->data.symbol;
+}

@@ -34,5 +34,6 @@ bool sexpr_is_atom(SexprRef sexpr);
 bool sexpr_is_symbol(SexprRef sexpr);
 
 SexprRef sexpr_make_symbol(StringRef symbol);
+StringRef sexpr_get_symbol(SexprRef sexpr);
 
 #endif  /* KMC_C90_COMPILER_SEXPR_H */
