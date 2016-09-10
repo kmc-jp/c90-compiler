@@ -35,3 +35,10 @@ bool sexpr_is_atom(SexprRef sexpr) {
 bool sexpr_is_symbol(SexprRef sexpr) {
   return !sexpr_is_null(sexpr) && sexpr->tag == SEXPR_SYMBOL;
 }
+
+SexprRef sexpr_make_symbol(StringRef symbol) {
+  SexprRef sexpr = new_sexpr();
+  sexpr->tag = SEXPR_SYMBOL;
+  sexpr->data.symbol = symbol;
+  return sexpr;
+}
