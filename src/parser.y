@@ -126,6 +126,15 @@ init-declaration
 : declaration-specifiers init-declarator-list
 ;
 
+init-declarator-list.opt
+: %empty
+| ',' init-declarator-list
+;
+
+init-declarator-list
+: init-declarator init-declarator-list.opt
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
