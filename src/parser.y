@@ -92,6 +92,13 @@ linkage-specifier
 | STATIC
 ;
 
+type-specifier
+: fundamental-specifier
+/* | struct-or-union-specifier */
+/* | enum-specifier */
+/* | typedef-name */
+;
+
 declaration-specifiers
 : type-specifier
 /* : type-specifier type-qualifier-list.opt */
