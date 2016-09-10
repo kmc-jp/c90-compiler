@@ -23,6 +23,8 @@ struct Sexpr {
 };
 
 SexprRef cons(SexprRef car, SexprRef cdr);
+SexprRef car(SexprRef sexpr);
+SexprRef cdr(SexprRef sexpr);
 
 bool sexpr_is_null(SexprRef sexpr);
 bool sexpr_is_pair(SexprRef sexpr);

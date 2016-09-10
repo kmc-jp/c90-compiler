@@ -1,4 +1,5 @@
 #include "sexpr.h"
+#include <assert.h>
 #include "memory_pool.h"
 #include "sexpr_pool.h"
 
@@ -12,6 +13,14 @@ SexprRef cons(SexprRef car, SexprRef cdr) {
   sexpr->data.cons.car = car;
   sexpr->data.cons.cdr = cdr;
   return sexpr;
+}
+SexprRef car(SexprRef sexpr) {
+  assert(sexpr_is_pair(sexpr));
+  return sexpr->data.cons.car;
+}
+SexprRef cdr(SexprRef sexpr) {
+  assert(sexpr_is_pair(sexpr));
+  return sexpr->data.cons.cdr;
 }
 
 bool sexpr_is_null(SexprRef sexpr) {
