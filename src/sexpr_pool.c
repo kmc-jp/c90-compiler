@@ -33,8 +33,15 @@ MemoryPoolRef sexpr_pool(void) {
 void sexpr_initialize_pool(void) {
   assert(!g_sexpr_pool);
   g_sexpr_pool = memory_pool_ctor(SEXPR_POOL_CHUNK_SIZE);
+  g_sexpr_symbol_allocator.manager_ = g_sexpr_pool;
 }
 
 void sexpr_finalize_pool(void) {
+  g_sexpr_symbol_allocator.manager_ = NULL;
   memory_pool_dtor(&g_sexpr_pool);
+}
+
+AllocatorRef sexpr_symbol_allocator(void) {
+  assert(g_sexpr_symbol_allocator.manager_);
+  return &g_sexpr_symbol_allocator;
 }
