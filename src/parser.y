@@ -207,6 +207,17 @@ statement-list
 : statement statement-list.opt
 ;
 
+statement
+: compound-statement
+| jump-statement
+/* : labeled-statement */
+/* | compound-statement */
+/* | expression-statement */
+/* | selection-statement */
+/* | iteration-statement */
+/* | jump-statement */
+;
+
 compound-statement
 : '{' declaration-statement-list.opt statement-list.opt '}'
 ;
