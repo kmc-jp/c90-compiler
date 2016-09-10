@@ -140,6 +140,11 @@ init-declarator
 /* | declarator '=' initializer */
 ;
 
+declarator
+: direct-declarator
+/* : pointer-list.opt direct-declarator */
+;
+
 translation-unit.opt
 : %empty
 | translation-unit
