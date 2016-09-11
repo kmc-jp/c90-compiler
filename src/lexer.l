@@ -106,91 +106,37 @@ INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 "|=" return OR_ASSIGN;
 "^=" return XOR_ASSIGN;
 
-"auto" {
-  create_token();
-  return AUTO;
-}
+"auto"     return AUTO;
 "break"    return BREAK;
 "case"     return CASE;
-"char" {
-  create_token();
-  return CHAR;
-}
-"const" {
-  create_token();
-  return CONST;
-}
+"char"     return CHAR;
+"const"    return CONST;
 "continue" return CONTINUE;
 "default"  return DEFAULT;
 "do"       return DO;
-"double" {
-  create_token();
-  return DOUBLE;
-}
+"double"   return DOUBLE;
 "else"     return ELSE;
 "enum"     return ENUM;
-"extern" {
-  create_token();
-  return EXTERN;
-}
-"float" {
-  create_token();
-  return FLOAT;
-}
+"extern"   return EXTERN;
+"float"    return FLOAT;
 "for"      return FOR;
 "goto"     return GOTO;
 "if"       return IF;
-"int" {
-  create_token();
-  return INT;
-}
-"long" {
-  create_token();
-  return LONG;
-}
-"register" {
-  create_token();
-  return REGISTER;
-}
+"int"      return INT;
+"long"     return LONG;
+"register" return REGISTER;
 "return"   return RETURN;
-"short" {
-  create_token();
-  return SHORT;
-}
-"signed" {
-  create_token();
-  return SIGNED;
-}
+"short"    return SHORT;
+"signed"   return SIGNED;
 "sizeof"   return SIZEOF;
-"static" {
-  create_token();
-  return STATIC;
-}
-"struct" {
-  create_token();
-  return STRUCT;
-}
+"static"   return STATIC;
+"struct"   return STRUCT;
 "switch"   return SWITCH;
-"typedef" {
-  create_token();
-  return TYPEDEF;
-}
-"union"  {
-  create_token();
-  return UNION;
-}
-"unsigned" {
-  create_token();
-  return UNSIGNED;
-}
-"void" {
-  create_token();
-  return VOID;
-}
-"volatile" {
-  create_token();
-  return VOLATILE;
-}
+"typedef"  return TYPEDEF;
+"union"    return UNION;
+"unsigned" return UNSIGNED;
+"void"     return VOID;
+"volatile" return VOLATILE;
 "while"    return WHILE;
 
 {IDENTIFIER} {
