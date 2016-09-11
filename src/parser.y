@@ -213,7 +213,9 @@ declarator
 ;
 
 direct-declarator
-: identifier
+: identifier {
+  $$ = $[identifier];
+}
 /* | '(' declarator ')' */
 /* | array-declarator */
 /* | function-declarator */
