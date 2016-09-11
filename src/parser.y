@@ -214,12 +214,18 @@ parameter-declaration
 ;
 
 statement-list.opt
-: %empty
-| statement-list
+: %empty {
+  $$ = NULL;
+}
+| statement-list {
+  $$ = $[statement-list];
+}
 ;
 
 statement-list
-: statement statement-list.opt
+: statement statement-list.opt {
+  $$ = cons($[statement], $[statement-list.opt]);
+}
 ;
 
 statement
