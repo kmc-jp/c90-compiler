@@ -222,12 +222,18 @@ direct-declarator
 ;
 
 parameter-declaration-list.opt
-: %empty
-| ',' parameter-declaration-list
+: %empty {
+  $$ = NULL;
+}
+| ',' parameter-declaration-list {
+  $$ = $[parameter-declaration-list];
+}
 ;
 
 parameter-declaration-list
-: parameter-declaration parameter-declaration-list.opt
+: parameter-declaration parameter-declaration-list.opt {
+  $$ = cons($[parameter-declaration], $[parameter-declaration-list.opt]);
+}
 ;
 
 parameter-declaration
