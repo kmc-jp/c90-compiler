@@ -187,10 +187,6 @@ init-declarator
 /* | declarator '=' initializer */
 ;
 
-typedef-declaration
-: TYPEDEF declaration
-;
-
 declarator
 : direct-declarator
 /* : pointer-list.opt direct-declarator */
@@ -252,7 +248,7 @@ declaration-statement-list
 
 declaration-statement
 : storage-class-specifier.opt init-declaration
-| typedef-declaration
+| typedef-specifier declaration
 ;
 
 jump-statement
@@ -274,7 +270,7 @@ translation-unit
 external-declaration
 : linkage-specifier.opt function-definition
 | linkage-specifier.opt init-declaration
-| typedef-declaration
+| typedef-specifier declaration
 ;
 
 function-definition-declarator
