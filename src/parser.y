@@ -267,8 +267,12 @@ declaration-statement-list
 ;
 
 declaration-statement
-: storage-class-specifier.opt init-declaration
-| typedef-specifier declaration
+: storage-class-specifier.opt init-declaration {
+  $$ = cons($[storage-class-specifier.opt], $[init-declaration]);
+}
+| typedef-specifier declaration {
+  $$ = cons($[typedef-specifier], $[declaration]);
+}
 ;
 
 jump-statement
