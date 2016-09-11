@@ -17,6 +17,11 @@ void set_yyin_file(const char *filename);
 void set_yyin_string(const char *code);
 }
 
+%code requires {
+#include "sexpr.h"
+#define YYSTYPE SexprRef
+}
+
 %token IDENTIFIER
 %token FLOATING_CONSTANT
 %token INTEGER_CONSTANT
