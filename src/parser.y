@@ -237,7 +237,9 @@ parameter-declaration-list
 ;
 
 parameter-declaration
-: declaration-specifiers declarator
+: declaration-specifiers declarator {
+  $$ = cons($[declaration-specifiers], $[declarator]);
+}
 /* | declaration-specifiers abstract-declarator.opt */
 ;
 
