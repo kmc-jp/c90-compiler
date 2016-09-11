@@ -94,13 +94,21 @@ identifier
 ;
 
 expression.opt
-: %empty
-| expression
+: %empty {
+  $$ = NULL;
+}
+| expression {
+  $$ = $[expression];
+}
 ;
 
 expression
-: identifier
-| INTEGER_CONSTANT
+: identifier {
+  $$ = $[identifier];
+}
+| integer-constant {
+  $$ = $[integer-constant];
+}
 ;
 
 integer-constant
