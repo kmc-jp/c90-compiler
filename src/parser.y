@@ -183,7 +183,9 @@ typedef-specifier
 ;
 
 type-specifier
-: fundamental-specifier
+: fundamental-specifier {
+  $$ = cons($[fundamental-specifier], NULL);
+}
 /* | struct-or-union-specifier */
 /* | enum-specifier */
 /* | typedef-name */
