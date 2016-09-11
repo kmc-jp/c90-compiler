@@ -199,7 +199,9 @@ init-declarator-list
 ;
 
 init-declarator
-: declarator
+: declarator {
+  $$ = cons($[declarator], NULL);
+}
 /* | declarator '=' initializer */
 ;
 
