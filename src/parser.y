@@ -103,6 +103,11 @@ expression
 | INTEGER_CONSTANT
 ;
 
+integer-constant
+: INTEGER_CONSTANT {
+  $$ = cons(sexpr_make_ast(AST_INTEGER_CONSTANT), $[INTEGER_CONSTANT]);
+}
+
 fundamental-specifier
 : VOID
 | INT
