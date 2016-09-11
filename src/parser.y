@@ -192,7 +192,9 @@ type-specifier
 ;
 
 declaration-specifiers
-: type-specifier
+: type-specifier {
+  $$ = $[type-specifier];
+}
 /* : type-specifier type-qualifier-list.opt */
 /* | type-qualifier declaration-specifiers */
 ;
