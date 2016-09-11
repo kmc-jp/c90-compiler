@@ -274,9 +274,18 @@ translation-unit
 ;
 
 external-declaration
-: linkage-specifier.opt function-definition
-| linkage-specifier.opt init-declaration
-| typedef-specifier declaration
+: linkage-specifier.opt function-definition {
+  $$ = cons(sexpr_make_ast(AST_FUNCTION_DEFINITION),
+            cons($[linkage-specifier.opt], $[function-definition]));
+}
+| linkage-specifier.opt init-declaration {
+  $$ = cons(sexpr_make_ast(AST_EXTERNAL_DECLARATION),
+            cons($[linkage-specifier.opt], $[init-declaration]));
+}
+| typedef-specifier declaration {
+  $$ = cons(sexpr_make_ast(AST_EXTERNAL_DECLARATION),
+            cons($[typedef-specifier], $[declaration]));
+}
 ;
 
 function-definition-declarator
