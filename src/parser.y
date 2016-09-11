@@ -138,14 +138,24 @@ fundamental-specifier
 ;
 
 storage-class-specifier.opt
-: %empty
-| storage-class-specifier
+: %empty {
+  $$ = NULL;
+}
+| storage-class-specifier {
+  $$ = $[storage-class-specifier];
+}
 ;
 
 storage-class-specifier
-: AUTO
-| REGISTER
-| STATIC
+: AUTO {
+  $$ = sexpr_make_ast(AST_SPEC_AUTO);
+}
+| REGISTER {
+  $$ = sexpr_make_ast(AST_SPEC_REGISTER);
+}
+| STATIC {
+  $$ = sexpr_make_ast(AST_SPEC_STATIC);
+}
 ;
 
 linkage-specifier.opt
