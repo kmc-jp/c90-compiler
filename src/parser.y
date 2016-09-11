@@ -178,7 +178,9 @@ declarator-list
 ;
 
 init-declaration
-: declaration-specifiers init-declarator-list
+: declaration-specifiers init-declarator-list {
+  $$ = cons($[declaration-specifiers], $[init-declarator-list]);
+}
 ;
 
 init-declarator-list.opt
