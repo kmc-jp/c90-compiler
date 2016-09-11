@@ -163,12 +163,18 @@ declaration
 ;
 
 declarator-list.opt
-: %empty
-| ',' declarator-list
+: %empty {
+  $$ = NULL;
+}
+| ',' declarator-list {
+  $$ = $[declarator-list];
+}
 ;
 
 declarator-list
-: declarator declarator-list.opt
+: declarator declarator-list.opt {
+  $$ = cons($[declarator], $[declarator-list.opt]);
+}
 ;
 
 init-declaration
