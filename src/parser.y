@@ -157,7 +157,9 @@ declaration-specifiers
 ;
 
 declaration
-: declaration-specifiers declarator-list
+: declaration-specifiers declarator-list {
+  $$ = cons($[declaration-specifiers], $[declarator-list]);
+}
 ;
 
 declarator-list.opt
