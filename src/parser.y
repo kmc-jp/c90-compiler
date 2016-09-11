@@ -229,8 +229,12 @@ statement-list
 ;
 
 statement
-: compound-statement
-| jump-statement
+: compound-statement {
+  $$ = $[compound-statement];
+}
+| jump-statement {
+  $$ = $[jump-statement];
+}
 /* : labeled-statement */
 /* | compound-statement */
 /* | expression-statement */
