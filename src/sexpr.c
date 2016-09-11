@@ -55,3 +55,10 @@ StringRef sexpr_get_symbol(SexprRef sexpr) {
   assert(sexpr_is_symbol(sexpr));
   return sexpr->data.symbol;
 }
+
+SexprRef sexpr_make_ast(enum AstTag ast) {
+  SexprRef sexpr = new_sexpr();
+  sexpr->tag = SEXPR_AST;
+  sexpr->data.ast = ast;
+  return sexpr;
+}

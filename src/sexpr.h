@@ -40,4 +40,6 @@ SexprRef sexpr_new_symbol(const char* src, size_t length);
 SexprRef sexpr_make_symbol(StringRef symbol);
 StringRef sexpr_get_symbol(SexprRef sexpr);
 
+SexprRef sexpr_make_ast(enum AstTag ast);
+
 #endif  /* KMC_C90_COMPILER_SEXPR_H */
