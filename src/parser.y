@@ -259,12 +259,18 @@ jump-statement
 ;
 
 translation-unit.opt
-: %empty
-| translation-unit
+: %empty {
+  $$ = NULL;
+}
+| translation-unit {
+  $$ = $[translation-unit];
+}
 ;
 
 translation-unit
-: external-declaration translation-unit.opt
+: external-declaration translation-unit.opt {
+  $$ = cons($[external-declaration], $[translation-unit.opt]);
+}
 ;
 
 external-declaration
