@@ -88,7 +88,9 @@ void set_yyin_string(const char *code);
 %%
 
 identifier
-: IDENTIFIER
+: IDENTIFIER {
+  $$ = cons(sexpr_make_ast(AST_IDENTIFIER), $[IDENTIFIER]);
+}
 ;
 
 expression.opt
