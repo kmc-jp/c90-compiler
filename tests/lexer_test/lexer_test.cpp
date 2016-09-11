@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "gtest/gtest.h"
 #include <vector>
@@ -10,12 +11,19 @@ extern "C" {
 typedef int Token;
 
 std::vector<Token> lex_from_file(const std::string &filename) {
-  set_yyin_file(filename.c_str());
+  FILE* fp = fopen(filename.c_str(), "r");
+  if (fp == NULL) {
+    fprintf(stderr, "fatal error: failed to open %s\n", filename.c_str());
+    exit(EXIT_FAILURE);
+  }
+  set_yyin_file(fp);
   std::vector<Token> tokens;
   Token tok;
   while ((tok = (Token)yylex()) != 0) {
     tokens.push_back(tok);
   }
+  set_yyin_file(NULL);
+  fclose(fp);
   return tokens;
 }
 

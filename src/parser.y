@@ -1,5 +1,4 @@
 %code {
-#include <stdio.h>
 #include "utility.h"
 
 #define AST_ERROR(lhs, rhs) \
@@ -13,11 +12,12 @@ void yyerror(const char *);
 
 %code provides {
 int yylex(void);
-void set_yyin_file(const char *filename);
+void set_yyin_file(FILE* fp);
 void set_yyin_string(const char *code);
 }
 
 %code requires {
+#include <stdio.h>
 #include "sexpr.h"
 #define YYSTYPE SexprRef
 }

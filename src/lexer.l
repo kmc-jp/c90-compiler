@@ -1,7 +1,6 @@
 /* %option yywrap */
 %{
 #include "parser.tab.h"
-#include <stdlib.h>
 #include "sexpr.h"
 #include "stdstring.h"
 
@@ -156,11 +155,6 @@ void set_yyin_string(const char *code) {
   yy_scan_string(code);
 }
 
-void set_yyin_file(const char *filename) {
-  FILE* fp = fopen(filename, "r");
-  if (fp == NULL) {
-    fprintf(stderr, "fatal error: failed to open %s\n", filename);
-    exit(EXIT_FAILURE);
-  }
+void set_yyin_file(FILE* fp) {
   yyin = fp;
 }
