@@ -244,7 +244,11 @@ statement
 ;
 
 compound-statement
-: '{' declaration-statement-list.opt statement-list.opt '}'
+: '{' declaration-statement-list.opt statement-list.opt '}' {
+  $$ = cons(sexpr_make_ast(AST_COMPOUND_STATEMENT),
+            cons($[declaration-statement-list.opt],
+                 $[statement-list.opt]));
+}
 ;
 
 declaration-statement-list.opt
