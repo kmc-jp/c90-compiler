@@ -184,12 +184,18 @@ init-declaration
 ;
 
 init-declarator-list.opt
-: %empty
-| ',' init-declarator-list
+: %empty {
+  $$ = NULL;
+}
+| ',' init-declarator-list {
+  $$ = $[init-declarator-list];
+}
 ;
 
 init-declarator-list
-: init-declarator init-declarator-list.opt
+: init-declarator init-declarator-list.opt {
+  $$ = cons($[init-declarator], $[init-declarator-list.opt]);
+}
 ;
 
 init-declarator
