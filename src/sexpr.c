@@ -62,3 +62,7 @@ SexprRef sexpr_make_ast(enum AstTag ast) {
   sexpr->data.ast = ast;
   return sexpr;
 }
+enum AstTag sexpr_get_ast(SexprRef sexpr) {
+  assert(sexpr_is_ast(sexpr));
+  return sexpr->data.ast;
+}
