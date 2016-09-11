@@ -1,10 +1,9 @@
 /* %option yywrap */
 %{
-#define YY_USER_INIT initialize_lexer()
-#include <stdlib.h>
-#include "ast_method.h"
-#include "stdstring.h"
 #include "parser.tab.h"
+#include <stdlib.h>
+#include "sexpr.h"
+#include "stdstring.h"
 
 int yywrap(void) {
   return 1;
@@ -12,11 +11,8 @@ int yywrap(void) {
 
 static StringRef lexer_string_literal;
 
-void initialize_lexer(void) {
-  ast_initialize_pool();
-}
 void create_token(void) {
-  yylval = ast_make_token(yytext, yyleng);
+  yylval = sexpr_new_symbol(yytext, yyleng);
 }
 %}
 SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
@@ -50,8 +46,9 @@ INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 }
 
 <STRING>"\"" {
-  const size_t leng = string_length(lexer_string_literal);
-  yylval = ast_make_token(string_data(lexer_string_literal), leng);
+  const size_t length = string_length(lexer_string_literal);
+  const char* const data = string_data(lexer_string_literal);
+  yylval = sexpr_new_symbol(data, length);
   string_dtor(&lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
