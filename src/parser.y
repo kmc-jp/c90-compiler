@@ -159,13 +159,21 @@ storage-class-specifier
 ;
 
 linkage-specifier.opt
-: %empty
-| linkage-specifier
+: %empty {
+  $$ = NULL;
+}
+| linkage-specifier {
+  $$ = $[linkage-specifier];
+}
 ;
 
 linkage-specifier
-: EXTERN
-| STATIC
+: EXTERN {
+  $$ = sexpr_make_ast(AST_SPEC_EXTERN);
+}
+| STATIC {
+  $$ = sexpr_make_ast(AST_SPEC_STATIC);
+}
 ;
 
 typedef-specifier
