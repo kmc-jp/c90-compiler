@@ -139,6 +139,10 @@ linkage-specifier
 | STATIC
 ;
 
+typedef-specifier
+: TYPEDEF
+;
+
 type-specifier
 : fundamental-specifier
 /* | struct-or-union-specifier */
