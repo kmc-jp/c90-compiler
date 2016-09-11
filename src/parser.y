@@ -206,7 +206,9 @@ init-declarator
 ;
 
 declarator
-: direct-declarator
+: direct-declarator {
+  $$ = $[direct-declarator];
+}
 /* : pointer-list.opt direct-declarator */
 ;
 
