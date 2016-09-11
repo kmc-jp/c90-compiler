@@ -177,7 +177,9 @@ linkage-specifier
 ;
 
 typedef-specifier
-: TYPEDEF
+: TYPEDEF {
+  $$ = sexpr_make_ast(AST_SPEC_TYPEDEF);
+}
 ;
 
 type-specifier
