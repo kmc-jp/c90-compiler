@@ -252,12 +252,18 @@ compound-statement
 ;
 
 declaration-statement-list.opt
-: %empty
-| declaration-statement-list
+: %empty {
+  $$ = NULL;
+}
+| declaration-statement-list {
+  $$ = $[declaration-statement-list];
+}
 ;
 
 declaration-statement-list
-: declaration-statement declaration-statement-list.opt
+: declaration-statement declaration-statement-list.opt {
+  $$ = cons($[declaration-statement], $[declaration-statement-list.opt]);
+}
 ;
 
 declaration-statement
