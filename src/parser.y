@@ -289,11 +289,17 @@ external-declaration
 ;
 
 function-definition-declarator
-: identifier '(' parameter-declaration-list ')'
+: identifier '(' parameter-declaration-list ')' {
+  $$ = cons($[identifier], $[parameter-declaration-list]);
+}
 ;
 
 function-definition
-: declaration-specifiers function-definition-declarator compound-statement
+: declaration-specifiers function-definition-declarator compound-statement {
+  $$ = cons($[declaration-specifiers],
+            cons($[function-definition-declarator],
+                 $[compound-statement]));
+}
 ;
 
 %%
