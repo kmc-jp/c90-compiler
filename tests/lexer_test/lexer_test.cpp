@@ -6,6 +6,7 @@
 #include <string>
 extern "C" {
 #include "parser.tab.h"
+#include "sexpr_pool.h"
 }
 
 typedef int Token;
@@ -38,6 +39,7 @@ Token lex_first_token(const std::string &code) {
 }
 
 TEST(LexerTest, HandlesSingleToken) {
+  sexpr_initialize_pool();
   EXPECT_EQ('[', lex_first_token("[42"));
   EXPECT_EQ(']', lex_first_token("]+"));
   EXPECT_EQ('(', lex_first_token("(["));
@@ -192,4 +194,5 @@ TEST(LexerTest, HandlesSingleToken) {
 
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"(L"abcdefgABCDEF\"G\t\'\n\\____;;;")"));
+  sexpr_finalize_pool();
 }
