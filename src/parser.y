@@ -117,8 +117,12 @@ integer-constant
 }
 
 fundamental-specifier
-: VOID
-| INT
+: VOID {
+  $$ = sexpr_make_ast(AST_TYPE_VOID);
+}
+| INT {
+  $$ = sexpr_make_ast(AST_TYPE_INT);
+}
 /* | CHAR */
 /* | SIGNED CHAR */
 /* | UNSIGNED CHAR */
