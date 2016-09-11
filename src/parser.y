@@ -276,10 +276,18 @@ declaration-statement
 ;
 
 jump-statement
-: GOTO identifier ';'
-| CONTINUE ';'
-| BREAK ';'
-| RETURN expression.opt ';'
+: GOTO identifier ';' {
+  $$ = cons(sexpr_make_ast(AST_GOTO_STATEMENT), $[identifier]);
+}
+| CONTINUE ';' {
+  $$ = cons(sexpr_make_ast(AST_CONTINUE_STATEMENT), NULL);
+}
+| BREAK ';' {
+  $$ = cons(sexpr_make_ast(AST_BREAK_STATEMENT), NULL);
+}
+| RETURN expression.opt ';' {
+  $$ = cons(sexpr_make_ast(AST_RETURN_STATEMENT), $[expression.opt]);
+}
 ;
 
 translation-unit.opt
