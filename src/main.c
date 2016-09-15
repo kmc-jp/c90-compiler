@@ -3,7 +3,10 @@
 #include "sexpr_pool.h"
 #include "utility.h"
 
+extern int yydebug;
+
 int main(int argc, char *argv[]) {
+  yydebug = 1;
   if (1 < argc) {
     FILE* fp = fopen(argv[1], "r");
     if (fp) {
