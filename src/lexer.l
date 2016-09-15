@@ -1,10 +1,8 @@
 /* %option yywrap */
 %{
-#define YY_USER_INIT initialize_lexer()
-#include <stdlib.h>
-#include "ast_method.h"
-#include "stdstring.h"
 #include "parser.tab.h"
+#include "sexpr.h"
+#include "stdstring.h"
 
 int yywrap(void) {
   return 1;
@@ -12,11 +10,8 @@ int yywrap(void) {
 
 static StringRef lexer_string_literal;
 
-void initialize_lexer(void) {
-  ast_initialize_pool();
-}
 void create_token(void) {
-  yylval = ast_make_token(yytext, yyleng);
+  yylval = sexpr_new_symbol(yytext, yyleng);
 }
 %}
 SIMPLE_ESCAPE_SEQUENCE "\\"[\'\"?\\abfnrtv]
@@ -50,8 +45,9 @@ INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 }
 
 <STRING>"\"" {
-  const size_t leng = string_length(lexer_string_literal);
-  yylval = ast_make_token(string_data(lexer_string_literal), leng);
+  const size_t length = string_length(lexer_string_literal);
+  const char* const data = string_data(lexer_string_literal);
+  yylval = sexpr_new_symbol(data, length);
   string_dtor(&lexer_string_literal);
   BEGIN(INITIAL);
   return STRING_LITERAL;
@@ -109,91 +105,37 @@ INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 "|=" return OR_ASSIGN;
 "^=" return XOR_ASSIGN;
 
-"auto" {
-  create_token();
-  return AUTO;
-}
+"auto"     return AUTO;
 "break"    return BREAK;
 "case"     return CASE;
-"char" {
-  create_token();
-  return CHAR;
-}
-"const" {
-  create_token();
-  return CONST;
-}
+"char"     return CHAR;
+"const"    return CONST;
 "continue" return CONTINUE;
 "default"  return DEFAULT;
 "do"       return DO;
-"double" {
-  create_token();
-  return DOUBLE;
-}
+"double"   return DOUBLE;
 "else"     return ELSE;
 "enum"     return ENUM;
-"extern" {
-  create_token();
-  return EXTERN;
-}
-"float" {
-  create_token();
-  return FLOAT;
-}
+"extern"   return EXTERN;
+"float"    return FLOAT;
 "for"      return FOR;
 "goto"     return GOTO;
 "if"       return IF;
-"int" {
-  create_token();
-  return INT;
-}
-"long" {
-  create_token();
-  return LONG;
-}
-"register" {
-  create_token();
-  return REGISTER;
-}
+"int"      return INT;
+"long"     return LONG;
+"register" return REGISTER;
 "return"   return RETURN;
-"short" {
-  create_token();
-  return SHORT;
-}
-"signed" {
-  create_token();
-  return SIGNED;
-}
+"short"    return SHORT;
+"signed"   return SIGNED;
 "sizeof"   return SIZEOF;
-"static" {
-  create_token();
-  return STATIC;
-}
-"struct" {
-  create_token();
-  return STRUCT;
-}
+"static"   return STATIC;
+"struct"   return STRUCT;
 "switch"   return SWITCH;
-"typedef" {
-  create_token();
-  return TYPEDEF;
-}
-"union"  {
-  create_token();
-  return UNION;
-}
-"unsigned" {
-  create_token();
-  return UNSIGNED;
-}
-"void" {
-  create_token();
-  return VOID;
-}
-"volatile" {
-  create_token();
-  return VOLATILE;
-}
+"typedef"  return TYPEDEF;
+"union"    return UNION;
+"unsigned" return UNSIGNED;
+"void"     return VOID;
+"volatile" return VOLATILE;
 "while"    return WHILE;
 
 {IDENTIFIER} {
@@ -213,11 +155,6 @@ void set_yyin_string(const char *code) {
   yy_scan_string(code);
 }
 
-void set_yyin_file(const char *filename) {
-  FILE* fp = fopen(filename, "r");
-  if (fp == NULL) {
-    fprintf(stderr, "fatal error: failed to open %s\n", filename);
-    exit(EXIT_FAILURE);
-  }
+void set_yyin_file(FILE* fp) {
   yyin = fp;
 }
