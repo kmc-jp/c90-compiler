@@ -1,21 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "gtest/gtest.h"
 #include <vector>
 #include <string>
 extern "C" {
 #include "parser.tab.h"
+#include "sexpr_pool.h"
 }
 
 typedef int Token;
 
 std::vector<Token> lex_from_file(const std::string &filename) {
-  set_yyin_file(filename.c_str());
+  FILE* fp = fopen(filename.c_str(), "r");
+  if (fp == NULL) {
+    fprintf(stderr, "fatal error: failed to open %s\n", filename.c_str());
+    exit(EXIT_FAILURE);
+  }
+  set_yyin_file(fp);
   std::vector<Token> tokens;
   Token tok;
   while ((tok = (Token)yylex()) != 0) {
     tokens.push_back(tok);
   }
+  set_yyin_file(NULL);
+  fclose(fp);
   return tokens;
 }
 
@@ -30,6 +39,7 @@ Token lex_first_token(const std::string &code) {
 }
 
 TEST(LexerTest, HandlesSingleToken) {
+  sexpr_initialize_pool();
   EXPECT_EQ('[', lex_first_token("[42"));
   EXPECT_EQ(']', lex_first_token("]+"));
   EXPECT_EQ('(', lex_first_token("(["));
@@ -184,4 +194,5 @@ TEST(LexerTest, HandlesSingleToken) {
 
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"("abcdefgABCDEF\"G\t\'\n\\____;;;")"));
   EXPECT_EQ(STRING_LITERAL, lex_first_token(R"(L"abcdefgABCDEF\"G\t\'\n\\____;;;")"));
+  sexpr_finalize_pool();
 }
