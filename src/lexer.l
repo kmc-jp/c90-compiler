@@ -156,5 +156,5 @@ void set_yyin_string(const char *code) {
 }
 
 void set_yyin_file(FILE* fp) {
-  yyin = fp;
+  yyset_in(fp);
 }
