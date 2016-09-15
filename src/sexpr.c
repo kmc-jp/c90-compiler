@@ -36,6 +36,9 @@ bool sexpr_is_atom(SexprRef sexpr) {
 bool sexpr_is_symbol(SexprRef sexpr) {
   return !sexpr_is_null(sexpr) && sexpr->tag == SEXPR_SYMBOL;
 }
+bool sexpr_is_ast(SexprRef sexpr) {
+  return !sexpr_is_null(sexpr) && sexpr->tag == SEXPR_AST;
+}
 
 SexprRef sexpr_new_symbol(const char* src, size_t length) {
   AllocatorRef allocator = sexpr_symbol_allocator();
@@ -51,4 +54,15 @@ SexprRef sexpr_make_symbol(StringRef symbol) {
 StringRef sexpr_get_symbol(SexprRef sexpr) {
   assert(sexpr_is_symbol(sexpr));
   return sexpr->data.symbol;
+}
+
+SexprRef sexpr_make_ast(enum AstTag ast) {
+  SexprRef sexpr = new_sexpr();
+  sexpr->tag = SEXPR_AST;
+  sexpr->data.ast = ast;
+  return sexpr;
+}
+enum AstTag sexpr_get_ast(SexprRef sexpr) {
+  assert(sexpr_is_ast(sexpr));
+  return sexpr->data.ast;
 }
