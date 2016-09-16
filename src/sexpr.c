@@ -66,3 +66,42 @@ enum AstTag sexpr_get_ast(SexprRef sexpr) {
   assert(sexpr_is_ast(sexpr));
   return sexpr->data.ast;
 }
+
+static void indent(FILE* stream, int depth) {
+  int i = 0;
+  for (; i < depth; ++i) {
+    fprintf(stream, " ");
+  }
+}
+static void sexpr_print_impl(FILE* stream, SexprRef sexpr, int depth) {
+  if (sexpr_is_pair(sexpr)) {
+    if (sexpr_is_atom(car(sexpr))) {
+      sexpr_print_impl(stream, car(sexpr), depth);
+    } else {
+      fprintf(stream, "(");
+      sexpr_print_impl(stream, car(sexpr), depth + 1);
+      fprintf(stream, ")");
+    }
+    if (sexpr_is_atom(cdr(sexpr))) {
+      fprintf(stream, " . ");
+      sexpr_print_impl(stream, cdr(sexpr), depth + 3);
+    } else if (sexpr_is_pair(cdr(sexpr))) {
+      fprintf(stream, "\n");
+      indent(stream, depth);
+      sexpr_print_impl(stream, cdr(sexpr), depth);
+    }
+  } else if (sexpr_is_symbol(sexpr)) {
+    fprintf(stream, "%s", string_data(sexpr_get_symbol(sexpr)));
+  } else if (sexpr_is_ast(sexpr)) {
+    fprintf(stream, "%s", ast_info(sexpr_get_ast(sexpr)));
+  }
+}
+void sexpr_print(FILE* stream, SexprRef sexpr) {
+  if (sexpr_is_atom(sexpr)) {
+    sexpr_print_impl(stream, sexpr, 0);
+  } else {
+    fprintf(stream, "(");
+    sexpr_print_impl(stream, sexpr, 1);
+    fprintf(stream, ")\n");
+  }
+}

@@ -1,6 +1,7 @@
 #ifndef KMC_C90_COMPILER_SEXPR_H
 #define KMC_C90_COMPILER_SEXPR_H
 
+#include <stdio.h>
 #include "ast.h"
 #include "stdstring.h"
 #include "utility.h"
@@ -42,5 +43,7 @@ StringRef sexpr_get_symbol(SexprRef sexpr);
 
 SexprRef sexpr_make_ast(enum AstTag ast);
 enum AstTag sexpr_get_ast(SexprRef sexpr);
+
+void sexpr_print(FILE* stream, SexprRef sexpr);
 
 #endif  /* KMC_C90_COMPILER_SEXPR_H */
