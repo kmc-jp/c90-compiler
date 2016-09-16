@@ -9,7 +9,7 @@ include $(TOP_DIR)/Makefile.common
 include $(GTEST_DIR)/Makefile.common
 include $(TESTS_DIR)/Makefile.common
 
-LEX_SRCS := lex.yy.c utility.c parser.tab.c allocator.c memory_pool.c stdstring.c sexpr.c sexpr_pool.c
+LEX_SRCS := lex.yy.c utility.c parser.tab.c allocator.c memory_pool.c stdstring.c sexpr.c sexpr_pool.c ast.c
 LEX_OBJS := $(LEX_SRCS:%.c=$(SRC_DIR)/%.o)
 TARGET := lexer_test.out
 
