@@ -114,8 +114,12 @@ postfix-expression
 ;
 
 argument-expression-list
+: argument-expression
+| argument-expression-list ',' argument-expression
+;
+
+argument-expression
 : assignment-expression
-| argument-expression-list ',' assignment-expression
 ;
 
 unary-expression
