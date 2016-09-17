@@ -104,6 +104,7 @@ INTEGER_SUFFIX ([uU][lL]?|[Ll][uU]?)
 "&=" return AND_ASSIGN;
 "|=" return OR_ASSIGN;
 "^=" return XOR_ASSIGN;
+"..." return ELLIPSIS;
 
 "auto"     return AUTO;
 "break"    return BREAK;

@@ -50,6 +50,7 @@ void set_yyin_string(const char *code);
 %token AND_ASSIGN "&="
 %token OR_ASSIGN "|="
 %token XOR_ASSIGN "^="
+%token ELLIPSIS "..."
 %token AUTO "auto"
 %token BREAK "break"
 %token CASE "case"
