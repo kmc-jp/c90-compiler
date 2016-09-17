@@ -34,8 +34,6 @@ void set_yyin_string(const char *code);
 %token RIGHT_SHIFT ">>"
 %token EQUAL "=="
 %token NOT_EQUAL "!="
-%token LESS "<"
-%token GREATER ">"
 %token LESS_EQUAL "<="
 %token GREATER_EQUAL ">="
 %token AND "&&"

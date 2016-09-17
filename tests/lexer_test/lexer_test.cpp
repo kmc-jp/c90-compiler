@@ -59,8 +59,8 @@ TEST(LexerTest, HandlesSingleToken) {
   EXPECT_EQ('%', lex_first_token("%!n"));
   EXPECT_EQ(LEFT_SHIFT, lex_first_token("<<*p"));
   EXPECT_EQ(RIGHT_SHIFT, lex_first_token(">>*p"));
-  EXPECT_EQ(LESS, lex_first_token("<!n"));
-  EXPECT_EQ(GREATER, lex_first_token(">!n"));
+  EXPECT_EQ('<', lex_first_token("<!n"));
+  EXPECT_EQ('>', lex_first_token(">!n"));
   EXPECT_EQ(LESS_EQUAL, lex_first_token("<=!n"));
   EXPECT_EQ(GREATER_EQUAL, lex_first_token(">=!n"));
   EXPECT_EQ('=', lex_first_token("=++n"));
