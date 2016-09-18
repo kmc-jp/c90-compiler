@@ -359,8 +359,8 @@ direct-declarator
 | '(' declarator ')'
 | direct-declarator '[' constant-expression ']'
 | direct-declarator '[' ']'
-| direct-declarator '(' parameter-list ')'
-| direct-declarator '(' parameter-list ',' "..." ')'
+| direct-declarator '(' parameter-declaration-list ')'
+| direct-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
 pointer
@@ -375,9 +375,9 @@ type-qualifier-list
 | type-qualifier-list type-qualifier
 ;
 
-parameter-list
+parameter-declaration-list
 : parameter-declaration
-| parameter-list ',' parameter-declaration
+| parameter-declaration-list ',' parameter-declaration
 ;
 
 parameter-declaration
@@ -403,10 +403,10 @@ direct-abstract-declarator
 | '[' constant-expression ']'
 | direct-abstract-declarator '[' ']'
 | direct-abstract-declarator '[' constant-expression ']'
-| '(' parameter-list ')'
-| '(' parameter-list ',' "..." ')'
-| direct-abstract-declarator '(' parameter-list ')'
-| direct-abstract-declarator '(' parameter-list ',' "..." ')'
+| '(' parameter-declaration-list ')'
+| '(' parameter-declaration-list ',' "..." ')'
+| direct-abstract-declarator '(' parameter-declaration-list ')'
+| direct-abstract-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
 initializer
