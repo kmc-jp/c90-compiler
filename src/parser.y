@@ -350,8 +350,6 @@ direct-declarator
 | direct-declarator '[' constant-expression ']'
 | direct-declarator '[' ']'
 | direct-declarator '(' parameter-type-list ')'
-| direct-declarator '(' identifier-list ')'
-| direct-declarator '(' ')'
 ;
 
 pointer
@@ -383,11 +381,6 @@ parameter-declaration
 | declaration-specifiers
 ;
 
-identifier-list
-: identifier
-| identifier-list ',' identifier
-;
-
 type-name
 : specifier-qualifier-list
 | specifier-qualifier-list abstract-declarator
@@ -405,9 +398,7 @@ direct-abstract-declarator
 | '[' constant-expression ']'
 | direct-abstract-declarator '[' ']'
 | direct-abstract-declarator '[' constant-expression ']'
-| '(' ')'
 | '(' parameter-type-list ')'
-| direct-abstract-declarator '(' ')'
 | direct-abstract-declarator '(' parameter-type-list ')'
 ;
 
@@ -491,9 +482,7 @@ external-declaration
 ;
 
 function-definition
-: declaration-specifiers declarator declaration-list compound-statement
-| declaration-specifiers declarator compound-statement
-| declarator declaration-list compound-statement
+: declaration-specifiers declarator compound-statement
 | declarator compound-statement
 ;
 
