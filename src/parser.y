@@ -460,10 +460,7 @@ labeled-statement
 ;
 
 compound-statement
-: '{' '}'
-| '{' statement-list '}'
-| '{' declaration-list '}'
-| '{' declaration-list statement-list '}'
+: '{' declaration-list.opt statement-list.opt '}'
 ;
 
 declaration-list.opt
