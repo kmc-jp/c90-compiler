@@ -241,13 +241,15 @@ declaration
 | declaration-specifiers init-declarator-list ';'
 ;
 
+declaration-specifiers.opt
+: %empty
+| declaration-specifiers
+;
+
 declaration-specifiers
-: storage-class-specifier
-| storage-class-specifier declaration-specifiers
-| type-specifier
-| type-specifier declaration-specifiers
-| type-qualifier
-| type-qualifier declaration-specifiers
+: storage-class-specifier declaration-specifiers.opt
+| type-specifier declaration-specifiers.opt
+| type-qualifier declaration-specifiers.opt
 ;
 
 init-declarator-list
