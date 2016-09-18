@@ -350,7 +350,7 @@ type-qualifier
 ;
 
 declarator
-: pointer direct-declarator
+: pointer-list direct-declarator
 | direct-declarator
 ;
 
@@ -363,11 +363,14 @@ direct-declarator
 | direct-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
-pointer
-: '*'
-| '*' type-qualifier-list
-| '*' pointer
-| '*' type-qualifier-list pointer
+pointer-list.opt
+: %empty
+| pointer-list
+;
+
+pointer-list
+: '*' pointer-list.opt
+| '*' type-qualifier-list pointer-list.opt
 ;
 
 type-qualifier-list
@@ -392,9 +395,9 @@ type-name
 ;
 
 abstract-declarator
-: pointer
+: pointer-list
 | direct-abstract-declarator
-| pointer direct-abstract-declarator
+| pointer-list direct-abstract-declarator
 ;
 
 direct-abstract-declarator
