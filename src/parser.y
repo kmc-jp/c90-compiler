@@ -232,6 +232,11 @@ assignment-operator
 | "|="
 ;
 
+expression.opt
+: %empty
+| expression
+;
+
 expression
 : assignment-expression
 | expression ',' assignment-expression
@@ -483,8 +488,7 @@ statement-list
 ;
 
 expression-statement
-: ';'
-| expression ';'
+: expression.opt ';'
 ;
 
 selection-statement
@@ -496,16 +500,14 @@ selection-statement
 iteration-statement
 : "while" '(' expression ')' statement
 | "do" statement "while" '(' expression ')' ';'
-| "for" '(' expression-statement expression-statement ')' statement
-| "for" '(' expression-statement expression-statement expression ')' statement
+| "for" '(' expression.opt ';' expression.opt ';' expression.opt ')' statement
 ;
 
 jump-statement
 : "goto" identifier ';'
 | "continue" ';'
 | "break" ';'
-| "return" ';'
-| "return" expression ';'
+| "return" expression.opt ';'
 ;
 
 translation-unit
