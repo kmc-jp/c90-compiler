@@ -237,6 +237,11 @@ expression
 | expression ',' assignment-expression
 ;
 
+constant-expression.opt
+: %empty
+| constant-expression
+;
+
 constant-expression
 : conditional-expression
 ;
@@ -370,8 +375,7 @@ declarator
 direct-declarator
 : identifier
 | '(' declarator ')'
-| direct-declarator '[' constant-expression ']'
-| direct-declarator '[' ']'
+| direct-declarator '[' constant-expression.opt ']'
 | direct-declarator '(' parameter-declaration-list ')'
 | direct-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
@@ -419,10 +423,8 @@ abstract-declarator
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| '[' ']'
-| '[' constant-expression ']'
-| direct-abstract-declarator '[' ']'
-| direct-abstract-declarator '[' constant-expression ']'
+| '[' constant-expression.opt ']'
+| direct-abstract-declarator '[' constant-expression.opt ']'
 | '(' parameter-declaration-list ')'
 | '(' parameter-declaration-list ',' "..." ')'
 | direct-abstract-declarator '(' parameter-declaration-list ')'
