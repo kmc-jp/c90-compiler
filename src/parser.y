@@ -298,18 +298,26 @@ struct-or-union
 | "union"
 ;
 
+struct-declaration-list.opt
+: %empty
+| struct-declaration-list
+;
+
 struct-declaration-list
-: struct-declaration
-| struct-declaration-list struct-declaration
+: struct-declaration struct-declaration-list.opt
 ;
 
 struct-declaration
 : specifier-qualifier-list struct-declarator-list ';'
 ;
 
+specifier-qualifier-list.opt
+: %empty
+| specifier-qualifier-list
+;
+
 specifier-qualifier-list
-: specifier-qualifier
-| specifier-qualifier specifier-qualifier-list
+: specifier-qualifier specifier-qualifier-list.opt
 ;
 
 specifier-qualifier
@@ -373,9 +381,13 @@ pointer-list
 | '*' type-qualifier-list pointer-list.opt
 ;
 
+type-qualifier-list.opt
+: %empty
+| type-qualifier-list
+;
+
 type-qualifier-list
-: type-qualifier
-| type-qualifier-list type-qualifier
+: type-qualifier type-qualifier-list.opt
 ;
 
 parameter-declaration-list
@@ -445,14 +457,22 @@ compound-statement
 | '{' declaration-list statement-list '}'
 ;
 
+declaration-list.opt
+: %empty
+| declaration-list
+;
+
 declaration-list
-: declaration
-| declaration-list declaration
+: declaration declaration-list.opt
+;
+
+statement-list.opt
+: %empty
+| statement-list
 ;
 
 statement-list
-: statement
-| statement-list statement
+: statement statement-list.opt
 ;
 
 expression-statement
