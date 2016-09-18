@@ -391,8 +391,7 @@ pointer-list.opt
 ;
 
 pointer-list
-: '*' pointer-list.opt
-| '*' type-qualifier-list pointer-list.opt
+: '*' type-qualifier-list.opt pointer-list.opt
 ;
 
 type-qualifier-list.opt
