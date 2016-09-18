@@ -373,8 +373,7 @@ type-qualifier
 ;
 
 declarator
-: pointer-list direct-declarator
-| direct-declarator
+: pointer-list.opt direct-declarator
 ;
 
 direct-declarator
@@ -421,8 +420,7 @@ type-name
 
 abstract-declarator
 : pointer-list
-| direct-abstract-declarator
-| pointer-list direct-abstract-declarator
+| pointer-list.opt direct-abstract-declarator
 ;
 
 direct-abstract-declarator
