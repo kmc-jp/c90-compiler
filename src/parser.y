@@ -352,7 +352,8 @@ direct-declarator
 | '(' declarator ')'
 | direct-declarator '[' constant-expression ']'
 | direct-declarator '[' ']'
-| direct-declarator '(' parameter-type-list ')'
+| direct-declarator '(' parameter-list ')'
+| direct-declarator '(' parameter-list ',' "..." ')'
 ;
 
 pointer
@@ -365,12 +366,6 @@ pointer
 type-qualifier-list
 : type-qualifier
 | type-qualifier-list type-qualifier
-;
-
-
-parameter-type-list
-: parameter-list
-| parameter-list ',' ELLIPSIS
 ;
 
 parameter-list
@@ -401,8 +396,10 @@ direct-abstract-declarator
 | '[' constant-expression ']'
 | direct-abstract-declarator '[' ']'
 | direct-abstract-declarator '[' constant-expression ']'
-| '(' parameter-type-list ')'
-| direct-abstract-declarator '(' parameter-type-list ')'
+| '(' parameter-list ')'
+| '(' parameter-list ',' "..." ')'
+| direct-abstract-declarator '(' parameter-list ')'
+| direct-abstract-declarator '(' parameter-list ',' "..." ')'
 ;
 
 initializer
