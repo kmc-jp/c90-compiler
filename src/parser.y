@@ -81,6 +81,11 @@ void set_yyin_string(const char *code);
 
 %%
 
+identifier.opt
+: %empty
+| IDENTIFIER
+;
+
 identifier
 : IDENTIFIER
 ;
@@ -290,8 +295,7 @@ typedef-name
 ;
 
 struct-or-union-specifier
-: struct-or-union identifier '{' struct-declaration-list '}'
-| struct-or-union '{' struct-declaration-list '}'
+: struct-or-union identifier.opt '{' struct-declaration-list '}'
 | struct-or-union identifier
 ;
 
@@ -339,8 +343,7 @@ struct-declarator
 ;
 
 enum-specifier
-: "enum" '{' enumerator-list '}'
-| "enum" identifier '{' enumerator-list '}'
+: "enum" identifier.opt '{' enumerator-list '}'
 | "enum" identifier
 ;
 
