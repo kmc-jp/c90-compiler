@@ -308,9 +308,12 @@ struct-declaration
 ;
 
 specifier-qualifier-list
-: type-specifier specifier-qualifier-list
-| type-specifier
-| type-qualifier specifier-qualifier-list
+: specifier-qualifier
+| specifier-qualifier specifier-qualifier-list
+;
+
+specifier-qualifier
+: type-specifier
 | type-qualifier
 ;
 
