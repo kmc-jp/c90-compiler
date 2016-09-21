@@ -256,9 +256,12 @@ constant-expression
 : conditional-expression
 ;
 
-declaration
+type-declaration
 : declaration-specifiers ';'
-| declaration-specifiers init-declarator-list ';'
+;
+
+declaration
+: declaration-specifiers init-declarator-list ';'
 | storage-class-specifier declaration-specifiers init-declarator-list ';'
 ;
 
@@ -519,7 +522,7 @@ translation-unit
 
 external-declaration
 : function-definition
-| declaration
+| type-declaration
 ;
 
 function-definition
