@@ -14,6 +14,7 @@ void set_yyin_string(const char *code);
 #define YYSTYPE SexprRef
 }
 
+%token TYPENAME
 %token IDENTIFIER
 %token FLOATING_CONSTANT
 %token INTEGER_CONSTANT
@@ -80,6 +81,10 @@ void set_yyin_string(const char *code);
 %start translation-unit
 
 %%
+
+typedef-name
+: TYPENAME
+;
 
 identifier.opt
 : %empty
@@ -298,10 +303,6 @@ type-specifier
 | struct-or-union-specifier
 | enum-specifier
 | typedef-name
-;
-
-typedef-name
-: identifier
 ;
 
 struct-or-union-specifier
