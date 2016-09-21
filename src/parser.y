@@ -259,6 +259,7 @@ constant-expression
 declaration
 : declaration-specifiers ';'
 | declaration-specifiers init-declarator-list ';'
+| storage-class-specifier declaration-specifiers init-declarator-list ';'
 ;
 
 declaration-specifiers.opt
@@ -267,8 +268,7 @@ declaration-specifiers.opt
 ;
 
 declaration-specifiers
-: storage-class-specifier declaration-specifiers.opt
-| type-specifier declaration-specifiers.opt
+: type-specifier declaration-specifiers.opt
 | type-qualifier declaration-specifiers.opt
 ;
 
@@ -524,6 +524,7 @@ external-declaration
 
 function-definition
 : declaration-specifiers declarator compound-statement
+| linkage-specifier declaration-specifiers declarator compound-statement
 ;
 
 %%
