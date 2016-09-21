@@ -265,6 +265,11 @@ declaration
 | storage-class-specifier declaration-specifiers init-declarator-list ';'
 ;
 
+global-declaration
+: declaration-specifiers init-declarator-list ';'
+| linkage-specifier declaration-specifiers init-declarator-list ';'
+;
+
 declaration-specifiers.opt
 : %empty
 | declaration-specifiers
@@ -523,6 +528,7 @@ translation-unit
 external-declaration
 : function-definition
 | type-declaration
+| global-declaration
 ;
 
 function-definition
