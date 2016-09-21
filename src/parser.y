@@ -392,6 +392,11 @@ type-qualifier
 | "volatile"
 ;
 
+declarator-list
+: declarator
+| declarator-list ',' declarator
+;
+
 declarator
 : pointer-list.opt direct-declarator
 ;
