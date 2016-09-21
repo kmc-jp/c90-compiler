@@ -270,6 +270,10 @@ global-declaration
 | linkage-specifier declaration-specifiers init-declarator-list ';'
 ;
 
+typedef-declaration
+: typedef-specifier declaration-specifiers declarator-list ';'
+;
+
 declaration-specifiers.opt
 : %empty
 | declaration-specifiers
@@ -529,6 +533,7 @@ external-declaration
 : function-definition
 | type-declaration
 | global-declaration
+| typedef-declaration
 ;
 
 function-definition
