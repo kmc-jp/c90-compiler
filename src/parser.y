@@ -283,11 +283,18 @@ init-declarator
 ;
 
 storage-class-specifier
-: "typedef"
-| "extern"
-| "static"
+: "static"
 | "auto"
 | "register"
+;
+
+linkage-specifier
+: "extern"
+| "static"
+;
+
+typedef-specifier
+: "typedef"
 ;
 
 type-specifier
