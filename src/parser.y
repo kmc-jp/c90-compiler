@@ -516,7 +516,6 @@ external-declaration
 
 function-definition
 : declaration-specifiers declarator compound-statement
-| declarator compound-statement
 ;
 
 %%
