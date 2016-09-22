@@ -474,16 +474,13 @@ type-name
 abstract-declarator
 : pointer-list
 | pointer-list.opt direct-abstract-declarator
+| pointer-list.opt array-abstract-declarator
+| pointer-list.opt function-abstract-declarator
+| pointer-list.opt variadic-function-abstract-declarator
 ;
 
 direct-abstract-declarator
 : '(' abstract-declarator ')'
-| '[' constant-expression.opt ']'
-| direct-abstract-declarator '[' constant-expression.opt ']'
-| '(' parameter-declaration-list ')'
-| '(' parameter-declaration-list ',' "..." ')'
-| direct-abstract-declarator '(' parameter-declaration-list ')'
-| direct-abstract-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
 array-abstract-declarator
