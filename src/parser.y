@@ -75,8 +75,6 @@ void set_yyin_string(const char *code);
 %token VOLATILE "volatile"
 %token WHILE "while"
 
-%precedence NO_INT
-%precedence INT
 %precedence ONLY_IF
 %precedence ELSE
 
@@ -276,14 +274,8 @@ typedef-declaration
 : typedef-specifier declaration-specifiers declarator-list ';'
 ;
 
-declaration-specifiers.opt
-: %empty
-| declaration-specifiers
-;
-
 declaration-specifiers
-: type-specifier declaration-specifiers.opt
-| type-qualifier declaration-specifiers.opt
+: type-qualifier-list.opt type-specifier type-qualifier-list.opt
 ;
 
 init-declarator-list
@@ -312,7 +304,7 @@ typedef-specifier
 ;
 
 int.opt
-: NO_INT
+: %empty
 | "int"
 ;
 
