@@ -492,6 +492,16 @@ array-abstract-declarator
 | array-abstract-declarator '[' constant-expression.opt ']'
 ;
 
+function-abstract-declarator
+: '(' parameter-declaration-list ')'
+| direct-abstract-declarator '(' parameter-declaration-list ')'
+;
+
+variadic-function-abstract-declarator
+: '(' parameter-declaration-list ',' "..." ')'
+| direct-abstract-declarator '(' parameter-declaration-list ',' "..." ')'
+;
+
 initializer
 : assignment-expression
 | '{' initializer-list '}'
