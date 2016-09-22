@@ -429,6 +429,14 @@ array-declarator
 | array-declarator '[' constant-expression.opt ']'
 ;
 
+function-declarator
+: direct-declarator '(' parameter-declaration-list ')'
+;
+
+variadic-function-declarator
+: direct-declarator '(' parameter-declaration-list ',' "..." ')'
+;
+
 pointer-list.opt
 : %empty
 | pointer-list
