@@ -414,14 +414,14 @@ declarator-list
 
 declarator
 : pointer-list.opt direct-declarator
+| pointer-list.opt array-declarator
+| pointer-list.opt function-declarator
+| pointer-list.opt variadic-function-declarator
 ;
 
 direct-declarator
 : identifier
 | '(' declarator ')'
-| direct-declarator '[' constant-expression.opt ']'
-| direct-declarator '(' parameter-declaration-list ')'
-| direct-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
 array-declarator
