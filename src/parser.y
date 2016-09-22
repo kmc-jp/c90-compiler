@@ -373,21 +373,7 @@ struct-declaration-list
 ;
 
 struct-declaration
-: specifier-qualifier-list struct-declarator-list ';'
-;
-
-specifier-qualifier-list.opt
-: %empty
-| specifier-qualifier-list
-;
-
-specifier-qualifier-list
-: specifier-qualifier specifier-qualifier-list.opt
-;
-
-specifier-qualifier
-: type-specifier
-| type-qualifier
+: declaration-specifiers struct-declarator-list ';'
 ;
 
 struct-declarator-list
@@ -468,8 +454,8 @@ parameter-declaration
 ;
 
 type-name
-: specifier-qualifier-list
-| specifier-qualifier-list abstract-declarator
+: declaration-specifiers
+| declaration-specifiers abstract-declarator
 ;
 
 abstract-declarator
