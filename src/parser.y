@@ -486,6 +486,12 @@ direct-abstract-declarator
 | direct-abstract-declarator '(' parameter-declaration-list ',' "..." ')'
 ;
 
+array-abstract-declarator
+: '[' constant-expression.opt ']'
+| direct-abstract-declarator '[' constant-expression.opt ']'
+| array-abstract-declarator '[' constant-expression.opt ']'
+;
+
 initializer
 : assignment-expression
 | '{' initializer-list '}'
