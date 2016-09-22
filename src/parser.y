@@ -75,6 +75,8 @@ void set_yyin_string(const char *code);
 %token VOLATILE "volatile"
 %token WHILE "while"
 
+%precedence NO_INT
+%precedence INT
 %precedence ONLY_IF
 %precedence ELSE
 
@@ -307,6 +309,11 @@ linkage-specifier
 
 typedef-specifier
 : "typedef"
+;
+
+int.opt
+: NO_INT
+| "int"
 ;
 
 type-specifier
