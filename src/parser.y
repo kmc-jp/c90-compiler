@@ -316,6 +316,26 @@ int.opt
 | "int"
 ;
 
+short-type
+: "short" int.opt
+| "signed" "short" int.opt
+;
+
+int-type
+: "int"
+| "signed" int.opt
+;
+
+long-type
+: "long" int.opt
+| "signed" "long" int.opt
+;
+
+long-long-type
+: "long" "long" int.opt
+| "signed" "long" "long" int.opt
+;
+
 type-specifier
 : "void"
 | "char"
