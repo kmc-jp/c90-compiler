@@ -336,16 +336,26 @@ long-long-type
 | "signed" "long" "long" int.opt
 ;
 
-type-specifier
+fundamental-type-specifier
 : "void"
 | "char"
-| "short"
-| "int"
-| "long"
+| "signed" "char"
+| "unsigned" "char"
+| short-type
+| "unsigned" "short" int.opt
+| int-type
+| "unsigned" int.opt
+| long-type
+| "unsigned" "long" int.opt
+| long-long-type
+| "unsigned" "long" "long" int.opt
 | "float"
 | "double"
-| "signed"
-| "unsigned"
+| "long" "double"
+;
+
+type-specifier
+: fundamental-type-specifier
 | struct-or-union-specifier
 | enum-specifier
 | typedef-name
