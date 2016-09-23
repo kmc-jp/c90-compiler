@@ -1,6 +1,4 @@
 %code {
-#include "stdstring.h"
-#include "utility.h"
 
 #define AST_ERROR(lhs, rhs) \
   do { \
@@ -18,11 +16,14 @@ void type_table_add(StringRef typename);
 int yylex(void);
 void set_yyin_file(FILE* fp);
 void set_yyin_string(const char *code);
+bool type_table_exists(StringRef typename);
 }
 
 %code requires {
 #include <stdio.h>
 #include "sexpr.h"
+#include "stdstring.h"
+#include "utility.h"
 #define YYSTYPE SexprRef
 }
 
@@ -305,4 +306,14 @@ void type_table_finalize(void) {
 }
 void type_table_add(StringRef typename) {
   VECTORFUNC(StringRef, push_back)(g_type_table, typename);
+}
+bool type_table_exists(StringRef typename) {
+  const StringRef* it = VECTORFUNC(StringRef, begin)(g_type_table);
+  const StringRef* const end = VECTORFUNC(StringRef, end)(g_type_table);
+  for (; it != end; ++it) {
+    if (string_compare(typename, *it)) {
+      return true;
+    }
+  }
+  return false;
 }
