@@ -23,6 +23,15 @@ SexprRef cdr(SexprRef sexpr) {
   assert(sexpr_is_pair(sexpr));
   return sexpr->data.cons.cdr;
 }
+SexprRef append(SexprRef xs, SexprRef ys) {
+  assert(sexpr_is_null(xs) || sexpr_is_pair(xs));
+  if (sexpr_is_null(xs)) {
+    return ys;
+  } else {
+    xs->data.cons.cdr = append(cdr(xs), ys);
+    return xs;
+  }
+}
 
 bool sexpr_is_null(SexprRef sexpr) {
   return sexpr == NULL;
