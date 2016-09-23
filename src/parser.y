@@ -13,6 +13,9 @@ void type_table_add(StringRef typename);
 }
 
 %code provides {
+#include <stdio.h>
+#include "stdstring.h"
+#include "utility.h"
 int yylex(void);
 void set_yyin_file(FILE* fp);
 void set_yyin_string(const char *code);
@@ -20,10 +23,7 @@ bool type_table_exists(StringRef typename);
 }
 
 %code requires {
-#include <stdio.h>
 #include "sexpr.h"
-#include "stdstring.h"
-#include "utility.h"
 #define YYSTYPE SexprRef
 }
 
