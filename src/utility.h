@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_UTILITY_H
-#define KMC_C90_COMPILER_UTILITY_H
+#ifndef INCLUDE_GUARD_UUID_F5C18B91_A046_4615_A62F_B79EE7AED603
+#define INCLUDE_GUARD_UUID_F5C18B91_A046_4615_A62F_B79EE7AED603
 
 #include <stddef.h>
 
@@ -59,4 +59,4 @@ void memory_move(void* dst, const void* src, size_t size, size_t count);
 
 END_EXTERN_C
 
-#endif  /* KMC_C90_COMPILER_UTILITY_H */
+#endif  /* INCLUDE_GUARD_UUID_F5C18B91_A046_4615_A62F_B79EE7AED603 */

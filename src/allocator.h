@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_ALLOCATOR_H
-#define KMC_C90_COMPILER_ALLOCATOR_H
+#ifndef INCLUDE_GUARD_UUID_369AE7CB_59C4_44F9_827B_3680E4BE4CE3
+#define INCLUDE_GUARD_UUID_369AE7CB_59C4_44F9_827B_3680E4BE4CE3
 
 #include "utility.h"
 
@@ -10,4 +10,4 @@ void* allocate_container(AllocatorRef allocator);
 void* allocate_element(AllocatorRef allocator, size_t count);
 void deallocate(AllocatorRef allocator, void* ptr);
 
-#endif  /* KMC_C90_COMPILER_ALLOCATOR_H */
+#endif  /* INCLUDE_GUARD_UUID_369AE7CB_59C4_44F9_827B_3680E4BE4CE3 */

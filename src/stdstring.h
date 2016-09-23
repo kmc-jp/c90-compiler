@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_STDSTRING_H
-#define KMC_C90_COMPILER_STDSTRING_H
+#ifndef INCLUDE_GUARD_UUID_AC04F0D5_11C0_431B_A82E_4E56DA9456AF
+#define INCLUDE_GUARD_UUID_AC04F0D5_11C0_431B_A82E_4E56DA9456AF
 
 #include "allocator.h"
 #include "utility.h"
@@ -114,4 +114,4 @@ size_t string_find_first_of(StringRef self, const char* str);
 /* behavior is undefined if str is NULL */
 size_t string_find_first_not_of(StringRef self, const char* str);
 
-#endif  /* KMC_C90_COMPILER_STDSTRING_H */
+#endif  /* INCLUDE_GUARD_UUID_AC04F0D5_11C0_431B_A82E_4E56DA9456AF */

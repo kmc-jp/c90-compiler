@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_MEMORY_POOL_H
-#define KMC_C90_COMPILER_MEMORY_POOL_H
+#ifndef INCLUDE_GUARD_UUID_CE8F872C_1C85_4BD9_BA55_DCCB9DFCA5FD
+#define INCLUDE_GUARD_UUID_CE8F872C_1C85_4BD9_BA55_DCCB9DFCA5FD
 
 #include "utility.h"
 
@@ -16,4 +16,4 @@ void memory_pool_dtor(MemoryPoolRef* ppool);
 /* allocate 'size' memory from pool */
 void* palloc_impl(MemoryPoolRef pool, size_t size, size_t alignment);
 
-#endif  /* KMC_C90_COMPILER_MEMORY_POOL_H */
+#endif  /* INCLUDE_GUARD_UUID_CE8F872C_1C85_4BD9_BA55_DCCB9DFCA5FD */

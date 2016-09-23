@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_SEXPR_H
-#define KMC_C90_COMPILER_SEXPR_H
+#ifndef INCLUDE_GUARD_UUID_DC32CCE0_A68D_4F17_8621_17C2E13F96F3
+#define INCLUDE_GUARD_UUID_DC32CCE0_A68D_4F17_8621_17C2E13F96F3
 
 #include "ast.h"
 #include "stdstring.h"
@@ -43,4 +43,4 @@ StringRef sexpr_get_symbol(SexprRef sexpr);
 SexprRef sexpr_make_ast(enum AstTag ast);
 enum AstTag sexpr_get_ast(SexprRef sexpr);
 
-#endif  /* KMC_C90_COMPILER_SEXPR_H */
+#endif  /* INCLUDE_GUARD_UUID_DC32CCE0_A68D_4F17_8621_17C2E13F96F3 */

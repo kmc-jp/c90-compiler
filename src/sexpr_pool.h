@@ -1,5 +1,5 @@
-#ifndef KMC_C90_COMPILER_SEXPR_POOL_H
-#define KMC_C90_COMPILER_SEXPR_POOL_H
+#ifndef INCLUDE_GUARD_UUID_DD55EAEA_2431_4469_A0F8_24CDD9BF0180
+#define INCLUDE_GUARD_UUID_DD55EAEA_2431_4469_A0F8_24CDD9BF0180
 
 #include "allocator.h"
 #include "memory_pool.h"
@@ -10,4 +10,4 @@ void sexpr_finalize_pool(void);
 
 AllocatorRef sexpr_symbol_allocator(void);
 
-#endif  /* KMC_C90_COMPILER_SEXPR_POOL_H */
+#endif  /* INCLUDE_GUARD_UUID_DD55EAEA_2431_4469_A0F8_24CDD9BF0180 */
