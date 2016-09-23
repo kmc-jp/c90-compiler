@@ -282,6 +282,9 @@ function-definition
 ;
 
 %%
+#include "use_vector.h"
+typedef VECTORREF(StringRef) TypeTableRef;
+static TypeTableRef g_type_table;
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
