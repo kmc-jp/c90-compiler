@@ -8,6 +8,8 @@
   } while (false)
 
 void yyerror(const char *);
+void type_table_initialize(void);
+void type_table_finalize(void);
 }
 
 %code provides {
@@ -282,10 +284,20 @@ function-definition
 ;
 
 %%
+#include <assert.h>
 #include "use_vector.h"
 typedef VECTORREF(StringRef) TypeTableRef;
 static TypeTableRef g_type_table;
 
 void yyerror(const char* s) {
   fprintf(stderr, "%s\n", s);
+}
+
+void type_table_initialize(void) {
+  assert(!g_type_table);
+  g_type_table = VECTORFUNC(StringRef, ctor)(NULL);
+}
+void type_table_finalize(void) {
+  assert(g_type_table);
+  VECTORFUNC(StringRef, dtor)(&g_type_table);
 }
