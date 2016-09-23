@@ -1,11 +1,4 @@
 %code {
-
-#define AST_ERROR(lhs, rhs) \
-  do { \
-    yyerror("cannot parse `" lhs "` as `" rhs "`"); \
-    YYERROR; \
-  } while (false)
-
 void yyerror(const char *);
 void type_table_initialize(void);
 void type_table_finalize(void);
