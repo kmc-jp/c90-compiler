@@ -1,4 +1,5 @@
 %code {
+#include "stdstring.h"
 #include "utility.h"
 
 #define AST_ERROR(lhs, rhs) \
@@ -10,6 +11,7 @@
 void yyerror(const char *);
 void type_table_initialize(void);
 void type_table_finalize(void);
+void type_table_add(StringRef typename);
 }
 
 %code provides {
@@ -300,4 +302,7 @@ void type_table_initialize(void) {
 void type_table_finalize(void) {
   assert(g_type_table);
   VECTORFUNC(StringRef, dtor)(&g_type_table);
+}
+void type_table_add(StringRef typename) {
+  VECTORFUNC(StringRef, push_back)(g_type_table, typename);
 }
